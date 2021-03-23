@@ -4,7 +4,7 @@
 
 ```
 mobile
-├── app
+├── src
 │   ├── components
 │   ├── i18n
 │   ├── utils
@@ -60,8 +60,8 @@ This is the place for helpers and utilities. Things like date helpers, formatter
 
 ## ./test directory
 
-This directory will hold your Jest configs and mocks
+This directory will hold Jest configs and mocks
 
 ## app.tsx
 
-This is the entry point to your app. This is where you will find the main App component which renders the rest of the application.
+This is the entry point to the app. This is where you will find the main App component which renders the rest of the application.

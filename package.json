@@ -6,16 +6,24 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "clean": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start -- --reset-cache",
     "clean:android": "yarn clean && cd android &&./gradlew clean && cd ../",
     "clean:ios": "yarn clean && cd ios && && pod cache clean --all && rm -rf build && xcodebuild clean && pod install && cd ../",
-    "wrap": "yarn link && yarn test"
+    "wrap": "yarn lint && yarn test"
   },
   "dependencies": {
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "5.11.8",
+    "@react-navigation/native": "5.9.3",
+    "@react-navigation/stack": "5.14.3",
     "react": "17.0.1",
-    "react-native": "0.64.0"
+    "react-native": "0.64.0",
+    "react-native-gesture-handler": "1.10.3",
+    "react-native-reanimated": "2.0.0",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "2.18.1"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",
