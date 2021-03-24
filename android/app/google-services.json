@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "812947530168",
+    "project_id": "candt-dev",
+    "storage_bucket": "candt-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812947530168:android:73bee96da67ceb47202f4d",
+        "android_client_info": {
+          "package_name": "com.cardsandtreasure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812947530168-8g4uktdt1tjmaahtheietmptt6oq5daa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB63Kp8-TlVnTtIGVj7XsSv9jTJLRafMKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812947530168-8g4uktdt1tjmaahtheietmptt6oq5daa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "812947530168-48j4afvp87kuvv5v8ns9dpn6kv0dllfg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cardsandtreasures"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
