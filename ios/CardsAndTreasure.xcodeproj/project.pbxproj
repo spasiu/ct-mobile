@@ -15,6 +15,13 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8B024A51260B035A00E15470 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B024A50260B035A00E15470 /* GoogleService-Info.plist */; };
 		CFBB87B7ABF3C7A7B49B9BC4 /* libPods-CardsAndTreasure.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6148D7B606ED463A151A8FD /* libPods-CardsAndTreasure.a */; };
+		61BA85C7516449F896C4F984 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65AA4B49972A4D96904D0C66 /* DMSans-Bold.ttf */; };
+		928522FF7BC24B2D9466D4E8 /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59241F44EB05486D9212DB57 /* DMSans-Medium.ttf */; };
+		81D1FE0C87B7472FBDD45FB8 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 679D1732D3FA48A9ADC7E0B7 /* DMSans-Regular.ttf */; };
+		CD12F91C110A4559B571D7BF /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1023C8D56761482997B45EA2 /* Inter-Bold.ttf */; };
+		7EB8E3AF02454D63B7F55FDC /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 822AFCFF87AF43BB81799A7D /* Inter-Medium.ttf */; };
+		8DEA0B1F0BBB4E08BC6D2B50 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AD3ECF87A243E38528E6EA /* Inter-Regular.ttf */; };
+		E4A9DB7AAE3A428B8041F0A9 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EED82CCBA57947159AAB5CC9 /* Inter-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +53,13 @@
 		EC5C0CFCFD8DF61DFA7EC374 /* Pods-CardsAndTreasure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardsAndTreasure.release.xcconfig"; path = "Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F6148D7B606ED463A151A8FD /* libPods-CardsAndTreasure.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CardsAndTreasure.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65AA4B49972A4D96904D0C66 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; name = "DMSans-Bold.ttf"; path = "../assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		59241F44EB05486D9212DB57 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; name = "DMSans-Medium.ttf"; path = "../assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		679D1732D3FA48A9ADC7E0B7 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; name = "DMSans-Regular.ttf"; path = "../assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1023C8D56761482997B45EA2 /* Inter-Bold.ttf */ = {isa = PBXFileReference; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		822AFCFF87AF43BB81799A7D /* Inter-Medium.ttf */ = {isa = PBXFileReference; name = "Inter-Medium.ttf"; path = "../assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A1AD3ECF87A243E38528E6EA /* Inter-Regular.ttf */ = {isa = PBXFileReference; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EED82CCBA57947159AAB5CC9 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +139,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D12099303DB1EE7979EDEEAB /* Pods */,
+				4404FF2739EC447AABFB2EB9 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -150,6 +165,21 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		4404FF2739EC447AABFB2EB9 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				65AA4B49972A4D96904D0C66 /* DMSans-Bold.ttf */,
+				59241F44EB05486D9212DB57 /* DMSans-Medium.ttf */,
+				679D1732D3FA48A9ADC7E0B7 /* DMSans-Regular.ttf */,
+				1023C8D56761482997B45EA2 /* Inter-Bold.ttf */,
+				822AFCFF87AF43BB81799A7D /* Inter-Medium.ttf */,
+				A1AD3ECF87A243E38528E6EA /* Inter-Regular.ttf */,
+				EED82CCBA57947159AAB5CC9 /* Inter-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -249,6 +279,13 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8B024A51260B035A00E15470 /* GoogleService-Info.plist in Resources */,
+				61BA85C7516449F896C4F984 /* DMSans-Bold.ttf in Resources */,
+				928522FF7BC24B2D9466D4E8 /* DMSans-Medium.ttf in Resources */,
+				81D1FE0C87B7472FBDD45FB8 /* DMSans-Regular.ttf in Resources */,
+				CD12F91C110A4559B571D7BF /* Inter-Bold.ttf in Resources */,
+				7EB8E3AF02454D63B7F55FDC /* Inter-Medium.ttf in Resources */,
+				8DEA0B1F0BBB4E08BC6D2B50 /* Inter-Regular.ttf in Resources */,
+				E4A9DB7AAE3A428B8041F0A9 /* Inter-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
