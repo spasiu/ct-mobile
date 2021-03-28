@@ -1,6 +1,7 @@
 import React from 'react';
 import { enableScreens } from 'react-native-screens';
 
+import './styles/tachyons';
 import { RootNavigator } from './navigators/root-navigator';
 
 // for performance optimizations and native feel
