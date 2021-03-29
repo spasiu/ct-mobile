@@ -9,10 +9,10 @@
     "start": "react-native start",
     "test": "jest --passWithNoTests",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean:js": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install && yarn start -- --reset-cache",
-    "clean:android": "cd android &&./gradlew clean && cd ../",
-    "clean:ios": "cd ios && && pod cache clean --all && rm -rf build && xcodebuild clean && pod install && cd ../",
-    "clean": "yarn clean:js && yarn clean:ios && yarn clean:android",
+    "clean:js": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install",
+    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:ios": "cd ios && pod cache clean --all && rm -rf build && xcodebuild clean && pod install && cd ../",
+    "clean": "yarn clean:js && yarn clean:ios && yarn clean:android && yarn start -- --reset-cache",
     "wrap": "yarn lint && yarn test"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "react-native-reanimated": "2.0.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "2.18.1",
+    "react-native-splash-screen": "3.2.0",
     "react-native-style-tachyons": "4.2.0"
   },
   "devDependencies": {

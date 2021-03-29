@@ -5560,7 +5560,12 @@ react-native-screens@2.18.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.18.1.tgz#47b9991c6f762d00d0ed3233e5283d523e859885"
   integrity sha512-r5WZLpmx2hHjC1RgMdPq5YpSU9tEhBpUaZ5M1SUtNIONyiLqQVxabhRCINdebIk4depJiIl7yw2Q85zJyeX6fw==
 
-react-native-style-tachyons@^4.2.0:
+react-native-splash-screen@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
+
+react-native-style-tachyons@4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-native-style-tachyons/-/react-native-style-tachyons-4.2.0.tgz#b2f04a6c6786e08c1d41672d05db4e5d6e2e871e"
   integrity sha512-+EYtiVJxxWWxAk6xaA5o+2Xbq/lycGWHmbsyW3N2xHPZH/h+2GtI3g92irUFu7oSvpxjXcF2JZf6cOUYuxLMXA==
