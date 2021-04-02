@@ -1,1 +1,23 @@
-{}
+{
+  "buttons": {
+    "start": "Let's Go!",
+    "signUp": "Sign Up",
+    "login": "Login",
+    "googleSignUp": "Continue with Google",
+    "appleSignUp": "Continue with Apple"
+  },
+  "forms": {
+    "emailLabel": "Email",
+    "passwordLabel": "Password"
+  },
+  "account": {
+    "haveAccountInstructions": "Already have an account?",
+    "dontHaveAccountInstructions": "Don't have an account?",
+    "dontHaveAccountAction": "",
+    "welcomeText": "Welcome to",
+    "welcomeAdvisory": "You must be 18+ years old to register",
+    "separatorText": "or",
+    "welcomeBackTitle": "Welcome Back",
+    "welcomeBackSubtitle": "Ready for a break?"
+  }
+}
