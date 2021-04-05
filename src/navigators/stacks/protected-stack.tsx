@@ -1,25 +1,30 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View } from 'react-native';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import { ROUTES_IDS } from '../routes/identifiers';
+import { TabNavigator } from '../tab-navigator';
+import { OnboardingStack } from './onboarding-stack';
 
 type ProtectedStackParamList = {
-  [ROUTES_IDS.LIVE_TAB]: undefined;
-  [ROUTES_IDS.SCHEDULE_TAB]: undefined;
-  [ROUTES_IDS.HITS_TAB]: undefined;
-  [ROUTES_IDS.BREAKERS_TAB]: undefined;
+  [ROUTES_IDS.ONBOARDING_STACK]: undefined;
+  [ROUTES_IDS.TAB_NAVIGATOR]: undefined;
 };
 
-const Tab = createBottomTabNavigator<ProtectedStackParamList>();
-
-const GenericScreen = () => <View />;
+const Stack = createNativeStackNavigator<ProtectedStackParamList>();
+const isProfileComplete = false;
 
 export const ProtectedStack = () => (
-  <Tab.Navigator>
-    <Tab.Screen name={ROUTES_IDS.LIVE_TAB} component={GenericScreen} />
-    <Tab.Screen name={ROUTES_IDS.SCHEDULE_TAB} component={GenericScreen} />
-    <Tab.Screen name={ROUTES_IDS.HITS_TAB} component={GenericScreen} />
-    <Tab.Screen name={ROUTES_IDS.BREAKERS_TAB} component={GenericScreen} />
-  </Tab.Navigator>
+  <Stack.Navigator
+    initialRouteName={
+      isProfileComplete ? ROUTES_IDS.TAB_NAVIGATOR : ROUTES_IDS.ONBOARDING_STACK
+    }
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen
+      name={ROUTES_IDS.ONBOARDING_STACK}
+      component={OnboardingStack}
+    />
+    <Stack.Screen name={ROUTES_IDS.TAB_NAVIGATOR} component={TabNavigator} />
+  </Stack.Navigator>
 );

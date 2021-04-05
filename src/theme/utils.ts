@@ -1,4 +1,4 @@
-import { PixelRatio } from 'react-native';
+import { PixelRatio, ViewStyle } from 'react-native';
 
 export const getRootRem = (): number => {
   const ratio: number = PixelRatio.get();
@@ -12,4 +12,12 @@ export const getRootRem = (): number => {
   }
 
   return 14;
+};
+
+export const getCircleStyle = (size: number): ViewStyle => {
+  return {
+    width: size,
+    height: size,
+    borderRadius: size / 2,
+  };
 };

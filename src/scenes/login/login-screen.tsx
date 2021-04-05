@@ -23,7 +23,7 @@ export const LoginScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe]}
       backgroundColor={s.bg_white}
-      containerType="fixed">
+      containerType="scroll">
       <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
         <TitleBar
           title={t('account.welcomeBackTitle')}

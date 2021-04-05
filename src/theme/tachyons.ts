@@ -1,8 +1,9 @@
 import NativeTachyons from 'react-native-style-tachyons';
 import { StyleSheet } from 'react-native';
 
-import { getRootRem } from './utils';
-import { colors } from './colors';
+import { getRootRem, getCircleStyle } from './utils';
+import { COLORS } from './colors';
+import { SIZES } from './sizes';
 
 NativeTachyons.build(
   {
@@ -17,7 +18,7 @@ NativeTachyons.build(
     },
     rem: getRootRem(),
     colors: {
-      palette: colors,
+      palette: COLORS,
     },
     customStyles: {
       ff_r: { fontFamily: 'DMSans-Regular', fontWeight: '400' },
@@ -33,6 +34,11 @@ NativeTachyons.build(
       flx_ratio: (r: number) => ({
         flex: r,
       }),
+      circle_xs: getCircleStyle(SIZES.ICON_XS),
+      circle_s: getCircleStyle(SIZES.ICON_S),
+      circle_m: getCircleStyle(SIZES.ICON_M),
+      circle_l: getCircleStyle(SIZES.ICON_L),
+      circle_xl: getCircleStyle(SIZES.ICON_XL),
     },
   },
   StyleSheet,

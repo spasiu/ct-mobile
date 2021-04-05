@@ -4,11 +4,13 @@
     "signUp": "Sign Up",
     "login": "Login",
     "googleSignUp": "Continue with Google",
-    "appleSignUp": "Continue with Apple"
+    "appleSignUp": "Continue with Apple",
+    "createAccount": "Create Account"
   },
   "forms": {
     "emailLabel": "Email",
-    "passwordLabel": "Password"
+    "passwordLabel": "Password",
+    "usernameLabel": "Username"
   },
   "account": {
     "haveAccountInstructions": "Already have an account?",
@@ -18,6 +20,8 @@
     "welcomeAdvisory": "You must be 18+ years old to register",
     "separatorText": "or",
     "welcomeBackTitle": "Welcome Back",
-    "welcomeBackSubtitle": "Ready for a break?"
+    "welcomeBackSubtitle": "Ready for a break?",
+    "completeProfileTitle": "Reserve your username",
+    "completeProfileSubtitle": "Choose a username and upload an avatar"
   }
 }

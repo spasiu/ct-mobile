@@ -5,23 +5,22 @@ import { isIos } from '../../utils/platform';
 
 export const backgroundColorPreset = s.bg_mercury;
 
-export const viewPreset = {
-  style: [s.flx_i, s.h_100] as ViewStyle[],
-  insetStyle: [s.mh4] as ViewStyle[],
-};
-
-export const safeAreaPreset = {
+export const stylePresets = {
   scroll: {
-    style: [s.jcfs, s.ais] as ViewStyle[],
+    safeAreaStyle: [s.jcfs, s.ais] as ViewStyle[],
+    containerStyle: [s.h_100] as ViewStyle[],
+    insetStyle: [s.mh4] as ViewStyle[],
   },
   fixed: {
-    style: [s.jcfs, s.ais, s.w_100, s.h_100] as ViewStyle[],
+    safeAreaStyle: [s.jcfs, s.ais, s.w_100, s.h_100] as ViewStyle[],
+    containerStyle: [s.flx_i, s.h_100] as ViewStyle[],
+    insetStyle: [s.mh4] as ViewStyle[],
   },
 };
 
-export const keyboardAvoidingViewBehaviour = isIos ? 'position' : 'height';
+export const keyboardAvoidingViewBehaviour = isIos ? 'padding' : 'height';
 
-export type ContainerTypes = keyof typeof safeAreaPreset;
+export type ContainerTypes = keyof typeof stylePresets;
 
 export const DEFAULT_CONTAINER_TYPE = 'scroll';
 

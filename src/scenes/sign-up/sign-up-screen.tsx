@@ -23,7 +23,7 @@ export const SignUpScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe]}
       backgroundColor={s.bg_white}
-      containerType="fixed">
+      containerType="scroll">
       <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
         <View style={[s.w_100, s.mv4, s.aic]}>
           <Text style={[s.ff_b, s.f4, s.woodsmoke]}>

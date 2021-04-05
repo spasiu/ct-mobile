@@ -7,9 +7,8 @@ import {
   isFixed,
   DEFAULT_CONTAINER_TYPE,
   keyboardAvoidingViewBehaviour,
-  safeAreaPreset,
-  viewPreset,
   backgroundColorPreset,
+  stylePresets,
 } from './container.presets';
 
 function ContainerWithoutScrolling({
@@ -21,8 +20,8 @@ function ContainerWithoutScrolling({
   const content = (
     <View
       style={[
-        ...viewPreset.style,
-        ...viewPreset.insetStyle,
+        ...stylePresets.fixed.containerStyle,
+        ...stylePresets.fixed.insetStyle,
         backgroundColor,
         ...style,
       ]}>
@@ -31,7 +30,9 @@ function ContainerWithoutScrolling({
   );
 
   return useSafeArea ? (
-    <SafeAreaView style={safeAreaPreset.fixed.style}>{content}</SafeAreaView>
+    <SafeAreaView style={stylePresets.fixed.safeAreaStyle}>
+      {content}
+    </SafeAreaView>
   ) : (
     content
   );
@@ -45,14 +46,16 @@ function ContainerWithScrolling({
 }: ContainerProps) {
   const content = (
     <ScrollView
-      style={[...viewPreset.style, backgroundColor, ...style]}
-      contentContainerStyle={viewPreset.insetStyle}>
+      style={[...stylePresets.scroll.containerStyle, backgroundColor]}
+      contentContainerStyle={[...stylePresets.scroll.insetStyle, ...style]}>
       {children}
     </ScrollView>
   );
 
   return useSafeArea ? (
-    <SafeAreaView style={safeAreaPreset.scroll.style}>{content}</SafeAreaView>
+    <SafeAreaView style={stylePresets.scroll.safeAreaStyle}>
+      {content}
+    </SafeAreaView>
   ) : (
     content
   );
@@ -63,7 +66,7 @@ export const Container = (props: ContainerProps) => {
   if (isFixed(props.containerType || DEFAULT_CONTAINER_TYPE)) {
     return (
       <KeyboardAvoidingView
-        style={[...viewPreset.style, backgroundColor]}
+        style={[...stylePresets.fixed.containerStyle, backgroundColor]}
         behavior={keyboardAvoidingViewBehaviour}>
         <ContainerWithoutScrolling {...props} />
       </KeyboardAvoidingView>
@@ -71,7 +74,7 @@ export const Container = (props: ContainerProps) => {
   } else {
     return (
       <KeyboardAvoidingView
-        style={[...viewPreset.style, backgroundColor]}
+        style={[...stylePresets.scroll.containerStyle, backgroundColor]}
         behavior={keyboardAvoidingViewBehaviour}>
         <ContainerWithScrolling {...props} />
       </KeyboardAvoidingView>

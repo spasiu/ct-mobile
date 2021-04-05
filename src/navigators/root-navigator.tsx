@@ -13,7 +13,7 @@ type RootStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-const isLoggedIn = false;
+const isLoggedIn = true;
 
 export const RootNavigator = () => {
   SplashScreen.hide();

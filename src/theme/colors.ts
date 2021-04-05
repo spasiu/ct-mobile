@@ -1,4 +1,4 @@
-export const colors: { [key: string]: string } = {
+export const COLORS = {
   black: '#000000',
   white: '#FFFFFF',
   mercury: '#E5E5E5',
@@ -7,4 +7,4 @@ export const colors: { [key: string]: string } = {
   pomegranate: '#EC1C24',
   iron: '#CACCCF',
   abbey: '#52575C',
-};
+} as const;
