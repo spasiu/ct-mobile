@@ -10,4 +10,5 @@ export interface PaginationProps {
   leftButton?: React.ReactNode;
   indicatorColor?: ViewStyle;
   activeIndicatorColor?: ViewStyle;
+  containerStyle?: ViewStyle[];
 }

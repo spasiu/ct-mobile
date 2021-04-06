@@ -3,7 +3,7 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import { isIos } from '../../utils/platform';
 
-export const backgroundColorPreset = s.bg_mercury;
+export const backgroundColorPreset = s.bg_black_10;
 
 export const stylePresets = {
   scroll: {

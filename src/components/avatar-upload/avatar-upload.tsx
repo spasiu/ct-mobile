@@ -28,7 +28,7 @@ export const AvatarUpload = ({
     <BorderlessButton
       style={[
         s.circle_m,
-        s.bg_mercury,
+        s.bg_black_10,
         s.jcc,
         s.aic,
         s.absolute,

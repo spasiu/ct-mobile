@@ -1,7 +1,6 @@
 import React from 'react';
-import { Image } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
 
+import { IconButton } from '../icon-button/icon-button';
 import { SoundButtonProps } from './sound-button.props';
 
 const volumeOn = require('../../assets/volume-on.png');
@@ -14,11 +13,11 @@ export const SoundButton = ({
   ...borderlessButtonProps
 }: SoundButtonProps) => {
   return (
-    <BorderlessButton
+    <IconButton
+      image={muted ? volumeOn : volumeOff}
       style={style}
       onPress={onPress}
-      {...borderlessButtonProps}>
-      <Image source={muted ? volumeOn : volumeOff} />
-    </BorderlessButton>
+      {...borderlessButtonProps}
+    />
   );
 };

@@ -2,9 +2,9 @@ import { ViewStyle, TextStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 export const buttonTypes = {
-  primary: [s.bg_woodsmoke] as ViewStyle[],
-  secondary: [s.bg_pomegranate] as ViewStyle[],
-  disabled: [s.bg_iron] as ViewStyle[],
+  primary: [s.bg_black] as ViewStyle[],
+  secondary: [s.bg_secondary] as ViewStyle[],
+  disabled: [s.bg_black_40] as ViewStyle[],
 };
 
 export const textPresets = {

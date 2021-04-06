@@ -30,23 +30,23 @@ export const LoginScreen = () => {
           subtitle={t('account.welcomeBackSubtitle')}
         />
         <ActionButton
-          style={[s.bg_white, s.ba, s.b__woodsmoke]}
-          textStyle={[s.woodsmoke]}
+          style={[s.bg_white, s.ba, s.b__black]}
+          textStyle={[s.black]}
           text={t('buttons.appleSignUp')}>
           <Image source={appleLogo} style={[s.mr3]} />
         </ActionButton>
         <ActionButton
-          style={[s.bg_white, s.ba, s.b__mercury, s.mt3]}
-          textStyle={[s.woodsmoke]}
+          style={[s.bg_white, s.ba, s.b__black_10, s.mt3]}
+          textStyle={[s.black]}
           text={t('buttons.googleSignUp')}>
           <Image source={googleLogo} style={[s.mr3]} />
         </ActionButton>
         <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, s.mv4]}>
-          <View style={[s.flx_ratio(0.45), s.h_1px, s.bg_iron]} />
-          <Text style={[s.tc, s.ff_alt_r, s.f6, s.iron]}>
+          <View style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]} />
+          <Text style={[s.tc, s.ff_alt_r, s.f6, s.black_40]}>
             {t('account.separatorText').toUpperCase()}
           </Text>
-          <View style={[s.flx_ratio(0.45), s.h_1px, s.bg_iron]} />
+          <View style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]} />
         </View>
         <View style={[s.flx_i, s.w_100, s.jcfs]}>
           <FormInput label={t('forms.emailLabel')} />

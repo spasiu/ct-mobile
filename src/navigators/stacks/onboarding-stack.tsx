@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { ROUTES_IDS } from '../routes/identifiers';
 import { CompleteProfileScreen } from '../../scenes/complete-profile/complete-profile-screen';
 import { OnboardingInstructionsScreen } from '../../scenes/onboarding-instructions/onboarding-instructions-screen';
+import { OnboardingQuestionsScreen } from '../../scenes/onboarding-questions/onboarding-questions-screen';
 
 type OnboardingStackParamList = {
   [ROUTES_IDS.COMPLETE_PROFILE_SCREEN]: undefined;
@@ -33,7 +34,7 @@ export const OnboardingStack = () => (
     />
     <Stack.Screen
       name={ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN}
-      component={GenericScreen}
+      component={OnboardingQuestionsScreen}
     />
     <Stack.Screen
       name={ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN}

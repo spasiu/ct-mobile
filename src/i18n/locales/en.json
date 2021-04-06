@@ -34,6 +34,45 @@
     "thridInstructionTitle": "Never miss a break again",
     "thridInstructionSubtitle": "Reserve your spot in advance, or follow a break, and get notified when it’s live",
     "fourthInstructionTitle": "Pull heat, share your hits",
-    "fourthInstructionSubtitle": "We scan your biggest hits, you share and show them off right from your account"
+    "fourthInstructionSubtitle": "We scan your biggest hits, you share and show them off right from your account",
+    "howOftenDoYouBreakQuestion": {
+      "title": "How often do you break?",
+      "subtitle": "Wherever you land, we'll be there for you",
+      "newToBreaking": "New to Breaking",
+      "fewTimes": "A few times a year",
+      "onceMonth": "Once a month",
+      "onceWeek": "Once a week",
+      "moreThanOnceWeek": "More than once a week"
+    },
+    "whatDoYouCollectQuestion": {
+      "title": "What do you collect?",
+      "subtitle": "Select all that apply",
+      "baseball": "Baseball",
+      "basketball": "Basketball",
+      "football": "Football",
+      "hockey": "Hockey",
+      "soccer": "Soccer",
+      "other": "Other"
+    },
+    "howMuchDoYouSpendQuestion": {
+      "title": "How much do you like to spend on a break?",
+      "subtitle": "Select all that apply",
+      "lessThan50": "Less than $50",
+      "between50and100": "$50-100",
+      "between100and250": "$100-250",
+      "between250and500": "$250-500",
+      "between500and1000": "$500-1,000",
+      "moreThan1000": "$1,000+"
+    },
+    "howDoYouBreakQuestion": {
+      "title": "How do you break?",
+      "subtitle": "Select all that apply",
+      "new": "I'm new to breaking",
+      "pickYourTeam": "Pick your Team",
+      "randomTeam": "Random Team",
+      "hitDraft": "Hit Draft",
+      "packWars": "Pack Wars",
+      "personals": "Personals"
+    }
   }
 }

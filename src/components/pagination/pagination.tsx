@@ -8,6 +8,7 @@ import {
   INDICATOR_TYPE_STYLE,
   DEFAULT_INDICATOR_STYLE,
   ACTIVE_INDICATOR_STYLE,
+  BASE_BUTTONS_WRAPPER_STYLE,
 } from './pagination.presets';
 import { PaginationProps } from './pagination.props';
 
@@ -19,9 +20,10 @@ export const Pagination = ({
   leftButton,
   indicatorColor = DEFAULT_INDICATOR_STYLE,
   activeIndicatorColor = ACTIVE_INDICATOR_STYLE,
+  containerStyle = [],
 }: PaginationProps) => (
-  <View style={BASE_CONTAINER_STYLE}>
-    {leftButton}
+  <View style={[...BASE_CONTAINER_STYLE, ...containerStyle]}>
+    <View style={BASE_BUTTONS_WRAPPER_STYLE}>{leftButton}</View>
     <View style={BASE_INDICATOR_WRAPPER_STYLE}>
       {map(
         rangeIndex => (
@@ -36,6 +38,6 @@ export const Pagination = ({
         range(0, total),
       )}
     </View>
-    {rightButton}
+    <View style={BASE_BUTTONS_WRAPPER_STYLE}>{rightButton}</View>
   </View>
 );

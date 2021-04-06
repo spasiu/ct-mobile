@@ -32,7 +32,7 @@ NativeTachyons.build(
       h_100: { height: '100%' },
       h_75: { height: '75%' },
       w_100: { width: '100%' },
-      h_1px: { height: 1 },
+      h_custom: (pixels: number) => ({ height: pixels }),
       flx_ratio: (r: number) => ({
         flex: r,
       }),
