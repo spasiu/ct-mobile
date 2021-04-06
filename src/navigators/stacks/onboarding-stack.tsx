@@ -4,10 +4,11 @@ import { View } from 'react-native';
 
 import { ROUTES_IDS } from '../routes/identifiers';
 import { CompleteProfileScreen } from '../../scenes/complete-profile/complete-profile-screen';
+import { OnboardingInstructionsScreen } from '../../scenes/onboarding-instructions/onboarding-instructions-screen';
 
 type OnboardingStackParamList = {
   [ROUTES_IDS.COMPLETE_PROFILE_SCREEN]: undefined;
-  [ROUTES_IDS.INSTRUCTIONS_SCREEN]: undefined;
+  [ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN]: undefined;
   [ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN]: undefined;
   [ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN]: undefined;
 };
@@ -27,8 +28,8 @@ export const OnboardingStack = () => (
       component={CompleteProfileScreen}
     />
     <Stack.Screen
-      name={ROUTES_IDS.INSTRUCTIONS_SCREEN}
-      component={GenericScreen}
+      name={ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN}
+      component={OnboardingInstructionsScreen}
     />
     <Stack.Screen
       name={ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN}

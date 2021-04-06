@@ -6,7 +6,7 @@ export const ROUTES_IDS = {
   SIGN_UP_SCREEN: 'screen.signUp',
   LANDING_SCREEN: 'screen.landing',
   COMPLETE_PROFILE_SCREEN: 'screen.completeProfile',
-  INSTRUCTIONS_SCREEN: 'screen.instructions',
+  ONBOARDING_INSTRUCTIONS_SCREEN: 'screen.onboardingInstructions',
   ONBOARDING_QUESTIONS_SCREEN: 'screen.onboardingQuestions',
   ALLOW_NOTIFICATIONS_SCREEN: 'screen.allowNotifications',
   TAB_NAVIGATOR: 'navigator.tab',

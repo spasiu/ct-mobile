@@ -5,7 +5,9 @@
     "login": "Login",
     "googleSignUp": "Continue with Google",
     "appleSignUp": "Continue with Apple",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "skip": "Skip",
+    "next": "Next"
   },
   "forms": {
     "emailLabel": "Email",
@@ -23,5 +25,15 @@
     "welcomeBackSubtitle": "Ready for a break?",
     "completeProfileTitle": "Reserve your username",
     "completeProfileSubtitle": "Choose a username and upload an avatar"
+  },
+  "onboarding": {
+    "firstInstructionTitle": "Find your break",
+    "firstInstructionSubtitle": "Choose your favorite sport, type of break, or breaker, and jump into a live event",
+    "secondInstructionTitle": "Pay live, in the stream",
+    "secondInstructionSubtitle": "No more leaving a live stream to buy into your favorite break - a few clicks and you’re in!",
+    "thridInstructionTitle": "Never miss a break again",
+    "thridInstructionSubtitle": "Reserve your spot in advance, or follow a break, and get notified when it’s live",
+    "fourthInstructionTitle": "Pull heat, share your hits",
+    "fourthInstructionSubtitle": "We scan your biggest hits, you share and show them off right from your account"
   }
 }

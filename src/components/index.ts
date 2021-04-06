@@ -6,3 +6,4 @@ export * from './container/container';
 export * from './form-input/form-input';
 export * from './title-bar/title-bar';
 export * from './avatar-upload/avatar-upload';
+export * from './pagination/pagination';

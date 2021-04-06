@@ -32,7 +32,9 @@ export const CompleteProfileScreen = () => {
       </View>
       <ActionFooter
         buttonText={t('buttons.createAccount')}
-        onPress={() => navigation.navigate(ROUTES_IDS.INSTRUCTIONS_SCREEN)}
+        onPress={() =>
+          navigation.navigate(ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN)
+        }
       />
     </Container>
   );
