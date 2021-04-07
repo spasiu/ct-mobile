@@ -59,6 +59,7 @@ export const LoginScreen = () => {
         </Text>
         <TextLink
           style={[s.ml1]}
+          textStyle={[s.underline]}
           text={t('buttons.signUp')}
           onPress={() => navigation.navigate(ROUTES_IDS.SIGN_UP_SCREEN)}
         />

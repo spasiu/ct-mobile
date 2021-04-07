@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import { View } from 'react-native';
 
 import { ROUTES_IDS } from '../routes/identifiers';
 import { CompleteProfileScreen } from '../../scenes/complete-profile/complete-profile-screen';
 import { OnboardingInstructionsScreen } from '../../scenes/onboarding-instructions/onboarding-instructions-screen';
 import { OnboardingQuestionsScreen } from '../../scenes/onboarding-questions/onboarding-questions-screen';
+import { AllowNotificationsScreen } from '../../scenes/allow-notifications/allow-notifications-screen';
 
 type OnboardingStackParamList = {
   [ROUTES_IDS.COMPLETE_PROFILE_SCREEN]: undefined;
@@ -15,8 +15,6 @@ type OnboardingStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<OnboardingStackParamList>();
-
-const GenericScreen = () => <View />;
 
 export const OnboardingStack = () => (
   <Stack.Navigator
@@ -38,7 +36,7 @@ export const OnboardingStack = () => (
     />
     <Stack.Screen
       name={ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN}
-      component={GenericScreen}
+      component={AllowNotificationsScreen}
     />
   </Stack.Navigator>
 );

@@ -50,7 +50,7 @@ export const OnboardingInstructionsScreen = () => {
               rightButton={
                 <TextLink
                   text={t('buttons.next')}
-                  textStyle={[s.ff_r, s.f4, s.no_underline]}
+                  textStyle={[s.ff_r, s.f4]}
                   onPress={() =>
                     isLastSlide
                       ? navigation.navigate(
@@ -63,7 +63,7 @@ export const OnboardingInstructionsScreen = () => {
               leftButton={
                 <TextLink
                   text={t('buttons.skip')}
-                  textStyle={[s.ff_r, s.f4, s.no_underline]}
+                  textStyle={[s.ff_r, s.f4]}
                   onPress={() =>
                     navigation.navigate(ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN)
                   }
@@ -75,11 +75,13 @@ export const OnboardingInstructionsScreen = () => {
         {map(
           ({ titleKey, subtitleKey, image }) => (
             <View key={titleKey} style={[s.flx_i, s.mb5, s.mt4, s.aic, s.mh4]}>
-              <Image style={[s.h_75]} source={image} resizeMode="contain" />
-              <Text style={[s.ff_b, s.f3, s.tc]}>{t(titleKey)}</Text>
-              <Text style={[s.ff_alt_r, s.f5, s.lh_high, s.tc, s.mv3]}>
-                {t(subtitleKey)}
-              </Text>
+              <Image style={[s.flx_i]} source={image} resizeMode="contain" />
+              <View style={[s.flx_ratio(0.3)]}>
+                <Text style={[s.ff_b, s.f3, s.tc]}>{t(titleKey)}</Text>
+                <Text style={[s.ff_alt_r, s.f5, s.lh_high, s.tc, s.mv3]}>
+                  {t(subtitleKey)}
+                </Text>
+              </View>
             </View>
           ),
           instructions,

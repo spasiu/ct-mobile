@@ -7,7 +7,9 @@
     "appleSignUp": "Continue with Apple",
     "createAccount": "Create Account",
     "skip": "Skip",
-    "next": "Next"
+    "next": "Next",
+    "notifyMe": "Notify Me",
+    "noThanks": "No thanks"
   },
   "forms": {
     "emailLabel": "Email",
@@ -73,6 +75,10 @@
       "hitDraft": "Hit Draft",
       "packWars": "Pack Wars",
       "personals": "Personals"
+    },
+    "allowNotifications": {
+      "title": "Never miss a break!",
+      "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile."
     }
   }
 }
