@@ -14,7 +14,7 @@ NativeTachyons.build(
       f4: 1.25,
       f5: 1,
       f6: 0.875,
-      f7: 0.625,
+      f7: 0.7,
     },
     rem: getRootRem(),
     colors: {

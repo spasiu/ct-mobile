@@ -11,6 +11,12 @@
     "notifyMe": "Notify Me",
     "noThanks": "No thanks"
   },
+  "tabBar": {
+    "liveTab": "Home",
+    "scheduleTab": "Schedule",
+    "hitsTab": "Hits",
+    "breakersTab": "Breakers"
+  },
   "forms": {
     "emailLabel": "Email",
     "passwordLabel": "Password",

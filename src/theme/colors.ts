@@ -24,4 +24,6 @@ export const COLORS = {
   white: '#FFFFFF',
   positive: '#2AC769',
   negative: '#EC1C24',
+  blue: '#4285F4',
+  dark_blue: '#0E4C7D',
 } as const;
