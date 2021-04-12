@@ -1,7 +1,7 @@
-import { ViewStyle, ImageURISource } from 'react-native';
+import { ImageProps, TextProps, ViewStyle } from 'react-native';
 import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
 export interface IconButtonProps extends BorderlessButtonProps {
-  image: ImageURISource | number;
+  children?: React.ReactElement<ImageProps> | React.ReactElement<TextProps>;
   style?: ViewStyle[];
 }

@@ -31,6 +31,7 @@
     "react-native-config": "1.4.2",
     "react-native-gesture-handler": "1.10.3",
     "react-native-image-picker": "3.3.2",
+    "react-native-linear-gradient": "2.5.6",
     "react-native-localize": "2.0.2",
     "react-native-really-awesome-button": "^1.6.0",
     "react-native-reanimated": "2.0.0",

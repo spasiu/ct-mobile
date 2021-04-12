@@ -11,20 +11,20 @@ type ProtectedStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();
-const isProfileComplete = false;
+const isProfileComplete = true;
 
 export const ProtectedStack = () => (
   <Stack.Navigator
-    initialRouteName={
-      isProfileComplete ? ROUTES_IDS.TAB_NAVIGATOR : ROUTES_IDS.ONBOARDING_STACK
-    }
     screenOptions={{
       headerShown: false,
     }}>
-    <Stack.Screen
-      name={ROUTES_IDS.ONBOARDING_STACK}
-      component={OnboardingStack}
-    />
-    <Stack.Screen name={ROUTES_IDS.TAB_NAVIGATOR} component={TabNavigator} />
+    {isProfileComplete ? (
+      <Stack.Screen name={ROUTES_IDS.TAB_NAVIGATOR} component={TabNavigator} />
+    ) : (
+      <Stack.Screen
+        name={ROUTES_IDS.ONBOARDING_STACK}
+        component={OnboardingStack}
+      />
+    )}
   </Stack.Navigator>
 );

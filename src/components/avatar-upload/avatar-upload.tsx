@@ -3,7 +3,7 @@ import { View, Image } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { SIZES } from '../../theme/sizes';
+import { ICON_SIZE } from '../../theme/sizes';
 
 import { AvatarUploadProps } from './avatar-upload.props';
 
@@ -17,7 +17,7 @@ export const AvatarUpload = ({
 }: AvatarUploadProps) => (
   <View
     style={[
-      { width: SIZES.ICON_XL, height: SIZES.ICON_XL + SIZES.ICON_M / 4 },
+      { width: ICON_SIZE.XL, height: ICON_SIZE.XL + ICON_SIZE.M / 4 },
       ...containerStyle,
     ]}>
     <Image

@@ -9,9 +9,9 @@ import {
   Container,
   Pagination,
   TitleBar,
-  IconButton,
   ActionFooter,
   SelectionButton,
+  BackButton,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -19,8 +19,6 @@ import { indexedMap } from '../../utils/ramda';
 
 import { QUESTIONS } from './onboarding-questions-screen.presets';
 import { Question } from './onboarding-questions-screen.props';
-
-const backButton = require('../../assets/arrow-left.png');
 
 export const OnboardingQuestionsScreen = () => {
   const navigation = useNavigation();
@@ -42,8 +40,7 @@ export const OnboardingQuestionsScreen = () => {
               total={total}
               containerStyle={[s.absolute]}
               leftButton={
-                <IconButton
-                  image={backButton}
+                <BackButton
                   onPress={() =>
                     isFirstSlide
                       ? navigation.goBack()

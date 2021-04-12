@@ -9,10 +9,11 @@
     "skip": "Skip",
     "next": "Next",
     "notifyMe": "Notify Me",
-    "noThanks": "No thanks"
+    "noThanks": "No thanks",
+    "seeAll": "See All"
   },
   "tabBar": {
-    "liveTab": "Home",
+    "homeTab": "Home",
     "scheduleTab": "Schedule",
     "hitsTab": "Hits",
     "breakersTab": "Breakers"
@@ -86,5 +87,21 @@
       "title": "Never miss a break!",
       "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile."
     }
+  },
+  "home": {
+    "leaguesSectionTitle": "Leagues",
+    "featuredBreaksSectionTitle": "Featured Breaks",
+    "recentHitsSectionTitle": "Recent Hits",
+    "meetTheBreakersSectionTitle": "Meet the Breakers"
+  },
+  "search": {
+    "action": "Search",
+    "emptyState": "Search for Breaks, Events, Breakers or Hits",
+    "noResultTitle": "No hits is no fun at all!",
+    "noResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!"
+  },
+  "status": {
+    "live": "Live",
+    "upcoming": "Upcoming"
   }
 }

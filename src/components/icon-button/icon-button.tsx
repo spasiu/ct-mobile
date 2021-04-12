@@ -1,11 +1,11 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { IconButtonProps } from './icon-button.props';
 
 export const IconButton = ({
-  image,
+  children,
   style = [],
   onPress = () => {},
   ...borderlessButtonProps
@@ -15,9 +15,7 @@ export const IconButton = ({
       style={style}
       onPress={onPress}
       {...borderlessButtonProps}>
-      <View accessible>
-        <Image source={image} />
-      </View>
+      <View accessible>{children}</View>
     </BorderlessButton>
   );
 };

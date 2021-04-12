@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 
 import { IconButton } from '../icon-button/icon-button';
 import { SoundButtonProps } from './sound-button.props';
@@ -10,14 +11,11 @@ export const SoundButton = ({
   muted = false,
   style = [],
   onPress = () => {},
-  ...borderlessButtonProps
+  ...iconButtonProps
 }: SoundButtonProps) => {
   return (
-    <IconButton
-      image={muted ? volumeOn : volumeOff}
-      style={style}
-      onPress={onPress}
-      {...borderlessButtonProps}
-    />
+    <IconButton style={style} onPress={onPress} {...iconButtonProps}>
+      <Image source={muted ? volumeOn : volumeOff} />
+    </IconButton>
   );
 };

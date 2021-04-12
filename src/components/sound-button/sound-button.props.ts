@@ -1,7 +1,8 @@
 import { ViewStyle } from 'react-native';
-import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
-export interface SoundButtonProps extends BorderlessButtonProps {
+import { IconButtonProps } from '../icon-button/icon-button.props';
+
+export interface SoundButtonProps extends IconButtonProps {
   muted?: boolean;
   style?: ViewStyle[];
 }

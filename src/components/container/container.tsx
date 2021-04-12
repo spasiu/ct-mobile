@@ -6,6 +6,7 @@ import { ContainerProps } from './container.props';
 import {
   isFixed,
   DEFAULT_CONTAINER_TYPE,
+  DEFAULT_SAFE_AREA_EDGES,
   keyboardAvoidingViewBehaviour,
   backgroundColorPreset,
   stylePresets,
@@ -16,6 +17,7 @@ function ContainerWithoutScrolling({
   style = [],
   children,
   backgroundColor = backgroundColorPreset,
+  safeAreaEdges = DEFAULT_SAFE_AREA_EDGES,
 }: ContainerProps) {
   const content = (
     <View
@@ -30,7 +32,9 @@ function ContainerWithoutScrolling({
   );
 
   return useSafeArea ? (
-    <SafeAreaView style={stylePresets.fixed.safeAreaStyle}>
+    <SafeAreaView
+      edges={safeAreaEdges}
+      style={stylePresets.fixed.safeAreaStyle}>
       {content}
     </SafeAreaView>
   ) : (
@@ -43,6 +47,7 @@ function ContainerWithScrolling({
   style = [],
   children,
   backgroundColor = backgroundColorPreset,
+  safeAreaEdges = DEFAULT_SAFE_AREA_EDGES,
 }: ContainerProps) {
   const content = (
     <ScrollView
@@ -53,7 +58,9 @@ function ContainerWithScrolling({
   );
 
   return useSafeArea ? (
-    <SafeAreaView style={stylePresets.scroll.safeAreaStyle}>
+    <SafeAreaView
+      edges={safeAreaEdges}
+      style={stylePresets.scroll.safeAreaStyle}>
       {content}
     </SafeAreaView>
   ) : (

@@ -1,9 +1,10 @@
 import { ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { Edge } from 'react-native-safe-area-context';
 
 import { isIos } from '../../utils/platform';
 
-export const backgroundColorPreset = s.bg_black_10;
+export const backgroundColorPreset = s.bg_black_5;
 
 export const stylePresets = {
   scroll: {
@@ -23,6 +24,13 @@ export const keyboardAvoidingViewBehaviour = isIos ? 'padding' : 'height';
 export type ContainerTypes = keyof typeof stylePresets;
 
 export const DEFAULT_CONTAINER_TYPE = 'scroll';
+
+export const DEFAULT_SAFE_AREA_EDGES = [
+  'top',
+  'right',
+  'bottom',
+  'left',
+] as Edge[];
 
 export const isFixed = (type: ContainerTypes) => {
   return type === 'fixed';

@@ -1,14 +1,16 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Image, Text } from 'react-native';
+import { Image, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import { COLORS } from '../theme/colors';
 import { t } from '../i18n/i18n';
 import { ROUTES_IDS } from './routes/identifiers';
 
+import { HomeStack } from './stacks/home-stack';
+
 type TabNavigatorParamList = {
-  [ROUTES_IDS.LIVE_TAB]: undefined;
+  [ROUTES_IDS.HOME_TAB]: undefined;
   [ROUTES_IDS.SCHEDULE_TAB]: undefined;
   [ROUTES_IDS.HITS_TAB]: undefined;
   [ROUTES_IDS.BREAKERS_TAB]: undefined;
@@ -16,22 +18,20 @@ type TabNavigatorParamList = {
 
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();
 
-const liveIcon = require('../assets/live-icon.png');
+const homeIcon = require('../assets/home-icon.png');
 const scheduleIcon = require('../assets/schedule-icon.png');
 const hitsIcon = require('../assets/hits-icon.png');
 const breakersIcon = require('../assets/breakers-icon.png');
 
-const GenericScreen = () => <View />;
-
 export const TabNavigator = () => (
   <Tab.Navigator>
     <Tab.Screen
-      name={ROUTES_IDS.LIVE_TAB}
-      component={GenericScreen}
+      name={ROUTES_IDS.HOME_TAB}
+      component={HomeStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
-            source={liveIcon}
+            source={homeIcon}
             style={[
               {
                 width: size,
@@ -46,14 +46,14 @@ export const TabNavigator = () => (
             ? [s.ff_alt_b, s.black]
             : [s.ff_alt_r, s.black_60];
           return (
-            <Text style={[...labelStyle, s.f7]}>{t('tabBar.liveTab')}</Text>
+            <Text style={[...labelStyle, s.f7]}>{t('tabBar.homeTab')}</Text>
           );
         },
       }}
     />
     <Tab.Screen
       name={ROUTES_IDS.SCHEDULE_TAB}
-      component={GenericScreen}
+      component={HomeStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
@@ -79,7 +79,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.HITS_TAB}
-      component={GenericScreen}
+      component={HomeStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
@@ -105,7 +105,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.BREAKERS_TAB}
-      component={GenericScreen}
+      component={HomeStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image

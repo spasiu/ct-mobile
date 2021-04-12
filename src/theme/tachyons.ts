@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import { getRootRem, getCircleStyle } from './utils';
 import { COLORS } from './colors';
-import { SIZES } from './sizes';
+import { ICON_SIZE } from './sizes';
 
 NativeTachyons.build(
   {
@@ -36,12 +36,33 @@ NativeTachyons.build(
       flx_ratio: (r: number) => ({
         flex: r,
       }),
-      circle_micro: getCircleStyle(SIZES.ICON_MICRO),
-      circle_xs: getCircleStyle(SIZES.ICON_XS),
-      circle_s: getCircleStyle(SIZES.ICON_S),
-      circle_m: getCircleStyle(SIZES.ICON_M),
-      circle_l: getCircleStyle(SIZES.ICON_L),
-      circle_xl: getCircleStyle(SIZES.ICON_XL),
+      circle_micro: getCircleStyle(ICON_SIZE.MICRO),
+      circle_xs: getCircleStyle(ICON_SIZE.XS),
+      circle_s: getCircleStyle(ICON_SIZE.S),
+      circle_m: getCircleStyle(ICON_SIZE.M),
+      circle_l: getCircleStyle(ICON_SIZE.L),
+      circle_xl: getCircleStyle(ICON_SIZE.XL),
+      shadow_s: {
+        shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      shadow_m: {
+        shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      no_overflow: { overflow: 'hidden' },
     },
   },
   StyleSheet,
