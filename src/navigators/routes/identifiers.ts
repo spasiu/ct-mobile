@@ -12,6 +12,7 @@ export const ROUTES_IDS = {
   ALLOW_NOTIFICATIONS_SCREEN: 'screen.allowNotifications',
   HOME_SCREEN: 'screen.home',
   SEARCH_SCREEN: 'screen.search',
+  LIVE_MODAL: 'modal.live',
   TAB_NAVIGATOR: 'navigator.tab',
   HOME_TAB: 'tab.home',
   SCHEDULE_TAB: 'tab.schedule',

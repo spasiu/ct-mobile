@@ -204,6 +204,9 @@ export const HomeScreen = () => {
                           }}
                           title={item.title}
                           description={item.description}
+                          onPress={() =>
+                            navigation.navigate(ROUTES_IDS.LIVE_MODAL)
+                          }
                         />
                       );
                     }

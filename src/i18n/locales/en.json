@@ -10,7 +10,13 @@
     "next": "Next",
     "notifyMe": "Notify Me",
     "noThanks": "No thanks",
-    "seeAll": "See All"
+    "seeAll": "See All",
+    "follow": "Follow",
+    "following": "Following",
+    "buy": "Buy Break",
+    "purchase": "Purchase",
+    "seeMore": "See More",
+    "seeLess": "See Less"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -103,5 +109,29 @@
   "status": {
     "live": "Live",
     "upcoming": "Upcoming"
+  },
+  "payment": {
+    "paymentModalTitle": "Payment",
+    "paymentTotal": "Total",
+    "paymentDescription": "+ Tax",
+    "paymentCurrencySign": "$",
+    "paymentDisclaimer": "All purchases are final and subject to our Terms of Service.",
+    "apple": "Apple Pay"
+  },
+  "event": {
+    "liveDetailTitle": "Upcoming Breaks",
+    "breakLineupTitle": "Break Lineup"
+  },
+  "break": {
+    "spotsLeft": "Spots Left",
+    "breakTypes": {
+      "pickYourTeam": "PYT",
+      "randomTeam": "Random",
+      "hitDraft": "Hit Draft",
+      "packWars": "Pack Wars"
+    }
+  },
+  "profile": {
+    "addAddress": "Add Delivery Address"
   }
 }

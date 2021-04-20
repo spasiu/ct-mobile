@@ -28,7 +28,8 @@ export const LandingScreen = () => {
       />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
-        start={{ x: 0.7, y: 0.7 }}
+        start={{ x: 0, y: 0.7 }}
+        end={{ x: 0, y: 1 }}
         style={[s.flx_i]}>
         <SafeAreaView style={[s.flx_i]}>
           <View style={[s.flx_i, s.jcsb, s.mh4]}>

@@ -2,6 +2,7 @@ import { Dimensions } from 'react-native';
 
 export const ICON_SIZE = {
   MICRO: 8,
+  XXS: 14,
   XS: 20,
   S: 25,
   M: 32,

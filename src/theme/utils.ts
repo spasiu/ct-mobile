@@ -21,3 +21,10 @@ export const getCircleStyle = (size: number): ViewStyle => {
     borderRadius: size / 2,
   };
 };
+
+export const getIconSize = (size: number): ViewStyle => {
+  return {
+    width: size,
+    height: size,
+  };
+};

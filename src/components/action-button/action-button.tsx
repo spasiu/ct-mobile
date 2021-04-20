@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { ActionButtonProps } from './action-button.props';
 import {
@@ -20,7 +20,7 @@ export const ActionButton = ({
   ...rectButtonProps
 }: ActionButtonProps) => {
   return (
-    <RectButton
+    <BorderlessButton
       style={[...rectButtonPresets[buttonType], ...style]}
       onPress={event => !isDisabled(buttonType) && onPress(event)}
       {...rectButtonProps}>
@@ -28,6 +28,6 @@ export const ActionButton = ({
         {children}
         <Text style={[...textPresets.style, ...textStyle]}>{text}</Text>
       </View>
-    </RectButton>
+    </BorderlessButton>
   );
 };

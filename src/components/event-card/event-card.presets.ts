@@ -5,7 +5,8 @@ import { COLORS } from '../../theme/colors';
 
 export const GRADIENT_PRESETS = {
   colors: [COLORS.transparent, COLORS.alpha_black] as string[],
-  start: { x: 0.5, y: 0.5 },
+  start: { x: 0, y: 0.5 },
+  end: { x: 0, y: 1 },
   style: [s.flx_i] as ViewStyle[],
 };
 

@@ -19,7 +19,7 @@ export const stylePresets = {
   },
 };
 
-export const keyboardAvoidingViewBehaviour = isIos ? 'padding' : 'height';
+export const keyboardAvoidingViewBehaviour = isIos ? 'position' : 'height';
 
 export type ContainerTypes = keyof typeof stylePresets;
 

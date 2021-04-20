@@ -1,9 +1,11 @@
 import NativeTachyons from 'react-native-style-tachyons';
 import { StyleSheet } from 'react-native';
 
-import { getRootRem, getCircleStyle } from './utils';
+import { getRootRem, getCircleStyle, getIconSize } from './utils';
 import { COLORS } from './colors';
 import { ICON_SIZE } from './sizes';
+
+const rootRem = getRootRem();
 
 NativeTachyons.build(
   {
@@ -16,7 +18,7 @@ NativeTachyons.build(
       f6: 0.875,
       f7: 0.7,
     },
-    rem: getRootRem(),
+    rem: rootRem,
     colors: {
       palette: COLORS,
     },
@@ -29,14 +31,30 @@ NativeTachyons.build(
       ff_alt_sb: { fontFamily: 'Inter-Medium', fontWeight: '600' },
       ff_alt_b: { fontFamily: 'Inter-Bold', fontWeight: '700' },
       lh_high: { lineHeight: 24 },
+      lh_medium: { lineHeight: 17 },
       h_100: { height: '100%' },
       h_75: { height: '75%' },
       w_100: { width: '100%' },
+      w_40: { width: '40%' },
       h_custom: (pixels: number) => ({ height: pixels }),
       flx_ratio: (r: number) => ({
         flex: r,
       }),
+      badge_height: { height: rootRem * 1.5 },
+      badge_icon: {
+        height: rootRem * 1.5,
+        width: rootRem * 1.5,
+        borderRadius: (rootRem * 1.5) / 2,
+      },
+      icon_micro: getIconSize(ICON_SIZE.MICRO),
+      icon_xxs: getIconSize(ICON_SIZE.XXS),
+      icon_xs: getIconSize(ICON_SIZE.XS),
+      icon_s: getIconSize(ICON_SIZE.S),
+      icon_m: getIconSize(ICON_SIZE.M),
+      icon_l: getIconSize(ICON_SIZE.L),
+      icon_xl: getIconSize(ICON_SIZE.XL),
       circle_micro: getCircleStyle(ICON_SIZE.MICRO),
+      circle_xxs: getCircleStyle(ICON_SIZE.XXS),
       circle_xs: getCircleStyle(ICON_SIZE.XS),
       circle_s: getCircleStyle(ICON_SIZE.S),
       circle_m: getCircleStyle(ICON_SIZE.M),

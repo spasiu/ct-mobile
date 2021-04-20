@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { ImageCard } from '../image-card/image-card';
 import { StatusBadge } from '../status-badge/status-badge';
-import { Badge } from '../badge/badge';
+import { LiveCountBadge } from '../live-count-badge/live-count-badge';
 
 import { EventCardProps } from './event-card.props';
 import {
@@ -16,7 +16,6 @@ import {
   CONTENT_WRAPPER_STYPE_PRESET,
 } from './event-card.presets';
 
-const eyeIcon = require('../../assets/eye-icon.png');
 export const EventCard = ({
   title = '',
   description = '',
@@ -33,7 +32,7 @@ export const EventCard = ({
         style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
         <View style={BADGE_WRAPPER_STYLE_PRESET}>
           {status && <StatusBadge status={status} />}
-          {viewCount && <Badge image={eyeIcon} text={viewCount} />}
+          {viewCount && <LiveCountBadge count={viewCount} />}
         </View>
         <View style={CONTENT_WRAPPER_STYPE_PRESET}>
           <Text style={[...TITLE_STYLE_PRESET, ...titleTextStyle]}>

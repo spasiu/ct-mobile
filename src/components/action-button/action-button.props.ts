@@ -1,9 +1,9 @@
 import { ViewStyle, TextStyle } from 'react-native';
-import { RectButtonProps } from 'react-native-gesture-handler';
+import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
 import { ActionButtonTypes } from './action-button.presets';
 
-export interface ActionButtonProps extends RectButtonProps {
+export interface ActionButtonProps extends BorderlessButtonProps {
   text?: string;
   style?: ViewStyle[];
   textStyle?: TextStyle[];

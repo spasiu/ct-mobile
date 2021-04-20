@@ -1,13 +1,11 @@
 import { ViewStyle } from 'react-native';
-import { styles as s, sizes } from 'react-native-style-tachyons';
-
-const BADGE_HEIGHT = sizes.h1 * 1.5;
+import { styles as s } from 'react-native-style-tachyons';
 
 export const CONTAINER_STYLE_PRESET = [
   s.bg_black_60,
   s.pa1,
   s.flx_row,
-  { height: BADGE_HEIGHT },
+  s.badge_height,
   s.br4,
   s.jcc,
   s.aic,

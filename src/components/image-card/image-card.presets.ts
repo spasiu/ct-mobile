@@ -2,6 +2,10 @@ import { ViewStyle, ImageStyle } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
 const CARD_SIZES = {
+  micro: {
+    height: sizes.h4,
+    width: sizes.w3 + sizes.w2,
+  },
   small: {
     height: sizes.h4 + sizes.h3,
     width: sizes.w4 + sizes.w1,
@@ -19,6 +23,7 @@ const CARD_SIZES = {
 export const SHADOW_CONTAINER_PRESET = [s.shadow_m];
 
 export const CONTAINER_PRESET = {
+  micro: [CARD_SIZES.micro, s.br4, s.no_overflow] as ViewStyle[],
   small: [CARD_SIZES.small, s.br4, s.no_overflow] as ViewStyle[],
   medium: [CARD_SIZES.large, s.br4, s.no_overflow] as ViewStyle[],
   large: [CARD_SIZES.large, s.br4, s.no_overflow] as ViewStyle[],

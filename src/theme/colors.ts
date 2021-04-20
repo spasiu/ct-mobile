@@ -1,6 +1,8 @@
 export const COLORS = {
   transparent: 'rgba(0, 0, 0, 0)',
   alpha_black: 'rgba(0, 0, 0, 1)',
+  alpha_primary: 'rgba(250, 175, 64, 0.75)',
+  alpha_primary_5: 'rgba(249, 249, 249, 0.95)',
   black: '#111213',
   black_80: '#52575C',
   black_60: '#A0A4A8',
