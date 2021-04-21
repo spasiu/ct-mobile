@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ContainerProps } from './container.props';
@@ -7,7 +7,6 @@ import {
   isFixed,
   DEFAULT_CONTAINER_TYPE,
   DEFAULT_SAFE_AREA_EDGES,
-  keyboardAvoidingViewBehaviour,
   backgroundColorPreset,
   stylePresets,
 } from './container.presets';
@@ -72,19 +71,15 @@ export const Container = (props: ContainerProps) => {
   const backgroundColor = props.backgroundColor || backgroundColorPreset;
   if (isFixed(props.containerType || DEFAULT_CONTAINER_TYPE)) {
     return (
-      <KeyboardAvoidingView
-        style={[...stylePresets.fixed.containerStyle, backgroundColor]}
-        behavior={keyboardAvoidingViewBehaviour}>
+      <View style={[...stylePresets.fixed.containerStyle, backgroundColor]}>
         <ContainerWithoutScrolling {...props} />
-      </KeyboardAvoidingView>
+      </View>
     );
   } else {
     return (
-      <KeyboardAvoidingView
-        style={[...stylePresets.scroll.containerStyle, backgroundColor]}
-        behavior={keyboardAvoidingViewBehaviour}>
+      <View style={[...stylePresets.scroll.containerStyle, backgroundColor]}>
         <ContainerWithScrolling {...props} />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 };

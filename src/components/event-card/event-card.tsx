@@ -4,25 +4,25 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { ImageCard } from '../image-card/image-card';
 import { StatusBadge } from '../status-badge/status-badge';
-import { LiveCountBadge } from '../live-count-badge/live-count-badge';
+import { LeagueIcon } from '../league-icon';
+import { FollowButton } from '../follow-button/follow-button';
 
 import { EventCardProps } from './event-card.props';
 import {
   GRADIENT_PRESETS,
   CONTENT_CONTAINER_STYLE_PRESET,
   TITLE_STYLE_PRESET,
-  DESCRIPTION_STYLE_PRESET,
-  BADGE_WRAPPER_STYLE_PRESET,
-  CONTENT_WRAPPER_STYPE_PRESET,
+  INFO_WRAPPER_STYLE_PRESET,
+  CONTENT_WRAPPER_STYLE,
+  FOLLOW_BUTTON_STYLE,
+  FOLLOW_BUTTON_WRAPPER_STYLE,
+  FOOTER_WRAPPER_STYLE,
 } from './event-card.presets';
 
 export const EventCard = ({
   title = '',
-  description = '',
   status,
-  viewCount,
-  titleTextStyle = [],
-  descriptionTextStyle = [],
+  league,
   contentContainerStyle = [],
   ...imageCardProps
 }: EventCardProps) => (
@@ -30,20 +30,23 @@ export const EventCard = ({
     <LinearGradient {...GRADIENT_PRESETS}>
       <View
         style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
-        <View style={BADGE_WRAPPER_STYLE_PRESET}>
-          {status && <StatusBadge status={status} />}
-          {viewCount && <LiveCountBadge count={viewCount} />}
+        <View style={INFO_WRAPPER_STYLE_PRESET}>
+          <StatusBadge status={status} />
+          <LeagueIcon league={league} />
         </View>
-        <View style={CONTENT_WRAPPER_STYPE_PRESET}>
-          <Text style={[...TITLE_STYLE_PRESET, ...titleTextStyle]}>
-            {title}
-          </Text>
-          <Text
-            style={[...DESCRIPTION_STYLE_PRESET, ...descriptionTextStyle]}
-            numberOfLines={2}
-            ellipsizeMode={'tail'}>
-            {description}
-          </Text>
+        <View style={CONTENT_WRAPPER_STYLE}>
+          <View style={FOOTER_WRAPPER_STYLE}>
+            <Text style={TITLE_STYLE_PRESET} numberOfLines={2}>
+              {title}
+            </Text>
+            <View style={FOLLOW_BUTTON_WRAPPER_STYLE}>
+              <FollowButton
+                defaultContainerStyle={FOLLOW_BUTTON_STYLE.container}
+                defaultImageStyle={FOLLOW_BUTTON_STYLE.image}
+                size={'short'}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </LinearGradient>

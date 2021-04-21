@@ -69,6 +69,17 @@ const EVENT = {
       bought: false,
       price: '190',
     },
+    {
+      id: 305,
+      status: 'upcoming',
+      league: 'baseball',
+      eventType: 'pick_your_team',
+      title: '2020 Topps Archives Signature Series Baseball 20 Box Case',
+      spotsLeft: 18,
+      following: false,
+      bought: false,
+      price: '190',
+    },
   ],
 };
 
@@ -80,7 +91,7 @@ export const EventDetailModal = ({
   return (
     <OverScreenModal {...modalProps} title={modalTitle}>
       {showHeader && (
-        <View style={[s.mv3, s.jcc, s.aic]}>
+        <View style={[s.mv3, s.jcc, s.aic, s.ph3]}>
           <ImageCard
             cardSize={'micro'}
             touchable={false}
@@ -111,11 +122,11 @@ export const EventDetailModal = ({
           </ReadMore>
         </View>
       )}
-      <Text style={[s.ff_b, s.f5, s.mb2, s.mt3]}>
+      <Text style={[s.ff_b, s.f5, s.mb2, s.mt3, s.ph3]}>
         {t('event.breakLineupTitle')}
       </Text>
       <FlatList
-        style={[s.flx_i, s.mv3]}
+        style={[s.flx_i, s.mv3, s.ph3]}
         data={EVENT.breaks}
         keyExtractor={item => item.id}
         renderItem={({ item }) => {

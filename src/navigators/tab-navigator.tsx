@@ -5,9 +5,11 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import { COLORS } from '../theme/colors';
 import { t } from '../i18n/i18n';
-import { ROUTES_IDS } from './routes/identifiers';
 
+import { ScheduleScreen } from '../scenes/schedule/schedule-screen';
 import { HomeStack } from './stacks/home-stack';
+
+import { ROUTES_IDS } from './routes/identifiers';
 
 type TabNavigatorParamList = {
   [ROUTES_IDS.HOME_TAB]: undefined;
@@ -53,7 +55,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.SCHEDULE_TAB}
-      component={HomeStack}
+      component={ScheduleScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image

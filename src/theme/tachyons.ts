@@ -41,6 +41,7 @@ NativeTachyons.build(
         flex: r,
       }),
       badge_height: { height: rootRem * 1.5 },
+      badge_br: { borderRadius: rootRem * 0.5 + 3 },
       badge_icon: {
         height: rootRem * 1.5,
         width: rootRem * 1.5,

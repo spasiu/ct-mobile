@@ -7,11 +7,11 @@ import {
   Container,
   HitCard,
   BreakerCard,
-  EventCard,
   FilterItem,
   LeagueIcon,
   SectionHeader,
   SearchInput,
+  FeaturedBreakCard,
   NavigationBar,
 } from '../../components';
 import { t } from '../../i18n/i18n';
@@ -195,7 +195,7 @@ export const HomeScreen = () => {
 
                     if (key === 'featured_breaks') {
                       return (
-                        <EventCard
+                        <FeaturedBreakCard
                           containerStyle={[s.mr3, s.mb3]}
                           status={item.status}
                           viewCount={item.viewCount}

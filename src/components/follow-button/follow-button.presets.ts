@@ -1,11 +1,11 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
-import { styles as s, sizes } from 'react-native-style-tachyons';
+import { styles as s } from 'react-native-style-tachyons';
 
 export const BASE_FULL_BUTTON_STYLE = [
   s.jcc,
   s.aic,
   s.ph3,
-  { borderRadius: sizes.br3 + 5 },
+  s.badge_br,
   s.badge_height,
 ];
 

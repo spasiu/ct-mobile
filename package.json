@@ -44,7 +44,8 @@
     "react-native-svg": "12.1.0",
     "react-native-swiper": "1.6.0",
     "react-native-video": "5.1.1",
-    "react-native-webview": "11.4.0"
+    "react-native-webview": "11.4.0",
+    "toggle-switch-react-native": "3.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",

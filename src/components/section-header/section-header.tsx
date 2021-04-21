@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 import { TextLink } from '../text-link/text-link';
 
@@ -7,18 +7,24 @@ import {
   CONTAINER_STYLE,
   TITLE_TEXT_STYLE,
   ACTION_TEXT_STYLE,
+  IMAGE_STYLE,
+  CONTENT_WRAPPER_STYLE,
 } from './section-header.presets';
 import { SectionHeaderProps } from './section-header.props';
 
 export const SectionHeader = ({
   title = '',
   actionText = '',
+  image,
   containerStyle = [],
   titleTextStyle = [],
   actionTextStyle = [],
 }: SectionHeaderProps) => (
   <View style={[...CONTAINER_STYLE, ...containerStyle]}>
-    <Text style={[...TITLE_TEXT_STYLE, ...titleTextStyle]}>{title}</Text>
+    <View style={CONTENT_WRAPPER_STYLE}>
+      {image && <Image style={IMAGE_STYLE} source={image} />}
+      <Text style={[...TITLE_TEXT_STYLE, ...titleTextStyle]}>{title}</Text>
+    </View>
     <TextLink
       textStyle={[...ACTION_TEXT_STYLE, ...actionTextStyle]}
       text={actionText}

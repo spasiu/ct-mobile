@@ -20,17 +20,24 @@ const followIcon = require('../../assets/plus-icon.png');
 export const FollowButton = ({
   type = 'default',
   size = 'full',
-  containerStyle = [],
+  defaultContainerStyle = [],
+  selectedContainerStyle = [],
+  defaultImageStyle = [],
+  selectedImageStyle = [],
   ...borderlessButtonProps
 }: FollowButtonProps) => {
+  const selected = isFollowing(type);
   if (isSizeFull(size)) {
     return (
       <BorderlessButton
         {...borderlessButtonProps}
-        style={[...BUTTON_TYPE_STYLE.full[type], ...containerStyle]}>
+        style={[
+          ...BUTTON_TYPE_STYLE.full[type],
+          ...(selected ? selectedContainerStyle : defaultContainerStyle),
+        ]}>
         <View accessible>
           <Text style={BUTTON_CONTENT_STYLE.full[type]}>
-            {isFollowing(type) ? t('buttons.following') : t('buttons.follow')}
+            {selected ? t('buttons.following') : t('buttons.follow')}
           </Text>
         </View>
       </BorderlessButton>
@@ -40,10 +47,16 @@ export const FollowButton = ({
   return (
     <IconButton
       {...borderlessButtonProps}
-      style={[...BUTTON_TYPE_STYLE.short[type], ...containerStyle]}>
+      style={[
+        ...BUTTON_TYPE_STYLE.short[type],
+        ...(selected ? selectedContainerStyle : defaultContainerStyle),
+      ]}>
       <Image
-        style={BUTTON_CONTENT_STYLE.short[type]}
-        source={isFollowing(type) ? followingIcon : followIcon}
+        style={[
+          ...BUTTON_CONTENT_STYLE.short[type],
+          ...(selected ? selectedImageStyle : defaultImageStyle),
+        ]}
+        source={selected ? followingIcon : followIcon}
         resizeMode={'contain'}
       />
     </IconButton>

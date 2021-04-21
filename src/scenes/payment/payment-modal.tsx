@@ -12,8 +12,6 @@ import {
 
 import { PaymentModalProps } from './payment-modal.props';
 
-const arrowRight = require('../../assets/arrow-right.png');
-
 export const PaymentModal = ({
   productImage,
   productTitle = '',
@@ -51,7 +49,6 @@ export const PaymentModal = ({
               'payment.paymentCurrencySign',
             )}${price} ${t('payment.paymentDescription')}`}</Text>
           </View>
-          <Image style={[s.icon_s]} source={arrowRight} />
         </View>
         <View style={[s.flx_row, s.mv2]}>
           <CheckBox />

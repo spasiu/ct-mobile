@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { ImageStyle, ViewStyle } from 'react-native';
 import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
 import {
@@ -9,5 +9,8 @@ import {
 export interface FollowButtonProps extends BorderlessButtonProps {
   type?: FollowButtonTypes;
   size?: FollowButtonSizeTypes;
-  containerStyle?: ViewStyle[];
+  defaultContainerStyle?: ViewStyle[];
+  selectedContainerStyle?: ViewStyle[];
+  defaultImageStyle?: ImageStyle[];
+  selectedImageStyle?: ImageStyle[];
 }

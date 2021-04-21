@@ -9,10 +9,12 @@ const CONTAINER_CIRCLE_BASE_STYLE = [
   s.ba,
 ];
 
+const CONTAINER_PILL_BASE_STYLE = [s.badge_height, s.jcc, s.aic];
+
 export const CONTAINER_STYLE_PRESETS = {
   pill: {
-    default: [s.bg_transparent],
-    selected: [s.bg_black, s.br4],
+    default: [...CONTAINER_PILL_BASE_STYLE, s.bg_transparent],
+    selected: [...CONTAINER_PILL_BASE_STYLE, s.bg_black, s.badge_br],
   },
   circle: {
     default: [...CONTAINER_CIRCLE_BASE_STYLE, s.b__black_10],
@@ -22,8 +24,8 @@ export const CONTAINER_STYLE_PRESETS = {
 
 export const TEXT_STYLE_PRESETS = {
   pill: {
-    default: [s.black_60],
-    selected: [s.white],
+    default: [s.ff_alt_sb, s.f6, s.black_60, s.ph3],
+    selected: [s.ff_alt_sb, s.f6, s.white, s.ph3],
   },
   circle: {
     default: [],

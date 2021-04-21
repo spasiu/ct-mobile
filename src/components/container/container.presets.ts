@@ -2,8 +2,6 @@ import { ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Edge } from 'react-native-safe-area-context';
 
-import { isIos } from '../../utils/platform';
-
 export const backgroundColorPreset = s.bg_black_5;
 
 export const stylePresets = {
@@ -18,8 +16,6 @@ export const stylePresets = {
     insetStyle: [s.mh4] as ViewStyle[],
   },
 };
-
-export const keyboardAvoidingViewBehaviour = isIos ? 'position' : 'height';
 
 export type ContainerTypes = keyof typeof stylePresets;
 

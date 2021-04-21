@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import {
   SHADOW_CONTAINER_PRESET,
@@ -30,7 +30,7 @@ export const ImageCard = ({
     </View>
   );
   return touchable ? (
-    <RectButton onPress={onPress}>{imageCard}</RectButton>
+    <BorderlessButton onPress={onPress}>{imageCard}</BorderlessButton>
   ) : (
     imageCard
   );

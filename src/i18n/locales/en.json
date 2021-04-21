@@ -100,6 +100,9 @@
     "recentHitsSectionTitle": "Recent Hits",
     "meetTheBreakersSectionTitle": "Meet the Breakers"
   },
+  "schedule": {
+    "title": "Break Schedule"
+  },
   "search": {
     "action": "Search",
     "emptyState": "Search for Breaks, Events, Breakers or Hits",
@@ -126,6 +129,15 @@
     "spotsLeft": "Spots Left",
     "breakTypes": {
       "pickYourTeam": "PYT",
+      "randomTeam": "Random",
+      "hitDraft": "Hit Draft",
+      "packWars": "Pack Wars"
+    }
+  },
+  "filter": {
+    "all": "All",
+    "breakTypes": {
+      "pickYourTeam": "Pick Your Team",
       "randomTeam": "Random",
       "hitDraft": "Hit Draft",
       "packWars": "Pack Wars"

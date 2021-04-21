@@ -1,3 +1,4 @@
+import React from 'react';
 import { TextStyle } from 'react-native';
 
 export interface TitleBarProps {
@@ -6,4 +7,5 @@ export interface TitleBarProps {
   titleStyle?: TextStyle[];
   subtitleStyle?: TextStyle[];
   wrapperStyle?: TextStyle[];
+  rightElement?: React.ReactNode;
 }

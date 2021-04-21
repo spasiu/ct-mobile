@@ -36,6 +36,28 @@ const IMAGE_OPTIONS = [
   require('../../assets/football-icon.png'),
   require('../../assets/soccer-icon.png'),
   require('../../assets/hockey-icon.png'),
+  require('../../assets/check-icon.png'),
+  require('../../assets/close-icon.png'),
+  require('../../assets/diamond-icon.png'),
+  require('../../assets/eye-icon.png'),
+  require('../../assets/google-logo.png'),
+  require('../../assets/hits-icon.png'),
+  require('../../assets/home-icon.png'),
+  require('../../assets/input-error-icon.png'),
+  require('../../assets/live-icon.png'),
+  require('../../assets/plus-icon.png'),
+  require('../../assets/schedule-icon.png'),
+  require('../../assets/search-icon.png'),
+  require('../../assets/share-icon.png'),
+  require('../../assets/shop-icon.png'),
+  require('../../assets/volume-off.png'),
+  require('../../assets/volume-on.png'),
+  require('../../assets/address-icon.png'),
+  require('../../assets/apple-logo.png'),
+  require('../../assets/arrow-left.png'),
+  require('../../assets/arrow-right.png'),
+  require('../../assets/avatar.png'),
+  require('../../assets/breakers-icon.png'),
 ];
 
 const ROWS_NUMBER = 4;
@@ -60,7 +82,7 @@ const Reel = ({ width, height, index }) => {
       {
         translateY: withRepeat(
           withTiming(scrollPosition.value, {
-            duration: 500 + index * 100,
+            duration: 800 + index * 100,
             easing: Easing.bezier(0.25, 0.1, 0.25, 1),
           }),
           REELS_REPEAT,
@@ -70,7 +92,16 @@ const Reel = ({ width, height, index }) => {
   }));
 
   useEffect(() => {
-    scrollPosition.value = -1 * symbolHeight * 5;
+    let timer1 = setTimeout(
+      () =>
+        (scrollPosition.value =
+          -1 * symbolHeight * (IMAGE_OPTIONS.length - ROWS_NUMBER)),
+      3000,
+    );
+
+    return () => {
+      clearTimeout(timer1);
+    };
   });
 
   return (
