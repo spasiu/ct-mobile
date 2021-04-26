@@ -187,7 +187,6 @@ export const ScheduleScreen = () => {
           return (
             <FilterItem
               status={index === 0 ? 'selected' : 'default'}
-              type={'pill'}
               text={t(TEXT_KEY_FOR_BREAK_TYPE[item])}
             />
           );

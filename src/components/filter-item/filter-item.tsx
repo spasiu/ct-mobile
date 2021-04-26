@@ -11,7 +11,7 @@ import { FilterItemProps } from './filter-item.props';
 
 export const FilterItem = ({
   children,
-  type = 'pill',
+  type = 'pill-default',
   status = 'default',
   style = [],
   text,

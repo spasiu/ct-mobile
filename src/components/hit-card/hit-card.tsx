@@ -10,10 +10,20 @@ export const HitCard = ({
   title = '',
   containerStyle = [],
   textStyle = [],
+  cardStyle = [],
   ...imageCardProps
 }: HitCardProps) => (
   <View style={[...CONTAINER_PRESETS, ...containerStyle]}>
-    <ImageCard cardSize="small" {...imageCardProps} />
-    <Text style={[...TITLE_PRESETS, ...textStyle]}>{title}</Text>
+    <ImageCard
+      cardSize="small"
+      {...imageCardProps}
+      containerStyle={cardStyle}
+    />
+    <Text
+      numberOfLines={3}
+      ellipsizeMode={'tail'}
+      style={[...TITLE_PRESETS, ...textStyle]}>
+      {title}
+    </Text>
   </View>
 );

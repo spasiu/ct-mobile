@@ -7,6 +7,7 @@ import { COLORS } from '../theme/colors';
 import { t } from '../i18n/i18n';
 
 import { ScheduleScreen } from '../scenes/schedule/schedule-screen';
+import { HitsScreen } from '../scenes/hits/hits-screen';
 import { HomeStack } from './stacks/home-stack';
 
 import { ROUTES_IDS } from './routes/identifiers';
@@ -81,7 +82,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.HITS_TAB}
-      component={HomeStack}
+      component={HitsScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
