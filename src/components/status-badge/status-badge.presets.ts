@@ -14,5 +14,7 @@ export const BADGE_TEXT_PRESETS = {
 };
 
 export const isStatusLive = (status: string): boolean => status === 'live';
+export const isStatusScheduled = (status: string): boolean =>
+  status === 'scheduled';
 
 export type StatusBadgeTypes = keyof typeof BADGE_TEXT_PRESETS;

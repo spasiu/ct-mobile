@@ -1,0 +1,11 @@
+# import "./scheduled-breaks-fragment.graphql"
+
+subscription NewScheduledBreaks {
+  Breaks(
+    where: { Event: { status: { _neq: COMPLETED } } }
+    order_by: { Event: { start_time: asc } }
+  ) {
+    id
+    ...scheduledBreak
+  }
+}

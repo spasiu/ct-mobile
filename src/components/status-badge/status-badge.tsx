@@ -7,6 +7,7 @@ import {
   BADGE_CONTAINER_PRESETS,
   BADGE_TEXT_PRESETS,
   isStatusLive,
+  isStatusScheduled,
 } from './status-badge.presets';
 import { StatusBadgeProps } from './status-badge.props';
 
@@ -18,12 +19,13 @@ export const StatusBadge = ({
   ...badgeProps
 }: StatusBadgeProps) => {
   const isLive = isStatusLive(status);
+  const isScheduled = isStatusScheduled(status);
   return (
     <Badge
       {...badgeProps}
       containerStyle={BADGE_CONTAINER_PRESETS[status]}
       image={isLive && liveIcon}
-      text={text || t(BADGE_TEXT_PRESETS[status])}
+      text={(isScheduled && text) || t(BADGE_TEXT_PRESETS[status])}
     />
   );
 };

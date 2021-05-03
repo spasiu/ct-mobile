@@ -1,0 +1,8 @@
+# import "./scheduled-events-fragment.graphql"
+
+subscription NewScheduledEvents {
+  Users(where: { role: { _eq: ADMIN } }) {
+    id
+    ...scheduledEvent
+  }
+}

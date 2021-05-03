@@ -31,6 +31,7 @@ export const BreakCard = ({
   breakType,
   price,
   spotsLeft,
+  eventDate,
   onPressFollow = () => {},
   onPressBuy = () => {},
   containerStyle = [],
@@ -39,7 +40,7 @@ export const BreakCard = ({
     <View style={[...CARD_CONTAINER_STYLE, ...containerStyle]}>
       <View style={INFORMATION_BAR_WRAPPER_STYLE}>
         <View>
-          <StatusBadge status={status} />
+          <StatusBadge status={status} text={eventDate} />
         </View>
         <View style={BREAK_DETAIL_WRAPPER_STYLE}>
           <LeagueIcon league={league} />
@@ -51,9 +52,7 @@ export const BreakCard = ({
         {title}
       </Text>
       <View style={BREAK_DETAILS_WRAPPER}>
-        <Text style={PRICE_TEXT_STYLE}>{`${t(
-          'payment.paymentCurrencySign',
-        )}${price}`}</Text>
+        <Text style={PRICE_TEXT_STYLE}>{price}</Text>
         <Text style={SPOTS_LEFT_STYLE}>{`${spotsLeft} ${t(
           'break.spotsLeft',
         )}`}</Text>

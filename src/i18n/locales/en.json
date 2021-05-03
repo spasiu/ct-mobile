@@ -29,6 +29,9 @@
     "passwordLabel": "Password",
     "usernameLabel": "Username"
   },
+  "calendar": {
+    "today": "Today"
+  },
   "account": {
     "haveAccountInstructions": "Already have an account?",
     "dontHaveAccountInstructions": "Don't have an account?",
@@ -101,7 +104,8 @@
     "meetTheBreakersSectionTitle": "Meet the Breakers"
   },
   "schedule": {
-    "title": "Break Schedule"
+    "breakTitle": "Break Schedule",
+    "eventTitle": "Event Schedule"
   },
   "search": {
     "action": "Search",
@@ -129,18 +133,22 @@
     "spotsLeft": "Spots Left",
     "breakTypes": {
       "pickYourTeam": "PYT",
-      "randomTeam": "Random",
+      "pickYourDivision": "PYD",
+      "randomTeam": "Random T",
+      "randomDivision": "Random D",
       "hitDraft": "Hit Draft",
-      "packWars": "Pack Wars"
+      "personal": "Personal"
     }
   },
   "filter": {
     "all": "All",
     "breakTypes": {
       "pickYourTeam": "Pick Your Team",
-      "randomTeam": "Random",
+      "pickYourDivision": "Pick Your Division",
+      "randomTeam": "Random Team",
+      "randomDivision": "Random Division",
       "hitDraft": "Hit Draft",
-      "packWars": "Pack Wars"
+      "personal": "Personal"
     }
   },
   "profile": {

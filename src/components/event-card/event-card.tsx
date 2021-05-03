@@ -23,6 +23,7 @@ export const EventCard = ({
   title = '',
   status,
   league,
+  eventDate,
   contentContainerStyle = [],
   ...imageCardProps
 }: EventCardProps) => (
@@ -31,7 +32,7 @@ export const EventCard = ({
       <View
         style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
         <View style={INFO_WRAPPER_STYLE_PRESET}>
-          <StatusBadge status={status} />
+          <StatusBadge status={status} text={eventDate} />
           <LeagueIcon league={league} />
         </View>
         <View style={CONTENT_WRAPPER_STYLE}>

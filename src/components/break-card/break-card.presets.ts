@@ -15,7 +15,7 @@ export const CARD_CONTAINER_STYLE = [
 
 export const INFORMATION_BAR_WRAPPER_STYLE = [s.flx_row, s.jcsb, s.aifs];
 
-export const BREAK_DETAIL_WRAPPER_STYLE = [s.flx_row, s.w_40, s.jcsb];
+export const BREAK_DETAIL_WRAPPER_STYLE = [s.flx_row, s.w_40, s.jcfe];
 
 export const BREAKER_AVATAR_STYLE = [s.circle_xs];
 

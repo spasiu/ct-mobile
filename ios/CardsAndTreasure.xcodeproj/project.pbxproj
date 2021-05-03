@@ -191,7 +191,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				E4AE09B2F540045308F4EA46 /* [CP] Embed Pods Frameworks */,
 				B4CE68E4F95E8994B3B15401 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -214,7 +213,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				A30F68E11331B4A54B319286 /* [CP] Embed Pods Frameworks */,
 				78A474B0249381307F6866AA /* [CP] Copy Pods Resources */,
 				2C3835D5FB321A9EA2AEF9EC /* [CP-User] [RNFB] Core Configuration */,
 			);
@@ -354,23 +352,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A30F68E11331B4A54B319286 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B4CE68E4F95E8994B3B15401 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,23 +367,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E4AE09B2F540045308F4EA46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E74B5DED56C99CAFA020C124 /* [CP] Check Pods Manifest.lock */ = {

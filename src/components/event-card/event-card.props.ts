@@ -7,5 +7,6 @@ export interface EventCardProps extends ImageCardProps {
   title?: string;
   contentContainerStyle?: ViewStyle[];
   league: LeagueIconTypes;
+  eventDate: string;
   status: 'live' | 'upcoming' | 'scheduled'; // change to data status when models available
 }

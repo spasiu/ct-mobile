@@ -24,6 +24,7 @@ export const OverScreenModal = ({
   children,
   onPressClose = () => {},
   onPressAction = () => {},
+  actionStyle = [],
   ...modalProps
 }: OverScreenModalProps) => {
   return (
@@ -49,7 +50,11 @@ export const OverScreenModal = ({
           </View>
           {children}
           {action && (
-            <ActionFooter buttonText={action} onPress={onPressAction} />
+            <ActionFooter
+              containerStyle={actionStyle}
+              buttonText={action}
+              onPress={onPressAction}
+            />
           )}
         </View>
       </View>

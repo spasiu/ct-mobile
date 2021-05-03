@@ -5,10 +5,12 @@ import {
   SafeAreaProvider,
   initialWindowMetrics,
 } from 'react-native-safe-area-context';
+import { ApolloProvider } from '@apollo/client';
 
 import './theme/tachyons';
 import { RootNavigator } from './navigators/root-navigator';
 import { setI18nConfig } from './i18n/i18n';
+import { client } from './services/api/api';
 
 // for performance optimizations and native feel
 // https://reactnavigation.org/docs/react-native-screens
@@ -31,9 +33,11 @@ const App = () => {
   }
 
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <RootNavigator />
-    </SafeAreaProvider>
+    <ApolloProvider client={client}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <RootNavigator />
+      </SafeAreaProvider>
+    </ApolloProvider>
   );
 };
 

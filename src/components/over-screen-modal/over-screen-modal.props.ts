@@ -1,4 +1,4 @@
-import { ModalProps } from 'react-native';
+import { ModalProps, ViewStyle } from 'react-native';
 
 export interface OverScreenModalProps extends ModalProps {
   ratio?: number;
@@ -7,4 +7,5 @@ export interface OverScreenModalProps extends ModalProps {
   onPressClose?: () => void;
   onPressAction?: () => void;
   children?: React.ReactNode;
+  actionStyle?: ViewStyle[];
 }

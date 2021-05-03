@@ -8,6 +8,7 @@ import {
   PaymentRowLink,
   AddressRowLink,
   CheckBox,
+  Container,
 } from '../../components';
 
 import { PaymentModalProps } from './payment-modal.props';
@@ -23,8 +24,9 @@ export const PaymentModal = ({
     <OverScreenModal
       {...modalProps}
       action={t('buttons.purchase')}
-      title={t('payment.paymentModalTitle')}>
-      <ScrollView style={[s.flx_i, s.mv3]}>
+      title={t('payment.paymentModalTitle')}
+      actionStyle={[s.ph3, s.pb3]}>
+      <ScrollView style={[s.flx_i, s.mv3, s.ph3]}>
         <Image
           style={[s.h4, s.mt2]}
           source={productImage}

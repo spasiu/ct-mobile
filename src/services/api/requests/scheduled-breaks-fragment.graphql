@@ -1,0 +1,20 @@
+fragment scheduledBreak on Breaks {
+  break_type
+  description
+  price
+  spots
+  status
+  title
+  event_id
+  Event {
+    id
+    status
+    start_time
+    User {
+      id
+      Profile {
+        image
+      }
+    }
+  }
+}
