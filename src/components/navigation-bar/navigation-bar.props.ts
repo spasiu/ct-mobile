@@ -4,4 +4,5 @@ export interface NavigationBarProps {
   children?: React.ReactNode;
   containerStyle?: ViewStyle[];
   title?: string;
+  onBackPressed?: () => void;
 }

@@ -12,6 +12,16 @@ export const GRADIENT_PRESETS = {
 
 export const CONTENT_CONTAINER_STYLE_PRESET = [s.flx_i, s.jcfe, s.pa3];
 
-export const TITLE_STYLE_PRESET = [s.ff_alt_sb, s.f6, s.white, s.mb2];
+export const TITLE_STYLE_PRESET = {
+  micro: [s.ff_alt_sb, s.f6, s.white, s.mb2],
+  small: [s.ff_alt_sb, s.f6, s.white, s.mb2],
+  medium: [s.ff_alt_sb, s.f6, s.white, s.mb2],
+  large: [s.ff_alt_sb, s.f4, s.white, s.mb2],
+};
 
-export const DESCRIPTION_STYLE_PRESET = [s.ff_alt_r, s.f7, s.white];
+export const DESCRIPTION_STYLE_PRESET = {
+  micro: [s.ff_alt_r, s.f7, s.white],
+  small: [s.ff_alt_r, s.f7, s.white],
+  medium: [s.ff_alt_r, s.f7, s.white],
+  large: [s.ff_alt_r, s.f5, s.white],
+};

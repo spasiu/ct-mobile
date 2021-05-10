@@ -8,21 +8,18 @@ import {
   PaymentRowLink,
   AddressRowLink,
   CheckBox,
-  Container,
 } from '../../components';
 
-import { PaymentModalProps } from './payment-modal.props';
-
-export const PaymentModal = ({
-  productImage,
-  productTitle = '',
-  productDescription = '',
-  price = '',
-  ...modalProps
-}: PaymentModalProps) => {
+export const BreakDetailModal = ({ route, navigation }) => {
+  const {
+    productImage,
+    productTitle,
+    productDescription,
+    price,
+  } = route.params;
   return (
     <OverScreenModal
-      {...modalProps}
+      onPressClose={() => navigation.goBack()}
       action={t('buttons.purchase')}
       title={t('payment.paymentModalTitle')}
       actionStyle={[s.ph3, s.pb3]}>
@@ -47,9 +44,9 @@ export const PaymentModal = ({
         <View style={[s.flx_row, s.aic, s.mv3]}>
           <View style={[s.flx_row, s.flx_i, s.jcsb, s.mr2]}>
             <Text style={[s.ff_alt_sb, s.f5]}>{t('payment.paymentTotal')}</Text>
-            <Text style={[s.ff_alt_sb, s.f5]}>{`${t(
-              'payment.paymentCurrencySign',
-            )}${price} ${t('payment.paymentDescription')}`}</Text>
+            <Text style={[s.ff_alt_sb, s.f5]}>{`${price} ${t(
+              'payment.paymentDescription',
+            )}`}</Text>
           </View>
         </View>
         <View style={[s.flx_row, s.mv2]}>

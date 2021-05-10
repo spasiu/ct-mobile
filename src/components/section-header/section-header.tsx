@@ -19,15 +19,20 @@ export const SectionHeader = ({
   containerStyle = [],
   titleTextStyle = [],
   actionTextStyle = [],
+  actionComponent,
 }: SectionHeaderProps) => (
   <View style={[...CONTAINER_STYLE, ...containerStyle]}>
     <View style={CONTENT_WRAPPER_STYLE}>
       {image && <Image style={IMAGE_STYLE} source={image} />}
       <Text style={[...TITLE_TEXT_STYLE, ...titleTextStyle]}>{title}</Text>
     </View>
-    <TextLink
-      textStyle={[...ACTION_TEXT_STYLE, ...actionTextStyle]}
-      text={actionText}
-    />
+    {actionComponent ? (
+      actionComponent
+    ) : (
+      <TextLink
+        textStyle={[...ACTION_TEXT_STYLE, ...actionTextStyle]}
+        text={actionText}
+      />
+    )}
   </View>
 );

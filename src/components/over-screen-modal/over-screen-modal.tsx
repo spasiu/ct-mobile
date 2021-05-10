@@ -10,6 +10,7 @@ import {
   BUTTON_WRAPPER_STYLE,
   TITLE_TEXT_STYLE,
   CLOSE_BUTTON_STYLE,
+  BACK_SCREEN_STYLE,
   getModalWrapperStyle,
 } from './over-screen-modal.presets';
 import { OverScreenModalProps } from './over-screen-modal.props';
@@ -17,7 +18,6 @@ import { OverScreenModalProps } from './over-screen-modal.props';
 const closeIcon = require('../../assets/close-icon.png');
 
 export const OverScreenModal = ({
-  visible = false,
   ratio = 1,
   title = '',
   action,
@@ -25,16 +25,9 @@ export const OverScreenModal = ({
   onPressClose = () => {},
   onPressAction = () => {},
   actionStyle = [],
-  ...modalProps
 }: OverScreenModalProps) => {
   return (
-    <Modal
-      {...modalProps}
-      presentationStyle={'overFullScreen'}
-      animationType={'slide'}
-      visible={visible}
-      onRequestClose={onPressClose}
-      transparent={true}>
+    <View style={BACK_SCREEN_STYLE}>
       <View style={MODAL_CONTAINER_STYLE}>
         <View style={getModalWrapperStyle(ratio)}>
           <View style={TITLE_BAR_STYLE}>
@@ -58,6 +51,6 @@ export const OverScreenModal = ({
           )}
         </View>
       </View>
-    </Modal>
+    </View>
   );
 };

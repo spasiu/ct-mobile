@@ -11,6 +11,7 @@ import {
   FilterItem,
 } from '../../components';
 import { WINDOW_WIDTH } from '../../theme/sizes';
+import { t } from '../../i18n/i18n';
 
 const HITS = [
   {
@@ -85,10 +86,10 @@ export const HitsScreen = () => {
       safeAreaEdges={['top', 'left', 'right']}>
       <View style={[s.mh3, s.mb4]}>
         <TitleBar
-          title={'Hits'}
+          title={t('hits.title')}
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
-              <FilterItem type="pill-alt" text={'My Hits'} />
+              <FilterItem type="pill-alt" text={t('buttons.myHits')} />
               <IconButton style={[s.ml3]}>
                 <Image
                   resizeMode={'cover'}

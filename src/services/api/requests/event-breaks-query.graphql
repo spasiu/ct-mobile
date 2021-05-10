@@ -1,0 +1,11 @@
+query EventBreaks($id: uuid!) {
+  Breaks(where: { status: { _neq: COMPLETED }, Event: { id: { _eq: $id } } }) {
+    id
+    break_type
+    description
+    price
+    spots
+    status
+    title
+  }
+}

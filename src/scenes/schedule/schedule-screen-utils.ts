@@ -6,8 +6,6 @@ import {
   SectionHeaderProps,
 } from '../../components';
 import {
-  ScheduledBreakFragment,
-  ScheduledEventFragment,
   Breaks,
   Events,
   Users,
@@ -15,26 +13,7 @@ import {
 } from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 
-export type ScheduledBreakQueryType = { __typename?: 'Breaks' } & Pick<
-  Breaks,
-  'id'
-> &
-  ScheduledBreakFragment;
-
-export type ScheduledEventQueryType = { __typename?: 'Events' } & Pick<
-  Events,
-  'id' | 'title' | 'status' | 'image' | 'start_time'
->;
-
-export type ScheduledEventBreakerQueryType = { __typename?: 'Users' } & Pick<
-  Users,
-  'id'
-> &
-  ScheduledEventFragment;
-
-export const breaksScheduleSelector = (
-  breaks: ScheduledBreakQueryType,
-): BreakCardProps => {
+export const breaksScheduleSelector = (breaks: Breaks): BreakCardProps => {
   const eventPath = ['Event'];
   const profilePath = [...eventPath, 'User', 'Profile'];
 
@@ -53,9 +32,7 @@ export const breaksScheduleSelector = (
   };
 };
 
-export const eventBreakerSelector = (
-  breaker: ScheduledEventBreakerQueryType,
-): SectionHeaderProps => {
+export const eventBreakerSelector = (breaker: Users): SectionHeaderProps => {
   const profilePath = ['Profile'];
 
   const firstName = pathOr('', [...profilePath, 'first_name'], breaker);
@@ -72,7 +49,7 @@ export const eventSelector = ({
   image,
   status,
   start_time,
-}: ScheduledEventQueryType): EventCardProps => {
+}: Events): EventCardProps => {
   return {
     eventDate: formatScheduledStatus(start_time),
     league: 'baseball',

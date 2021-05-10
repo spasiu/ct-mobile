@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Image, View } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { StatusBadge } from '../status-badge';
 import { LeagueIcon } from '../league-icon/league-icon';
@@ -35,9 +36,12 @@ export const BreakCard = ({
   onPressFollow = () => {},
   onPressBuy = () => {},
   containerStyle = [],
+  ...borderlessButtonProps
 }: BreakCardProps) => {
   return (
-    <View style={[...CARD_CONTAINER_STYLE, ...containerStyle]}>
+    <BorderlessButton
+      style={[...CARD_CONTAINER_STYLE, ...containerStyle]}
+      {...borderlessButtonProps}>
       <View style={INFORMATION_BAR_WRAPPER_STYLE}>
         <View>
           <StatusBadge status={status} text={eventDate} />
@@ -61,6 +65,6 @@ export const BreakCard = ({
         <FollowButton size={'short'} onPress={onPressFollow} />
         <BuyButton containerStyle={BUY_BUTTON_STYLE} onPress={onPressBuy} />
       </View>
-    </View>
+    </BorderlessButton>
   );
 };

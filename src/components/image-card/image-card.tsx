@@ -9,6 +9,8 @@ import {
 } from './image-card.presets';
 import { ImageCardProps } from './image-card.props';
 
+const loadingImage = require('../../assets/baseball-icon.png');
+
 export const ImageCard = ({
   children,
   cardSize = 'medium',
@@ -21,6 +23,7 @@ export const ImageCard = ({
     <View style={SHADOW_CONTAINER_PRESET} accessible>
       <View style={[...CONTAINER_PRESET[cardSize], ...containerStyle]}>
         <ImageBackground
+          loadingIndicatorSource={loadingImage}
           style={IMAGE_BACKGROUND_PRESET}
           resizeMode={'cover'}
           source={image}>

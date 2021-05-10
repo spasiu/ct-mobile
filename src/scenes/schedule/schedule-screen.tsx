@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -17,8 +16,6 @@ import { EVENT_TYPES, TEXT_KEY_FOR_BREAK_TYPE } from './schedule-screen-utils';
 
 export const ScheduleScreen = () => {
   const [eventsView, setEventsView] = useState(false);
-  const navigation = useNavigation();
-
   return (
     <Container
       style={[s.mh0]}
@@ -27,7 +24,7 @@ export const ScheduleScreen = () => {
       <View>
         <TitleBar
           wrapperStyle={[s.mh3, s.mv0, s.mt4, s.mb0]}
-          title={t(eventsView ? 'schedule.eventTitle' : 'schedule.breakTitle')}
+          title={t(eventsView ? 'sections.event' : 'sections.break')}
           rightElement={
             <ScheduleToggle
               isOn={eventsView}

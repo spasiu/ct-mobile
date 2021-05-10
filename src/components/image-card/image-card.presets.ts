@@ -15,8 +15,8 @@ const CARD_SIZES = {
     width: sizes.w3 + sizes.w4 + sizes.w1,
   },
   large: {
-    height: sizes.h5 + sizes.h2,
-    width: sizes.w3 + sizes.w4 + sizes.w1,
+    height: sizes.h5 + sizes.h4 + sizes.h2,
+    width: sizes.w5 + sizes.w3 + sizes.w2,
   },
 };
 
@@ -25,7 +25,7 @@ export const SHADOW_CONTAINER_PRESET = [s.shadow_m];
 export const CONTAINER_PRESET = {
   micro: [CARD_SIZES.micro, s.br4, s.no_overflow] as ViewStyle[],
   small: [CARD_SIZES.small, s.br4, s.no_overflow] as ViewStyle[],
-  medium: [CARD_SIZES.large, s.br4, s.no_overflow] as ViewStyle[],
+  medium: [CARD_SIZES.medium, s.br4, s.no_overflow] as ViewStyle[],
   large: [CARD_SIZES.large, s.br4, s.no_overflow] as ViewStyle[],
 };
 

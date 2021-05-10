@@ -1,5 +1,7 @@
 import { styles as s } from 'react-native-style-tachyons';
 
+export const BACK_SCREEN_STYLE = [s.flx_i, s.shadow_l];
+
 export const MODAL_CONTAINER_STYLE = [s.flx_i, s.bg_transparent, s.jcfe];
 
 export const getModalWrapperStyle = (ratio: number) => [

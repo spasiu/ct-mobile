@@ -18,15 +18,21 @@ export const BreakerCard = ({
   titleTextStyle = [],
   descriptionTextStyle = [],
   contentContainerStyle = [],
+  cardSize = 'medium',
   ...imageCardProps
 }: BreakerCardProps) => (
-  <ImageCard cardSize="medium" {...imageCardProps}>
+  <ImageCard cardSize={cardSize} {...imageCardProps}>
     <LinearGradient {...GRADIENT_PRESETS}>
       <View
         style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
-        <Text style={[...TITLE_STYLE_PRESET, ...titleTextStyle]}>{title}</Text>
+        <Text style={[...TITLE_STYLE_PRESET[cardSize], ...titleTextStyle]}>
+          {title}
+        </Text>
         <Text
-          style={[...DESCRIPTION_STYLE_PRESET, ...descriptionTextStyle]}
+          style={[
+            ...DESCRIPTION_STYLE_PRESET[cardSize],
+            ...descriptionTextStyle,
+          ]}
           numberOfLines={2}
           ellipsizeMode={'tail'}>
           {description}

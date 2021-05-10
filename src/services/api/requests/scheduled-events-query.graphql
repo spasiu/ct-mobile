@@ -1,8 +1,18 @@
-# import "./scheduled-events-fragment.graphql"
-
 query ScheduledEvents {
   Users(where: { role: { _eq: ADMIN } }) {
     id
-    ...scheduledEvent
+    Events(limit: 5, where: { status: { _neq: COMPLETED } }) {
+      id
+      title
+      status
+      image
+      start_time
+    }
+    Profile {
+      id
+      image
+      first_name
+      last_name
+    }
   }
 }

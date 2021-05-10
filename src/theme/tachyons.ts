@@ -61,6 +61,16 @@ NativeTachyons.build(
       circle_m: getCircleStyle(ICON_SIZE.M),
       circle_l: getCircleStyle(ICON_SIZE.L),
       circle_xl: getCircleStyle(ICON_SIZE.XL),
+      shadow_xs: {
+        shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 1,
+        elevation: 2,
+      },
       shadow_s: {
         shadowColor: COLORS.black,
         shadowOffset: {
@@ -79,6 +89,16 @@ NativeTachyons.build(
         },
         shadowOpacity: 0.2,
         shadowRadius: 4,
+        elevation: 5,
+      },
+      shadow_l: {
+        shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 20,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 20,
         elevation: 5,
       },
       no_overflow: { overflow: 'hidden' },

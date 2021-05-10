@@ -20,7 +20,7 @@ import { indexedMap } from '../../utils/ramda';
 
 const data = [
   {
-    title: t('home.leaguesSectionTitle'),
+    title: t('sections.leagues'),
     key: 'leagues',
     data: [
       {
@@ -46,7 +46,7 @@ const data = [
     ],
   },
   {
-    title: t('home.featuredBreaksSectionTitle'),
+    title: t('sections.featuredBreaks'),
     key: 'featured_breaks',
     data: [
       {
@@ -84,7 +84,7 @@ const data = [
     ],
   },
   {
-    title: t('home.recentHitsSectionTitle'),
+    title: t('sections.recentHits'),
     key: 'recent_hits',
     data: [
       {
@@ -114,7 +114,7 @@ const data = [
     ],
   },
   {
-    title: t('home.meetTheBreakersSectionTitle'),
+    title: t('sections.meetTheBreakers'),
     key: 'meet_the_breakers',
     data: [
       {

@@ -14,7 +14,8 @@ import { NavigationBarProps } from './navigation-bar.props';
 export const NavigationBar = ({
   children,
   containerStyle = [],
-  title = 'TestTitle',
+  title = '',
+  onBackPressed,
 }: NavigationBarProps) => (
   <View style={[...NAVIGATION_BAR_CONTAINER_STYLE, ...containerStyle]}>
     {children ? (
@@ -22,7 +23,7 @@ export const NavigationBar = ({
     ) : (
       <View style={DEFAULT_NAVIGATION_BAR_WRAPPER_STYLE}>
         <View style={SIDES_WRAPPER_STYLE}>
-          <BackButton />
+          <BackButton onPress={onBackPressed} />
         </View>
         <View>
           <Text style={TITLE_TEXT_STYLE}>{title}</Text>

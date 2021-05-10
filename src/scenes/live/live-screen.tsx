@@ -24,7 +24,7 @@ import {
 } from '../../components';
 import { COLORS } from '../../theme/colors';
 
-import { PaymentModal } from '../payment/payment-modal';
+import { BreakDetailModal } from '../break-detail/break-detail-modal';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { t } from '../../i18n/i18n';
 
@@ -120,6 +120,7 @@ export const LiveScreen = () => {
                 inverted
                 style={[s.flx_i]}
                 data={messages}
+                keyExtractor={item => item}
                 renderItem={({ item }) => (
                   <View style={[s.flx_i, s.flx_row, s.mv2]}>
                     <Image
@@ -177,7 +178,7 @@ export const LiveScreen = () => {
               </View>
             </View>
           </KeyboardAvoidingView>
-          <PaymentModal
+          <BreakDetailModal
             productImage={{ uri: 'https://source.unsplash.com/100x100/?card' }}
             productTitle={'2020 Bowman Baseball Sapphire Edition'}
             productDescription={

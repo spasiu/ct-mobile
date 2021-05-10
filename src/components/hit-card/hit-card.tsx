@@ -11,6 +11,7 @@ export const HitCard = ({
   containerStyle = [],
   textStyle = [],
   cardStyle = [],
+  showTitle = true,
   ...imageCardProps
 }: HitCardProps) => (
   <View style={[...CONTAINER_PRESETS, ...containerStyle]}>
@@ -19,11 +20,13 @@ export const HitCard = ({
       {...imageCardProps}
       containerStyle={cardStyle}
     />
-    <Text
-      numberOfLines={3}
-      ellipsizeMode={'tail'}
-      style={[...TITLE_PRESETS, ...textStyle]}>
-      {title}
-    </Text>
+    {showTitle && (
+      <Text
+        numberOfLines={3}
+        ellipsizeMode={'tail'}
+        style={[...TITLE_PRESETS, ...textStyle]}>
+        {title}
+      </Text>
+    )}
   </View>
 );

@@ -16,7 +16,9 @@
     "buy": "Buy Break",
     "purchase": "Purchase",
     "seeMore": "See More",
-    "seeLess": "See Less"
+    "seeLess": "See Less",
+    "myHits": "My Hits",
+    "showFollowing": "Show Following"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -97,15 +99,13 @@
       "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile."
     }
   },
-  "home": {
-    "leaguesSectionTitle": "Leagues",
-    "featuredBreaksSectionTitle": "Featured Breaks",
-    "recentHitsSectionTitle": "Recent Hits",
-    "meetTheBreakersSectionTitle": "Meet the Breakers"
-  },
-  "schedule": {
-    "breakTitle": "Break Schedule",
-    "eventTitle": "Event Schedule"
+  "sections": {
+    "leagues": "Leagues",
+    "featuredBreaks": "Featured Breaks",
+    "recentHits": "Recent Hits",
+    "meetTheBreakers": "Meet the Breakers",
+    "break": "Break Schedule",
+    "event": "Event Schedule"
   },
   "search": {
     "action": "Search",
@@ -126,6 +126,7 @@
     "apple": "Apple Pay"
   },
   "event": {
+    "detailTitle": "Event",
     "liveDetailTitle": "Upcoming Breaks",
     "breakLineupTitle": "Break Lineup"
   },
@@ -153,5 +154,11 @@
   },
   "profile": {
     "addAddress": "Add Delivery Address"
+  },
+  "hits": {
+    "title": "Hits"
+  },
+  "breakers": {
+    "title": "Breakers"
   }
 }

@@ -9,13 +9,10 @@ import { indexedMap } from '../../utils/ramda';
 import {
   useScheduledEventsQuery,
   NewScheduledEventsDocument,
+  Users,
 } from '../../services/api/requests';
 
-import {
-  eventBreakerSelector,
-  eventSelector,
-  ScheduledEventBreakerQueryType,
-} from './schedule-screen-utils';
+import { eventBreakerSelector, eventSelector } from './schedule-screen-utils';
 
 export const EventsView = () => {
   const {
@@ -37,7 +34,7 @@ export const EventsView = () => {
 
   return (
     <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
-      {indexedMap((breaker: ScheduledEventBreakerQueryType, index: number) => {
+      {indexedMap((breaker: Users, index: number) => {
         return (
           <View key={index}>
             <SectionHeader

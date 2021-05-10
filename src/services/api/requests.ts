@@ -42,8 +42,10 @@ export type Breaks = {
   __typename?: 'Breaks';
   /** An object relationship */
   Event: Events;
-  /** An object relationship */
-  Product?: Maybe<Products>;
+  /** An array relationship */
+  Products: Array<Products>;
+  /** An aggregated array relationship */
+  Products_aggregate: Products_Aggregate;
   /** An object relationship */
   break_status: Break_Status;
   break_type: Break_Type_Enum;
@@ -60,6 +62,24 @@ export type Breaks = {
   /** An object relationship */
   type: Break_Type;
   updated_at: Scalars['timestamptz'];
+};
+
+/** columns and relationships of "Breaks" */
+export type BreaksProductsArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+/** columns and relationships of "Breaks" */
+export type BreaksProducts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
 };
 
 /** aggregated selection of "Breaks" */
@@ -130,7 +150,7 @@ export type Breaks_Avg_Order_By = {
 /** Boolean expression to filter rows from the table "Breaks". All fields are combined with a logical 'AND'. */
 export type Breaks_Bool_Exp = {
   Event?: Maybe<Events_Bool_Exp>;
-  Product?: Maybe<Products_Bool_Exp>;
+  Products?: Maybe<Products_Bool_Exp>;
   _and?: Maybe<Array<Maybe<Breaks_Bool_Exp>>>;
   _not?: Maybe<Breaks_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Breaks_Bool_Exp>>>;
@@ -166,7 +186,7 @@ export type Breaks_Inc_Input = {
 /** input type for inserting data into table "Breaks" */
 export type Breaks_Insert_Input = {
   Event?: Maybe<Events_Obj_Rel_Insert_Input>;
-  Product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  Products?: Maybe<Products_Arr_Rel_Insert_Input>;
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -266,7 +286,7 @@ export type Breaks_On_Conflict = {
 /** ordering options when selecting data from "Breaks" */
 export type Breaks_Order_By = {
   Event?: Maybe<Events_Order_By>;
-  Product?: Maybe<Products_Order_By>;
+  Products_aggregate?: Maybe<Products_Aggregate_Order_By>;
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -747,10 +767,10 @@ export type Int_Comparison_Exp = {
 export type Products = {
   __typename?: 'Products';
   /** An object relationship */
-  Break: Breaks;
+  Break?: Maybe<Breaks>;
   /** An object relationship */
   SKU: Sku;
-  break_id: Scalars['uuid'];
+  break_id?: Maybe<Scalars['uuid']>;
   cost_basis: Scalars['money'];
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
@@ -840,8 +860,6 @@ export type Products_Bool_Exp = {
 
 /** unique or primary key constraints on table "Products" */
 export enum Products_Constraint {
-  /** unique or primary key constraint */
-  ProductsBreakIdKey = 'Products_break_id_key',
   /** unique or primary key constraint */
   ProductsPkey = 'Products_pkey',
 }
@@ -1420,9 +1438,9 @@ export type Sku = {
   player?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
   sku_id: Scalars['String'];
   sku_type: Sku_Type_Enum;
-  sub_brand?: Maybe<Scalars['String']>;
   /** An object relationship */
   type: Sku_Type;
   updated_at: Scalars['timestamptz'];
@@ -1549,9 +1567,9 @@ export type Sku_Bool_Exp = {
   player?: Maybe<String_Comparison_Exp>;
   product_type?: Maybe<String_Comparison_Exp>;
   rookie_card?: Maybe<Boolean_Comparison_Exp>;
+  series?: Maybe<String_Comparison_Exp>;
   sku_id?: Maybe<String_Comparison_Exp>;
   sku_type?: Maybe<Sku_Type_Enum_Comparison_Exp>;
-  sub_brand?: Maybe<String_Comparison_Exp>;
   type?: Maybe<Sku_Type_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   year1?: Maybe<Smallint_Comparison_Exp>;
@@ -1600,9 +1618,9 @@ export type Sku_Insert_Input = {
   player?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
   sku_id?: Maybe<Scalars['String']>;
   sku_type?: Maybe<Sku_Type_Enum>;
-  sub_brand?: Maybe<Scalars['String']>;
   type?: Maybe<Sku_Type_Obj_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year1?: Maybe<Scalars['smallint']>;
@@ -1632,8 +1650,8 @@ export type Sku_Max_Fields = {
   paralell?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
+  series?: Maybe<Scalars['String']>;
   sku_id?: Maybe<Scalars['String']>;
-  sub_brand?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year1?: Maybe<Scalars['smallint']>;
   year2?: Maybe<Scalars['smallint']>;
@@ -1661,8 +1679,8 @@ export type Sku_Max_Order_By = {
   paralell?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   product_type?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
   sku_id?: Maybe<Order_By>;
-  sub_brand?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   year1?: Maybe<Order_By>;
   year2?: Maybe<Order_By>;
@@ -1691,8 +1709,8 @@ export type Sku_Min_Fields = {
   paralell?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
+  series?: Maybe<Scalars['String']>;
   sku_id?: Maybe<Scalars['String']>;
-  sub_brand?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year1?: Maybe<Scalars['smallint']>;
   year2?: Maybe<Scalars['smallint']>;
@@ -1720,8 +1738,8 @@ export type Sku_Min_Order_By = {
   paralell?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   product_type?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
   sku_id?: Maybe<Order_By>;
-  sub_brand?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   year1?: Maybe<Order_By>;
   year2?: Maybe<Order_By>;
@@ -1774,9 +1792,9 @@ export type Sku_Order_By = {
   player?: Maybe<Order_By>;
   product_type?: Maybe<Order_By>;
   rookie_card?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
   sku_id?: Maybe<Order_By>;
   sku_type?: Maybe<Order_By>;
-  sub_brand?: Maybe<Order_By>;
   type?: Maybe<Sku_Type_Order_By>;
   updated_at?: Maybe<Order_By>;
   year1?: Maybe<Order_By>;
@@ -1835,11 +1853,11 @@ export enum Sku_Select_Column {
   /** column name */
   RookieCard = 'rookie_card',
   /** column name */
+  Series = 'series',
+  /** column name */
   SkuId = 'sku_id',
   /** column name */
   SkuType = 'sku_type',
-  /** column name */
-  SubBrand = 'sub_brand',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -1872,9 +1890,9 @@ export type Sku_Set_Input = {
   player?: Maybe<Scalars['String']>;
   product_type?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
   sku_id?: Maybe<Scalars['String']>;
   sku_type?: Maybe<Sku_Type_Enum>;
-  sub_brand?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year1?: Maybe<Scalars['smallint']>;
   year2?: Maybe<Scalars['smallint']>;
@@ -2019,11 +2037,11 @@ export enum Sku_Update_Column {
   /** column name */
   RookieCard = 'rookie_card',
   /** column name */
+  Series = 'series',
+  /** column name */
   SkuId = 'sku_id',
   /** column name */
   SkuType = 'sku_type',
-  /** column name */
-  SubBrand = 'sub_brand',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4420,33 +4438,132 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type ScheduledBreakFragment = { __typename?: 'Breaks' } & Pick<
-  Breaks,
-  | 'break_type'
-  | 'description'
-  | 'price'
-  | 'spots'
-  | 'status'
-  | 'title'
-  | 'event_id'
-> & {
-    Event: { __typename?: 'Events' } & Pick<
-      Events,
-      'id' | 'status' | 'start_time'
+export type BreakerBreaksQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type BreakerBreaksQuery = { __typename?: 'query_root' } & {
+  Breaks: Array<
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      | 'id'
+      | 'break_type'
+      | 'description'
+      | 'price'
+      | 'spots'
+      | 'status'
+      | 'title'
+      | 'image'
     > & {
-        User: { __typename?: 'Users' } & Pick<Users, 'id'> & {
-            Profile?: Maybe<
-              { __typename?: 'Profiles' } & Pick<Profiles, 'image'>
-            >;
-          };
-      };
-  };
+        Event: { __typename?: 'Events' } & Pick<
+          Events,
+          'id' | 'status' | 'start_time'
+        >;
+      }
+  >;
+};
+
+export type BreakerEventsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type BreakerEventsQuery = { __typename?: 'query_root' } & {
+  Events: Array<
+    { __typename?: 'Events' } & Pick<
+      Events,
+      'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'
+    >
+  >;
+};
+
+export type BreakersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type BreakersQuery = { __typename?: 'query_root' } & {
+  Users: Array<
+    { __typename?: 'Users' } & Pick<Users, 'id'> & {
+        Profile?: Maybe<
+          { __typename?: 'Profiles' } & Pick<
+            Profiles,
+            | 'id'
+            | 'first_name'
+            | 'last_name'
+            | 'twitter'
+            | 'facebook'
+            | 'instagram'
+            | 'image'
+            | 'video'
+            | 'bio'
+          >
+        >;
+      }
+  >;
+};
+
+export type EventBreaksQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+export type EventBreaksQuery = { __typename?: 'query_root' } & {
+  Breaks: Array<
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      | 'id'
+      | 'break_type'
+      | 'description'
+      | 'price'
+      | 'spots'
+      | 'status'
+      | 'title'
+    >
+  >;
+};
+
+export type NewEventBreaksSubscriptionVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+export type NewEventBreaksSubscription = {
+  __typename?: 'subscription_root';
+} & {
+  Breaks: Array<
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      | 'id'
+      | 'break_type'
+      | 'description'
+      | 'price'
+      | 'spots'
+      | 'status'
+      | 'title'
+    >
+  >;
+};
 
 export type ScheduledBreaksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ScheduledBreaksQuery = { __typename?: 'query_root' } & {
   Breaks: Array<
-    { __typename?: 'Breaks' } & Pick<Breaks, 'id'> & ScheduledBreakFragment
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      | 'id'
+      | 'break_type'
+      | 'description'
+      | 'price'
+      | 'spots'
+      | 'status'
+      | 'title'
+    > & {
+        Event: { __typename?: 'Events' } & Pick<
+          Events,
+          'id' | 'status' | 'start_time'
+        > & {
+            User: { __typename?: 'Users' } & Pick<Users, 'id'> & {
+                Profile?: Maybe<
+                  { __typename?: 'Profiles' } & Pick<Profiles, 'id' | 'image'>
+                >;
+              };
+          };
+      }
   >;
 };
 
@@ -4458,22 +4575,27 @@ export type NewScheduledBreaksSubscription = {
   __typename?: 'subscription_root';
 } & {
   Breaks: Array<
-    { __typename?: 'Breaks' } & Pick<Breaks, 'id'> & ScheduledBreakFragment
-  >;
-};
-
-export type ScheduledEventFragment = { __typename?: 'Users' } & {
-  Events: Array<
-    { __typename?: 'Events' } & Pick<
-      Events,
-      'id' | 'title' | 'status' | 'image' | 'start_time'
-    >
-  >;
-  Profile?: Maybe<
-    { __typename?: 'Profiles' } & Pick<
-      Profiles,
-      'id' | 'image' | 'first_name' | 'last_name'
-    >
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      | 'id'
+      | 'break_type'
+      | 'description'
+      | 'price'
+      | 'spots'
+      | 'status'
+      | 'title'
+    > & {
+        Event: { __typename?: 'Events' } & Pick<
+          Events,
+          'id' | 'status' | 'start_time'
+        > & {
+            User: { __typename?: 'Users' } & Pick<Users, 'id'> & {
+                Profile?: Maybe<
+                  { __typename?: 'Profiles' } & Pick<Profiles, 'id' | 'image'>
+                >;
+              };
+          };
+      }
   >;
 };
 
@@ -4481,7 +4603,20 @@ export type ScheduledEventsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ScheduledEventsQuery = { __typename?: 'query_root' } & {
   Users: Array<
-    { __typename?: 'Users' } & Pick<Users, 'id'> & ScheduledEventFragment
+    { __typename?: 'Users' } & Pick<Users, 'id'> & {
+        Events: Array<
+          { __typename?: 'Events' } & Pick<
+            Events,
+            'id' | 'title' | 'status' | 'image' | 'start_time'
+          >
+        >;
+        Profile?: Maybe<
+          { __typename?: 'Profiles' } & Pick<
+            Profiles,
+            'id' | 'image' | 'first_name' | 'last_name'
+          >
+        >;
+      }
   >;
 };
 
@@ -4493,49 +4628,339 @@ export type NewScheduledEventsSubscription = {
   __typename?: 'subscription_root';
 } & {
   Users: Array<
-    { __typename?: 'Users' } & Pick<Users, 'id'> & ScheduledEventFragment
+    { __typename?: 'Users' } & Pick<Users, 'id'> & {
+        Events: Array<
+          { __typename?: 'Events' } & Pick<
+            Events,
+            'id' | 'title' | 'status' | 'image' | 'start_time'
+          >
+        >;
+        Profile?: Maybe<
+          { __typename?: 'Profiles' } & Pick<
+            Profiles,
+            'id' | 'image' | 'first_name' | 'last_name'
+          >
+        >;
+      }
   >;
 };
 
-export const ScheduledBreakFragmentDoc = gql`
-  fragment scheduledBreak on Breaks {
-    break_type
-    description
-    price
-    spots
-    status
-    title
-    event_id
-    Event {
+export const BreakerBreaksDocument = gql`
+  query BreakerBreaks($id: String!) {
+    Breaks(
+      where: {
+        Event: { User: { id: { _eq: $id } }, status: { _neq: COMPLETED } }
+      }
+      order_by: { Event: { start_time: asc } }
+    ) {
       id
+      break_type
+      description
+      price
+      spots
       status
-      start_time
-      User {
+      title
+      image
+      Event {
         id
-        Profile {
-          image
-        }
+        status
+        start_time
       }
     }
   }
 `;
-export const ScheduledEventFragmentDoc = gql`
-  fragment scheduledEvent on Users {
-    Events(limit: 5, where: { status: { _neq: COMPLETED } }) {
+
+/**
+ * __useBreakerBreaksQuery__
+ *
+ * To run a query within a React component, call `useBreakerBreaksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBreakerBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakerBreaksQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useBreakerBreaksQuery(
+  baseOptions: ApolloReactHooks.QueryHookOptions<
+    BreakerBreaksQuery,
+    BreakerBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<
+    BreakerBreaksQuery,
+    BreakerBreaksQueryVariables
+  >(BreakerBreaksDocument, options);
+}
+export function useBreakerBreaksLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    BreakerBreaksQuery,
+    BreakerBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    BreakerBreaksQuery,
+    BreakerBreaksQueryVariables
+  >(BreakerBreaksDocument, options);
+}
+export type BreakerBreaksQueryHookResult = ReturnType<
+  typeof useBreakerBreaksQuery
+>;
+export type BreakerBreaksLazyQueryHookResult = ReturnType<
+  typeof useBreakerBreaksLazyQuery
+>;
+export type BreakerBreaksQueryResult = Apollo.QueryResult<
+  BreakerBreaksQuery,
+  BreakerBreaksQueryVariables
+>;
+export const BreakerEventsDocument = gql`
+  query BreakerEvents($id: String!) {
+    Events(where: { User: { id: { _eq: $id } }, status: { _neq: COMPLETED } }) {
       id
       title
       status
       image
       start_time
-    }
-    Profile {
-      id
-      image
-      first_name
-      last_name
+      description
     }
   }
 `;
+
+/**
+ * __useBreakerEventsQuery__
+ *
+ * To run a query within a React component, call `useBreakerEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBreakerEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakerEventsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useBreakerEventsQuery(
+  baseOptions: ApolloReactHooks.QueryHookOptions<
+    BreakerEventsQuery,
+    BreakerEventsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<
+    BreakerEventsQuery,
+    BreakerEventsQueryVariables
+  >(BreakerEventsDocument, options);
+}
+export function useBreakerEventsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    BreakerEventsQuery,
+    BreakerEventsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    BreakerEventsQuery,
+    BreakerEventsQueryVariables
+  >(BreakerEventsDocument, options);
+}
+export type BreakerEventsQueryHookResult = ReturnType<
+  typeof useBreakerEventsQuery
+>;
+export type BreakerEventsLazyQueryHookResult = ReturnType<
+  typeof useBreakerEventsLazyQuery
+>;
+export type BreakerEventsQueryResult = Apollo.QueryResult<
+  BreakerEventsQuery,
+  BreakerEventsQueryVariables
+>;
+export const BreakersDocument = gql`
+  query Breakers {
+    Users(where: { role: { _eq: ADMIN } }) {
+      id
+      Profile {
+        id
+        first_name
+        last_name
+        twitter
+        facebook
+        instagram
+        image
+        video
+        bio
+      }
+    }
+  }
+`;
+
+/**
+ * __useBreakersQuery__
+ *
+ * To run a query within a React component, call `useBreakersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBreakersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBreakersQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    BreakersQuery,
+    BreakersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<BreakersQuery, BreakersQueryVariables>(
+    BreakersDocument,
+    options,
+  );
+}
+export function useBreakersLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    BreakersQuery,
+    BreakersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<BreakersQuery, BreakersQueryVariables>(
+    BreakersDocument,
+    options,
+  );
+}
+export type BreakersQueryHookResult = ReturnType<typeof useBreakersQuery>;
+export type BreakersLazyQueryHookResult = ReturnType<
+  typeof useBreakersLazyQuery
+>;
+export type BreakersQueryResult = Apollo.QueryResult<
+  BreakersQuery,
+  BreakersQueryVariables
+>;
+export const EventBreaksDocument = gql`
+  query EventBreaks($id: uuid!) {
+    Breaks(
+      where: { status: { _neq: COMPLETED }, Event: { id: { _eq: $id } } }
+    ) {
+      id
+      break_type
+      description
+      price
+      spots
+      status
+      title
+    }
+  }
+`;
+
+/**
+ * __useEventBreaksQuery__
+ *
+ * To run a query within a React component, call `useEventBreaksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEventBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEventBreaksQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEventBreaksQuery(
+  baseOptions: ApolloReactHooks.QueryHookOptions<
+    EventBreaksQuery,
+    EventBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<EventBreaksQuery, EventBreaksQueryVariables>(
+    EventBreaksDocument,
+    options,
+  );
+}
+export function useEventBreaksLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    EventBreaksQuery,
+    EventBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    EventBreaksQuery,
+    EventBreaksQueryVariables
+  >(EventBreaksDocument, options);
+}
+export type EventBreaksQueryHookResult = ReturnType<typeof useEventBreaksQuery>;
+export type EventBreaksLazyQueryHookResult = ReturnType<
+  typeof useEventBreaksLazyQuery
+>;
+export type EventBreaksQueryResult = Apollo.QueryResult<
+  EventBreaksQuery,
+  EventBreaksQueryVariables
+>;
+export const NewEventBreaksDocument = gql`
+  subscription NewEventBreaks($id: uuid!) {
+    Breaks(
+      where: { status: { _neq: COMPLETED }, Event: { id: { _eq: $id } } }
+    ) {
+      id
+      break_type
+      description
+      price
+      spots
+      status
+      title
+    }
+  }
+`;
+
+/**
+ * __useNewEventBreaksSubscription__
+ *
+ * To run a query within a React component, call `useNewEventBreaksSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewEventBreaksSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewEventBreaksSubscription({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useNewEventBreaksSubscription(
+  baseOptions: ApolloReactHooks.SubscriptionHookOptions<
+    NewEventBreaksSubscription,
+    NewEventBreaksSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useSubscription<
+    NewEventBreaksSubscription,
+    NewEventBreaksSubscriptionVariables
+  >(NewEventBreaksDocument, options);
+}
+export type NewEventBreaksSubscriptionHookResult = ReturnType<
+  typeof useNewEventBreaksSubscription
+>;
+export type NewEventBreaksSubscriptionResult = Apollo.SubscriptionResult<NewEventBreaksSubscription>;
 export const ScheduledBreaksDocument = gql`
   query ScheduledBreaks {
     Breaks(
@@ -4543,10 +4968,26 @@ export const ScheduledBreaksDocument = gql`
       order_by: { Event: { start_time: asc } }
     ) {
       id
-      ...scheduledBreak
+      break_type
+      description
+      price
+      spots
+      status
+      title
+      Event {
+        id
+        status
+        start_time
+        User {
+          id
+          Profile {
+            id
+            image
+          }
+        }
+      }
     }
   }
-  ${ScheduledBreakFragmentDoc}
 `;
 
 /**
@@ -4605,10 +5046,26 @@ export const NewScheduledBreaksDocument = gql`
       order_by: { Event: { start_time: asc } }
     ) {
       id
-      ...scheduledBreak
+      break_type
+      description
+      price
+      spots
+      status
+      title
+      Event {
+        id
+        status
+        start_time
+        User {
+          id
+          Profile {
+            id
+            image
+          }
+        }
+      }
     }
   }
-  ${ScheduledBreakFragmentDoc}
 `;
 
 /**
@@ -4646,10 +5103,21 @@ export const ScheduledEventsDocument = gql`
   query ScheduledEvents {
     Users(where: { role: { _eq: ADMIN } }) {
       id
-      ...scheduledEvent
+      Events(limit: 5, where: { status: { _neq: COMPLETED } }) {
+        id
+        title
+        status
+        image
+        start_time
+      }
+      Profile {
+        id
+        image
+        first_name
+        last_name
+      }
     }
   }
-  ${ScheduledEventFragmentDoc}
 `;
 
 /**
@@ -4705,10 +5173,21 @@ export const NewScheduledEventsDocument = gql`
   subscription NewScheduledEvents {
     Users(where: { role: { _eq: ADMIN } }) {
       id
-      ...scheduledEvent
+      Events(limit: 5, where: { status: { _neq: COMPLETED } }) {
+        id
+        title
+        status
+        image
+        start_time
+      }
+      Profile {
+        id
+        image
+        first_name
+        last_name
+      }
     }
   }
-  ${ScheduledEventFragmentDoc}
 `;
 
 /**

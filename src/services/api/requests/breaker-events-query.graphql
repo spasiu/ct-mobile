@@ -1,0 +1,10 @@
+query BreakerEvents($id: String!) {
+  Events(where: { User: { id: { _eq: $id } }, status: { _neq: COMPLETED } }) {
+    id
+    title
+    status
+    image
+    start_time
+    description
+  }
+}
