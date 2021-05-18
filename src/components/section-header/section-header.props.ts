@@ -9,4 +9,5 @@ export interface SectionHeaderProps {
   titleTextStyle?: TextProps[];
   actionTextStyle?: TextProps[];
   actionComponent?: React.ReactNode;
+  onActionPressed?: () => void;
 }

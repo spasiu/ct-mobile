@@ -24,6 +24,7 @@ export const FeaturedBreakCard = ({
   titleTextStyle = [],
   descriptionTextStyle = [],
   contentContainerStyle = [],
+  eventDate,
   ...imageCardProps
 }: FeaturedBreakCardProps) => (
   <ImageCard cardSize="medium" {...imageCardProps}>
@@ -31,7 +32,7 @@ export const FeaturedBreakCard = ({
       <View
         style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
         <View style={BADGE_WRAPPER_STYLE_PRESET}>
-          {status && <StatusBadge status={status} />}
+          {status && <StatusBadge text={eventDate} status={status} />}
           {viewCount && <LiveCountBadge count={viewCount} />}
         </View>
         <View style={CONTENT_WRAPPER_STYPE_PRESET}>

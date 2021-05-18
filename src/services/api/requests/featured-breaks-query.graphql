@@ -1,0 +1,17 @@
+query FeaturedBreaks {
+  Breaks(
+    limit: 6
+    where: { Event: { status: { _neq: COMPLETED } } }
+    order_by: { Event: { start_time: asc } }
+  ) {
+    id
+    image
+    title
+    description
+    Event {
+      id
+      status
+      start_time
+    }
+  }
+}

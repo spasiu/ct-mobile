@@ -153,6 +153,7 @@
     }
   },
   "profile": {
+    "title": "Profile",
     "addAddress": "Add Delivery Address"
   },
   "hits": {

@@ -10,6 +10,7 @@ import {
   IconButton,
   FilterItem,
 } from '../../components';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { WINDOW_WIDTH } from '../../theme/sizes';
 import { t } from '../../i18n/i18n';
 
@@ -76,7 +77,7 @@ const HITS = [
   },
 ];
 
-export const HitsScreen = () => {
+export const HitsScreen = ({ navigation }) => {
   const cardWidth = (WINDOW_WIDTH - sizes.mv3 * 2 - 40) / 3;
   const cardHeight = cardWidth * 1.3;
   return (
@@ -90,7 +91,11 @@ export const HitsScreen = () => {
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
               <FilterItem type="pill-alt" text={t('buttons.myHits')} />
-              <IconButton style={[s.ml3]}>
+              <IconButton
+                style={[s.ml3]}
+                onPress={() =>
+                  navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
+                }>
                 <Image
                   resizeMode={'cover'}
                   style={[s.circle_m]}
@@ -108,6 +113,7 @@ export const HitsScreen = () => {
         data={HITS}
         renderItem={({ item }) => (
           <HitCard
+            onPress={() => navigation.navigate(ROUTES_IDS.HIT_DETAIL_MODAL, {})}
             title={item.name}
             image={{ uri: item.image }}
             containerStyle={[s.flx_i]}

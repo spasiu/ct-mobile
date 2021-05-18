@@ -19,6 +19,7 @@ export const SectionHeader = ({
   containerStyle = [],
   titleTextStyle = [],
   actionTextStyle = [],
+  onActionPressed = () => {},
   actionComponent,
 }: SectionHeaderProps) => (
   <View style={[...CONTAINER_STYLE, ...containerStyle]}>
@@ -32,6 +33,7 @@ export const SectionHeader = ({
       <TextLink
         textStyle={[...ACTION_TEXT_STYLE, ...actionTextStyle]}
         text={actionText}
+        onPress={onActionPressed}
       />
     )}
   </View>

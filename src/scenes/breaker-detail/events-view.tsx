@@ -14,7 +14,7 @@ import {
 import {
   breakerEventSelector,
   eventDetailSelector,
-} from './breaker-screen-utils';
+} from './breaker-detail-screen-utils';
 
 export const EventsView = ({ breaker }) => {
   const navigation = useNavigation();

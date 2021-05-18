@@ -11,9 +11,9 @@ import {
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import ReadMore from '@fawazahmed/react-native-read-more';
 import { WebView } from 'react-native-webview';
+
 import { WINDOW_WIDTH } from '../../theme/sizes';
 import { COLORS } from '../../theme/colors';
-
 import {
   Container,
   NavigationBar,
@@ -24,9 +24,10 @@ import {
   SocialIcon,
   IconButton,
 } from '../../components';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 
-import { breakerProfileSelector } from './breaker-screen-utils';
+import { breakerProfileSelector } from './breaker-detail-screen-utils';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 
@@ -57,9 +58,9 @@ const RECENT_HITS = [
   },
 ];
 
-export const BreakerScreen = ({ route, navigation }) => {
-  const [eventsView, setEventsView] = useState(false);
-  const { breaker, id } = route.params;
+export const BreakerDetailScreen = ({ route, navigation }) => {
+  const { breaker, id, startOnEventsView = false } = route.params;
+  const [eventsView, setEventsView] = useState(startOnEventsView);
 
   const { image, name, description, social } = breakerProfileSelector(breaker);
   const pixelRatio = PixelRatio.get();
@@ -146,14 +147,19 @@ export const BreakerScreen = ({ route, navigation }) => {
           containerStyle={[s.mh3, s.h1]}
           title={t('sections.recentHits')}
           actionText={t('buttons.seeAll')}
+          onActionPressed={() => navigation.navigate(ROUTES_IDS.HITS_TAB)}
         />
         <FlatList
           showsHorizontalScrollIndicator={false}
           style={[s.h5, s.w_100, s.pl3, s.mb3]}
+          contentContainerStyle={[s.pr3]}
           data={RECENT_HITS}
           horizontal
           renderItem={({ item }) => (
             <HitCard
+              onPress={() =>
+                navigation.navigate(ROUTES_IDS.HIT_DETAIL_MODAL, {})
+              }
               showTitle={false}
               containerStyle={[s.mr3]}
               image={{

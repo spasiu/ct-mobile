@@ -10,4 +10,5 @@ export interface FeaturedBreakCardProps extends ImageCardProps {
   contentContainerStyle?: ViewStyle[];
   status?: 'live' | 'upcoming' | 'scheduled'; // change to data status when models available
   viewCount?: string;
+  eventDate?: string;
 }

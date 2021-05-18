@@ -1,17 +1,23 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { useNavigation } from '@react-navigation/native';
 
 import { BreakCard, Loading } from '../../components';
-
 import {
   useScheduledBreaksQuery,
   NewScheduledBreaksDocument,
 } from '../../services/api/requests';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
-import { breaksScheduleSelector } from './schedule-screen-utils';
+import {
+  breaksScheduleSelector,
+  breakDetailSelector,
+} from './schedule-screen-utils';
 
 export const BreaksView = () => {
+  const navigation = useNavigation();
+
   const {
     loading,
     data,
@@ -35,7 +41,16 @@ export const BreaksView = () => {
       data={data?.Breaks}
       keyExtractor={item => item.id}
       renderItem={({ item }) => {
-        return <BreakCard {...breaksScheduleSelector(item)} />;
+        return (
+          <BreakCard
+            onPress={() =>
+              navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {
+                ...breakDetailSelector(item),
+              })
+            }
+            {...breaksScheduleSelector(item)}
+          />
+        );
       }}
     />
   );

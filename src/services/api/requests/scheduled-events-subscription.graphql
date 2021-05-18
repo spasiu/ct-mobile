@@ -7,12 +7,18 @@ subscription NewScheduledEvents {
       status
       image
       start_time
+      description
     }
     Profile {
       id
       image
       first_name
       last_name
+      twitter
+      facebook
+      instagram
+      video
+      bio
     }
   }
 }

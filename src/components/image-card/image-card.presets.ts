@@ -16,7 +16,7 @@ const CARD_SIZES = {
   },
   large: {
     height: sizes.h5 + sizes.h4 + sizes.h2,
-    width: sizes.w5 + sizes.w3 + sizes.w2,
+    width: sizes.w5 + sizes.w2,
   },
 };
 

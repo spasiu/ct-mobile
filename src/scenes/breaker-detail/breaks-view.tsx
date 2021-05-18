@@ -14,7 +14,7 @@ import { indexedMap } from '../../utils/ramda';
 import {
   breakerBreakSelector,
   breakDetailSelector,
-} from './breaker-screen-utils';
+} from './breaker-detail-screen-utils';
 
 export const BreaksView = ({ breaker }) => {
   const navigation = useNavigation();

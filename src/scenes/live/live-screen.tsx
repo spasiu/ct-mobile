@@ -11,7 +11,6 @@ import Video from 'react-native-video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import { prepend } from 'ramda';
 
 import {
@@ -23,9 +22,8 @@ import {
   BuyButton,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
-import { BreakDetailModal } from '../break-detail/break-detail-modal';
-import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { t } from '../../i18n/i18n';
 
 const closeIcon = require('../../assets/close-icon.png');
@@ -33,13 +31,9 @@ const diamondIcon = require('../../assets/diamond-icon.png');
 const shareIcon = require('../../assets/share-icon.png');
 const shopIcon = require('../../assets/shop-icon.png');
 
-export const LiveScreen = () => {
+export const LiveScreen = ({ navigation }) => {
   const inputRef = useRef(null);
-
-  const navigation = useNavigation();
   const [messages, setMessage] = useState([]);
-  const [showPayment, setShowPayment] = useState(false);
-  const [showBreaks, setShowBreaks] = useState(false);
 
   return (
     <View style={[s.flx_i]}>
@@ -109,7 +103,11 @@ export const LiveScreen = () => {
                 <Text style={[s.ff_alt_sb, s.f7, s.white]}>{'$110'}</Text>
                 <Text style={[s.ff_alt_r, s.f7, s.white]}>{'3 remaining'}</Text>
               </View>
-              <BuyButton onPress={() => setShowPayment(true)} />
+              <BuyButton
+                onPress={() =>
+                  navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {})
+                }
+              />
             </View>
           </View>
           <KeyboardAvoidingView
@@ -172,13 +170,16 @@ export const LiveScreen = () => {
                 <IconButton>
                   <Image source={shareIcon} />
                 </IconButton>
-                <IconButton onPress={() => setShowBreaks(true)}>
+                <IconButton
+                  onPress={() =>
+                    navigation.navigate(ROUTES_IDS.EVENT_DETAIL_MODAL, {})
+                  }>
                   <Image source={shopIcon} />
                 </IconButton>
               </View>
             </View>
           </KeyboardAvoidingView>
-          <BreakDetailModal
+          {/* <BreakDetailModal
             productImage={{ uri: 'https://source.unsplash.com/100x100/?card' }}
             productTitle={'2020 Bowman Baseball Sapphire Edition'}
             productDescription={
@@ -193,7 +194,7 @@ export const LiveScreen = () => {
             showHeader={false}
             visible={showBreaks}
             onPressClose={() => setShowBreaks(false)}
-          />
+          /> */}
         </SafeAreaView>
       </LinearGradient>
     </View>

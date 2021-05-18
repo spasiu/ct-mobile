@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, View, Image } from 'react-native';
-import { styles as s } from 'react-native-style-tachyons';
+import { styles as s, sizes } from 'react-native-style-tachyons';
 
 import {
   TitleBar,
@@ -35,7 +35,11 @@ export const BreakersScreen = ({ navigation }) => {
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
               <FilterItem type="pill-alt" text={t('buttons.showFollowing')} />
-              <IconButton style={[s.ml3]}>
+              <IconButton
+                style={[s.ml3]}
+                onPress={() =>
+                  navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
+                }>
                 <Image
                   resizeMode={'cover'}
                   style={[s.circle_m]}
@@ -59,12 +63,15 @@ export const BreakersScreen = ({ navigation }) => {
               <BreakerCard
                 {...breakerSelector(item)}
                 onPress={() =>
-                  navigation.navigate(ROUTES_IDS.BREAKER_SCREEN, {
+                  navigation.navigate(ROUTES_IDS.BREAKER_DETAIL_SCREEN, {
                     breaker: breakerProfileSelector(item),
                     id: item.id,
                   })
                 }
-                containerStyle={[s.flx_i]}
+                containerStyle={[
+                  s.flx_i,
+                  { width: sizes.w5 + sizes.w3 + sizes.w2 },
+                ]}
                 cardSize="large"
               />
             </View>

@@ -2,24 +2,22 @@ import React from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import { ROUTES_IDS } from '../routes/identifiers';
-import { HomeScreen } from '../../scenes/home/home-screen';
+import { HitsScreen } from '../../scenes/hits/hits-screen';
 import { UserProfileScreen } from '../../scenes/user-profile/user-profile-screen';
 
-type HomeStackParamList = {
-  [ROUTES_IDS.HOME_SCREEN]: undefined;
-  [ROUTES_IDS.SEARCH_SCREEN]: undefined;
+type HitsStackParamList = {
+  [ROUTES_IDS.HITS_SCREEN]: undefined;
   [ROUTES_IDS.USER_PROFILE_SCREEN]: undefined;
 };
 
-const Stack = createNativeStackNavigator<HomeStackParamList>();
+const Stack = createNativeStackNavigator<HitsStackParamList>();
 
-export const HomeStack = () => (
+export const HitsStack = () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
     }}>
-    <Stack.Screen name={ROUTES_IDS.HOME_SCREEN} component={HomeScreen} />
-    <Stack.Screen name={ROUTES_IDS.SEARCH_SCREEN} component={HomeScreen} />
+    <Stack.Screen name={ROUTES_IDS.HITS_SCREEN} component={HitsScreen} />
     <Stack.Screen
       name={ROUTES_IDS.USER_PROFILE_SCREEN}
       component={UserProfileScreen}

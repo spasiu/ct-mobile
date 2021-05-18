@@ -4539,6 +4539,61 @@ export type NewEventBreaksSubscription = {
   >;
 };
 
+export type FeaturedBreakersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FeaturedBreakersQuery = { __typename?: 'query_root' } & {
+  Users: Array<
+    { __typename?: 'Users' } & Pick<Users, 'id'> & {
+        Profile?: Maybe<
+          { __typename?: 'Profiles' } & Pick<
+            Profiles,
+            | 'id'
+            | 'first_name'
+            | 'last_name'
+            | 'twitter'
+            | 'facebook'
+            | 'instagram'
+            | 'image'
+            | 'video'
+            | 'bio'
+          >
+        >;
+      }
+  >;
+};
+
+export type FeaturedBreaksQueryVariables = Exact<{ [key: string]: never }>;
+
+export type FeaturedBreaksQuery = { __typename?: 'query_root' } & {
+  Breaks: Array<
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      'id' | 'image' | 'title' | 'description'
+    > & {
+        Event: { __typename?: 'Events' } & Pick<
+          Events,
+          'id' | 'status' | 'start_time'
+        >;
+      }
+  >;
+};
+
+export type NewFeaturedBreaksQueryVariables = Exact<{ [key: string]: never }>;
+
+export type NewFeaturedBreaksQuery = { __typename?: 'query_root' } & {
+  Breaks: Array<
+    { __typename?: 'Breaks' } & Pick<
+      Breaks,
+      'id' | 'image' | 'title' | 'description'
+    > & {
+        Event: { __typename?: 'Events' } & Pick<
+          Events,
+          'id' | 'status' | 'start_time'
+        >;
+      }
+  >;
+};
+
 export type ScheduledBreaksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ScheduledBreaksQuery = { __typename?: 'query_root' } & {
@@ -4607,13 +4662,21 @@ export type ScheduledEventsQuery = { __typename?: 'query_root' } & {
         Events: Array<
           { __typename?: 'Events' } & Pick<
             Events,
-            'id' | 'title' | 'status' | 'image' | 'start_time'
+            'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'
           >
         >;
         Profile?: Maybe<
           { __typename?: 'Profiles' } & Pick<
             Profiles,
-            'id' | 'image' | 'first_name' | 'last_name'
+            | 'id'
+            | 'image'
+            | 'first_name'
+            | 'last_name'
+            | 'twitter'
+            | 'facebook'
+            | 'instagram'
+            | 'video'
+            | 'bio'
           >
         >;
       }
@@ -4632,13 +4695,21 @@ export type NewScheduledEventsSubscription = {
         Events: Array<
           { __typename?: 'Events' } & Pick<
             Events,
-            'id' | 'title' | 'status' | 'image' | 'start_time'
+            'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'
           >
         >;
         Profile?: Maybe<
           { __typename?: 'Profiles' } & Pick<
             Profiles,
-            'id' | 'image' | 'first_name' | 'last_name'
+            | 'id'
+            | 'image'
+            | 'first_name'
+            | 'last_name'
+            | 'twitter'
+            | 'facebook'
+            | 'instagram'
+            | 'video'
+            | 'bio'
           >
         >;
       }
@@ -4961,6 +5032,212 @@ export type NewEventBreaksSubscriptionHookResult = ReturnType<
   typeof useNewEventBreaksSubscription
 >;
 export type NewEventBreaksSubscriptionResult = Apollo.SubscriptionResult<NewEventBreaksSubscription>;
+export const FeaturedBreakersDocument = gql`
+  query FeaturedBreakers {
+    Users(where: { role: { _eq: ADMIN } }, limit: 6) {
+      id
+      Profile {
+        id
+        first_name
+        last_name
+        twitter
+        facebook
+        instagram
+        image
+        video
+        bio
+      }
+    }
+  }
+`;
+
+/**
+ * __useFeaturedBreakersQuery__
+ *
+ * To run a query within a React component, call `useFeaturedBreakersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedBreakersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeaturedBreakersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeaturedBreakersQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    FeaturedBreakersQuery,
+    FeaturedBreakersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<
+    FeaturedBreakersQuery,
+    FeaturedBreakersQueryVariables
+  >(FeaturedBreakersDocument, options);
+}
+export function useFeaturedBreakersLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    FeaturedBreakersQuery,
+    FeaturedBreakersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    FeaturedBreakersQuery,
+    FeaturedBreakersQueryVariables
+  >(FeaturedBreakersDocument, options);
+}
+export type FeaturedBreakersQueryHookResult = ReturnType<
+  typeof useFeaturedBreakersQuery
+>;
+export type FeaturedBreakersLazyQueryHookResult = ReturnType<
+  typeof useFeaturedBreakersLazyQuery
+>;
+export type FeaturedBreakersQueryResult = Apollo.QueryResult<
+  FeaturedBreakersQuery,
+  FeaturedBreakersQueryVariables
+>;
+export const FeaturedBreaksDocument = gql`
+  query FeaturedBreaks {
+    Breaks(
+      limit: 6
+      where: { Event: { status: { _neq: COMPLETED } } }
+      order_by: { Event: { start_time: asc } }
+    ) {
+      id
+      image
+      title
+      description
+      Event {
+        id
+        status
+        start_time
+      }
+    }
+  }
+`;
+
+/**
+ * __useFeaturedBreaksQuery__
+ *
+ * To run a query within a React component, call `useFeaturedBreaksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeaturedBreaksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeaturedBreaksQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    FeaturedBreaksQuery,
+    FeaturedBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<
+    FeaturedBreaksQuery,
+    FeaturedBreaksQueryVariables
+  >(FeaturedBreaksDocument, options);
+}
+export function useFeaturedBreaksLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    FeaturedBreaksQuery,
+    FeaturedBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    FeaturedBreaksQuery,
+    FeaturedBreaksQueryVariables
+  >(FeaturedBreaksDocument, options);
+}
+export type FeaturedBreaksQueryHookResult = ReturnType<
+  typeof useFeaturedBreaksQuery
+>;
+export type FeaturedBreaksLazyQueryHookResult = ReturnType<
+  typeof useFeaturedBreaksLazyQuery
+>;
+export type FeaturedBreaksQueryResult = Apollo.QueryResult<
+  FeaturedBreaksQuery,
+  FeaturedBreaksQueryVariables
+>;
+export const NewFeaturedBreaksDocument = gql`
+  query NewFeaturedBreaks {
+    Breaks(
+      limit: 6
+      where: { Event: { status: { _neq: COMPLETED } } }
+      order_by: { Event: { start_time: asc } }
+    ) {
+      id
+      image
+      title
+      description
+      Event {
+        id
+        status
+        start_time
+      }
+    }
+  }
+`;
+
+/**
+ * __useNewFeaturedBreaksQuery__
+ *
+ * To run a query within a React component, call `useNewFeaturedBreaksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewFeaturedBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewFeaturedBreaksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewFeaturedBreaksQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    NewFeaturedBreaksQuery,
+    NewFeaturedBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useQuery<
+    NewFeaturedBreaksQuery,
+    NewFeaturedBreaksQueryVariables
+  >(NewFeaturedBreaksDocument, options);
+}
+export function useNewFeaturedBreaksLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    NewFeaturedBreaksQuery,
+    NewFeaturedBreaksQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useLazyQuery<
+    NewFeaturedBreaksQuery,
+    NewFeaturedBreaksQueryVariables
+  >(NewFeaturedBreaksDocument, options);
+}
+export type NewFeaturedBreaksQueryHookResult = ReturnType<
+  typeof useNewFeaturedBreaksQuery
+>;
+export type NewFeaturedBreaksLazyQueryHookResult = ReturnType<
+  typeof useNewFeaturedBreaksLazyQuery
+>;
+export type NewFeaturedBreaksQueryResult = Apollo.QueryResult<
+  NewFeaturedBreaksQuery,
+  NewFeaturedBreaksQueryVariables
+>;
 export const ScheduledBreaksDocument = gql`
   query ScheduledBreaks {
     Breaks(
@@ -5109,12 +5386,18 @@ export const ScheduledEventsDocument = gql`
         status
         image
         start_time
+        description
       }
       Profile {
         id
         image
         first_name
         last_name
+        twitter
+        facebook
+        instagram
+        video
+        bio
       }
     }
   }
@@ -5179,12 +5462,18 @@ export const NewScheduledEventsDocument = gql`
         status
         image
         start_time
+        description
       }
       Profile {
         id
         image
         first_name
         last_name
+        twitter
+        facebook
+        instagram
+        video
+        bio
       }
     }
   }

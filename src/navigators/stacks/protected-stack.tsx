@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { LiveScreen } from '../../scenes/live/live-screen';
 import { BreakDetailModal } from '../../scenes/break-detail/break-detail-modal';
 import { EventDetailModal } from '../../scenes/event-detail/event-detail-modal';
+import { HitDetailModal } from '../../scenes/hit-detail/hit-detail-modal';
 
 import { ROUTES_IDS } from '../routes/identifiers';
 import { TabNavigator } from '../tab-navigator';
@@ -15,6 +16,7 @@ type ProtectedStackParamList = {
   [ROUTES_IDS.LIVE_MODAL]: undefined;
   [ROUTES_IDS.EVENT_DETAIL_MODAL]: undefined;
   [ROUTES_IDS.BREAK_DETAIL_MODAL]: undefined;
+  [ROUTES_IDS.HIT_DETAIL_MODAL]: undefined;
 };
 
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();
@@ -45,6 +47,10 @@ export const ProtectedStack = () => (
     <Stack.Screen
       name={ROUTES_IDS.BREAK_DETAIL_MODAL}
       component={BreakDetailModal}
+    />
+    <Stack.Screen
+      name={ROUTES_IDS.HIT_DETAIL_MODAL}
+      component={HitDetailModal}
     />
   </Stack.Navigator>
 );

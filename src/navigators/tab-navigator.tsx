@@ -6,8 +6,8 @@ import { styles as s } from 'react-native-style-tachyons';
 import { COLORS } from '../theme/colors';
 import { t } from '../i18n/i18n';
 
-import { ScheduleScreen } from '../scenes/schedule/schedule-screen';
-import { HitsScreen } from '../scenes/hits/hits-screen';
+import { ScheduleStack } from './stacks/schedule-stack';
+import { HitsStack } from './stacks/hits-stack';
 import { HomeStack } from './stacks/home-stack';
 import { BreakersStack } from './stacks/breakers-stack';
 
@@ -57,7 +57,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.SCHEDULE_TAB}
-      component={ScheduleScreen}
+      component={ScheduleStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
@@ -83,7 +83,7 @@ export const TabNavigator = () => (
     />
     <Tab.Screen
       name={ROUTES_IDS.HITS_TAB}
-      component={HitsScreen}
+      component={HitsStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image

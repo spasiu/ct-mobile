@@ -1,0 +1,16 @@
+query FeaturedBreakers {
+  Users(where: { role: { _eq: ADMIN } }, limit: 6) {
+    id
+    Profile {
+      id
+      first_name
+      last_name
+      twitter
+      facebook
+      instagram
+      image
+      video
+      bio
+    }
+  }
+}

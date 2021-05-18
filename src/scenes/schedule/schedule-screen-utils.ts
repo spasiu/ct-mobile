@@ -74,3 +74,40 @@ export const TEXT_KEY_FOR_BREAK_TYPE = {
   [Break_Type_Enum.RandomTeam]: 'filter.breakTypes.randomTeam',
   [ALL_FILTER_OPTION]: 'filter.all',
 };
+
+export const breakDetailSelector = ({
+  price,
+  title,
+  description,
+  image,
+}: Breaks) => {
+  return {
+    productImage: {
+      uri: image || 'https://source.unsplash.com/600x801/?sports',
+    },
+    productTitle: title,
+    productDescription: description,
+    price,
+  };
+};
+
+export const eventDetailSelector = (event, breaker) => {
+  const { id, image, title, status, description, start_time } = event;
+  const profilePath = ['Profile'];
+  const firstName = pathOr('', [...profilePath, 'first_name'], breaker);
+  const lastName = pathOr('', [...profilePath, 'last_name'], breaker);
+  const breakerImage = pathOr('', [...profilePath, 'image'], breaker);
+  return {
+    id,
+    title,
+    image: { uri: image || 'https://source.unsplash.com/600x801/?sports' },
+    breaker: {
+      name: `${firstName} ${lastName}`.trim(),
+      image: { uri: breakerImage },
+    },
+    status: status.toLowerCase(),
+    description,
+    league: 'baseball',
+    eventDate: formatScheduledStatus(start_time),
+  };
+};
