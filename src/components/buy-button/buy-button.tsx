@@ -1,8 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 
-import { ActionButton } from '../action-button/action-button';
-import { ActionButtonProps } from '../action-button/action-button.props';
+import { ActionButton, ActionButtonTypes } from '../action-button';
 import { t } from '../../i18n/i18n';
 
 import { BUTTON_STYLE, TEXT_STYLE, IMAGE_STYLE } from './buy-button.presets';
@@ -15,7 +14,7 @@ export const BuyButton = ({
   ...actionButtonProps
 }: BuyButtonProps) => (
   <ActionButton
-    buttonType="primary"
+    buttonType={ActionButtonTypes.primary}
     text={t('buttons.buy')}
     {...actionButtonProps}
     style={[...BUTTON_STYLE, ...containerStyle]}

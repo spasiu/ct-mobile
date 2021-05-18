@@ -1,11 +1,11 @@
 import { ViewStyle } from 'react-native';
 
-import { ActionButtonTypes } from '../action-button/action-button.presets';
+import { ActionButtonTypes } from '../action-button';
 
 export interface ActionFooterProps {
   containerStyle?: ViewStyle[];
   buttonText?: string;
-  buttonType?: ActionButtonTypes;
+  buttonType?: keyof typeof ActionButtonTypes;
   onPress?: () => void;
   children?: React.ReactNode;
 }

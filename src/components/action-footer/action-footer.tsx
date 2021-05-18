@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { ActionButton } from '../action-button/action-button';
+import { ActionButton, ActionButtonTypes } from '../action-button';
 
 import { ActionFooterProps } from './action-footer.props';
 import { viewPresets } from './action-footer.presets';
@@ -9,7 +9,7 @@ import { viewPresets } from './action-footer.presets';
 export const ActionFooter = ({
   containerStyle = [],
   buttonText = '',
-  buttonType = 'primary',
+  buttonType = ActionButtonTypes.primary,
   onPress = () => {},
   children,
 }: ActionFooterProps) => {
