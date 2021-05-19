@@ -7,6 +7,7 @@ import { map } from 'ramda';
 
 import {
   Container,
+  ContainerTypes,
   Pagination,
   TitleBar,
   ActionFooter,
@@ -27,7 +28,7 @@ export const OnboardingQuestionsScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe, s.mh0]}
       backgroundColor={s.bg_white}
-      containerType="fixed">
+      containerType={ContainerTypes.fixed}>
       <Swiper
         ref={swiperRef}
         scrollEnabled={false}

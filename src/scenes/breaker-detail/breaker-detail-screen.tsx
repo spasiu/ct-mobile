@@ -16,6 +16,7 @@ import { WINDOW_WIDTH } from '../../theme/sizes';
 import { COLORS } from '../../theme/colors';
 import {
   Container,
+  ContainerTypes,
   NavigationBar,
   FollowButton,
   HitCard,
@@ -82,7 +83,7 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
 
   return (
     <Container
-      containerType={'fixed'}
+      containerType={ContainerTypes.fixed}
       style={[s.mh0]}
       safeAreaEdges={['top', 'left', 'right']}>
       <NavigationBar onBackPressed={() => navigation.goBack()} />

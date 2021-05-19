@@ -5,6 +5,7 @@ import { styles as s, sizes } from 'react-native-style-tachyons';
 import {
   TitleBar,
   Container,
+  ContainerTypes,
   SearchInput,
   IconButton,
   FilterItem,
@@ -26,7 +27,7 @@ export const BreakersScreen = ({ navigation }) => {
   });
   return (
     <Container
-      containerType={'fixed'}
+      containerType={ContainerTypes.fixed}
       style={[s.mh0]}
       safeAreaEdges={['top', 'left', 'right']}>
       <View style={[s.mh3, s.mb4]}>

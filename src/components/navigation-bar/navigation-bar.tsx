@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-import { BackButton } from '../back-button/back-button';
+import { BackButton } from '../back-button';
 
 import {
   NAVIGATION_BAR_CONTAINER_STYLE,

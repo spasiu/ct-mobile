@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
+  ContainerTypes,
   ActionFooter,
   TextLink,
   ActionButton,
@@ -23,7 +24,7 @@ export const LoginScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe]}
       backgroundColor={s.bg_white}
-      containerType="scroll">
+      containerType={ContainerTypes.scroll}>
       <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
         <TitleBar
           title={t('account.welcomeBackTitle')}

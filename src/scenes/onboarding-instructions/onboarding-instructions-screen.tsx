@@ -5,7 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
 import { map } from 'ramda';
 
-import { Container, Pagination, TextLink } from '../../components';
+import {
+  Container,
+  ContainerTypes,
+  Pagination,
+  TextLink,
+} from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
@@ -39,7 +44,7 @@ export const OnboardingInstructionsScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe, s.mh0]}
       backgroundColor={s.bg_white}
-      containerType="fixed">
+      containerType={ContainerTypes.fixed}>
       <Swiper
         renderPagination={(index, total, context) => {
           const isLastSlide = index === total - 1;

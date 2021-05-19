@@ -2,7 +2,13 @@ import React from 'react';
 import { Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { Container, TextLink, TitleBar, ActionFooter } from '../../components';
+import {
+  Container,
+  ContainerTypes,
+  TextLink,
+  TitleBar,
+  ActionFooter,
+} from '../../components';
 import { t } from '../../i18n/i18n';
 
 const instructionImage = require('../../assets/instruction-one.png');
@@ -12,7 +18,7 @@ export const AllowNotificationsScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe, s.aic]}
       backgroundColor={s.bg_white}
-      containerType="scroll">
+      containerType={ContainerTypes.scroll}>
       <TitleBar
         title={t('onboarding.allowNotifications.title')}
         subtitle={t('onboarding.allowNotifications.subtitle')}

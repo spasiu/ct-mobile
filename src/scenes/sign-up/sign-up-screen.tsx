@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
+  ContainerTypes,
   ActionFooter,
   TextLink,
   ActionButton,
@@ -23,7 +24,7 @@ export const SignUpScreen = () => {
     <Container
       style={[s.flx_i, s.jcfe]}
       backgroundColor={s.bg_white}
-      containerType="scroll">
+      containerType={ContainerTypes.scroll}>
       <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
         <View style={[s.w_100, s.mv4, s.aic]}>
           <Text style={[s.ff_b, s.f4, s.black]}>

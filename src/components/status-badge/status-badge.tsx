@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { t } from '../../i18n/i18n';
-import { Badge } from '../badge/badge';
+import { Badge } from '../badge';
 
 import {
   BADGE_CONTAINER_PRESETS,

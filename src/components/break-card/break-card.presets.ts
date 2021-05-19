@@ -1,6 +1,7 @@
+import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 
-export const CARD_CONTAINER_STYLE = [
+export const cardContainerStyle = [
   { height: sizes.h4 + sizes.h1 },
   s.flx_i,
   s.pa3,
@@ -11,23 +12,36 @@ export const CARD_CONTAINER_STYLE = [
   s.shadow_s,
   s.ml1,
   s.mr1,
-];
+] as ViewStyle[];
 
-export const INFORMATION_BAR_WRAPPER_STYLE = [s.flx_row, s.jcsb, s.aifs];
+export const informationBarWrapperStyle = [
+  s.flx_row,
+  s.jcsb,
+  s.aifs,
+] as ViewStyle[];
 
-export const BREAK_DETAIL_WRAPPER_STYLE = [s.flx_row, s.w_40, s.jcfe];
+export const breakDetailWrapperStyle = [
+  s.flx_row,
+  s.w_40,
+  s.jcfe,
+] as ViewStyle[];
 
-export const BREAKER_AVATAR_STYLE = [s.circle_xs];
+export const breakerAvatarStyle = [s.circle_xs] as ImageStyle[];
 
-export const BREAK_TITLE_STYLE = [s.ff_b, s.f5, s.black];
+export const breakTitleStyle = [s.ff_b, s.f5, s.black] as TextStyle[];
 
-export const BREAK_DETAILS_WRAPPER = [s.jcfe, s.aifs];
+export const breakDetailsWrapper = [s.jcfe, s.aifs] as ViewStyle[];
 
-export const PRICE_TEXT_STYLE = [s.ff_alt_sb, s.f7, s.black, s.mb1];
+export const priceTextStyle = [
+  s.ff_alt_sb,
+  s.f7,
+  s.black,
+  s.mb1,
+] as TextStyle[];
 
-export const SPOTS_LEFT_STYLE = [s.ff_alt_r, s.f7, s.primary];
+export const spotsLeftStyle = [s.ff_alt_r, s.f7, s.primary] as TextStyle[];
 
-export const ACTIONS_CONTAINER_STYLE = [
+export const actionsContainerStyle = [
   s.absolute,
   s.bottom_0,
   s.right_0,
@@ -36,6 +50,9 @@ export const ACTIONS_CONTAINER_STYLE = [
   s.flx_row,
   s.w_40,
   s.jcfe,
-];
+] as ViewStyle[];
 
-export const BUY_BUTTON_STYLE = [{ width: sizes.w3 + sizes.w1 }, s.ml2];
+export const buyButtonStyle = [
+  { width: sizes.w3 + sizes.w1 },
+  s.ml2,
+] as ViewStyle[];

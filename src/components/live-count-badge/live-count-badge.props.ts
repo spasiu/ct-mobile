@@ -1,4 +1,4 @@
-import { BadgeProps } from '../badge/badge.props';
+import { BadgeProps } from '../badge';
 
 export interface LiveCountBadgeProps extends BadgeProps {
   count: string;

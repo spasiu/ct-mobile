@@ -2,14 +2,13 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ContainerProps } from './container.props';
+import { ContainerProps, ContainerTypes } from './container.props';
 import {
-  isFixed,
-  DEFAULT_CONTAINER_TYPE,
   DEFAULT_SAFE_AREA_EDGES,
   backgroundColorPreset,
   stylePresets,
 } from './container.presets';
+import { isFixed } from './container.utils';
 
 function ContainerWithoutScrolling({
   useSafeArea = true,
@@ -69,7 +68,7 @@ function ContainerWithScrolling({
 
 export const Container = (props: ContainerProps) => {
   const backgroundColor = props.backgroundColor || backgroundColorPreset;
-  if (isFixed(props.containerType || DEFAULT_CONTAINER_TYPE)) {
+  if (isFixed(props.containerType || ContainerTypes.fixed)) {
     return (
       <View style={[...stylePresets.fixed.containerStyle, backgroundColor]}>
         <ContainerWithoutScrolling {...props} />

@@ -4,6 +4,7 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import {
   Container,
+  ContainerTypes,
   HitCard,
   BreakerCard,
   FilterItem,
@@ -123,7 +124,7 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <Container
       style={[s.mh0]}
-      containerType="fixed"
+      containerType={ContainerTypes.fixed}
       safeAreaEdges={['top', 'left', 'right']}>
       <View style={[s.flx_i]}>
         <NavigationBar>

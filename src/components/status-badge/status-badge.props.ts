@@ -1,4 +1,4 @@
-import { BadgeProps } from '../badge/badge.props';
+import { BadgeProps } from '../badge';
 
 import { StatusBadgeTypes } from './status-badge.presets';
 

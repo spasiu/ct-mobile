@@ -6,6 +6,7 @@ import {
   HitCard,
   TitleBar,
   Container,
+  ContainerTypes,
   SearchInput,
   IconButton,
   FilterItem,
@@ -82,7 +83,7 @@ export const HitsScreen = ({ navigation }) => {
   const cardHeight = cardWidth * 1.3;
   return (
     <Container
-      containerType={'fixed'}
+      containerType={ContainerTypes.fixed}
       style={[s.mh0]}
       safeAreaEdges={['top', 'left', 'right']}>
       <View style={[s.mh3, s.mb4]}>

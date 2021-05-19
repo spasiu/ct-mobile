@@ -1,15 +1,13 @@
 import React from 'react';
-import RNCheckBox from '@react-native-community/checkbox';
-import { styles as s } from 'react-native-style-tachyons';
+import RNCheckBox, { CheckBoxProps } from '@react-native-community/checkbox';
 
-import { COLORS } from '../../theme/colors';
+import { checkboxStyle, checkboxColors } from './checkbox.presets';
 
-export const CheckBox = () => (
+export const CheckBox = (props: CheckBoxProps) => (
   <RNCheckBox
-    tintColor={COLORS.negative}
-    onCheckColor={COLORS.positive}
-    onTintColor={COLORS.positive}
+    {...props}
+    {...checkboxColors}
     boxType={'square'}
-    style={[s.icon_xxs, s.ml1]}
+    style={checkboxStyle}
   />
 );

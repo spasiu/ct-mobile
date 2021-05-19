@@ -4,8 +4,7 @@ import { Image } from 'react-native';
 import { IconButton } from '../icon-button/icon-button';
 
 import { BackButtonProps } from './back-button.props';
-
-const backButton = require('../../assets/arrow-left.png');
+import { backButton } from './back-button.presets';
 
 export const BackButton = ({
   style = [],

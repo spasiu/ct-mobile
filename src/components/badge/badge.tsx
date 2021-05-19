@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 
 import {
-  CONTAINER_STYLE_PRESET,
-  IMAGE_STYLE_PRESET,
-  TEXT_STYLE_PRESET,
+  containerStylePreset,
+  imageStylePreset,
+  textStylePreset,
 } from './badge.presets';
 import { BadgeProps } from './badge.props';
 
@@ -15,10 +15,10 @@ export const Badge = ({
   text = '',
   textStyle = [],
 }: BadgeProps) => (
-  <View style={[...CONTAINER_STYLE_PRESET, ...containerStyle]}>
+  <View style={[...containerStylePreset, ...containerStyle]}>
     {image && (
-      <Image style={[...IMAGE_STYLE_PRESET, ...imageStyle]} source={image} />
+      <Image style={[...imageStylePreset, ...imageStyle]} source={image} />
     )}
-    <Text style={[...TEXT_STYLE_PRESET, ...textStyle]}>{text}</Text>
+    <Text style={[...textStylePreset, ...textStyle]}>{text}</Text>
   </View>
 );

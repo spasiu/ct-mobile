@@ -4,6 +4,7 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import {
   Container,
+  ContainerTypes,
   FilterItem,
   TitleBar,
   ScheduleToggle,
@@ -19,7 +20,7 @@ export const ScheduleScreen = () => {
   return (
     <Container
       style={[s.mh0]}
-      containerType="fixed"
+      containerType={ContainerTypes.fixed}
       safeAreaEdges={['top', 'left', 'right']}>
       <View>
         <TitleBar

@@ -1,5 +1,6 @@
-import { BadgeProps } from '../badge/badge.props';
+import { Break_Type_Enum } from '../../services/api/requests';
+import { BadgeProps } from '../badge';
 
 export interface BreakTypeBadgeProps extends BadgeProps {
-  breakType: string;
+  breakType: Break_Type_Enum;
 }

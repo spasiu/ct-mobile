@@ -1,7 +1,10 @@
+import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-export const BUTTON_STYLE = [s.badge_height, s.w_100, s.br3];
+export const appleLogo = require('../../assets/apple-logo.png');
 
-export const TEXT_STYLE = [s.f7];
+export const buttonStyle = [s.badge_height, s.w_100, s.br3] as ViewStyle[];
 
-export const IMAGE_STYLE = [s.icon_micro, s.tint_white, s.mr1];
+export const textStyle = [s.f7] as TextStyle[];
+
+export const imageStyle = [s.icon_micro, s.tint_white, s.mr1] as ImageStyle[];

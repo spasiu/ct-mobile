@@ -1,10 +1,12 @@
 import { ViewStyle } from 'react-native';
 import { Edge } from 'react-native-safe-area-context';
 
-import { ContainerTypes } from './container.presets';
-
+export enum ContainerTypes {
+  fixed = 'fixed',
+  scroll = 'scroll',
+}
 export interface ContainerProps {
-  containerType: ContainerTypes;
+  containerType: keyof typeof ContainerTypes;
   children?: React.ReactNode;
   style?: ViewStyle[];
   safeAreaStyle?: ViewStyle[];
