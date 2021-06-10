@@ -1,10 +1,17 @@
 import { ViewStyle, TextStyle, TextInputProps } from 'react-native';
 
-import { FormInputStatusTypes } from './form-input.presets';
+export enum FormInputStatusTypes {
+  active = 'active',
+  disabled = 'disabled',
+  error = 'error',
+  default = 'default',
+}
 
 export interface FormInputProps extends TextInputProps {
   style?: ViewStyle[];
   labelStyle?: TextStyle[];
   label?: string;
-  status?: FormInputStatusTypes;
+  status?: keyof typeof FormInputStatusTypes;
+  errorMessage?: string;
+  containerStyle?: ViewStyle[];
 }

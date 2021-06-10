@@ -4,10 +4,10 @@ import { View, Text } from 'react-native';
 import { BackButton } from '../back-button';
 
 import {
-  NAVIGATION_BAR_CONTAINER_STYLE,
-  DEFAULT_NAVIGATION_BAR_WRAPPER_STYLE,
-  SIDES_WRAPPER_STYLE,
-  TITLE_TEXT_STYLE,
+  navigationBarContainerStyle,
+  defaultNavigationBarWrapperStyle,
+  sidesWrapperStyle,
+  titleTextStyle,
 } from './navigation-bar.presets';
 import { NavigationBarProps } from './navigation-bar.props';
 
@@ -16,19 +16,19 @@ export const NavigationBar = ({
   containerStyle = [],
   title = '',
   onBackPressed,
-}: NavigationBarProps) => (
-  <View style={[...NAVIGATION_BAR_CONTAINER_STYLE, ...containerStyle]}>
+}: NavigationBarProps): JSX.Element => (
+  <View style={[...navigationBarContainerStyle, ...containerStyle]}>
     {children ? (
       children
     ) : (
-      <View style={DEFAULT_NAVIGATION_BAR_WRAPPER_STYLE}>
-        <View style={SIDES_WRAPPER_STYLE}>
+      <View style={defaultNavigationBarWrapperStyle}>
+        <View style={sidesWrapperStyle}>
           <BackButton onPress={onBackPressed} />
         </View>
         <View>
-          <Text style={TITLE_TEXT_STYLE}>{title}</Text>
+          <Text style={titleTextStyle}>{title}</Text>
         </View>
-        <View style={SIDES_WRAPPER_STYLE} />
+        <View style={sidesWrapperStyle} />
       </View>
     )}
   </View>

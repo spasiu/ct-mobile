@@ -7,9 +7,9 @@ import { IconButtonProps } from './icon-button.props';
 export const IconButton = ({
   children,
   style = [],
-  onPress = () => {},
+  onPress = () => undefined,
   ...borderlessButtonProps
-}: IconButtonProps) => {
+}: IconButtonProps): JSX.Element => {
   return (
     <BorderlessButton
       style={style}

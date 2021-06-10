@@ -1,16 +1,16 @@
 import React from 'react';
-import { Modal, View, Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
-import { IconButton } from '../icon-button/icon-button';
-import { ActionFooter } from '../action-footer/action-footer';
+import { IconButton } from '../icon-button';
+import { ActionFooter } from '../action-footer';
 
 import {
-  MODAL_CONTAINER_STYLE,
-  TITLE_BAR_STYLE,
-  BUTTON_WRAPPER_STYLE,
-  TITLE_TEXT_STYLE,
-  CLOSE_BUTTON_STYLE,
-  BACK_SCREEN_STYLE,
+  modalContainerStyle,
+  titleBarStyle,
+  buttonWrapperStyle,
+  titleTextStyle,
+  closeButtonStyle,
+  backScreenStyle,
   getModalWrapperStyle,
 } from './over-screen-modal.presets';
 import { OverScreenModalProps } from './over-screen-modal.props';
@@ -22,33 +22,33 @@ export const OverScreenModal = ({
   title = '',
   action,
   children,
-  onPressClose = () => {},
-  onPressAction = () => {},
+  onPressClose = () => undefined,
+  onPressAction = () => undefined,
   actionStyle = [],
-}: OverScreenModalProps) => {
+}: OverScreenModalProps): JSX.Element => {
   return (
-    <View style={BACK_SCREEN_STYLE}>
-      <View style={MODAL_CONTAINER_STYLE}>
+    <View style={backScreenStyle}>
+      <View style={modalContainerStyle}>
         <View style={getModalWrapperStyle(ratio)}>
-          <View style={TITLE_BAR_STYLE}>
-            <View style={BUTTON_WRAPPER_STYLE} />
-            <Text style={TITLE_TEXT_STYLE}>{title}</Text>
-            <IconButton style={BUTTON_WRAPPER_STYLE} onPress={onPressClose}>
+          <View style={titleBarStyle}>
+            <View style={buttonWrapperStyle} />
+            <Text style={titleTextStyle}>{title}</Text>
+            <IconButton style={buttonWrapperStyle} onPress={onPressClose}>
               <Image
-                style={CLOSE_BUTTON_STYLE}
+                style={closeButtonStyle}
                 source={closeIcon}
                 resizeMode={'contain'}
               />
             </IconButton>
           </View>
           {children}
-          {action && (
+          {action ? (
             <ActionFooter
               containerStyle={actionStyle}
               buttonText={action}
               onPress={onPressAction}
             />
-          )}
+          ) : null}
         </View>
       </View>
     </View>

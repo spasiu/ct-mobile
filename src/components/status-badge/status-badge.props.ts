@@ -1,8 +1,11 @@
 import { BadgeProps } from '../badge';
 
-import { StatusBadgeTypes } from './status-badge.presets';
-
+export enum StatusBadgeTypes {
+  live = 'live',
+  upcoming = 'upcoming',
+  scheduled = 'scheduled',
+}
 export interface StatusBadgeProps extends BadgeProps {
-  status: StatusBadgeTypes;
+  status: keyof typeof StatusBadgeTypes;
   text?: string;
 }

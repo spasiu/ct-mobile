@@ -18,7 +18,17 @@
     "seeMore": "See More",
     "seeLess": "See Less",
     "myHits": "My Hits",
-    "showFollowing": "Show Following"
+    "showFollowing": "Show Following",
+    "logout": "Logout",
+    "save": "Save",
+    "edit": "Edit",
+    "addDeliveryAddress": "Add Delivery Address",
+    "saveAddress": "Save Address",
+    "deleteAddress": "Delete Address",
+    "forgotPassword": "Forgot password",
+    "resetPassword": "Reset Password",
+    "backToLogin": "Back To Login",
+    "enableNotifications": "Enable Notifications"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -29,7 +39,25 @@
   "forms": {
     "emailLabel": "Email",
     "passwordLabel": "Password",
-    "usernameLabel": "Username"
+    "usernameLabel": "Username",
+    "invalidEmail": "Please enter a valid email address",
+    "requiredField": "This field is required",
+    "fieldTooShort": "Must have at least %{number} characters",
+    "fieldTooLong": "Must less than %{number} characters",
+    "fieldLowercase": "Must contain at least %{number} lowercase letter",
+    "fieldUppercase": "Must contain at least %{number} uppercase letter",
+    "fieldNumbers": "Must contain at least %{number} number",
+    "fieldSymbols": "Must contain at least %{number} symbol",
+    "fieldForbiddenCharacters": "Must only contain alphanumeric characters and _",
+    "addressLine1Label": "Address Line 1",
+    "addressLine2Label": "Address Line 2",
+    "cityLabel": "City",
+    "stateLabel": "State",
+    "postalCodeLabel": "Zip/Postal",
+    "countryLabel": "Country",
+    "recipientLabel": "Recipient",
+    "firstNameLabel": "First Name",
+    "lastNameLabel": "Last Name"
   },
   "calendar": {
     "today": "Today"
@@ -89,14 +117,19 @@
       "subtitle": "Select all that apply",
       "new": "I'm new to breaking",
       "pickYourTeam": "Pick your Team",
+      "pickYourDivision": "Pick your Division",
       "randomTeam": "Random Team",
+      "randomDivision": "Random Division",
       "hitDraft": "Hit Draft",
       "packWars": "Pack Wars",
-      "personals": "Personals"
+      "personal": "Personal"
     },
     "allowNotifications": {
       "title": "Never miss a break!",
-      "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile."
+      "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile.",
+      "warningTitle": "Are you sure?",
+      "warningMessage": "You can control what notifications you receive in your profile settings. We don’t want you to miss your favorite live break!",
+      "continueToHome": "I’m sure, let me in"
     }
   },
   "sections": {
@@ -154,12 +187,56 @@
   },
   "profile": {
     "title": "Profile",
-    "addAddress": "Add Delivery Address"
+    "addAddress": "Add Delivery Address",
+    "rulesOfPlay": "Rules of Play",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "chat": "Chat",
+    "notifications": "Notifications",
+    "breakPreferences": "Hits, Pick Your Team...",
+    "accountDetailsSection": "Account Details",
+    "helpSection": "Help"
   },
   "hits": {
     "title": "Hits"
   },
   "breakers": {
     "title": "Breakers"
+  },
+  "breakPreferences": {
+    "title": "Break Preferences",
+    "breakTypeRow": "Break Type",
+    "sportRow": "Sport",
+    "pricingRow": "Pricing"
+  },
+  "notificationPreferences": {
+    "title": "Preferences",
+    "enableNotifications": "Enable Notifications",
+    "notifictionTypesSection": "Reminders",
+    "notificationTypes": {
+      "before15min": "15 Mins Before",
+      "whenLive": "When Live",
+      "followedBreakers": "Breakers I follow",
+      "followedEvents": "Events I follow",
+      "followedBreaks": "Breaks I follow",
+      "newPersonalHits": "New hits for me",
+      "supportMessages": "Chat support messages",
+      "announcements": "Announcements"
+    }
+  },
+  "addresses": {
+    "deliveryAddress": "Delivery Address",
+    "billingAddress": "BillingAddress"
+  },
+  "errors": {
+    "generic": "Something went wrong. Check the information provided and try again.",
+    "emailInUse": "The email provided is already in use.",
+    "validateEmail": "Check your email to validate your account."
+  },
+  "resetPassword": {
+    "title": "Enter the email you use for Cards & Treasure",
+    "instruction": "If we have an account with your email we will send you a link to reset your password",
+    "confirmationTitle": "Email sent!",
+    "confirmationInstruction": "Check your email entered below for the link to reset your password"
   }
 }

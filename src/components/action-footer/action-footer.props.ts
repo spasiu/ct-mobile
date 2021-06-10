@@ -1,3 +1,4 @@
+import React from 'react';
 import { ViewStyle } from 'react-native';
 
 import { ActionButtonTypes } from '../action-button';
@@ -8,4 +9,6 @@ export interface ActionFooterProps {
   buttonType?: keyof typeof ActionButtonTypes;
   onPress?: () => void;
   children?: React.ReactNode;
+  topElement?: React.ReactNode;
+  isLoading?: boolean;
 }

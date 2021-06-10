@@ -52,7 +52,7 @@ export const EventDetailModal = ({ route, navigation }) => {
     <OverScreenModal
       title={modalTitle}
       onPressClose={() => navigation.goBack()}>
-      {showHeader && (
+      {showHeader ? (
         <View style={[s.mv3, s.jcc, s.aic, s.ph3]}>
           <ImageCard cardSize={'micro'} touchable={false} image={image} />
           <Text style={[s.ff_alt_b, s.f4, s.mv3]}>{title}</Text>
@@ -76,7 +76,7 @@ export const EventDetailModal = ({ route, navigation }) => {
             {description}
           </ReadMore>
         </View>
-      )}
+      ) : null}
       <Text style={[s.ff_b, s.f5, s.mb2, s.mt3, s.ph3]}>
         {t('event.breakLineupTitle')}
       </Text>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 
-import { TextLink } from '../text-link/text-link';
+import { TextLink } from '../text-link';
 
 import {
-  CONTAINER_STYLE,
-  TITLE_TEXT_STYLE,
-  ACTION_TEXT_STYLE,
-  IMAGE_STYLE,
-  CONTENT_WRAPPER_STYLE,
+  baseContainerStyle,
+  baseTitleTextStyle,
+  baseActionTextStyle,
+  imageStyle,
+  contentWrapperStyle,
 } from './section-header.presets';
 import { SectionHeaderProps } from './section-header.props';
 
@@ -19,22 +19,24 @@ export const SectionHeader = ({
   containerStyle = [],
   titleTextStyle = [],
   actionTextStyle = [],
-  onActionPressed = () => {},
+  onActionPressed = () => undefined,
   actionComponent,
-}: SectionHeaderProps) => (
-  <View style={[...CONTAINER_STYLE, ...containerStyle]}>
-    <View style={CONTENT_WRAPPER_STYLE}>
-      {image && <Image style={IMAGE_STYLE} source={image} />}
-      <Text style={[...TITLE_TEXT_STYLE, ...titleTextStyle]}>{title}</Text>
+}: SectionHeaderProps): JSX.Element => {
+  return (
+    <View style={[...baseContainerStyle, ...containerStyle]}>
+      <View style={contentWrapperStyle}>
+        {image ? <Image style={imageStyle} source={image} /> : null}
+        <Text style={[...baseTitleTextStyle, ...titleTextStyle]}>{title}</Text>
+      </View>
+      {actionComponent ? (
+        actionComponent
+      ) : (
+        <TextLink
+          textStyle={[...baseActionTextStyle, ...actionTextStyle]}
+          text={actionText}
+          onPress={onActionPressed}
+        />
+      )}
     </View>
-    {actionComponent ? (
-      actionComponent
-    ) : (
-      <TextLink
-        textStyle={[...ACTION_TEXT_STYLE, ...actionTextStyle]}
-        text={actionText}
-        onPress={onActionPressed}
-      />
-    )}
-  </View>
-);
+  );
+};

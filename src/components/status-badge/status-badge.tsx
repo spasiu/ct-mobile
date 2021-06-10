@@ -4,28 +4,26 @@ import { t } from '../../i18n/i18n';
 import { Badge } from '../badge';
 
 import {
-  BADGE_CONTAINER_PRESETS,
-  BADGE_TEXT_PRESETS,
-  isStatusLive,
-  isStatusScheduled,
+  badgeContainerPresets,
+  badgeTextPresets,
+  liveIcon,
 } from './status-badge.presets';
-import { StatusBadgeProps } from './status-badge.props';
-
-const liveIcon = require('../../assets/live-icon.png');
+import { StatusBadgeProps, StatusBadgeTypes } from './status-badge.props';
+import { isStatusLive, isStatusScheduled } from './status-badge.utils';
 
 export const StatusBadge = ({
-  status = 'live',
+  status = StatusBadgeTypes.live,
   text,
   ...badgeProps
-}: StatusBadgeProps) => {
+}: StatusBadgeProps): JSX.Element => {
   const isLive = isStatusLive(status);
   const isScheduled = isStatusScheduled(status);
   return (
     <Badge
       {...badgeProps}
-      containerStyle={BADGE_CONTAINER_PRESETS[status]}
+      containerStyle={badgeContainerPresets[status]}
       image={isLive && liveIcon}
-      text={(isScheduled && text) || t(BADGE_TEXT_PRESETS[status])}
+      text={(isScheduled && text) || t(badgeTextPresets[status])}
     />
   );
 };

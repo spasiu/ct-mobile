@@ -3,24 +3,27 @@ import { Text } from 'react-native';
 import AwesomeButton from 'react-native-really-awesome-button';
 
 import {
-  SELECTION_BUTTON_TYPE_PRESETS,
-  SELECTION_BUTTON_TEXT_PRESETS,
+  selectionButtonTypePresets,
+  selectionButtonTextPresets,
 } from './selection-button.presets';
-import { SelectionButtonProps } from './selection-button.props';
+import {
+  SelectionButtonProps,
+  SelectionButtonTypes,
+} from './selection-button.props';
 
 export const SelectionButton = ({
-  buttonType = 'default',
+  buttonType = SelectionButtonTypes.default,
   text = '',
   ...awesomeButtonProps
-}: SelectionButtonProps) => {
+}: SelectionButtonProps): JSX.Element => {
   return (
     <AwesomeButton
       stretch
       raiseLevel={6}
       springRelease={false}
-      {...SELECTION_BUTTON_TYPE_PRESETS[buttonType]}
+      {...selectionButtonTypePresets[buttonType]}
       {...awesomeButtonProps}>
-      <Text style={SELECTION_BUTTON_TEXT_PRESETS[buttonType]}>{text}</Text>
+      <Text style={selectionButtonTextPresets[buttonType]}>{text}</Text>
     </AwesomeButton>
   );
 };

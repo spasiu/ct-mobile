@@ -1,5 +1,12 @@
 # Cards & Treasure
 
+## Release Configuration Steps
+
+- [ ] Production email sources for Apple Sign-in on [Apple Developer Center](https://help.apple.com/developer-account/#/devf822fb8fc)
+- [ ] Production Firebase credentials on the environment folders
+- [ ] Change firebase env to production on .env
+- [ ] Add REVERSED_CLIENT_ID to [URL Types](https://developers.google.com/identity/sign-in/ios/start-integrating#add_a_url_scheme_to_your_project)
+
 ## Project Structure
 
 ```

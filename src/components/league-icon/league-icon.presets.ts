@@ -1,17 +1,16 @@
 import { ImageStyle, ImageRequireSource } from 'react-native';
 
 import { ICON_SIZE } from '../../theme/sizes';
+import { Sports } from '../../common/sports';
 
-export const LEAGUE_ICON_PRESETS = {
-  baseball: require('../../assets/baseball-icon.png') as ImageRequireSource,
-  basketball: require('../../assets/basketball-icon.png') as ImageRequireSource,
-  football: require('../../assets/football-icon.png') as ImageRequireSource,
-  soccer: require('../../assets/soccer-icon.png') as ImageRequireSource,
-  hockey: require('../../assets/hockey-icon.png') as ImageRequireSource,
+export const leagueIconPresets = {
+  [Sports.baseball]: require('../../assets/baseball-icon.png') as ImageRequireSource,
+  [Sports.basketball]: require('../../assets/basketball-icon.png') as ImageRequireSource,
+  [Sports.football]: require('../../assets/football-icon.png') as ImageRequireSource,
+  [Sports.soccer]: require('../../assets/soccer-icon.png') as ImageRequireSource,
+  [Sports.hockey]: require('../../assets/hockey-icon.png') as ImageRequireSource,
 };
 
-export const IMAGE_STYLE_PRESET = [
+export const imageStylePreset = [
   { width: ICON_SIZE.XS, height: ICON_SIZE.XS },
 ] as ImageStyle[];
-
-export type LeagueIconTypes = keyof typeof LEAGUE_ICON_PRESETS;

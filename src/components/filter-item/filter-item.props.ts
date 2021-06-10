@@ -1,16 +1,21 @@
 import { ImageStyle } from 'react-native';
-import { IconButtonProps } from '../icon-button/icon-button.props';
 
-import {
-  FilterItemTypes,
-  FilterItemStatusTypes,
-  FilterItemStyleTypes,
-} from './filter-item.presets';
+import { IconButtonProps } from '../icon-button';
+
+export enum FilterItemTypes {
+  pill_default = 'pill_default',
+  pill_alt = 'pill_alt',
+  circle = 'circle',
+}
+
+export enum FilterItemStatusTypes {
+  default = 'default',
+  selected = 'selected',
+}
 
 export interface FilterItemProps extends IconButtonProps {
-  type?: FilterItemTypes;
-  status?: FilterItemStatusTypes;
+  type?: keyof typeof FilterItemTypes;
+  status?: keyof typeof FilterItemStatusTypes;
   style?: ImageStyle[];
-  styleType?: FilterItemStyleTypes;
   text?: string;
 }

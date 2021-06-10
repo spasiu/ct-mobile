@@ -2,21 +2,21 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { ImageCard } from '../image-card/image-card';
-import { StatusBadge } from '../status-badge/status-badge';
+import { ImageCard, ImageCardSizeTypes } from '../image-card';
+import { StatusBadge } from '../status-badge';
 import { LeagueIcon } from '../league-icon';
-import { FollowButton } from '../follow-button/follow-button';
+import { FollowButton, FollowButtonSizeTypes } from '../follow-button';
 
 import { EventCardProps } from './event-card.props';
 import {
-  GRADIENT_PRESETS,
-  CONTENT_CONTAINER_STYLE_PRESET,
-  TITLE_STYLE_PRESET,
-  INFO_WRAPPER_STYLE_PRESET,
-  CONTENT_WRAPPER_STYLE,
-  FOLLOW_BUTTON_STYLE,
-  FOLLOW_BUTTON_WRAPPER_STYLE,
-  FOOTER_WRAPPER_STYLE,
+  gradientPresets,
+  contentContainerStylePreset,
+  titleStylePreset,
+  infoWrapperStylePreset,
+  contentWrapperStyle,
+  followButtonStyle,
+  followButtonWrapperStyle,
+  footerWrapperStyle,
 } from './event-card.presets';
 
 export const EventCard = ({
@@ -26,25 +26,24 @@ export const EventCard = ({
   eventDate,
   contentContainerStyle = [],
   ...imageCardProps
-}: EventCardProps) => (
-  <ImageCard cardSize="medium" {...imageCardProps}>
-    <LinearGradient {...GRADIENT_PRESETS}>
-      <View
-        style={[...CONTENT_CONTAINER_STYLE_PRESET, ...contentContainerStyle]}>
-        <View style={INFO_WRAPPER_STYLE_PRESET}>
+}: EventCardProps): JSX.Element => (
+  <ImageCard cardSize={ImageCardSizeTypes.medium} {...imageCardProps}>
+    <LinearGradient {...gradientPresets}>
+      <View style={[...contentContainerStylePreset, ...contentContainerStyle]}>
+        <View style={infoWrapperStylePreset}>
           <StatusBadge status={status} text={eventDate} />
           <LeagueIcon league={league} />
         </View>
-        <View style={CONTENT_WRAPPER_STYLE}>
-          <View style={FOOTER_WRAPPER_STYLE}>
-            <Text style={TITLE_STYLE_PRESET} numberOfLines={2}>
+        <View style={contentWrapperStyle}>
+          <View style={footerWrapperStyle}>
+            <Text style={titleStylePreset} numberOfLines={2}>
               {title}
             </Text>
-            <View style={FOLLOW_BUTTON_WRAPPER_STYLE}>
+            <View style={followButtonWrapperStyle}>
               <FollowButton
-                defaultContainerStyle={FOLLOW_BUTTON_STYLE.container}
-                defaultImageStyle={FOLLOW_BUTTON_STYLE.image}
-                size={'short'}
+                defaultContainerStyle={followButtonStyle.container}
+                defaultImageStyle={followButtonStyle.image}
+                size={FollowButtonSizeTypes.short}
               />
             </View>
           </View>

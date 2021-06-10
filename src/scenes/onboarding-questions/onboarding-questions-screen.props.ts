@@ -1,12 +1,15 @@
-export interface QuestionOption {
-  value: string;
-  label: string;
-}
+import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { OnboardingStackParamList } from '../../navigators';
 
-export interface Question {
-  rootKey: string;
-  titleKey: string;
-  subtitleKey: string;
-  allowMultipleSelection: boolean;
-  options: QuestionOption[];
+type OnboardingQuestionsScreenNavigationProp = NativeStackNavigationProp<
+  OnboardingStackParamList,
+  'screen.onboardingQuestions'
+>;
+
+export type UserPreferencesType = {
+  [key: string]: string | string[];
+};
+
+export interface OnboardingQuestionsScreenProps {
+  navigation: OnboardingQuestionsScreenNavigationProp;
 }

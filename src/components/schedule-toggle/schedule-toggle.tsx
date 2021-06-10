@@ -1,35 +1,25 @@
 import React from 'react';
 import { Image } from 'react-native';
-import ToggleSwitch from 'toggle-switch-react-native';
-import { styles as s } from 'react-native-style-tachyons';
+import ToggleSwitch, { ToggleSwitchProps } from 'toggle-switch-react-native';
 
-import { COLORS } from '../../theme/colors';
+import {
+  eventScheduleIcon,
+  breakScheduleIcon,
+  toggleColor,
+  thumbStyle,
+} from './schedule-toggle.presets';
 
-const breakScheduleIcon = require('../../assets/schedule-break-icon.png');
-const eventScheduleIcon = require('../../assets/schedule-event-icon.png');
-
-export const ScheduleToggle = ({ isOn, ...scheduleToggleProps }) => (
+export const ScheduleToggle = ({
+  isOn,
+  ...scheduleToggleProps
+}: ToggleSwitchProps): JSX.Element => (
   <ToggleSwitch
     {...scheduleToggleProps}
     isOn={isOn}
-    onColor={COLORS.black_10}
-    offColor={COLORS.black_10}
-    // trackOnStyle={{
-    //   padding: 15,
-    //   width: 70 - 8,
-    // }}
-    // trackOffStyle={{
-    //   padding: 15,
-    //   width: 70 - 8,
-    // }}
-    thumbOnStyle={{
-      ...s.bg_black,
-      //   margin: 0,
-    }}
-    thumbOffStyle={{
-      ...s.bg_black,
-      //   margin: 0,
-    }}
+    onColor={toggleColor}
+    offColor={toggleColor}
+    thumbOnStyle={thumbStyle}
+    thumbOffStyle={thumbStyle}
     size={'large'}
     icon={
       <Image

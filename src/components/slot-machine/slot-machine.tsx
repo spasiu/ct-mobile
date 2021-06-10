@@ -141,7 +141,7 @@ const ReelSet = () => {
           height: event.nativeEvent.layout.height,
         })
       }>
-      {dimensions && (
+      {dimensions ? (
         <>
           {indexedMap((data, index) => {
             return (
@@ -154,7 +154,7 @@ const ReelSet = () => {
             );
           }, range(0, COLUMNS_NUMBER))}
         </>
-      )}
+      ) : null}
     </View>
   );
 };

@@ -13,7 +13,7 @@ import { BreakTypeBadgeProps } from './break-type-badge.props';
 export const BreakTypeBadge = ({
   breakType,
   ...badgeProps
-}: BreakTypeBadgeProps) => (
+}: BreakTypeBadgeProps): JSX.Element => (
   <Badge
     {...badgeProps}
     text={t(textKeyForBreakType[breakType])}

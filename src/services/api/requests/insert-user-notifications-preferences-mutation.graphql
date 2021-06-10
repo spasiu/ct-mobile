@@ -1,0 +1,12 @@
+mutation InsertUserNotificationsPreferences(
+  $notificationPreferences: Notifications_insert_input!
+) {
+  insert_Notifications_one(object: $notificationPreferences) {
+    id
+    User {
+      id
+    }
+    before_15_min
+    when_live
+  }
+}

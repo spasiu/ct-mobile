@@ -138,7 +138,7 @@ export const HomeScreen = ({ navigation }) => {
           <View style={[s.flx_ratio(0.15), s.aife, s.jcc]}>
             <IconButton
               onPress={() =>
-                navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
+                navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
               }>
               <Image
                 style={[s.circle_m]}

@@ -17,7 +17,7 @@ export const t = memoizeWith(
   (key, config) => i18n.t(key, config),
 );
 
-export const setI18nConfig = () => {
+export const setI18nConfig = (): void => {
   const { languageTag } = RNLocalize.findBestAvailableLanguage(
     SUPPORTED_LANGUAGES,
   ) || { languageTag: DEFAULT_LANGUAGE };

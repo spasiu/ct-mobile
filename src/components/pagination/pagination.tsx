@@ -3,34 +3,34 @@ import { View } from 'react-native';
 import { map, range } from 'ramda';
 
 import {
-  BASE_CONTAINER_STYLE,
-  BASE_INDICATOR_WRAPPER_STYLE,
-  INDICATOR_TYPE_STYLE,
-  DEFAULT_INDICATOR_STYLE,
-  ACTIVE_INDICATOR_STYLE,
-  BASE_BUTTONS_WRAPPER_STYLE,
+  baseContainerStyle,
+  baseIndicatorWrapperStyle,
+  indicatorTypeStyle,
+  defaultIndicatorColorStyle,
+  activeIndicatorColorStyle,
+  baseButtonsWrapperStyle,
 } from './pagination.presets';
-import { PaginationProps } from './pagination.props';
+import { PaginationProps, PageIndicatorTypes } from './pagination.props';
 
 export const Pagination = ({
   index,
   total,
-  pageIndicator = 'dot',
+  pageIndicator = PageIndicatorTypes.dot,
   rightButton,
   leftButton,
-  indicatorColor = DEFAULT_INDICATOR_STYLE,
-  activeIndicatorColor = ACTIVE_INDICATOR_STYLE,
+  indicatorColor = defaultIndicatorColorStyle,
+  activeIndicatorColor = activeIndicatorColorStyle,
   containerStyle = [],
-}: PaginationProps) => (
-  <View style={[...BASE_CONTAINER_STYLE, ...containerStyle]}>
-    <View style={BASE_BUTTONS_WRAPPER_STYLE}>{leftButton}</View>
-    <View style={BASE_INDICATOR_WRAPPER_STYLE}>
+}: PaginationProps): JSX.Element => (
+  <View style={[...baseContainerStyle, ...containerStyle]}>
+    <View style={baseButtonsWrapperStyle}>{leftButton}</View>
+    <View style={baseIndicatorWrapperStyle}>
       {map(
         rangeIndex => (
           <View
             key={rangeIndex}
             style={[
-              ...INDICATOR_TYPE_STYLE[pageIndicator],
+              ...indicatorTypeStyle[pageIndicator],
               index === rangeIndex ? activeIndicatorColor : indicatorColor,
             ]}
           />
@@ -38,6 +38,6 @@ export const Pagination = ({
         range(0, total),
       )}
     </View>
-    <View style={BASE_BUTTONS_WRAPPER_STYLE}>{rightButton}</View>
+    <View style={baseButtonsWrapperStyle}>{rightButton}</View>
   </View>
 );

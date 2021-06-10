@@ -3,28 +3,28 @@ import { View, ImageBackground } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 import {
-  SHADOW_CONTAINER_PRESET,
-  CONTAINER_PRESET,
-  IMAGE_BACKGROUND_PRESET,
+  shadowContainerPreset,
+  containerPreset,
+  imageBackgroundPreset,
 } from './image-card.presets';
-import { ImageCardProps } from './image-card.props';
+import { ImageCardProps, ImageCardSizeTypes } from './image-card.props';
 
 const loadingImage = require('../../assets/baseball-icon.png');
 
 export const ImageCard = ({
   children,
-  cardSize = 'medium',
+  cardSize = ImageCardSizeTypes.medium,
   image,
-  onPress = () => {},
+  onPress = () => undefined,
   touchable = true,
   containerStyle = [],
-}: ImageCardProps) => {
+}: ImageCardProps): JSX.Element => {
   const imageCard = (
-    <View style={SHADOW_CONTAINER_PRESET} accessible>
-      <View style={[...CONTAINER_PRESET[cardSize], ...containerStyle]}>
+    <View style={shadowContainerPreset} accessible>
+      <View style={[...containerPreset[cardSize], ...containerStyle]}>
         <ImageBackground
           loadingIndicatorSource={loadingImage}
-          style={IMAGE_BACKGROUND_PRESET}
+          style={imageBackgroundPreset}
           resizeMode={'cover'}
           source={image}>
           {children}

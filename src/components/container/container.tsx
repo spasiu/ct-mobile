@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { ContainerProps, ContainerTypes } from './container.props';
 import {
@@ -48,11 +49,11 @@ function ContainerWithScrolling({
   safeAreaEdges = DEFAULT_SAFE_AREA_EDGES,
 }: ContainerProps) {
   const content = (
-    <ScrollView
+    <KeyboardAwareScrollView
       style={[...stylePresets.scroll.containerStyle, backgroundColor]}
       contentContainerStyle={[...stylePresets.scroll.insetStyle, ...style]}>
       {children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 
   return useSafeArea ? (
@@ -66,7 +67,7 @@ function ContainerWithScrolling({
   );
 }
 
-export const Container = (props: ContainerProps) => {
+export const Container = (props: ContainerProps): JSX.Element => {
   const backgroundColor = props.backgroundColor || backgroundColorPreset;
   if (isFixed(props.containerType || ContainerTypes.fixed)) {
     return (

@@ -7,4 +7,4 @@ export const textStylePresets = {
   wrapper: [s.mt4, s.mb4] as TextStyle[],
 };
 
-export const TITLE_WRAPPER_STYLE = [s.flx_row, s.jcsb, s.aic];
+export const titleWrapperStyle = [s.flx_row, s.jcsb, s.aic];

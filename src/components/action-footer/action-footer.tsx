@@ -10,19 +10,23 @@ export const ActionFooter = ({
   containerStyle = [],
   buttonText = '',
   buttonType = ActionButtonTypes.primary,
-  onPress = () => {},
+  onPress = () => undefined,
   children,
-}: ActionFooterProps) => {
+  topElement,
+  isLoading = false,
+}: ActionFooterProps): JSX.Element => {
   return (
     <View style={[...viewPresets.containerStyle, ...containerStyle]}>
+      {topElement ? topElement : null}
       <ActionButton
         buttonType={buttonType}
         text={buttonText}
         onPress={onPress}
+        isLoading={isLoading}
       />
-      {children && (
+      {children ? (
         <View style={[viewPresets.childrenWrapperStyle]}>{children}</View>
-      )}
+      ) : null}
     </View>
   );
 };

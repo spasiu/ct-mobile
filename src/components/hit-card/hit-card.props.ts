@@ -1,6 +1,6 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
-import { ImageCardProps } from '../image-card/image-card.props';
+import { ImageCardProps } from '../image-card';
 
 export interface HitCardProps extends ImageCardProps {
   title?: string;

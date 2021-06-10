@@ -19,6 +19,7 @@ import {
   FollowButton,
   LiveCountBadge,
   StatusBadge,
+  StatusBadgeTypes,
   BuyButton,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
@@ -78,7 +79,7 @@ export const LiveScreen = ({ navigation }) => {
             <View style={[s.flx_row, s.w_100, s.mb3]}>
               <FollowButton type={'default'} />
               <View style={[s.flx_i, s.flx_row, s.jcfe]}>
-                <StatusBadge status="live" />
+                <StatusBadge status={StatusBadgeTypes.live} />
                 <LiveCountBadge containerStyle={[s.ml2]} count="321" />
               </View>
             </View>

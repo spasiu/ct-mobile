@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-import { ImageCard } from '../image-card/image-card';
+import { ImageCard, ImageCardSizeTypes } from '../image-card';
 
 import { HitCardProps } from './hit-card.props';
-import { TITLE_PRESETS, CONTAINER_PRESETS } from './hit-card.presets';
+import { titlePresets, containerPresets } from './hit-card.presets';
 
 export const HitCard = ({
   title = '',
@@ -13,20 +13,20 @@ export const HitCard = ({
   cardStyle = [],
   showTitle = true,
   ...imageCardProps
-}: HitCardProps) => (
-  <View style={[...CONTAINER_PRESETS, ...containerStyle]}>
+}: HitCardProps): JSX.Element => (
+  <View style={[...containerPresets, ...containerStyle]}>
     <ImageCard
-      cardSize="small"
+      cardSize={ImageCardSizeTypes.small}
       {...imageCardProps}
       containerStyle={cardStyle}
     />
-    {showTitle && (
+    {showTitle ? (
       <Text
         numberOfLines={3}
         ellipsizeMode={'tail'}
-        style={[...TITLE_PRESETS, ...textStyle]}>
+        style={[...titlePresets, ...textStyle]}>
         {title}
       </Text>
-    )}
+    ) : null}
   </View>
 );

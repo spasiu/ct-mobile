@@ -7,7 +7,7 @@ import { OnboardingInstructionsScreen } from '../../scenes/onboarding-instructio
 import { OnboardingQuestionsScreen } from '../../scenes/onboarding-questions/onboarding-questions-screen';
 import { AllowNotificationsScreen } from '../../scenes/allow-notifications/allow-notifications-screen';
 
-type OnboardingStackParamList = {
+export type OnboardingStackParamList = {
   [ROUTES_IDS.COMPLETE_PROFILE_SCREEN]: undefined;
   [ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN]: undefined;
   [ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN]: undefined;
@@ -16,7 +16,7 @@ type OnboardingStackParamList = {
 
 const Stack = createNativeStackNavigator<OnboardingStackParamList>();
 
-export const OnboardingStack = () => (
+export const OnboardingStack = (): JSX.Element => (
   <Stack.Navigator
     initialRouteName={ROUTES_IDS.COMPLETE_PROFILE_SCREEN}
     screenOptions={{

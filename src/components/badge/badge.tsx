@@ -14,11 +14,11 @@ export const Badge = ({
   imageStyle = [],
   text = '',
   textStyle = [],
-}: BadgeProps) => (
+}: BadgeProps): JSX.Element => (
   <View style={[...containerStylePreset, ...containerStyle]}>
-    {image && (
+    {image ? (
       <Image style={[...imageStylePreset, ...imageStyle]} source={image} />
-    )}
+    ) : null}
     <Text style={[...textStylePreset, ...textStyle]}>{text}</Text>
   </View>
 );

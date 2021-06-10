@@ -15,7 +15,7 @@ import { BuyButtonProps } from './buy-button.props';
 export const BuyButton = ({
   containerStyle = [],
   ...actionButtonProps
-}: BuyButtonProps) => (
+}: BuyButtonProps): JSX.Element => (
   <ActionButton
     buttonType={ActionButtonTypes.primary}
     text={t('buttons.buy')}

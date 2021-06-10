@@ -21,3 +21,5 @@ export const borderlessButtonStyle = [
   s.bottom_0,
   s.right_0,
 ] as ViewStyle[];
+
+export const loadingWrapper = [s.jcc, s.aic, s.mt0];

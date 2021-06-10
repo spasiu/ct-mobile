@@ -9,8 +9,8 @@ export const TextLink = ({
   text = '',
   style = [],
   textStyle = [],
-  onPress = () => {},
-}: TextLinkProps) => {
+  onPress = () => undefined,
+}: TextLinkProps): JSX.Element => {
   return (
     <BorderlessButton style={style} onPress={onPress}>
       <View accessible>

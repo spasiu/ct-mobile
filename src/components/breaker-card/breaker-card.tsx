@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { ImageCard } from '../image-card/image-card';
+import { ImageCard } from '../image-card';
 
 import { BreakerCardProps } from './breaker-card.props';
 import {
@@ -20,7 +20,7 @@ export const BreakerCard = ({
   contentContainerStyle = [],
   cardSize = 'medium',
   ...imageCardProps
-}: BreakerCardProps) => (
+}: BreakerCardProps): JSX.Element => (
   <ImageCard cardSize={cardSize} {...imageCardProps}>
     <LinearGradient {...gradientPresets}>
       <View style={[...contentContainerStylePreset, ...contentContainerStyle]}>

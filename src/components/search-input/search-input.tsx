@@ -2,34 +2,33 @@ import React from 'react';
 import { View, Image, TextInput } from 'react-native';
 
 import {
-  SEARCH_INPUT_CONTAINER_STYLE,
-  SEARCH_ICON_WRAPPER_STYLE,
-  SEARCH_ICON_STYLE,
-  SEARCH_INPUT_STYLE,
-  PLACEHOLDER_TEXT_COLOR,
-  INPUT_PLACEHOLDER_TEXT,
+  searchInputContainerStyle,
+  searchIconWrapperStyle,
+  searchIconStyle,
+  searchInputStyle,
+  placeholderTextColor,
+  inputPlaceholderText,
+  searchIcon,
 } from './search-input.presets';
 import { SearchInputProps } from './search-input.props';
-
-const searchIcon = require('../../assets/search-icon.png');
 
 export const SearchInput = ({
   containerStyle = [],
   ...textInputProps
-}: SearchInputProps) => (
-  <View style={[...SEARCH_INPUT_CONTAINER_STYLE, ...containerStyle]}>
-    <View style={SEARCH_ICON_WRAPPER_STYLE}>
+}: SearchInputProps): JSX.Element => (
+  <View style={[...searchInputContainerStyle, ...containerStyle]}>
+    <View style={searchIconWrapperStyle}>
       <Image
-        style={SEARCH_ICON_STYLE}
+        style={searchIconStyle}
         source={searchIcon}
         resizeMode={'contain'}
       />
     </View>
     <TextInput
       {...textInputProps}
-      style={SEARCH_INPUT_STYLE}
-      placeholder={INPUT_PLACEHOLDER_TEXT}
-      placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+      style={searchInputStyle}
+      placeholder={inputPlaceholderText}
+      placeholderTextColor={placeholderTextColor}
     />
   </View>
 );

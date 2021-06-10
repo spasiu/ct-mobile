@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { t } from '../../i18n/i18n';
-import { RowLink } from '../row-link/row-link';
-import { RowLinkProps } from '../row-link/row-link.props';
+import { RowLink, RowLinkProps } from '../row-link';
 
-const appleLogo = require('../../assets/apple-logo.png');
+import { appleLogo } from './payment-row-link.presets';
 
-export const PaymentRowLink = (rowLinkProps: RowLinkProps) => (
+export const PaymentRowLink = (rowLinkProps: RowLinkProps): JSX.Element => (
   <RowLink {...rowLinkProps} icon={appleLogo} text={t('payment.apple')} />
 );

@@ -3,20 +3,20 @@ import { View, Text, Image } from 'react-native';
 import Video from 'react-native-video';
 import { styles as s } from 'react-native-style-tachyons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { TextLink, SoundButton, ActionFooter } from '../../components';
 import { t } from '../../i18n/i18n';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
+import { ROUTES_IDS } from '../../navigators';
 import { COLORS } from '../../theme/colors';
 
-const introVideo = require('../../assets/intro-video.mp4');
-const logo = require('../../assets/candt-logo.png');
+import { introVideo, logo } from './landing-screen.presets';
+import { LandingScreenProps } from './landing-screen.props';
 
-export const LandingScreen = () => {
-  const navigation = useNavigation();
-  const [muted, setMuted] = useState(false);
+export const LandingScreen = ({
+  navigation,
+}: LandingScreenProps): JSX.Element => {
+  const [muted, setMuted] = useState<boolean>(false);
   return (
     <View style={[s.flx_i]}>
       <Video

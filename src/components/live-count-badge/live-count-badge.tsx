@@ -1,13 +1,13 @@
 import React from 'react';
+
 import { Badge } from '../badge';
 
 import { LiveCountBadgeProps } from './live-count-badge.props';
-
-const eyeIcon = require('../../assets/eye-icon.png');
+import { eyeIcon } from './live-count-badge.presets';
 
 export const LiveCountBadge = ({
   count,
   ...badgeProps
-}: LiveCountBadgeProps) => (
+}: LiveCountBadgeProps): JSX.Element => (
   <Badge image={eyeIcon} text={count} {...badgeProps} />
 );

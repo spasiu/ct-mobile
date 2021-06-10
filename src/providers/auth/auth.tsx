@@ -1,0 +1,52 @@
+import React, { createContext, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
+
+import {
+  emailSignUpHandler,
+  emailSignInHandler,
+  googleSignInHandler,
+  appleSignInHandler,
+  checkOnboardingStatusHandler,
+  resetPasswordHandler,
+  setOnboardingCompleteHandler,
+  logoutHandler,
+} from './auth-handlers';
+
+import { AuthProviderProps, AuthUser } from './auth.types';
+
+export const AuthContext = createContext({});
+
+export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
+  const [user, setUser] = useState<AuthUser>(null);
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const client = useApolloClient();
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        onboardingComplete,
+        signUpWithEmail: emailSignUpHandler,
+        signInWithEmail: emailSignInHandler,
+        signInWithGoogle: googleSignInHandler,
+        signInWithApple: appleSignInHandler,
+        setOnboardingStatusComplete: async () => {
+          await setOnboardingCompleteHandler(user);
+          setOnboardingComplete(true);
+        },
+        checkOnboardingStatus: async (authUser: AuthUser) => {
+          const onboardingStatus = await checkOnboardingStatusHandler(
+            authUser,
+            onboardingComplete,
+          );
+          setOnboardingComplete(onboardingStatus);
+        },
+        resetPassword: resetPasswordHandler,
+        logout: () => {
+          logoutHandler(client);
+        },
+      }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

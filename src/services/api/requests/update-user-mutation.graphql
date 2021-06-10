@@ -1,0 +1,9 @@
+mutation UpdateUser($userInput: Users_set_input, $userId: String) {
+  update_Users(_set: $userInput, where: { id: { _eq: $userId } }) {
+    returning {
+      id
+      username
+      image
+    }
+  }
+}

@@ -1,28 +1,29 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { IconButton } from '../icon-button/icon-button';
+import { IconButton } from '../icon-button';
 
+import { containerStylePresets, textStylePresets } from './filter-item.presets';
 import {
-  CONTAINER_STYLE_PRESETS,
-  TEXT_STYLE_PRESETS,
-} from './filter-item.presets';
-import { FilterItemProps } from './filter-item.props';
+  FilterItemProps,
+  FilterItemTypes,
+  FilterItemStatusTypes,
+} from './filter-item.props';
 
 export const FilterItem = ({
   children,
-  type = 'pill-default',
-  status = 'default',
+  type = FilterItemTypes.pill_default,
+  status = FilterItemStatusTypes.default,
   style = [],
   text,
   ...iconButtonProps
-}: FilterItemProps) => {
+}: FilterItemProps): JSX.Element => {
   return (
     <IconButton
       {...iconButtonProps}
-      style={[...CONTAINER_STYLE_PRESETS[type][status], ...style]}>
+      style={[...containerStylePresets[type][status], ...style]}>
       {text ? (
-        <Text style={[...TEXT_STYLE_PRESETS[type][status]]}>{text}</Text>
+        <Text style={[...textStylePresets[type][status]]}>{text}</Text>
       ) : (
         children
       )}

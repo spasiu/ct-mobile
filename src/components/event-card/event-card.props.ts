@@ -1,12 +1,13 @@
 import { ViewStyle } from 'react-native';
 
-import { ImageCardProps } from '../image-card/image-card.props';
-import { LeagueIconTypes } from '../league-icon/league-icon.presets';
+import { Sports } from '../../common/sports';
 
+import { ImageCardProps } from '../image-card';
+import { StatusBadgeTypes } from '../status-badge';
 export interface EventCardProps extends ImageCardProps {
   title?: string;
   contentContainerStyle?: ViewStyle[];
-  league: LeagueIconTypes;
+  league: keyof typeof Sports;
   eventDate: string;
-  status: 'live' | 'upcoming' | 'scheduled'; // change to data status when models available
+  status: keyof typeof StatusBadgeTypes;
 }

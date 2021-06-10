@@ -1,4 +1,4 @@
-import { RowLinkProps } from '../row-link/row-link.props';
+import { RowLinkProps } from '../row-link';
 
 export interface AddressRowLinkProps extends RowLinkProps {
   address?: string;

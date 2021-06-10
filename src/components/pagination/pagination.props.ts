@@ -1,11 +1,13 @@
 import { ViewStyle } from 'react-native';
 
-import { PageIndicatorTypes } from './pagination.presets';
-
+export enum PageIndicatorTypes {
+  dot = 'dot',
+  dash = 'dash',
+}
 export interface PaginationProps {
   index: number;
   total: number;
-  pageIndicator?: PageIndicatorTypes;
+  pageIndicator?: keyof typeof PageIndicatorTypes;
   rightButton?: React.ReactNode;
   leftButton?: React.ReactNode;
   indicatorColor?: ViewStyle;

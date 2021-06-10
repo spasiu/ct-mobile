@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { View, Text, TextInput, Image } from 'react-native';
 
 import {
@@ -6,30 +6,51 @@ import {
   labelTextPreset,
   inputPreset,
   viewPreset,
+  containerWrapper,
+  errorTextPreset,
+  errorIcon,
 } from './form-input.presets';
-import { FormInputProps } from './form-input.props';
+import { FormInputProps, FormInputStatusTypes } from './form-input.props';
+import { isStatusError } from './form-input.utils';
 
-const errorIcon = require('../../assets/input-error-icon.png');
-
-export const FormInput = ({
-  label = '',
-  style = [],
-  labelStyle = [],
-  status = 'default',
-  ...textInputProps
-}: FormInputProps) => (
-  <View style={inputWrapperPreset[status]}>
-    <View style={viewPreset.textWrapper}>
-      <Text style={[...labelTextPreset.style, ...labelStyle]}>{label}</Text>
-      <TextInput
-        {...textInputProps}
-        style={[...inputPreset[status], ...style]}
-      />
-    </View>
-    {status === 'error' && (
-      <View style={viewPreset.iconWrapper}>
-        <Image source={errorIcon} />
+export const FormInput = forwardRef(
+  (
+    {
+      label,
+      style = [],
+      labelStyle = [],
+      status = FormInputStatusTypes.default,
+      errorMessage,
+      containerStyle = [],
+      ...textInputProps
+    }: FormInputProps,
+    ref,
+  ): JSX.Element => (
+    <View style={[...containerWrapper, ...containerStyle]}>
+      <View style={inputWrapperPreset[status]}>
+        <View style={viewPreset.textWrapper}>
+          {label ? (
+            <Text style={[...labelTextPreset.style, ...labelStyle]}>
+              {label}
+            </Text>
+          ) : null}
+          <TextInput
+            ref={ref}
+            autoCapitalize="none"
+            autoCorrect={false}
+            {...textInputProps}
+            style={[...inputPreset[status], ...style]}
+          />
+        </View>
+        {isStatusError(status) ? (
+          <View style={viewPreset.iconWrapper}>
+            <Image source={errorIcon} />
+          </View>
+        ) : null}
       </View>
-    )}
-  </View>
+      <Text style={errorTextPreset}>
+        {(isStatusError(status) && errorMessage) || ''}
+      </Text>
+    </View>
+  ),
 );

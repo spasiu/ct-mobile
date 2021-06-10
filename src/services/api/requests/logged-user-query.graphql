@@ -1,0 +1,29 @@
+query LoggedUser($id: String) {
+  Users(where: { id: { _eq: $id } }) {
+    id
+    image
+    first_name
+    last_name
+    username
+    Addresses {
+      id
+      line1
+      line2
+      postal_zip_code
+      state_provice_region
+      city
+      country
+    }
+    UserPreferences {
+      id
+      pricing
+      sports
+      break_type
+    }
+    Notifications {
+      id
+      before_15_min
+      when_live
+    }
+  }
+}

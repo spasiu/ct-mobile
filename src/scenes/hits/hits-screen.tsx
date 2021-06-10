@@ -91,11 +91,11 @@ export const HitsScreen = ({ navigation }) => {
           title={t('hits.title')}
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
-              <FilterItem type="pill-alt" text={t('buttons.myHits')} />
+              <FilterItem type="pill_alt" text={t('buttons.myHits')} />
               <IconButton
                 style={[s.ml3]}
                 onPress={() =>
-                  navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
+                  navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
                 }>
                 <Image
                   resizeMode={'cover'}

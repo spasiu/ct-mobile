@@ -3,40 +3,41 @@ import { View, Text, Image } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { t } from '../../i18n/i18n';
 
-import { IconButton } from '../icon-button/icon-button';
+import { IconButton } from '../icon-button';
 
 import {
-  BUTTON_TYPE_STYLE,
-  BUTTON_CONTENT_STYLE,
-  isFollowing,
-  isSizeFull,
+  buttonTypeStyle,
+  buttonContentStyle,
+  followingIcon,
+  followIcon,
 } from './follow-button.presets';
-
-import { FollowButtonProps } from './follow-button.props';
-
-const followingIcon = require('../../assets/check-icon.png');
-const followIcon = require('../../assets/plus-icon.png');
+import {
+  FollowButtonProps,
+  FollowButtonSizeTypes,
+  FollowButtonTypes,
+} from './follow-button.props';
+import { isFollowing, isSizeFull } from './follow-button.utils';
 
 export const FollowButton = ({
-  type = 'default',
-  size = 'full',
+  type = FollowButtonTypes.default,
+  size = FollowButtonSizeTypes.full,
   defaultContainerStyle = [],
   selectedContainerStyle = [],
   defaultImageStyle = [],
   selectedImageStyle = [],
   ...borderlessButtonProps
-}: FollowButtonProps) => {
+}: FollowButtonProps): JSX.Element => {
   const selected = isFollowing(type);
   if (isSizeFull(size)) {
     return (
       <BorderlessButton
         {...borderlessButtonProps}
         style={[
-          ...BUTTON_TYPE_STYLE.full[type],
+          ...buttonTypeStyle.full[type],
           ...(selected ? selectedContainerStyle : defaultContainerStyle),
         ]}>
         <View accessible>
-          <Text style={BUTTON_CONTENT_STYLE.full[type]}>
+          <Text style={buttonContentStyle.full[type]}>
             {selected ? t('buttons.following') : t('buttons.follow')}
           </Text>
         </View>
@@ -48,12 +49,12 @@ export const FollowButton = ({
     <IconButton
       {...borderlessButtonProps}
       style={[
-        ...BUTTON_TYPE_STYLE.short[type],
+        ...buttonTypeStyle.short[type],
         ...(selected ? selectedContainerStyle : defaultContainerStyle),
       ]}>
       <Image
         style={[
-          ...BUTTON_CONTENT_STYLE.short[type],
+          ...buttonContentStyle.short[type],
           ...(selected ? selectedImageStyle : defaultImageStyle),
         ]}
         source={selected ? followingIcon : followIcon}

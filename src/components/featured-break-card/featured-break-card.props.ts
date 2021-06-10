@@ -1,6 +1,7 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
-import { ImageCardProps } from '../image-card/image-card.props';
+import { ImageCardProps } from '../image-card';
+import { StatusBadgeTypes } from '../status-badge';
 
 export interface FeaturedBreakCardProps extends ImageCardProps {
   title?: string;
@@ -8,7 +9,7 @@ export interface FeaturedBreakCardProps extends ImageCardProps {
   titleTextStyle?: TextStyle[];
   descriptionTextStyle?: TextStyle[];
   contentContainerStyle?: ViewStyle[];
-  status?: 'live' | 'upcoming' | 'scheduled'; // change to data status when models available
+  status?: keyof typeof StatusBadgeTypes;
   viewCount?: string;
   eventDate?: string;
 }

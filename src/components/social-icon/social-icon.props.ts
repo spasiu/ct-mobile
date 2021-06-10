@@ -1,8 +1,12 @@
 import { ImageProps, ImageStyle } from 'react-native';
 
-import { SocialIconTypes } from './social-icon.presets';
-
+export enum SocialIconTypes {
+  twitter = 'twitter',
+  facebook = 'facebook',
+  instagram = 'instagram',
+  tiktok = 'tiktok',
+}
 export interface SocialIconProps extends Omit<ImageProps, 'source'> {
-  name: SocialIconTypes;
+  name: keyof typeof SocialIconTypes;
   style?: ImageStyle[];
 }

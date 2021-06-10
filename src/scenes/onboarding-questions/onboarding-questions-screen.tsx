@@ -1,100 +1,114 @@
-import React, { useRef } from 'react';
-import { View } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { styles as s } from 'react-native-style-tachyons';
-import { useNavigation } from '@react-navigation/native';
-import Swiper from 'react-native-swiper';
-import { map } from 'ramda';
+import { showMessage } from 'react-native-flash-message';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 import {
   Container,
   ContainerTypes,
   Pagination,
-  TitleBar,
-  ActionFooter,
-  SelectionButton,
+  PageIndicatorTypes,
   BackButton,
+  QuestionPage,
 } from '../../components';
+import { QUESTIONS, Question } from '../../common/break-preferences';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
+import { useInsertUserPreferencesMutation } from '../../services/api/requests';
+import { WINDOW_WIDTH } from '../../theme/sizes';
 
-import { QUESTIONS } from './onboarding-questions-screen.presets';
-import { Question } from './onboarding-questions-screen.props';
+import { OnboardingQuestionsScreenProps } from './onboarding-questions-screen.props';
+import { formatUserPreferences } from './onboarding-questions-screen.utils';
 
-export const OnboardingQuestionsScreen = () => {
-  const navigation = useNavigation();
-  const swiperRef = useRef<Swiper>(null);
+export const OnboardingQuestionsScreen = ({
+  navigation,
+}: OnboardingQuestionsScreenProps): JSX.Element => {
+  const swiperRef = useRef<SwiperFlatList>(null);
+  const [userPreferences, setUserPreferences] = useState({});
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [insertUserPreferences, { loading }] = useInsertUserPreferencesMutation(
+    {
+      onError: () => {
+        navigation.navigate(ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN);
+      },
+      onCompleted: () =>
+        navigation.navigate(ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN),
+    },
+  );
   return (
     <Container
       style={[s.flx_i, s.jcfe, s.mh0]}
       backgroundColor={s.bg_white}
       containerType={ContainerTypes.fixed}>
-      <Swiper
-        ref={swiperRef}
-        scrollEnabled={false}
-        renderPagination={(index, total, context) => {
-          const isFirstSlide = index === 0;
+      <SwiperFlatList ref={swiperRef} disableGesture={true}>
+        {indexedMap((question, index) => {
+          const questionProps = question as Question;
           return (
-            <Pagination
-              pageIndicator={'dash'}
-              index={index}
-              total={total}
-              containerStyle={[s.absolute]}
-              leftButton={
-                <BackButton
-                  onPress={() =>
-                    isFirstSlide
-                      ? navigation.goBack()
-                      : context.scrollBy(-1, true)
-                  }
-                />
-              }
+            <QuestionPage
+              containerStyle={[{ width: WINDOW_WIDTH }]}
+              key={`${questionProps.questionKey}-${index}`}
+              {...questionProps}
+              actionButtonText={t('buttons.next')}
+              isLoading={loading}
+              onActionPressed={alternatives => {
+                const isLastSlide = currentIndex === QUESTIONS.length - 1;
+                if (isLastSlide) {
+                  const allUserPreferences = {
+                    ...userPreferences,
+                    [questionProps.questionKey]: alternatives,
+                  };
+                  insertUserPreferences({
+                    variables: {
+                      userPreferences: {
+                        ...formatUserPreferences(allUserPreferences, QUESTIONS),
+                        user_id: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+                      },
+                    },
+                  });
+                } else {
+                  setUserPreferences({
+                    ...userPreferences,
+                    [questionProps.questionKey]: alternatives,
+                  });
+                  const newIndex = currentIndex + 1;
+                  setCurrentIndex(newIndex);
+                  swiperRef.current &&
+                    swiperRef.current.scrollToIndex({
+                      index: newIndex,
+                      animated: true,
+                    });
+                }
+              }}
             />
           );
-        }}>
-        {indexedMap((question, index) => {
-          const {
-            rootKey,
-            titleKey,
-            subtitleKey,
-            options,
-          } = question as Question;
-          return (
-            <View key={titleKey} style={[s.flx_i, s.mt4, s.aic, s.mh4, s.jcsb]}>
-              <TitleBar
-                title={t(`${rootKey}.${titleKey}`)}
-                subtitle={t(`${rootKey}.${subtitleKey}`)}
-              />
-              <View style={[s.flx_i, s.w_100]}>
-                {map(
-                  ({ label }) => (
-                    <SelectionButton
-                      key={label}
-                      text={t(`${rootKey}.${label}`)}
-                    />
-                  ),
-                  options,
-                )}
-              </View>
-              <ActionFooter
-                containerStyle={[s.w_100]}
-                buttonText={t('buttons.next')}
-                onPress={() => {
-                  const { current } = swiperRef;
-                  const isLastSlide = index === QUESTIONS.length - 1;
-                  if (current) {
-                    isLastSlide
-                      ? navigation.navigate(
-                          ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN,
-                        )
-                      : current.scrollBy(1, true);
-                  }
-                }}
-              />
-            </View>
-          );
         }, QUESTIONS)}
-      </Swiper>
+      </SwiperFlatList>
+      <Pagination
+        pageIndicator={PageIndicatorTypes.dash}
+        index={currentIndex}
+        total={QUESTIONS.length}
+        containerStyle={[s.absolute, s.top_0]}
+        leftButton={
+          <BackButton
+            onPress={() => {
+              const isFirstSlide = currentIndex === 0;
+              if (isFirstSlide) {
+                navigation.goBack();
+              } else {
+                const newIndex = currentIndex - 1;
+                setCurrentIndex(newIndex);
+                swiperRef.current &&
+                  swiperRef.current.scrollToIndex({
+                    index: newIndex,
+                    animated: true,
+                  });
+              }
+            }}
+          />
+        }
+      />
     </Container>
   );
 };

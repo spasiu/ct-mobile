@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { ROUTES_IDS } from '../routes/identifiers';
 import { ScheduleScreen } from '../../scenes/schedule/schedule-screen';
 
-type ScheduleStackParamList = {
+export type ScheduleStackParamList = {
   [ROUTES_IDS.SCHEDULE_SCREEN]: undefined;
 };
 
 const Stack = createNativeStackNavigator<ScheduleStackParamList>();
 
-export const ScheduleStack = () => (
+export const ScheduleStack = (): JSX.Element => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,

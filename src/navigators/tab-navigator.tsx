@@ -13,7 +13,7 @@ import { BreakersStack } from './stacks/breakers-stack';
 
 import { ROUTES_IDS } from './routes/identifiers';
 
-type TabNavigatorParamList = {
+export type TabNavigatorParamList = {
   [ROUTES_IDS.HOME_TAB]: undefined;
   [ROUTES_IDS.SCHEDULE_TAB]: undefined;
   [ROUTES_IDS.HITS_TAB]: undefined;
