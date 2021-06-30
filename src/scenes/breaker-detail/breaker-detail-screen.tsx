@@ -9,7 +9,6 @@ import {
   Linking,
 } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
-import ReadMore from '@fawazahmed/react-native-read-more';
 import { WebView } from 'react-native-webview';
 
 import { WINDOW_WIDTH } from '../../theme/sizes';
@@ -24,6 +23,7 @@ import {
   ScheduleToggle,
   SocialIcon,
   IconButton,
+  ReadMore,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
@@ -123,13 +123,7 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
               </IconButton>
             )}
           />
-          <ReadMore
-            style={[s.ff_alt_r, s.f5, s.lh_high, s.mv3]}
-            numberOfLines={5}
-            seeMoreText={t('buttons.seeMore')}
-            seeLessText={t('buttons.seeLess')}
-            seeMoreStyle={[s.ff_alt_b, s.black]}
-            seeLessStyle={[s.ff_alt_b, s.black]}>
+          <ReadMore mainTextStyle={[s.mv3, s.lh_high]} numberOfLines={5}>
             {description}
           </ReadMore>
         </View>

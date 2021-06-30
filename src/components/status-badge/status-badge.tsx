@@ -9,15 +9,25 @@ import {
   liveIcon,
 } from './status-badge.presets';
 import { StatusBadgeProps, StatusBadgeTypes } from './status-badge.props';
-import { isStatusLive, isStatusScheduled } from './status-badge.utils';
+import {
+  isStatusLive,
+  isStatusScheduled,
+  isStatusCompleted,
+} from './status-badge.utils';
 
 export const StatusBadge = ({
   status = StatusBadgeTypes.live,
   text,
   ...badgeProps
-}: StatusBadgeProps): JSX.Element => {
+}: StatusBadgeProps): JSX.Element | null => {
   const isLive = isStatusLive(status);
   const isScheduled = isStatusScheduled(status);
+  const isCompleted = isStatusCompleted(status);
+
+  if (isCompleted) {
+    return null;
+  }
+
   return (
     <Badge
       {...badgeProps}

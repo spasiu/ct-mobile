@@ -1,10 +1,24 @@
 import React from 'react';
 
-import { t } from '../../i18n/i18n';
-import { RowLink, RowLinkProps } from '../row-link';
+import { RowLink } from '../row-link';
 
-import { appleLogo } from './payment-row-link.presets';
+import { PaymentRowLinkProps } from './payment-row-link.props';
+import {
+  getRowIcon,
+  getRowText,
+  hasValidPayment,
+} from './payment-row-link.utils';
+import { warningTextStyle } from './payment-row-link.presets';
 
-export const PaymentRowLink = (rowLinkProps: RowLinkProps): JSX.Element => (
-  <RowLink {...rowLinkProps} icon={appleLogo} text={t('payment.apple')} />
+export const PaymentRowLink = ({
+  paymentMethod,
+  cardInfo,
+  ...rowLinkProps
+}: PaymentRowLinkProps): JSX.Element => (
+  <RowLink
+    {...rowLinkProps}
+    textStyle={hasValidPayment(paymentMethod, cardInfo) ? [] : warningTextStyle}
+    icon={getRowIcon(paymentMethod, cardInfo)}
+    text={getRowText(paymentMethod, cardInfo)}
+  />
 );

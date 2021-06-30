@@ -13,7 +13,7 @@ declare module 'toggle-switch-react-native' {
     thumbOffStyle?: StyleProp<ViewStyle>;
     trackOnStyle?: StyleProp<ViewStyle>;
     trackOffStyle?: StyleProp<ViewStyle>;
-    onToggle?: (isOn: boolean) => any;
+    onToggle?: (isOn: boolean) => void;
     icon?: React.ReactNode;
     disabled?: boolean;
     animationSpeed?: number;

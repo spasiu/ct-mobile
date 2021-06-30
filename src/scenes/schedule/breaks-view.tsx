@@ -7,15 +7,16 @@ import { BreakCard, Loading } from '../../components';
 import {
   useScheduledBreaksQuery,
   NewScheduledBreaksDocument,
+  Breaks,
 } from '../../services/api/requests';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
 import {
-  breaksScheduleSelector,
+  breakScheduleSelector,
   breakDetailSelector,
-} from './schedule-screen-utils';
+} from './schedule-screen.utils';
 
-export const BreaksView = () => {
+export const BreaksView = (): JSX.Element => {
   const navigation = useNavigation();
 
   const {
@@ -41,14 +42,15 @@ export const BreaksView = () => {
       data={data?.Breaks}
       keyExtractor={item => item.id}
       renderItem={({ item }) => {
+        const eventBreak = item as Breaks;
         return (
           <BreakCard
+            {...breakScheduleSelector(eventBreak)}
             onPress={() =>
               navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {
-                ...breakDetailSelector(item),
+                ...breakDetailSelector(eventBreak),
               })
             }
-            {...breaksScheduleSelector(item)}
           />
         );
       }}

@@ -1,13 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
+import {
+  userSelector,
+  userUsernameSelector,
+  userNameSelector,
+  userImageSelector,
+  userAddressesSelector,
+  userBreakPreferencesSelector,
+  userNotificationsSelector,
+  userDefaultAddressSingleLineSelector,
+} from '../../common/user-profile';
 import {
   Container,
   ContainerTypes,
   NavigationBar,
   RowLink,
   AddressRowLink,
+  PaymentMethods,
   PaymentRowLink,
   AvatarUpload,
   Loading,
@@ -15,26 +27,61 @@ import {
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-import { useLoggedUserQuery } from '../../services/api/requests';
+import { PaymentContext, PaymentContextType } from '../../providers/payment';
+import {
+  useLoggedUserQuery,
+  useUpdateUserMutation,
+  Users,
+} from '../../services/api/requests';
 
-const userIcon = require('../../assets/user-icon.png');
-const breakPreferencesIcon = require('../../assets/break-preferences-icon.png');
-const notificationsIcon = require('../../assets/notifications-icon.png');
-const rulesOfPlayIcon = require('../../assets/rules-of-play-icon.png');
-const termsOfServiceIcon = require('../../assets/terms-of-service-icon.png');
-const privacyPolicyIcon = require('../../assets/privacy-policy-icon.png');
-const chatIcon = require('../../assets/chat-icon.png');
-const logoutIcon = require('../../assets/logout-icon.png');
+import { UserProfileScreenProps } from './user-profile-screen.props';
+import {
+  userIcon,
+  breakPreferencesIcon,
+  notificationsIcon,
+  rulesOfPlayIcon,
+  termsOfServiceIcon,
+  privacyPolicyIcon,
+  chatIcon,
+  logoutIcon,
+} from './user-profile-screen.presets';
 
-export const UserProfileScreen = ({ navigation }) => {
-  const { logout } = useContext(AuthContext) as AuthContextType;
+export const UserProfileScreen = ({
+  navigation,
+}: UserProfileScreenProps): JSX.Element => {
+  const { logout, uploadPhoto, user: authUser } = useContext(
+    AuthContext,
+  ) as AuthContextType;
+  const { getCards, getDefaultPaymentCard } = useContext(
+    PaymentContext,
+  ) as PaymentContextType;
 
-  const { loading, data } = useLoggedUserQuery({
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+
+  useEffect(() => {
+    getCards(
+      authUser as FirebaseAuthTypes.User,
+      'b8c07a16-7e98-4d9f-a45d-b4254b590cf7',
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { data, refetch } = useLoggedUserQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
     },
   });
+
+  const [updateUserMutation] = useUpdateUserMutation({
+    onError: () => setUploadingPhoto(false),
+    onCompleted: () => {
+      refetch();
+      setUploadingPhoto(false);
+    },
+  });
+
+  const user = userSelector(data);
   return (
     <Container
       style={[s.mh0]}
@@ -45,14 +92,29 @@ export const UserProfileScreen = ({ navigation }) => {
         title={t('profile.title')}
       />
       <ScrollView contentContainerStyle={[s.mh3]}>
-        {loading ? (
+        {!user ? (
           <Loading />
         ) : (
           <>
             <View style={[s.flx_i, s.aic]}>
-              <AvatarUpload image={data?.Users[0].image} />
+              <AvatarUpload
+                isLoading={uploadingPhoto}
+                image={userImageSelector(user as Users)}
+                onNewImageSelected={async response => {
+                  setUploadingPhoto(true);
+                  const url = await uploadPhoto(response);
+                  updateUserMutation({
+                    variables: {
+                      userId: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+                      userInput: {
+                        image: url,
+                      },
+                    },
+                  });
+                }}
+              />
               <Text style={[s.ff_b, s.f5, s.mt3, s.mb4]}>
-                {`@${data?.Users[0].username}`}
+                {`@${userUsernameSelector(user as Users)}`}
               </Text>
             </View>
             <View style={[s.mb4]}>
@@ -61,18 +123,24 @@ export const UserProfileScreen = ({ navigation }) => {
               </Text>
               <RowLink
                 icon={userIcon}
-                text={`${data?.Users[0].first_name} ${data?.Users[0].last_name}`}
+                text={userNameSelector(user as Users)}
                 containerStyle={[s.mb2]}
                 showArrow={false}
                 enabled={false}
               />
-              <PaymentRowLink containerStyle={[s.mb2]} />
+              <PaymentRowLink
+                paymentMethod={PaymentMethods.card}
+                cardInfo={getDefaultPaymentCard()}
+                containerStyle={[s.mb2]}
+                onPress={() => navigation.navigate(ROUTES_IDS.PAYMENT_STACK)}
+              />
               <AddressRowLink
+                address={userDefaultAddressSingleLineSelector(user as Users)}
                 containerStyle={[s.mb2]}
                 onPress={() => {
                   navigation.navigate(ROUTES_IDS.ADDRESSES_LIST_SCREEN, {
-                    addresses: data?.Users[0].Addresses,
-                    recipient: `${data?.Users[0].first_name} ${data?.Users[0].last_name}`,
+                    addresses: userAddressesSelector(user as Users),
+                    recipient: userNameSelector(user as Users),
                   });
                 }}
               />
@@ -82,7 +150,9 @@ export const UserProfileScreen = ({ navigation }) => {
                 containerStyle={[s.mb2]}
                 onPress={() => {
                   navigation.navigate(ROUTES_IDS.BREAK_PREFERENCES_SCREEN, {
-                    breakPreferences: data?.Users[0].UserPreferences,
+                    breakPreferences: userBreakPreferencesSelector(
+                      user as Users,
+                    ),
                   });
                 }}
               />
@@ -94,7 +164,9 @@ export const UserProfileScreen = ({ navigation }) => {
                   navigation.navigate(
                     ROUTES_IDS.NOTIFICATION_PREFERENCES_SCREEN,
                     {
-                      notificationPreferences: data?.Users[0].Notifications,
+                      notificationPreferences: userNotificationsSelector(
+                        user as Users,
+                      ),
                     },
                   );
                 }}

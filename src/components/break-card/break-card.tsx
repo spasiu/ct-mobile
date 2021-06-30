@@ -25,7 +25,7 @@ import {
 import { BreakCardProps } from './break-card.props';
 
 export const BreakCard = ({
-  title,
+  title = '',
   status,
   league,
   breakerImage,

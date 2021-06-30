@@ -1,7 +1,5 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { pipe, split, head, replace } from 'ramda';
-import { ImagePickerResponse } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
 import { showMessage } from 'react-native-flash-message';
 
 import { t } from '../../i18n/i18n';
@@ -45,25 +43,6 @@ export const getSuggestedUserPhotoURL = (
   return {
     [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: '',
   };
-};
-
-export const handlePhotoUpload = async (
-  photo: ImagePickerResponse,
-): Promise<string> => {
-  try {
-    const { fileName, uri } = photo;
-    if (uri) {
-      const reference = storage().ref(fileName);
-      await reference.putFile(uri);
-      const url = await storage().ref(fileName).getDownloadURL();
-      return url;
-    }
-    showError();
-    return '';
-  } catch (e) {
-    showError();
-    return '';
-  }
 };
 
 export const showError = (): void => {

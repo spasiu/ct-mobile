@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { launchCamera } from 'react-native-image-picker';
 
 import { Loading } from '../loading';
 
@@ -12,12 +13,13 @@ import {
   imageSizeStyle,
   borderlessButtonStyle,
   loadingWrapper,
+  CAMERA_CONFIG,
 } from './avatar-upload.presets';
 
 export const AvatarUpload = ({
   containerStyle = [],
   imageStyle = [],
-  onPress = () => undefined,
+  onNewImageSelected = () => undefined,
   image,
   isLoading = false,
 }: AvatarUploadProps): JSX.Element => (
@@ -31,7 +33,13 @@ export const AvatarUpload = ({
         source={(image && { uri: image }) || avatar}
       />
     )}
-    <BorderlessButton style={borderlessButtonStyle} onPress={onPress}>
+    <BorderlessButton
+      style={borderlessButtonStyle}
+      onPress={() => {
+        launchCamera(CAMERA_CONFIG, async response => {
+          onNewImageSelected(response);
+        });
+      }}>
       <Image source={cameraIcon} />
     </BorderlessButton>
   </View>

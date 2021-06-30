@@ -6,10 +6,15 @@ import { BreakersScreen } from '../../scenes/breakers/breakers-screen';
 import { BreakerDetailScreen } from '../../scenes/breaker-detail/breaker-detail-screen';
 
 import { UserProfileStack } from './user-profile-stack';
+import { BreakerProfiles } from '../../services/api/requests';
 
 export type BreakersStackParamList = {
   [ROUTES_IDS.BREAKERS_SCREEN]: undefined;
-  [ROUTES_IDS.BREAKER_DETAIL_SCREEN]: undefined;
+  [ROUTES_IDS.BREAKER_DETAIL_SCREEN]: {
+    id: string;
+    breaker: Partial<BreakerProfiles>;
+    startOnEventsView?: boolean;
+  };
   [ROUTES_IDS.USER_PROFILE_STACK]: undefined;
 };
 

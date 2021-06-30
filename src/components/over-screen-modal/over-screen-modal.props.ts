@@ -1,11 +1,14 @@
-import { ModalProps, ViewStyle } from 'react-native';
+import React from 'react';
+import { ViewStyle } from 'react-native';
 
-export interface OverScreenModalProps extends ModalProps {
+export interface OverScreenModalProps {
+  isVisible?: boolean;
   ratio?: number;
   title?: string;
   action?: string;
   onPressClose?: () => void;
   onPressAction?: () => void;
-  children?: React.ReactNode;
   actionStyle?: ViewStyle[];
+  children?: React.ReactNode;
+  bottomComponent?: React.ReactNode;
 }

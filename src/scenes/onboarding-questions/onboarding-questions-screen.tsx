@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { styles as s } from 'react-native-style-tachyons';
-import { showMessage } from 'react-native-flash-message';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 import {

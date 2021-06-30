@@ -1,7 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import { View, TextInput } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { launchCamera } from 'react-native-image-picker';
 import { Formik } from 'formik';
 
 import {
@@ -22,19 +21,17 @@ import { CompleteProfileScreenProps } from './complete-profile-screen.props';
 import {
   COMPLETE_PROFILE_FORM_FIELDS,
   COMPLETE_PROFILE_SCHEMA,
-  CAMERA_CONFIG,
 } from './complete-profile-screen.presets';
 import {
   getSuggestedName,
   getSuggestedUserPhotoURL,
-  handlePhotoUpload,
   showError,
 } from './complete-profile-screen.utils';
 
 export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { user, uploadPhoto } = useContext(AuthContext) as AuthContextType;
 
   const [activeField, setActiveField] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -87,13 +84,11 @@ export const CompleteProfileScreen = ({
                 isLoading={uploadingPhoto}
                 image={values[COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]}
                 containerStyle={[s.mv4]}
-                onPress={() => {
-                  launchCamera(CAMERA_CONFIG, async response => {
-                    setUploadingPhoto(true);
-                    const url = await handlePhotoUpload(response);
-                    handleChange(COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO)(url);
-                    setUploadingPhoto(false);
-                  });
+                onNewImageSelected={async response => {
+                  setUploadingPhoto(true);
+                  const url = await uploadPhoto(response);
+                  handleChange(COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO)(url);
+                  setUploadingPhoto(false);
                 }}
               />
               <View style={[s.flx_i, s.w_100, s.jcfs]}>

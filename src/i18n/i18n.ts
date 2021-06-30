@@ -2,7 +2,7 @@ import i18n from 'i18n-js';
 import * as RNLocalize from 'react-native-localize';
 import { memoizeWith } from 'ramda';
 
-export const translations: { [key: string]: () => object } = {
+export const translations: { [key: string]: () => Record<string, unknown> } = {
   en: () => require('./locales/en.json'),
 };
 

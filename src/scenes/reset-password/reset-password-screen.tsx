@@ -39,10 +39,10 @@ export const ResetPasswordScreen = ({
         validateOnBlur
         validationSchema={RESET_PASSWORD_FORM_SCHEMA}
         initialValues={RESET_PASSWORD_FORM_INITIAL_VALUES}
-        onSubmit={values => {
+        onSubmit={async values => {
           setProcessing(true);
           const email = values[RESET_PASSWORD_FORM_FIELDS.EMAIL];
-          const isEmailSent = resetPassword(email);
+          const isEmailSent = await resetPassword(email);
           setProcessing(false);
           if (isEmailSent) {
             navigation.navigate(ROUTES_IDS.RESET_PASSWORD_CONFIRMATION_SCREEN, {

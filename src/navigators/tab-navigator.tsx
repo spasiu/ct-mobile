@@ -15,7 +15,12 @@ import { ROUTES_IDS } from './routes/identifiers';
 
 export type TabNavigatorParamList = {
   [ROUTES_IDS.HOME_TAB]: undefined;
-  [ROUTES_IDS.SCHEDULE_TAB]: undefined;
+  [ROUTES_IDS.SCHEDULE_TAB]: {
+    screen?: string;
+    initial?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params?: any;
+  };
   [ROUTES_IDS.HITS_TAB]: undefined;
   [ROUTES_IDS.BREAKERS_TAB]: undefined;
 };
@@ -27,7 +32,7 @@ const scheduleIcon = require('../assets/schedule-icon.png');
 const hitsIcon = require('../assets/hits-icon.png');
 const breakersIcon = require('../assets/breakers-icon.png');
 
-export const TabNavigator = () => (
+export const TabNavigator = (): JSX.Element => (
   <Tab.Navigator>
     <Tab.Screen
       name={ROUTES_IDS.HOME_TAB}

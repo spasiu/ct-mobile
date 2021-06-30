@@ -4,25 +4,30 @@ import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
 import {
+  ADDRESS_FORM_SCHEMA,
+  ADDRESS_FORM_FIELDS,
+} from '../../common/address/address-form';
+import {
   Container,
   ContainerTypes,
   NavigationBar,
   TextLink,
   ActionFooter,
   FormInput,
+  WarningModal,
 } from '../../components';
 import { t } from '../../i18n/i18n';
-import { ROUTES_IDS } from '../../navigators';
 import { getFieldStatus } from '../../utils/form-field';
 
-import {
-  ADDRESS_FORM_SCHEMA,
-  ADDRESS_FORM_FIELDS,
-} from './edit-address-screen.presets';
+import { EditAddressListScreenProps } from './edit-address-screen.props';
 
-export const EditAddressScreen = ({ navigation, route }) => {
+export const EditAddressScreen = ({
+  navigation,
+  route,
+}: EditAddressListScreenProps): JSX.Element => {
   const { address } = route.params;
   const [activeField, setActiveField] = useState('');
+  const [addressToDelete, setAddressToDelete] = useState('');
   return (
     <Container
       style={[s.mh0]}
@@ -36,8 +41,14 @@ export const EditAddressScreen = ({ navigation, route }) => {
         <Formik
           validateOnBlur
           validationSchema={ADDRESS_FORM_SCHEMA}
-          initialValues={address}
-          onSubmit={values => {}}>
+          initialValues={{
+            ...address,
+            [ADDRESS_FORM_FIELDS.SECOND_LINE]:
+              address[ADDRESS_FORM_FIELDS.SECOND_LINE] || '',
+          }}
+          onSubmit={values => {
+            console.log('on values', values);
+          }}>
           {({
             handleChange,
             handleBlur,
@@ -101,7 +112,6 @@ export const EditAddressScreen = ({ navigation, route }) => {
               <View style={[s.flx_row]}>
                 <FormInput
                   containerStyle={[s.mr2]}
-                  showLabel={false}
                   onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.CITY)}
                   status={getFieldStatus(
                     ADDRESS_FORM_FIELDS.CITY,
@@ -120,7 +130,6 @@ export const EditAddressScreen = ({ navigation, route }) => {
                 />
                 <FormInput
                   containerStyle={[s.ml2]}
-                  showLabel={false}
                   onFocus={() =>
                     setActiveField(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)
                   }
@@ -195,10 +204,22 @@ export const EditAddressScreen = ({ navigation, route }) => {
           <TextLink
             style={[s.mb3]}
             text={t('buttons.deleteAddress')}
-            onPress={() => {}}
+            onPress={() => setAddressToDelete(address.id)}
           />
         </ActionFooter>
       </View>
+      <WarningModal
+        title={t('warningModal.title')}
+        description={t('addresses.deleteAddressInstruction')}
+        visible={Boolean(addressToDelete)}
+        primaryActionText={t('buttons.deleteAddress')}
+        onPrimaryActionPressed={() => {
+          setAddressToDelete('');
+          navigation.goBack();
+        }}
+        secondaryActionText={t('buttons.cancel')}
+        onSecondaryActionPressed={() => setAddressToDelete('')}
+      />
     </Container>
   );
 };

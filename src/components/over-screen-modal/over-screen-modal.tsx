@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
+import Modal from 'react-native-modal';
 
 import { IconButton } from '../icon-button';
 import { ActionFooter } from '../action-footer';
@@ -10,8 +11,8 @@ import {
   buttonWrapperStyle,
   titleTextStyle,
   closeButtonStyle,
-  backScreenStyle,
   getModalWrapperStyle,
+  overScreenModalStyle,
 } from './over-screen-modal.presets';
 import { OverScreenModalProps } from './over-screen-modal.props';
 
@@ -25,9 +26,11 @@ export const OverScreenModal = ({
   onPressClose = () => undefined,
   onPressAction = () => undefined,
   actionStyle = [],
+  bottomComponent,
+  ...modalProps
 }: OverScreenModalProps): JSX.Element => {
   return (
-    <View style={backScreenStyle}>
+    <Modal style={overScreenModalStyle} {...modalProps}>
       <View style={modalContainerStyle}>
         <View style={getModalWrapperStyle(ratio)}>
           <View style={titleBarStyle}>
@@ -46,11 +49,12 @@ export const OverScreenModal = ({
             <ActionFooter
               containerStyle={actionStyle}
               buttonText={action}
-              onPress={onPressAction}
-            />
+              onPress={onPressAction}>
+              {bottomComponent}
+            </ActionFooter>
           ) : null}
         </View>
       </View>
-    </View>
+    </Modal>
   );
 };

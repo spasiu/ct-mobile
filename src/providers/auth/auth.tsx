@@ -10,6 +10,7 @@ import {
   resetPasswordHandler,
   setOnboardingCompleteHandler,
   logoutHandler,
+  uploadPhotoHandler,
 } from './auth-handlers';
 
 import { AuthProviderProps, AuthUser } from './auth.types';
@@ -42,9 +43,10 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           setOnboardingComplete(onboardingStatus);
         },
         resetPassword: resetPasswordHandler,
-        logout: () => {
-          logoutHandler(client);
+        logout: async () => {
+          await logoutHandler(client);
         },
+        uploadPhoto: uploadPhotoHandler,
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { ImageLibraryOptions } from 'react-native-image-picker';
 
 import { t } from '../../i18n/i18n';
 
@@ -25,9 +24,3 @@ export const COMPLETE_PROFILE_SCHEMA = Yup.object().shape({
     t('forms.requiredField'),
   ),
 });
-
-export const CAMERA_CONFIG: ImageLibraryOptions = {
-  mediaType: 'photo',
-  maxWidth: 180,
-  maxHeight: 180,
-};

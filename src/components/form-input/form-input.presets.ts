@@ -5,7 +5,7 @@ import { FormInputStatusTypes } from './form-input.props';
 
 export const errorIcon = require('../../assets/input-error-icon.png');
 
-export const containerWrapper = [s.mb3] as ViewStyle[];
+export const containerWrapper = [s.flx_i, s.mb3] as ViewStyle[];
 
 export const baseInputWrapperPreset = [
   s.w_100,
@@ -17,7 +17,12 @@ export const baseInputWrapperPreset = [
   s.br4,
 ] as ViewStyle[];
 
-export const baseInputPreset = [s.flx_i, s.ff_alt_r, s.f5] as TextStyle[];
+export const baseInputPreset = [
+  s.flx_i,
+  s.ff_alt_r,
+  s.f5,
+  s.jcc,
+] as TextStyle[];
 
 export const inputWrapperPreset = {
   [FormInputStatusTypes.active]: [
@@ -54,7 +59,9 @@ export const inputPreset = {
 
 export const viewPreset = {
   textWrapper: [s.flx_i] as ViewStyle[],
-  iconWrapper: [s.flx_ratio(0.15), s.jcc, s.aife] as ViewStyle[],
+  iconWrapper: [s.jcc, s.aic, s.asc] as ViewStyle[],
 };
+
+export const errorIconPreset = [s.flx_i];
 
 export const errorTextPreset = [s.ff_alt_r, s.f7, s.black, s.mt1, s.h1];

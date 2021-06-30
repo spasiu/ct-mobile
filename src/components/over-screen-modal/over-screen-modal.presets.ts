@@ -1,19 +1,16 @@
 import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-export const backScreenStyle = [s.flx_i, s.shadow_l] as ViewStyle[];
+export const overScreenModalStyle = [s.mh0, s.mb0];
 
-export const modalContainerStyle = [
-  s.flx_i,
-  s.bg_transparent,
-  s.jcfe,
-] as ViewStyle[];
+export const modalContainerStyle = [s.flx_i, s.jcfe] as ViewStyle[];
 
 export const getModalWrapperStyle = (ratio: number): ViewStyle[] =>
   [
-    s.mt5,
+    s.mt4,
     s.bg_alpha_primary_5,
     s.w_100,
+    s.h_100,
     s.br4,
     s.br__top,
     s.flx_ratio(ratio),

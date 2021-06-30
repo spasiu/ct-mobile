@@ -24,6 +24,7 @@ import {
 } from '../../components';
 import { COLORS } from '../../theme/colors';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
+import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
 import { t } from '../../i18n/i18n';
 
@@ -35,6 +36,7 @@ const shopIcon = require('../../assets/shop-icon.png');
 export const LiveScreen = ({ navigation }) => {
   const inputRef = useRef(null);
   const [messages, setMessage] = useState([]);
+  const [showPayment, setShowPayment] = useState(false);
 
   return (
     <View style={[s.flx_i]}>
@@ -104,11 +106,7 @@ export const LiveScreen = ({ navigation }) => {
                 <Text style={[s.ff_alt_sb, s.f7, s.white]}>{'$110'}</Text>
                 <Text style={[s.ff_alt_r, s.f7, s.white]}>{'3 remaining'}</Text>
               </View>
-              <BuyButton
-                onPress={() =>
-                  navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {})
-                }
-              />
+              <BuyButton onPress={() => setShowPayment(true)} />
             </View>
           </View>
           <KeyboardAvoidingView
@@ -180,23 +178,28 @@ export const LiveScreen = ({ navigation }) => {
               </View>
             </View>
           </KeyboardAvoidingView>
-          {/* <BreakDetailModal
-            productImage={{ uri: 'https://source.unsplash.com/100x100/?card' }}
-            productTitle={'2020 Bowman Baseball Sapphire Edition'}
-            productDescription={
-              '8 spot Hit Draft. 8 packs x 4 cards. 1 Prospect Auto. Hunt for Bowman Sapphire parallels and Chrome'
-            }
-            price={'110.00'}
-            visible={showPayment}
-            onPressClose={() => setShowPayment(false)}
-          />
-          <EventDetailModal
+
+          {/* <EventDetailModal
             modalTitle={t('event.liveDetailTitle')}
             showHeader={false}
             visible={showBreaks}
             onPressClose={() => setShowBreaks(false)}
           /> */}
         </SafeAreaView>
+        <BreakDetailModal
+          productImages={[
+            { uri: 'https://source.unsplash.com/100x100/?card' },
+            { uri: 'https://source.unsplash.com/100x100/?card' },
+            { uri: 'https://source.unsplash.com/100x100/?card' },
+          ]}
+          productTitle={'2020 Bowman Baseball Sapphire Edition'}
+          productDescription={
+            '8 spot Hit Draft. 8 packs x 4 cards. 1 Prospect Auto. Hunt for Bowman Sapphire parallels and Chrome Hunt for Bowman Sapphire parallels and Chrome Hunt for Bowman Sapphire parallels and Chrome Hunt for Bowman Sapphire parallels and Chrome Hunt for Bowman Sapphire parallels and Chrome'
+          }
+          price={'110.00'}
+          isVisible={showPayment}
+          onPressClose={() => setShowPayment(false)}
+        />
       </LinearGradient>
     </View>
   );

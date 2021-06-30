@@ -6,15 +6,15 @@ import { Break_Type_Enum } from '../../services/api/requests';
 import { StatusBadgeTypes } from '../status-badge';
 
 export interface BreakCardProps extends BorderlessButtonProps {
-  title: string;
-  status: keyof typeof StatusBadgeTypes;
-  league: keyof typeof Sports;
+  title?: string;
+  status: StatusBadgeTypes;
+  league: typeof Sports[keyof typeof Sports];
   breakerImage: ImageSourcePropType;
   breakType: Break_Type_Enum;
-  eventDate: string;
-  price: number;
-  spotsLeft: number;
-  onPressFollow: () => void;
-  onPressBuy: () => void;
-  containerStyle: ViewStyle[];
+  eventDate?: string;
+  price?: number;
+  spotsLeft?: number;
+  onPressFollow?: () => void;
+  onPressBuy?: () => void;
+  containerStyle?: ViewStyle[];
 }

@@ -1,5 +1,6 @@
 import { ImageStyle, ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { ImageLibraryOptions } from 'react-native-image-picker';
 
 import { ICON_SIZE } from '../../theme/sizes';
 
@@ -23,3 +24,9 @@ export const borderlessButtonStyle = [
 ] as ViewStyle[];
 
 export const loadingWrapper = [s.jcc, s.aic, s.mt0];
+
+export const CAMERA_CONFIG: ImageLibraryOptions = {
+  mediaType: 'photo',
+  maxWidth: 180,
+  maxHeight: 180,
+};

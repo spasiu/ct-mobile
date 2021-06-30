@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, Image, FlatList, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import ReadMore from '@fawazahmed/react-native-read-more';
 
 import {
   LeagueIcon,
@@ -9,6 +8,7 @@ import {
   ImageCard,
   BreakCard,
   Loading,
+  ReadMore,
 } from '../../components';
 
 import { t } from '../../i18n/i18n';
@@ -66,13 +66,7 @@ export const EventDetailModal = ({ route, navigation }) => {
               <StatusBadge status={status} text={eventDate} />
             </View>
           </View>
-          <ReadMore
-            style={[s.ff_alt_r, s.f7, s.lh_medium]}
-            numberOfLines={3}
-            seeMoreText={t('buttons.seeMore')}
-            seeLessText={t('buttons.seeLess')}
-            seeMoreStyle={[s.ff_alt_b, s.black]}
-            seeLessStyle={[s.ff_alt_b, s.black]}>
+          <ReadMore mainTextStyle={[s.f7, s.lh_medium]} numberOfLines={3}>
             {description}
           </ReadMore>
         </View>

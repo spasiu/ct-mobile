@@ -3,19 +3,32 @@ import { ScrollView, View, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import {
+  addressLineOneSelector,
+  addressLineTwoSelector,
+  addressCityAndStateOneLine,
+  addressPostalCodeAndCountryOneLine,
+} from '../../common/address/address-selectors';
+import {
   Container,
   ContainerTypes,
   NavigationBar,
-  TextLink,
+  SelectableRow,
+  SelectableRowTypes,
   ActionFooter,
   ActionButton,
   ActionButtonTypes,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
+import { Addresses } from '../../services/api/requests';
 import { indexedMap } from '../../utils/ramda';
 
-export const AddressesListScreen = ({ navigation, route }) => {
+import { AddressesListScreenProps } from './addresses-list-screen.props';
+
+export const AddressesListScreen = ({
+  navigation,
+  route,
+}: AddressesListScreenProps): JSX.Element => {
   const { addresses, recipient } = route.params;
   return (
     <Container
@@ -27,44 +40,38 @@ export const AddressesListScreen = ({ navigation, route }) => {
         title={t('addresses.deliveryAddress')}
       />
       <ScrollView contentContainerStyle={[s.ph3]}>
-        {indexedMap(address => {
+        {indexedMap(userAddress => {
+          const address = userAddress as Addresses;
           return (
-            <View
+            <SelectableRow
               key={address.id}
-              style={[s.flx_row, s.bg_white, s.ph3, s.pv3, s.br4]}>
-              <View style={[s.flx_ratio(0.2)]}>
-                <View style={[s.circle_s, s.bg_white, s.ba, s.b__black_40]} />
-              </View>
+              containerStyle={[s.mb3]}
+              rowStatus={SelectableRowTypes.default}
+              onActionPressed={() =>
+                navigation.navigate(ROUTES_IDS.EDIT_ADDRESS_SCREEN, {
+                  address: {
+                    ...address,
+                    recipient,
+                  },
+                })
+              }
+              actionText={t('buttons.edit')}>
               <View style={[s.flx_i]}>
                 <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>{recipient}</Text>
-                <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>{address.line1}</Text>
-                <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>{address.line2}</Text>
-                <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>{address.city}</Text>
                 <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>
-                  {address.postal_zip_code}
+                  {addressLineOneSelector(address)}
                 </Text>
                 <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>
-                  {address.state_provice_region}
+                  {addressLineTwoSelector(address)}
                 </Text>
                 <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>
-                  {address.country}
+                  {addressCityAndStateOneLine(address)}
+                </Text>
+                <Text style={[s.ff_alt_sb, s.f5, s.mb2]}>
+                  {addressPostalCodeAndCountryOneLine(address)}
                 </Text>
               </View>
-              <View style={[s.flx_ratio(0.2), s.aife, s.jcfs]}>
-                <TextLink
-                  onPress={() =>
-                    navigation.navigate(ROUTES_IDS.EDIT_ADDRESS_SCREEN, {
-                      address: {
-                        ...address,
-                        recipient,
-                      },
-                    })
-                  }
-                  textStyle={[s.ff_alt_r]}
-                  text={t('buttons.edit')}
-                />
-              </View>
-            </View>
+            </SelectableRow>
           );
         }, addresses)}
       </ScrollView>

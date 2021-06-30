@@ -1,6 +1,8 @@
 import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
+import { ArrowDirection } from './row-link.props';
+
 export const arrowRightIcon = require('../../assets/arrow-right.png');
 
 export const rowLinkContainerStyle = [
@@ -27,4 +29,9 @@ export const arrowWrapperStyle = [
   s.aife,
 ] as ViewStyle[];
 
-export const arrowStyle = [s.icon_s, s.mr3] as ImageStyle[];
+export const arrowBaseStyle = [s.icon_s, s.mr3] as ImageStyle[];
+
+export const arrowStyle = {
+  [ArrowDirection.right]: arrowBaseStyle,
+  [ArrowDirection.down]: [...arrowBaseStyle, s.rotate_90] as ImageStyle[],
+};

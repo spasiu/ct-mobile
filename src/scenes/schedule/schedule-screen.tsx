@@ -9,13 +9,18 @@ import {
   TitleBar,
   ScheduleToggle,
 } from '../../components';
+import { BreakType } from '../../common/break';
 import { t } from '../../i18n/i18n';
 
 import { EventsView } from './events-view';
 import { BreaksView } from './breaks-view';
-import { EVENT_TYPES, TEXT_KEY_FOR_BREAK_TYPE } from './schedule-screen-utils';
+import {
+  EVENT_TYPES,
+  TEXT_KEY_FOR_BREAK_TYPE,
+  ALL_FILTER_OPTION,
+} from './schedule-screen.presets';
 
-export const ScheduleScreen = () => {
+export const ScheduleScreen = (): JSX.Element => {
   const [eventsView, setEventsView] = useState(false);
   return (
     <Container
@@ -41,10 +46,11 @@ export const ScheduleScreen = () => {
           data={EVENT_TYPES}
           keyExtractor={item => item}
           renderItem={({ item, index }) => {
+            const filterOption = item as BreakType | typeof ALL_FILTER_OPTION;
             return (
               <FilterItem
                 status={index === 0 ? 'selected' : 'default'}
-                text={t(TEXT_KEY_FOR_BREAK_TYPE[item])}
+                text={t(TEXT_KEY_FOR_BREAK_TYPE[filterOption])}
               />
             );
           }}

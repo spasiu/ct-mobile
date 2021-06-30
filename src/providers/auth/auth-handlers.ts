@@ -4,6 +4,8 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { showMessage } from 'react-native-flash-message';
 import { ApolloClient } from '@apollo/client';
+import { ImagePickerResponse } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 import { t } from '../../i18n/i18n';
 
@@ -155,11 +157,39 @@ export const setOnboardingCompleteHandler = async (
 ): Promise<void> => {
   try {
     if (user) {
-      await firestore().collection('Users').doc(user.uid).set({
-        onboardingComplete: true,
-      });
+      await firestore().collection('Users').doc(user.uid).set(
+        {
+          onboardingComplete: true,
+        },
+        { merge: true },
+      );
     }
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const uploadPhotoHandler = async (
+  photo: ImagePickerResponse,
+): Promise<string> => {
+  try {
+    const { fileName, uri } = photo;
+    if (uri) {
+      const reference = storage().ref(fileName);
+      await reference.putFile(uri);
+      const url = await storage().ref(fileName).getDownloadURL();
+      return url;
+    }
+    showMessage({
+      message: t('errors.generic'),
+      type: 'danger',
+    });
+    return '';
+  } catch (e) {
+    showMessage({
+      message: t('errors.generic'),
+      type: 'danger',
+    });
+    return '';
   }
 };

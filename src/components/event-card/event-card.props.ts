@@ -7,7 +7,7 @@ import { StatusBadgeTypes } from '../status-badge';
 export interface EventCardProps extends ImageCardProps {
   title?: string;
   contentContainerStyle?: ViewStyle[];
-  league: keyof typeof Sports;
+  league: typeof Sports[keyof typeof Sports];
   eventDate: string;
   status: keyof typeof StatusBadgeTypes;
 }

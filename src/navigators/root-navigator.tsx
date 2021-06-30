@@ -37,7 +37,8 @@ export const RootNavigator = (): JSX.Element => {
       },
     );
     return authSubscriber;
-  }, [initializing, setUser, checkOnboardingStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <NavigationContainer>

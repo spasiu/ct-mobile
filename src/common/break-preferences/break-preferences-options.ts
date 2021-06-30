@@ -7,7 +7,6 @@ export interface QuestionOption {
   value: string;
   label: string;
 }
-
 export interface Question {
   questionKey: string;
   translationRootKey: string;

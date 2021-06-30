@@ -10,6 +10,9 @@ import { getLocale } from './utils/localization';
 
 export const initLibraries = (): void => {
   // start yup password validators
+  Yup.setLocale({
+    mixed: { notType: t('forms.numberField') },
+  });
   YupPassword(Yup);
 
   // start dayjs calendar to customize calendar locale

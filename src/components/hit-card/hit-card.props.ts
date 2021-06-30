@@ -6,5 +6,5 @@ export interface HitCardProps extends ImageCardProps {
   title?: string;
   textStyle?: TextStyle[];
   cardStyle?: ViewStyle[];
-  showTitle: boolean;
+  showTitle?: boolean;
 }

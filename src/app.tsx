@@ -15,6 +15,7 @@ import { setI18nConfig } from './i18n/i18n';
 import { client } from './services/api/api';
 import { AuthProvider } from './providers/auth';
 import { NotificationProvider } from './providers/notification';
+import { PaymentProvider } from './providers/payment';
 
 import { initLibraries } from './initializer';
 
@@ -47,7 +48,9 @@ const App = (): JSX.Element | null => {
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <AuthProvider>
           <NotificationProvider>
-            <RootNavigator />
+            <PaymentProvider>
+              <RootNavigator />
+            </PaymentProvider>
           </NotificationProvider>
         </AuthProvider>
       </SafeAreaProvider>

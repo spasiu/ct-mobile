@@ -27,6 +27,7 @@ export const ActionButton = ({
     <BorderlessButton
       style={[...borderlessButtonPresets[buttonType], ...style]}
       onPress={event => !isDisabled(buttonType, isLoading) && onPress(event)}
+      enabled={!isDisabled(buttonType, isLoading)}
       {...borderlessButtonProps}>
       {isLoading ? (
         <Loading containerStyle={loadingWrapper} />

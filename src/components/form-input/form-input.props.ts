@@ -14,4 +14,7 @@ export interface FormInputProps extends TextInputProps {
   status?: keyof typeof FormInputStatusTypes;
   errorMessage?: string;
   containerStyle?: ViewStyle[];
+  inputStyle?: ViewStyle[];
+  showTooltip?: boolean;
+  tooltipText?: string;
 }

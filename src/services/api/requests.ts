@@ -3210,7 +3210,9 @@ export type Users_Bool_Exp = {
 /** unique or primary key constraints on table "Users" */
 export enum Users_Constraint {
   /** unique or primary key constraint */
-  UsersPkey = 'Users_pkey'
+  UsersPkey = 'Users_pkey',
+  /** unique or primary key constraint */
+  UsersUsernameKey = 'Users_username_key'
 }
 
 /** input type for inserting data into table "Users" */
@@ -6184,10 +6186,10 @@ export type FeaturedBreakersQuery = (
   { __typename?: 'query_root' }
   & { Users: Array<(
     { __typename?: 'Users' }
-    & Pick<Users, 'id'>
-    & { Profile?: Maybe<(
-      { __typename?: 'Profiles' }
-      & Pick<Profiles, 'id' | 'first_name' | 'last_name' | 'twitter' | 'facebook' | 'instagram' | 'image' | 'video' | 'bio'>
+    & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
+    & { BreakerProfile?: Maybe<(
+      { __typename?: 'BreakerProfiles' }
+      & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
     )> }
   )> }
 );
@@ -6612,14 +6614,14 @@ export const FeaturedBreakersDocument = gql`
     query FeaturedBreakers {
   Users(where: {role: {_eq: ADMIN}}, limit: 6) {
     id
-    Profile {
+    first_name
+    last_name
+    image
+    BreakerProfile {
       id
-      first_name
-      last_name
       twitter
       facebook
       instagram
-      image
       video
       bio
     }

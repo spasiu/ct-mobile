@@ -11,7 +11,7 @@ import {
   arrowStyle,
   arrowRightIcon,
 } from './row-link.presets';
-import { RowLinkProps } from './row-link.props';
+import { RowLinkProps, ArrowDirection } from './row-link.props';
 
 export const RowLink = ({
   icon,
@@ -21,12 +21,17 @@ export const RowLink = ({
   iconStyle = [],
   enabled = true,
   showArrow = true,
+  arrowDirection = ArrowDirection.right,
   rightElement,
   rightElementContainerStyle = [],
   ...buttonProps
 }: RowLinkProps): JSX.Element => {
   const showOnRight = showArrow ? (
-    <Image style={arrowStyle} source={arrowRightIcon} resizeMode={'contain'} />
+    <Image
+      style={arrowStyle[arrowDirection]}
+      source={arrowRightIcon}
+      resizeMode={'contain'}
+    />
   ) : null;
   return (
     <BorderlessButton {...buttonProps} style={containerStyle} enabled={enabled}>
@@ -39,7 +44,12 @@ export const RowLink = ({
               resizeMode={'contain'}
             />
           ) : null}
-          <Text style={[...baseTextStyle, ...textStyle]}>{text}</Text>
+          <Text
+            style={[...baseTextStyle, ...textStyle]}
+            numberOfLines={1}
+            ellipsizeMode={'tail'}>
+            {text}
+          </Text>
         </View>
         <View style={[...arrowWrapperStyle, ...rightElementContainerStyle]}>
           {rightElement ? rightElement : showOnRight}

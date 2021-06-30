@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import { ImageURISource } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
+import { StatusBadgeTypes } from '../../components';
 import { LiveScreen } from '../../scenes/live/live-screen';
 import { BreakDetailModal } from '../../scenes/break-detail/break-detail-modal';
 import { EventDetailModal } from '../../scenes/event-detail/event-detail-modal';
@@ -16,8 +18,23 @@ export type ProtectedStackParamList = {
   [ROUTES_IDS.ONBOARDING_STACK]: undefined;
   [ROUTES_IDS.TAB_NAVIGATOR]: undefined;
   [ROUTES_IDS.LIVE_MODAL]: undefined;
-  [ROUTES_IDS.EVENT_DETAIL_MODAL]: undefined;
-  [ROUTES_IDS.BREAK_DETAIL_MODAL]: undefined;
+  [ROUTES_IDS.EVENT_DETAIL_MODAL]: {
+    modalTitle: string;
+    id: string;
+    title: string;
+    image: ImageURISource;
+    status: StatusBadgeTypes;
+    description: string;
+    league: string;
+    eventDate: string;
+    breaker: { name: string; image: ImageURISource };
+  };
+  [ROUTES_IDS.BREAK_DETAIL_MODAL]: {
+    productImage: ImageURISource;
+    productTitle: string;
+    productDescription: string;
+    price: number;
+  };
   [ROUTES_IDS.HIT_DETAIL_MODAL]: undefined;
 };
 

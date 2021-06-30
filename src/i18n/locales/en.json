@@ -28,7 +28,10 @@
     "forgotPassword": "Forgot password",
     "resetPassword": "Reset Password",
     "backToLogin": "Back To Login",
-    "enableNotifications": "Enable Notifications"
+    "enableNotifications": "Enable Notifications",
+    "addPaymentMethod": "Add New Payment Method",
+    "remove": "Remove",
+    "cancel": "Cancel"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -57,7 +60,13 @@
     "countryLabel": "Country",
     "recipientLabel": "Recipient",
     "firstNameLabel": "First Name",
-    "lastNameLabel": "Last Name"
+    "lastNameLabel": "Last Name",
+    "creditCardNumberLabel": "Credit Card Number",
+    "expirationMonth": "Exp. Month",
+    "expirationYear": "Exp. Year",
+    "nameOnCard": "Name On Card",
+    "numberField": "Must only contain numbers",
+    "cvvField": "CVV"
   },
   "calendar": {
     "today": "Today"
@@ -127,7 +136,6 @@
     "allowNotifications": {
       "title": "Never miss a break!",
       "subtitle": "Turn on notifications to let you know when breaks or breakers you follow are going live. Manage your notifications in your profile.",
-      "warningTitle": "Are you sure?",
       "warningMessage": "You can control what notifications you receive in your profile settings. We don’t want you to miss your favorite live break!",
       "continueToHome": "I’m sure, let me in"
     }
@@ -156,7 +164,19 @@
     "paymentDescription": "+ Tax",
     "paymentCurrencySign": "$",
     "paymentDisclaimer": "All purchases are final and subject to our Terms of Service.",
-    "apple": "Apple Pay"
+    "apple": "Apple Pay",
+    "google": "Google Pay",
+    "noPaymentSavedTitle": "No payment method stored!",
+    "noPaymentSavedDescription": "Register your credit card for a quick and easy way to buy your breaks.",
+    "paymentInformation": "Payment Information",
+    "addPaymentDetails": "Add Payment Details",
+    "numberOfSpots": "Number of Spots",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "shipping": "Shipping",
+    "addCoupon": "+ Add Coupon",
+    "cvvInstructions": "CVV is a three-digit code printed on the back of your credit card. For American Express cards you will find a four-digit code on the front of the card.",
+    "deleteCardInstructions": "This action will permanently remove this payment method from the app."
   },
   "event": {
     "detailTitle": "Event",
@@ -226,7 +246,8 @@
   },
   "addresses": {
     "deliveryAddress": "Delivery Address",
-    "billingAddress": "BillingAddress"
+    "billingAddress": "BillingAddress",
+    "deleteAddressInstruction": "This action will permanently remove this address information from the app."
   },
   "errors": {
     "generic": "Something went wrong. Check the information provided and try again.",
@@ -238,5 +259,8 @@
     "instruction": "If we have an account with your email we will send you a link to reset your password",
     "confirmationTitle": "Email sent!",
     "confirmationInstruction": "Check your email entered below for the link to reset your password"
+  },
+  "warningModal": {
+    "title": "Are you sure?"
   }
 }
