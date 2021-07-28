@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>812947530168-gejfmhm9qdib2hvfmb9bicb3up90pedq.apps.googleusercontent.com</string>
+	<string>414739262677-cmvbpra90i053dk7sqk9s8t2gorq69kv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.812947530168-gejfmhm9qdib2hvfmb9bicb3up90pedq</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>812947530168-a8afpo7iqe4q0d3sc8bue5ttopfth5fe.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.414739262677-cmvbpra90i053dk7sqk9s8t2gorq69kv</string>
 	<key>API_KEY</key>
-	<string>AIzaSyC1axWWUI5YML3xy48-7P97ZAJLFM2H41o</string>
+	<string>AIzaSyAXQidmKknVWvz7igN2Jj9d727s05x6Qb4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>812947530168</string>
+	<string>414739262677</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.cardsandtreasure</string>
 	<key>PROJECT_ID</key>
-	<string>candt-dev</string>
+	<string>candt-admin-dev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>candt-dev.appspot.com</string>
+	<string>candt-admin-dev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:812947530168:ios:800a056856e8fbab202f4d</string>
+	<string>1:414739262677:ios:120b7965c0c3d4d31d465c</string>
 </dict>
 </plist>

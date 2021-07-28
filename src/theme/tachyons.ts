@@ -4,6 +4,15 @@ import { StyleSheet } from 'react-native';
 import { getRootRem, getCircleStyle, getIconSize } from './utils';
 import { COLORS } from './colors';
 import { ICON_SIZE } from './sizes';
+import {
+  DM_SANS_REGULAR,
+  DM_SANS_MEDIUM,
+  DM_SANS_BOLD,
+  INTER_REGULAR,
+  INTER_MEDIUM,
+  INTER_MEDIUM_EXTRA,
+  INTER_BOLD,
+} from './fonts';
 
 const rootRem = getRootRem();
 
@@ -23,13 +32,13 @@ NativeTachyons.build(
       palette: COLORS,
     },
     customStyles: {
-      ff_r: { fontFamily: 'DMSans-Regular', fontWeight: '400' },
-      ff_m: { fontFamily: 'DMSans-Medium', fontWeight: '500' },
-      ff_b: { fontFamily: 'DMSans-Bold', fontWeight: '700' },
-      ff_alt_r: { fontFamily: 'Inter-Regular', fontWeight: '400' },
-      ff_alt_m: { fontFamily: 'Inter-Medium', fontWeight: '500' },
-      ff_alt_sb: { fontFamily: 'Inter-Medium', fontWeight: '600' },
-      ff_alt_b: { fontFamily: 'Inter-Bold', fontWeight: '700' },
+      ff_r: DM_SANS_REGULAR,
+      ff_m: DM_SANS_MEDIUM,
+      ff_b: DM_SANS_BOLD,
+      ff_alt_r: INTER_REGULAR,
+      ff_alt_m: INTER_MEDIUM,
+      ff_alt_sb: INTER_MEDIUM_EXTRA,
+      ff_alt_b: INTER_BOLD,
       lh_high: { lineHeight: 24 },
       lh_sub: { lineHeight: 20 },
       lh_medium: { lineHeight: 17 },
@@ -104,6 +113,8 @@ NativeTachyons.build(
       },
       no_overflow: { overflow: 'hidden' },
       rotate_90: { transform: [{ rotate: '90deg' }] },
+      o_0: { opacity: 0 },
+      flx_0: { flex: 0 },
     },
   },
   StyleSheet,

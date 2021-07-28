@@ -1,14 +1,14 @@
 query Breakers {
-  Users(where: { role: { _eq: ADMIN } }) {
+  Users(where: { role: { _eq: BREAKER } }) {
     id
-    Profile {
+    first_name
+    last_name
+    image
+    BreakerProfile {
       id
-      first_name
-      last_name
       twitter
       facebook
       instagram
-      image
       video
       bio
     }

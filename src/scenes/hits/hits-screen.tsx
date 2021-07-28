@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList, View, Image } from 'react-native';
+import React, { useContext } from 'react';
+import { FlatList, View } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 
 import {
@@ -10,77 +10,93 @@ import {
   SearchInput,
   IconButton,
   FilterItem,
+  ServerImage,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { WINDOW_WIDTH } from '../../theme/sizes';
 import { t } from '../../i18n/i18n';
+import { useUserImageQuery } from '../../services/api/requests';
+import { AuthContext, AuthContextType } from '../../providers/auth';
+import { userSelector, userImageSelector } from '../../common/user-profile';
+import { ICON_SIZE } from '../../theme/sizes';
 
 const HITS = [
   {
     id: 'hits-1',
-    image: 'https://source.unsplash.com/363x522/?sports',
-    name: 'Luis Robert',
+    image: '/temp-hits/Lionel-Messi-71.jpeg',
+    name: 'Lionel Messi',
   },
   {
     id: 'hits-2',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Ceedee-Lamb.jpeg',
     name: 'Ceedee Lamb',
   },
   {
     id: 'hits-3',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Deshaun-Watson.jpeg',
     name: 'Deshaun Watson',
   },
   {
     id: 'hits-4',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Ja-Morant.jpeg',
     name: 'Ja Morant',
   },
   {
     id: 'hits-5',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Justin-Herbert.jpeg',
     name: 'Justin Herbert',
   },
   {
     id: 'hits-6',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Mike-Trout.jpeg',
     name: 'Mike Trout',
   },
   {
     id: 'hits-7',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Mitch-Marner.jpeg',
     name: 'Mitch Marner',
   },
   {
     id: 'hits-8',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Tray-Young.jpeg',
     name: 'Trae Young',
   },
   {
     id: 'hits-9',
-    image: 'https://source.unsplash.com/363x522/?sports',
+    image: '/temp-hits/Zion-Williamson.jpeg',
     name: 'Zion Willamson',
   },
   {
     id: 'hits-10',
-    image: 'https://source.unsplash.com/363x522/?sports',
-    name: 'Mitch Marner',
+    image: '/temp-hits/Shohei-Ohtani-1.png',
+    name: 'Shohei Ohtani',
   },
   {
     id: 'hits-11',
-    image: 'https://source.unsplash.com/363x522/?sports',
-    name: 'Trae Young',
+    image: '/temp-hits/Tua-Tagovailoa-RC-Auto.jpeg',
+    name: 'Tua Tagovailoa',
   },
   {
     id: 'hits-12',
-    image: 'https://source.unsplash.com/363x522/?sports',
-    name: 'Zion Willamson',
+    image: '/temp-hits/Konrad-de-la-Fuente-RC.jpeg',
+    name: 'Konrad de la Fuente',
   },
 ];
 
 export const HitsScreen = ({ navigation }) => {
   const cardWidth = (WINDOW_WIDTH - sizes.mv3 * 2 - 40) / 3;
   const cardHeight = cardWidth * 1.3;
+
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+
+  const { data: users } = useUserImageQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      id: authUser?.uid,
+    },
+  });
+
+  const user = userSelector(users);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -97,10 +113,11 @@ export const HitsScreen = ({ navigation }) => {
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
                 }>
-                <Image
-                  resizeMode={'cover'}
-                  style={[s.circle_m]}
-                  source={{ uri: 'https://source.unsplash.com/96x96/?user' }}
+                <ServerImage
+                  src={userImageSelector(user)}
+                  width={ICON_SIZE.M}
+                  height={ICON_SIZE.M}
+                  style={[s.circle_m, s.no_overflow]}
                 />
               </IconButton>
             </View>
@@ -116,16 +133,12 @@ export const HitsScreen = ({ navigation }) => {
           <HitCard
             onPress={() => navigation.navigate(ROUTES_IDS.HIT_DETAIL_MODAL, {})}
             title={item.name}
-            image={{ uri: item.image }}
+            image={item.image}
             containerStyle={[s.flx_i]}
             textStyle={[s.flx_i, { height: sizes.h2 * 1.8 }, s.f6]}
-            cardStyle={[
-              {
-                width: cardWidth,
-                height: cardHeight,
-              },
-              s.br3,
-            ]}
+            cardWidth={cardWidth}
+            cardHeight={cardHeight}
+            cardStyle={[s.br3]}
           />
         )}
       />

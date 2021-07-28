@@ -1,0 +1,13 @@
+# import "./address-overview-fragment.graphql"
+
+query UserAddresses($id: String) {
+  Users(where: { id: { _eq: $id } }) {
+    id
+    first_name
+    last_name
+    Addresses {
+      id
+      ...AddressOverview
+    }
+  }
+}

@@ -58,7 +58,6 @@
     "stateLabel": "State",
     "postalCodeLabel": "Zip/Postal",
     "countryLabel": "Country",
-    "recipientLabel": "Recipient",
     "firstNameLabel": "First Name",
     "lastNameLabel": "Last Name",
     "creditCardNumberLabel": "Credit Card Number",
@@ -176,7 +175,9 @@
     "shipping": "Shipping",
     "addCoupon": "+ Add Coupon",
     "cvvInstructions": "CVV is a three-digit code printed on the back of your credit card. For American Express cards you will find a four-digit code on the front of the card.",
-    "deleteCardInstructions": "This action will permanently remove this payment method from the app."
+    "deleteCardInstructions": "This action will permanently remove this payment method from the app.",
+    "noShippingAddressSavedTitle": "No delivery address stored!",
+    "noShippingAddressSavedDescription": "Add a delivery address for a quick and easy way to buy your breaks."
   },
   "event": {
     "detailTitle": "Event",
@@ -250,7 +251,7 @@
     "deleteAddressInstruction": "This action will permanently remove this address information from the app."
   },
   "errors": {
-    "generic": "Something went wrong. Check the information provided and try again.",
+    "generic": "Something went wrong. Check your internet connection and try again.",
     "emailInUse": "The email provided is already in use.",
     "validateEmail": "Check your email to validate your account."
   },

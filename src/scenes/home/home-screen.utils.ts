@@ -14,25 +14,21 @@ import { breakerBioSelector } from '../../common/breaker';
 export const featuredBreakSelector = (
   eventBreak: Breaks,
 ): FeaturedBreakCardProps => {
-  const breakImage = breakImageSelector(eventBreak);
   const breakTime = breakTimeSelector(eventBreak);
   return {
     status: breakCardStatusSelector(eventBreak),
     eventDate: formatScheduledStatus(breakTime),
     viewCount: '321',
-    image: { uri: breakImage || 'https://source.unsplash.com/600x801/?sports' },
+    image: breakImageSelector(eventBreak),
     title: breakTitleSelector(eventBreak),
     description: breakDescriptionSelector(eventBreak),
   };
 };
 
 export const featuredBreakerSelector = (breaker: Users): BreakerCardProps => {
-  const breakerName = userNameSelector(breaker);
-  const description = breakerBioSelector(breaker);
-  const image = userImageSelector(breaker);
   return {
-    title: breakerName,
-    description,
-    image: { uri: image },
+    title: userNameSelector(breaker),
+    description: breakerBioSelector(breaker),
+    image: userImageSelector(breaker),
   };
 };

@@ -3,7 +3,8 @@ import * as Yup from 'yup';
 import { t } from '../../i18n/i18n';
 
 export const ADDRESS_FORM_FIELDS = {
-  RECIPIENT: 'recipient',
+  FIRST_NAME: 'first_name',
+  LAST_NAME: 'last_name',
   FIRST_LINE: 'line1',
   SECOND_LINE: 'line2',
   CITY: 'city',
@@ -13,7 +14,10 @@ export const ADDRESS_FORM_FIELDS = {
 } as const;
 
 export const ADDRESS_FORM_SCHEMA = Yup.object().shape({
-  [ADDRESS_FORM_FIELDS.RECIPIENT]: Yup.string().required(
+  [ADDRESS_FORM_FIELDS.FIRST_NAME]: Yup.string().required(
+    t('forms.requiredField'),
+  ),
+  [ADDRESS_FORM_FIELDS.LAST_NAME]: Yup.string().required(
     t('forms.requiredField'),
   ),
   [ADDRESS_FORM_FIELDS.FIRST_LINE]: Yup.string().required(

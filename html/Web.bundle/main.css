@@ -1,0 +1,80 @@
+body {
+  background-color: transparent;
+}
+
+.inputField {
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  background-color: transparent;
+  font-family: 'Inter';
+  font-size: 14px;
+  font-weight: 400;
+  color: #111213;
+  box-shadow: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.fullBox {
+  display: flex;
+  height: 44px;
+  flex: 1;
+  margin-bottom: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 12px;
+  width: calc(100% - 16px);
+}
+
+.fullBoxFrame {
+  width: calc(100% - 32px);
+}
+
+.halfBox {
+  display: flex;
+  height: 44px;
+  width: calc((100% / 2) - 16px);
+  margin-bottom: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 12px;
+}
+
+::-webkit-input-placeholder {
+  color: #111213;
+}
+
+.submitButton {
+  height: 60px;
+  width: 100%;
+  width: calc(100% - 16px);
+  margin-left: 8px;
+  margin-right: 8px;
+  background: #111213;
+  border-radius: 16px;
+  color: #ffffff;
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 16px;
+  border-width: 0;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.rowSpaceLeft {
+  margin-left: 8px;
+}
+
+.rowSpaceRight {
+  margin-right: 8px;
+}
+
+.footer {
+  margin-top: 32px;
+}

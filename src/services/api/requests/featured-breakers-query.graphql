@@ -1,5 +1,5 @@
 query FeaturedBreakers {
-  Users(where: { role: { _eq: ADMIN } }, limit: 6) {
+  Users(where: { role: { _eq: BREAKER } }, limit: 6) {
     id
     first_name
     last_name

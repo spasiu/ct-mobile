@@ -1,7 +1,13 @@
 query ScheduledEvents {
-  Users(where: { role: { _eq: ADMIN } }) {
+  Users(where: { role: { _eq: BREAKER } }) {
     id
-    Events(limit: 5, where: { status: { _neq: COMPLETED } }) {
+    image
+    first_name
+    last_name
+    Events(
+      limit: 5
+      where: { status: { _neq: DRAFT }, _and: { status: { _neq: COMPLETED } } }
+    ) {
       id
       title
       status
@@ -9,11 +15,8 @@ query ScheduledEvents {
       start_time
       description
     }
-    Profile {
+    BreakerProfile {
       id
-      image
-      first_name
-      last_name
       twitter
       facebook
       instagram

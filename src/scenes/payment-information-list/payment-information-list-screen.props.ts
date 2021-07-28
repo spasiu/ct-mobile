@@ -1,11 +1,15 @@
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import { PaymentStackParamList } from '../../navigators';
+import { PaymentStackParamList, ROUTES_IDS } from '../../navigators';
 
 type PaymentInformationListScreenNavigationProp = NativeStackNavigationProp<
   PaymentStackParamList,
-  'screen.paymentInformationList'
+  typeof ROUTES_IDS.PAYMENT_INFORMATION_LIST_SCREEN
 >;
 
 export interface PaymentInformationListScreenProps {
   navigation: PaymentInformationListScreenNavigationProp;
+}
+
+export interface PaymentInformationListProps {
+  onAddPayment: () => void;
 }

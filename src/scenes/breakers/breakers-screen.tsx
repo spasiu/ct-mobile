@@ -1,6 +1,13 @@
-import React from 'react';
-import { FlatList, View, Image } from 'react-native';
+import React, { useContext } from 'react';
+import { FlatList, View } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
+
+import { breakerProfileSelector } from '../../common/breaker';
+import {
+  usersSelector,
+  userSelector,
+  userImageSelector,
+} from '../../common/user-profile';
 
 import {
   TitleBar,
@@ -11,20 +18,38 @@ import {
   FilterItem,
   Loading,
   BreakerCard,
+  ServerImage,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
-import { useBreakersQuery } from '../../services/api/requests';
-
+import { AuthContext, AuthContextType } from '../../providers/auth';
+import { ICON_SIZE } from '../../theme/sizes';
 import {
-  breakerSelector,
-  breakerProfileSelector,
-} from './breakers-screen-utils';
+  useBreakersQuery,
+  useUserImageQuery,
+} from '../../services/api/requests';
 
-export const BreakersScreen = ({ navigation }) => {
+import { breakerCardSelector } from './breakers-screen-utils';
+import { BreakersScreenProps } from './breakers-screen.props';
+
+export const BreakersScreen = ({
+  navigation,
+}: BreakersScreenProps): JSX.Element => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { loading, data } = useBreakersQuery({
     fetchPolicy: 'cache-and-network',
   });
+
+  const { data: users } = useUserImageQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      id: authUser?.uid,
+    },
+  });
+
+  const user = userSelector(users);
+  const breakers = usersSelector(data);
+  const cardWidth = sizes.w5 + sizes.w3 + sizes.w2;
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -41,10 +66,11 @@ export const BreakersScreen = ({ navigation }) => {
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
                 }>
-                <Image
-                  resizeMode={'cover'}
-                  style={[s.circle_m]}
-                  source={{ uri: 'https://source.unsplash.com/96x96/?user' }}
+                <ServerImage
+                  src={userImageSelector(user)}
+                  width={ICON_SIZE.M}
+                  height={ICON_SIZE.M}
+                  style={[s.circle_m, s.no_overflow]}
                 />
               </IconButton>
             </View>
@@ -58,21 +84,18 @@ export const BreakersScreen = ({ navigation }) => {
         <FlatList
           keyExtractor={item => item.id}
           style={[s.flx_i, s.ph3]}
-          data={data?.Users}
+          data={breakers}
           renderItem={({ item }) => (
             <View style={[s.flx_i, s.aic, s.mb4]}>
               <BreakerCard
-                {...breakerSelector(item)}
+                {...breakerCardSelector(item)}
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.BREAKER_DETAIL_SCREEN, {
-                    breaker: breakerProfileSelector(item),
-                    id: item.id,
+                    breaker: item,
                   })
                 }
-                containerStyle={[
-                  s.flx_i,
-                  { width: sizes.w5 + sizes.w3 + sizes.w2 },
-                ]}
+                cardWidth={cardWidth}
+                containerStyle={[s.flx_i, { width: cardWidth }]}
                 cardSize="large"
               />
             </View>

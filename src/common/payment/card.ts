@@ -1,16 +1,12 @@
-import { BillingAddress } from './billing-address';
-
 export type CardExpiry = {
   month: number;
   year: number;
 };
 
 export type CardInput = {
-  cardNum: string;
-  cardExpiry: CardExpiry;
-  holderName: string;
-  billingAddress: BillingAddress;
+  singleUseToken: string;
   profileId: string;
+  merchantRefNum: string;
 };
 
 export enum CardTypes {

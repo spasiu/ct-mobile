@@ -1,9 +1,9 @@
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import { OnboardingStackParamList } from '../../navigators';
+import { OnboardingStackParamList, ROUTES_IDS } from '../../navigators';
 
 type OnboardingQuestionsScreenNavigationProp = NativeStackNavigationProp<
   OnboardingStackParamList,
-  'screen.onboardingQuestions'
+  typeof ROUTES_IDS.ONBOARDING_QUESTIONS_SCREEN
 >;
 
 export type UserPreferencesType = {

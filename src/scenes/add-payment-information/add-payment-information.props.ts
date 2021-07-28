@@ -6,6 +6,10 @@ type AddPaymentInformationScreenNavigationProp = NativeStackNavigationProp<
   'screen.addPaymentInformation'
 >;
 
+export interface AddPaymentInformationProps {
+  onPaymentAdded: () => void;
+}
+
 export interface AddPaymentInformationScreenProps {
   navigation: AddPaymentInformationScreenNavigationProp;
 }

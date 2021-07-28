@@ -4,8 +4,9 @@ import { styles as s } from 'react-native-style-tachyons';
 import { FormInputStatusTypes } from './form-input.props';
 
 export const errorIcon = require('../../assets/input-error-icon.png');
+export const arrowIcon = require('../../assets/arrow-right.png');
 
-export const containerWrapper = [s.flx_i, s.mb3] as ViewStyle[];
+export const containerWrapper = [s.mb3] as ViewStyle[];
 
 export const baseInputWrapperPreset = [
   s.w_100,
@@ -65,3 +66,5 @@ export const viewPreset = {
 export const errorIconPreset = [s.flx_i];
 
 export const errorTextPreset = [s.ff_alt_r, s.f7, s.black, s.mt1, s.h1];
+
+export const arrowStyle = [s.rotate_90];

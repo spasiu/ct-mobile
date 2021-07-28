@@ -1,3 +1,5 @@
+# import "./address-overview-fragment.graphql"
+
 query LoggedUser($id: String) {
   Users(where: { id: { _eq: $id } }) {
     id
@@ -7,20 +9,15 @@ query LoggedUser($id: String) {
     username
     Addresses {
       id
-      line1
-      line2
-      postal_zip_code
-      state_provice_region
-      city
-      country
+      ...AddressOverview
     }
-    UserPreferences {
+    UserPreference {
       id
       pricing
       sports
       break_type
     }
-    Notifications {
+    Notification {
       id
       before_15_min
       when_live

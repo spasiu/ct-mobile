@@ -1,5 +1,11 @@
 query BreakerEvents($id: String!) {
-  Events(where: { User: { id: { _eq: $id } }, status: { _neq: COMPLETED } }) {
+  Events(
+    where: {
+      User: { id: { _eq: $id } }
+      status: { _neq: DRAFT }
+      _and: { status: { _neq: COMPLETED } }
+    }
+  ) {
     id
     title
     status

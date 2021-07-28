@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <script type="text/javascript" src="paysafe.min.js"></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div>
+      <div id="cardNumber" class="inputField fullBox fullBoxFrame"></div>
+
+      <div class="rowContainer">
+        <div id="expiryDate" class="inputField halfBox rowSpaceRight"></div>
+        <div id="cvv" class="inputField halfBox rowSpaceLeft"></div>
+      </div>
+
+      <input
+        type="text"
+        value=""
+        placeholder="Name on Card"
+        name="cardholderName"
+        id="cardholderName"
+        class="inputField fullBox"
+      />
+      <input
+        type="text"
+        value=""
+        placeholder="Country"
+        name="country"
+        id="country"
+        class="inputField fullBox"
+      />
+      <input
+        type="text"
+        value=""
+        placeholder="Address Line 1"
+        name="addressLine1"
+        id="addressLine1"
+        class="inputField fullBox"
+      />
+      <input
+        type="text"
+        value=""
+        placeholder="Address Line 2"
+        name="addressLine2"
+        id="addressLine2"
+        class="inputField fullBox"
+      />
+      <input
+        type="text"
+        value=""
+        placeholder="Zip/Postal"
+        name="postalCode"
+        id="postalCode"
+        class="inputField fullBox"
+      />
+
+      <div class="rowContainer">
+        <input
+          type="text"
+          value=""
+          placeholder="City"
+          name="city"
+          id="city"
+          class="inputField halfBox rowSpaceRight"
+        />
+        <input
+          type="text"
+          value=""
+          placeholder="State"
+          name="state"
+          id="state"
+          class="inputField halfBox rowSpaceLeft"
+        />
+      </div>
+
+      <div class="footer">
+        <button class="submitButton" id="save" type="button">Save</button>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

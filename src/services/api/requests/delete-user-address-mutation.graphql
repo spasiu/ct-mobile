@@ -1,0 +1,8 @@
+mutation DeleteUserAddress($addressId: uuid!) {
+  delete_Addresses_by_pk(id: $addressId) {
+    id
+    User {
+      id
+    }
+  }
+}

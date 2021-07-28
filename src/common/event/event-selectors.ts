@@ -1,6 +1,6 @@
 import { pathOr } from 'ramda';
 
-import { Events, Event_Status_Enum } from '../../services/api/requests';
+import { Events, Event_Status_Enum, Users } from '../../services/api/requests';
 import { StatusBadgeTypes } from '../../components';
 
 import { EventStatusType } from './event';
@@ -40,3 +40,6 @@ export const eventIdSelector = (event: Partial<Events>): string =>
 
 export const eventDescriptionSelector = (event: Partial<Events>): string =>
   pathOr('', ['description'], event);
+
+export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
+  pathOr({}, ['User'], event);

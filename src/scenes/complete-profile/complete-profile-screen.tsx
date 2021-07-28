@@ -60,7 +60,7 @@ export const CompleteProfileScreen = ({
         onSubmit={values =>
           updateUserMutation({
             variables: {
-              userId: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+              userId: user?.uid,
               userInput: values,
             },
           })

@@ -34,28 +34,34 @@ export const SportsData: HomeSportsData[] = [
 
 export const HitsData: HomeHitsData[] = [
   {
-    id: 210,
-    name: 'Luis Robert',
+    id: 'hits-1',
+    image: '/temp-hits/Lionel-Messi-71.jpeg',
+    name: 'Lionel Messi',
   },
   {
-    id: 211,
+    id: 'hits-2',
+    image: '/temp-hits/Ceedee-Lamb.jpeg',
     name: 'Ceedee Lamb',
   },
   {
-    id: 212,
+    id: 'hits-3',
+    image: '/temp-hits/Deshaun-Watson.jpeg',
     name: 'Deshaun Watson',
   },
   {
-    id: 213,
-    name: 'Luis Robert',
+    id: 'hits-4',
+    image: '/temp-hits/Ja-Morant.jpeg',
+    name: 'Ja Morant',
   },
   {
-    id: 214,
-    name: 'Ceedee Lamb',
+    id: 'hits-5',
+    image: '/temp-hits/Justin-Herbert.jpeg',
+    name: 'Justin Herbert',
   },
   {
-    id: 215,
-    name: 'Deshaun Watson',
+    id: 'hits-6',
+    image: '/temp-hits/Mike-Trout.jpeg',
+    name: 'Mike Trout',
   },
 ];
 

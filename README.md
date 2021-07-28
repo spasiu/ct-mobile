@@ -6,6 +6,8 @@
 - [ ] Production Firebase credentials on the environment folders
 - [ ] Change firebase env to production on .env
 - [ ] Add REVERSED_CLIENT_ID to [URL Types](https://developers.google.com/identity/sign-in/ios/start-integrating#add_a_url_scheme_to_your_project)
+- [ ] Key restriction for maps API
+- [ ] Key restriction for other google APIs
 
 ## Project Structure
 

@@ -6,4 +6,5 @@ export interface WarningModalProps {
   onPrimaryActionPressed?: () => void;
   secondaryActionText?: string;
   onSecondaryActionPressed?: () => void;
+  loadingPrimaryAction?: boolean;
 }

@@ -1,22 +1,17 @@
+# import "./break-overview-fragment.graphql"
+
 query BreakerBreaks($id: String!) {
   Breaks(
     where: {
-      Event: { User: { id: { _eq: $id } }, status: { _neq: COMPLETED } }
+      Event: {
+        User: { id: { _eq: $id } }
+        status: { _neq: DRAFT }
+        _and: { status: { _neq: COMPLETED } }
+      }
     }
     order_by: { Event: { start_time: asc } }
   ) {
     id
-    break_type
-    description
-    price
-    spots
-    status
-    title
-    image
-    Event {
-      id
-      status
-      start_time
-    }
+    ...BreakOverview
   }
 }

@@ -1,9 +1,9 @@
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import { OnboardingStackParamList } from '../../navigators';
+import { OnboardingStackParamList, ROUTES_IDS } from '../../navigators';
 
 type OnboardingInstructionsScreenNavigationProp = NativeStackNavigationProp<
   OnboardingStackParamList,
-  'screen.onboardingInstructions'
+  typeof ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN
 >;
 
 export interface OnboardingInstructionsScreenProps {

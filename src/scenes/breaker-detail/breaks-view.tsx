@@ -12,11 +12,15 @@ import {
 import { indexedMap } from '../../utils/ramda';
 
 import {
-  breakerBreakSelector,
+  breakerDetailBreakSelector,
   breakDetailSelector,
 } from './breaker-detail-screen-utils';
 
-export const BreaksView = ({ breaker }) => {
+export const BreaksView = ({
+  breaker,
+}: {
+  breaker: { id: string; image: string };
+}): JSX.Element => {
   const navigation = useNavigation();
 
   const {
@@ -49,7 +53,7 @@ export const BreaksView = ({ breaker }) => {
               })
             }
             key={`breaker-break-${index}`}
-            {...breakerBreakSelector(item, breaker.image)}
+            {...breakerDetailBreakSelector(item, breaker.image)}
           />
         );
       }, data?.Breaks)}

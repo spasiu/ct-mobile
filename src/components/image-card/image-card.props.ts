@@ -1,4 +1,4 @@
-import { ImageSourcePropType, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
 export enum ImageCardSizeTypes {
@@ -10,7 +10,9 @@ export enum ImageCardSizeTypes {
 export interface ImageCardProps extends BorderlessButtonProps {
   children?: React.ReactNode;
   cardSize?: keyof typeof ImageCardSizeTypes;
-  image: ImageSourcePropType;
+  cardWidth?: number;
+  cardHeight?: number;
+  image: string;
   touchable?: boolean;
   containerStyle?: ViewStyle[];
 }

@@ -6,8 +6,11 @@ export interface OverScreenModalProps {
   ratio?: number;
   title?: string;
   action?: string;
+  actionLoading?: boolean;
   onPressClose?: () => void;
   onPressAction?: () => void;
+  onPressBack?: () => void;
+  showBack?: boolean;
   actionStyle?: ViewStyle[];
   children?: React.ReactNode;
   bottomComponent?: React.ReactNode;

@@ -1,14 +1,11 @@
+# import "./address-overview-fragment.graphql"
+
 mutation InsertUserAddress($address: Addresses_insert_input!) {
   insert_Addresses_one(object: $address) {
     id
+    ...AddressOverview
     User {
       id
     }
-    line1
-    line2
-    postal_zip_code
-    state_provice_region
-    city
-    country
   }
 }

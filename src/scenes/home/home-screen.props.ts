@@ -31,7 +31,8 @@ export type HomeSportsData = {
 };
 
 export type HomeHitsData = {
-  id: number;
+  id: string;
+  image: string;
   name: string;
 };
 

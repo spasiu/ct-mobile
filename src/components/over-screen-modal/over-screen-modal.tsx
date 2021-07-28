@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 
 import { IconButton } from '../icon-button';
 import { ActionFooter } from '../action-footer';
+import { BackButton } from '../back-button';
 
 import {
   modalContainerStyle,
@@ -25,6 +26,9 @@ export const OverScreenModal = ({
   children,
   onPressClose = () => undefined,
   onPressAction = () => undefined,
+  onPressBack = () => undefined,
+  showBack = false,
+  actionLoading = false,
   actionStyle = [],
   bottomComponent,
   ...modalProps
@@ -34,7 +38,9 @@ export const OverScreenModal = ({
       <View style={modalContainerStyle}>
         <View style={getModalWrapperStyle(ratio)}>
           <View style={titleBarStyle}>
-            <View style={buttonWrapperStyle} />
+            <View style={buttonWrapperStyle}>
+              {showBack ? <BackButton onPress={onPressBack} /> : null}
+            </View>
             <Text style={titleTextStyle}>{title}</Text>
             <IconButton style={buttonWrapperStyle} onPress={onPressClose}>
               <Image
@@ -47,6 +53,7 @@ export const OverScreenModal = ({
           {children}
           {action ? (
             <ActionFooter
+              isLoading={actionLoading}
               containerStyle={actionStyle}
               buttonText={action}
               onPress={onPressAction}>

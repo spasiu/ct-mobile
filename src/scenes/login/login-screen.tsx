@@ -60,7 +60,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
           touched,
         }) => (
           <>
-            <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
+            <View style={[s.flx_i, s.jcfs, s.aic]}>
               <TitleBar
                 title={t('account.welcomeBackTitle')}
                 subtitle={t('account.welcomeBackSubtitle')}
@@ -144,9 +144,11 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                   }
                   text={t('buttons.forgotPassword')}
                   textStyle={[s.ff_alt_sb, s.black, s.f6]}
+                  style={[s.mt5]}
                 />
               </View>
             </View>
+
             <ActionFooter
               isLoading={processing}
               buttonText={t('buttons.login')}

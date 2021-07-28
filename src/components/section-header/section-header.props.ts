@@ -1,10 +1,10 @@
 import React from 'react';
-import { ImageSourcePropType, TextProps, ViewProps } from 'react-native';
+import { TextProps, ViewProps } from 'react-native';
 
 export interface SectionHeaderProps {
   title?: string;
   actionText?: string;
-  image?: ImageSourcePropType;
+  image?: string;
   containerStyle?: ViewProps[];
   titleTextStyle?: TextProps[];
   actionTextStyle?: TextProps[];

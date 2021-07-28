@@ -1,0 +1,28 @@
+fragment BreakOverview on Breaks {
+  break_type
+  description
+  status
+  title
+  BreakProductItems_aggregate {
+    aggregate {
+      max {
+        price
+      }
+      min {
+        price
+      }
+      sum {
+        quantity
+      }
+    }
+  }
+  Event {
+    id
+    status
+    start_time
+    User {
+      id
+      image
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-import { ImageCard, ImageCardSizeTypes } from '../image-card';
+import { ImageCard } from '../image-card';
 
 import { HitCardProps } from './hit-card.props';
 import { titlePresets, containerPresets } from './hit-card.presets';
@@ -11,13 +11,16 @@ export const HitCard = ({
   containerStyle = [],
   textStyle = [],
   cardStyle = [],
+  cardWidth,
+  cardHeight,
   showTitle = true,
   ...imageCardProps
 }: HitCardProps): JSX.Element => (
   <View style={[...containerPresets, ...containerStyle]}>
     <ImageCard
-      cardSize={ImageCardSizeTypes.small}
       {...imageCardProps}
+      cardWidth={cardWidth}
+      cardHeight={cardHeight}
       containerStyle={cardStyle}
     />
     {showTitle ? (

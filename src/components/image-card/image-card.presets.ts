@@ -3,7 +3,7 @@ import { styles as s, sizes } from 'react-native-style-tachyons';
 
 import { ImageCardSizeTypes } from './image-card.props';
 
-const CARD_SIZES = {
+export const CARD_SIZES = {
   [ImageCardSizeTypes.micro]: {
     height: sizes.h4,
     width: sizes.w3 + sizes.w2,

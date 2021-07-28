@@ -1,9 +1,4 @@
-import {
-  userNameSelector,
-  userImageSelector,
-  userIdSelector,
-} from '../../common/user-profile';
-import { breakerProfileSelector } from '../../common/breaker';
+import { userNameSelector, userImageSelector } from '../../common/user-profile';
 import {
   eventTimeSelector,
   eventCardStatusSelector,
@@ -23,9 +18,8 @@ import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { Breaks, Events, Users } from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 import {
+  breakBreakerSelector,
   breakCardStatusSelector,
-  breakDescriptionSelector,
-  breakImageSelector,
   breakPriceSelector,
   breakSpotsSelector,
   breakTimeSelector,
@@ -47,24 +41,24 @@ export const breakScheduleSelector = (
   | 'breakerImage'
   | 'league'
 > => {
-  const breakerImage = breakImageSelector(eventBreak);
+  const breaker = breakBreakerSelector(eventBreak);
+  const breakTime = breakTimeSelector(eventBreak);
   return {
-    eventDate: breakTimeSelector(eventBreak),
+    eventDate: formatScheduledStatus(breakTime),
     status: breakCardStatusSelector(eventBreak),
     price: breakPriceSelector(eventBreak),
     spotsLeft: breakSpotsSelector(eventBreak),
     title: breakTitleSelector(eventBreak),
     breakType: breakTypeSelector(eventBreak),
-    breakerImage: { uri: breakerImage },
+    breakerImage: userImageSelector(breaker as Users),
     league: Sports.baseball,
   };
 };
 
 export const eventBreakerSelector = (breaker: Users): SectionHeaderProps => {
-  const breakerImage = userImageSelector(breaker);
   return {
     title: userNameSelector(breaker),
-    image: { uri: breakerImage },
+    image: userImageSelector(breaker),
   };
 };
 
@@ -72,35 +66,19 @@ export const eventBreakerDetailSelector = (
   breaker: Users,
 ): BreakersStackParamList[typeof ROUTES_IDS.BREAKER_DETAIL_SCREEN] => {
   return {
-    id: userIdSelector(breaker),
-    breaker: breakerProfileSelector(breaker),
+    breaker,
     startOnEventsView: true,
   };
 };
 
 export const scheduleEventSelector = (event: Events): EventCardProps => {
   const eventTime = eventTimeSelector(event);
-  const image = eventImageSelector(event);
   return {
     eventDate: formatScheduledStatus(eventTime),
     title: eventTitleSelector(event),
     status: eventCardStatusSelector(event),
-    image: { uri: image || 'https://source.unsplash.com/600x801/?sports' },
+    image: eventImageSelector(event),
     league: Sports.baseball,
-  };
-};
-
-export const breakDetailSelector = (
-  eventBreak: Breaks,
-): ProtectedStackParamList[typeof ROUTES_IDS.BREAK_DETAIL_MODAL] => {
-  const breakImage = breakImageSelector(eventBreak);
-  return {
-    productImage: {
-      uri: breakImage || 'https://source.unsplash.com/600x801/?sports',
-    },
-    productTitle: breakTitleSelector(eventBreak),
-    productDescription: breakDescriptionSelector(eventBreak),
-    price: breakPriceSelector(eventBreak),
   };
 };
 

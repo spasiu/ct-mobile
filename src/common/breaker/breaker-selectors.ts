@@ -11,5 +11,10 @@ export const breakerBioSelector = (breaker: Users): string => {
   return pathOr('', ['bio'], profile);
 };
 
+export const breakerVideoSelector = (breaker: Users): string => {
+  const profile = breakerProfileSelector(breaker);
+  return pathOr('', ['video'], profile);
+};
+
 export const breakerEventsSelector = (breaker: Users): Events[] =>
   pathOr([], ['Events'], breaker);

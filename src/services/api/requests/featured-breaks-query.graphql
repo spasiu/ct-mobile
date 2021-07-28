@@ -1,7 +1,9 @@
 query FeaturedBreaks {
   Breaks(
     limit: 6
-    where: { Event: { status: { _neq: COMPLETED } } }
+    where: {
+      Event: { status: { _neq: DRAFT }, _and: { status: { _neq: COMPLETED } } }
+    }
     order_by: { Event: { start_time: asc } }
   ) {
     id

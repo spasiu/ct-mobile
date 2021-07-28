@@ -1,4 +1,4 @@
-import { ViewStyle, ImageSourcePropType } from 'react-native';
+import { ViewStyle } from 'react-native';
 import { BorderlessButtonProps } from 'react-native-gesture-handler';
 
 import { Sports } from '../../common/sports';
@@ -9,11 +9,11 @@ export interface BreakCardProps extends BorderlessButtonProps {
   title?: string;
   status: StatusBadgeTypes;
   league: typeof Sports[keyof typeof Sports];
-  breakerImage: ImageSourcePropType;
+  breakerImage: string;
   breakType: Break_Type_Enum;
   eventDate?: string;
-  price?: number;
-  spotsLeft?: number;
+  price?: string;
+  spotsLeft?: string;
   onPressFollow?: () => void;
   onPressBuy?: () => void;
   containerStyle?: ViewStyle[];

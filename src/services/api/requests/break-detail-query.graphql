@@ -1,0 +1,28 @@
+# import "./address-overview-fragment.graphql"
+
+query BreakDetail($breakId: uuid, $userId: String) {
+  Breaks(where: { id: { _eq: $breakId } }) {
+    id
+    title
+    description
+    image
+    break_type
+    BreakProductItems {
+      id
+      title
+      price
+      quantity
+      bc_product_id
+      bc_variant_id
+    }
+  }
+  Users(where: { id: { _eq: $userId } }) {
+    id
+    first_name
+    last_name
+    Addresses {
+      id
+      ...AddressOverview
+    }
+  }
+}

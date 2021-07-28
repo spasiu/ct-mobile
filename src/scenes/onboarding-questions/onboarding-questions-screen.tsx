@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { styles as s } from 'react-native-style-tachyons';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
@@ -16,6 +16,7 @@ import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
 import { useInsertUserPreferencesMutation } from '../../services/api/requests';
 import { WINDOW_WIDTH } from '../../theme/sizes';
+import { AuthContext, AuthContextType } from '../../providers/auth';
 
 import { OnboardingQuestionsScreenProps } from './onboarding-questions-screen.props';
 import { formatUserPreferences } from './onboarding-questions-screen.utils';
@@ -23,6 +24,7 @@ import { formatUserPreferences } from './onboarding-questions-screen.utils';
 export const OnboardingQuestionsScreen = ({
   navigation,
 }: OnboardingQuestionsScreenProps): JSX.Element => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const swiperRef = useRef<SwiperFlatList>(null);
   const [userPreferences, setUserPreferences] = useState({});
 
@@ -62,7 +64,7 @@ export const OnboardingQuestionsScreen = ({
                     variables: {
                       userPreferences: {
                         ...formatUserPreferences(allUserPreferences, QUESTIONS),
-                        user_id: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+                        user_id: authUser?.uid,
                       },
                     },
                   });

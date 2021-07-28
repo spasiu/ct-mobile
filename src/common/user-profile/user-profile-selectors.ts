@@ -1,4 +1,4 @@
-import { pathOr, head } from 'ramda';
+import { pathOr, head, find, propEq, omit } from 'ramda';
 
 import {
   Users,
@@ -8,6 +8,8 @@ import {
   FeaturedBreakersQuery,
   LoggedUserQuery,
   ScheduledEventsQuery,
+  UserAddressesQuery,
+  UserImageQuery,
 } from '../../services/api/requests';
 
 import {
@@ -17,11 +19,23 @@ import {
 } from '../address/address-selectors';
 
 export const usersSelector = (
-  requestData: FeaturedBreakersQuery | ScheduledEventsQuery | undefined,
+  requestData:
+    | FeaturedBreakersQuery
+    | ScheduledEventsQuery
+    | LoggedUserQuery
+    | UserAddressesQuery
+    | UserImageQuery
+    | undefined,
 ): Users[] => pathOr([], ['Users'], requestData);
 
 export const userSelector = (
-  requestData: LoggedUserQuery | undefined,
+  requestData:
+    | FeaturedBreakersQuery
+    | ScheduledEventsQuery
+    | LoggedUserQuery
+    | UserAddressesQuery
+    | UserImageQuery
+    | undefined,
 ): Users => {
   const users = usersSelector(requestData) as Users[];
   return head(users) as Users;
@@ -33,10 +47,14 @@ export const userIdSelector = (user: Partial<Users>): string =>
 export const userUsernameSelector = (user: Partial<Users>): string =>
   pathOr('', ['username'], user);
 
+export const userFirstNameSelector = (user: Partial<Users>): string =>
+  pathOr('', ['first_name'], user);
+
+export const userLastNameSelector = (user: Partial<Users>): string =>
+  pathOr('', ['last_name'], user);
+
 export const userNameSelector = (user: Partial<Users>): string => {
-  const firstName = pathOr('', ['first_name'], user);
-  const lastName = pathOr('', ['last_name'], user);
-  return `${firstName} ${lastName}`;
+  return `${userFirstNameSelector(user)} ${userLastNameSelector(user)}`;
 };
 
 export const userImageSelector = (user: Users): string =>
@@ -44,6 +62,19 @@ export const userImageSelector = (user: Users): string =>
 
 export const userAddressesSelector = (user: Users): Addresses[] =>
   pathOr([], ['Addresses'], user);
+
+export const userDefaultAddressSelector = (user: Users): Addresses => {
+  const userAddresses = userAddressesSelector(user);
+  return find(propEq('is_default', true))(userAddresses) as Addresses;
+};
+
+export const userDefaultAddressCleanSelector = (user: Users): Addresses => {
+  const defaultAddress = userDefaultAddressSelector(user);
+  return omit(
+    ['first_name', 'last_name', 'is_default', '__typename', 'id'],
+    defaultAddress,
+  ) as Addresses;
+};
 
 export const userBreakPreferencesSelector = (
   user: Users,
@@ -54,8 +85,7 @@ export const userNotificationsSelector = (
 ): Partial<Notifications> => pathOr({}, ['Notifications'], user);
 
 export const userDefaultAddressSingleLineSelector = (user: Users): string => {
-  const addresses = userAddressesSelector(user);
-  const defaultAddress = head(addresses);
+  const defaultAddress = userDefaultAddressSelector(user);
   return defaultAddress
     ? `${addressLineOneSelector(defaultAddress)}, ${addressCitySelector(
         defaultAddress,

@@ -265,6 +265,9 @@ PODS:
   - Firebase/Firestore (7.8.1):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 7.8.0)
+  - Firebase/Functions (7.8.1):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 7.8.0)
   - Firebase/Messaging (7.8.1):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 7.8.0)
@@ -297,6 +300,9 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30907.0)
+  - FirebaseFunctions (7.8.0):
+    - FirebaseCore (~> 7.0)
+    - GTMSessionFetcher/Core (~> 1.4)
   - FirebaseInstallations (7.11.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
@@ -575,6 +581,8 @@ PODS:
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
   - React-jsinspector (0.64.0)
+  - react-native-blurhash (1.1.4):
+    - React-Core
   - react-native-config (1.4.2):
     - react-native-config/App (= 1.4.2)
   - react-native-config/App (1.4.2):
@@ -677,6 +685,10 @@ PODS:
     - Firebase/Firestore (= 7.8.1)
     - React-Core
     - RNFBApp
+  - RNFBFunctions (11.1.2):
+    - Firebase/Functions (= 7.8.1)
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (11.1.2):
     - Firebase/Messaging (= 7.8.1)
     - React-Core
@@ -747,6 +759,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-blurhash (from `../node_modules/react-native-blurhash`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-payments (from `../node_modules/react-native-payments`)
@@ -772,6 +785,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -794,6 +808,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseFunctions
     - FirebaseInstallations
     - FirebaseInstanceID
     - FirebaseMessaging
@@ -843,6 +858,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-blurhash:
+    :path: "../node_modules/react-native-blurhash"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-image-picker:
@@ -893,6 +910,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNFBFunctions:
+    :path: "../node_modules/@react-native-firebase/functions"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNFBStorage:
@@ -927,6 +946,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 049029df3096e5c118917029be7da75ee16f3b1b
   FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
   FirebaseFirestore: f1ededef972dea136e88a7bae9732f52afe64221
+  FirebaseFunctions: 60ffca9955121b73ff3b826766c25cca2cfade8e
   FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
   FirebaseInstanceID: ad5135045a498d7775903efd39762d2cdfa1be27
   FirebaseMessaging: 1d5cac3728c042d3d4700ecb56bbac893660a963
@@ -953,6 +973,7 @@ SPEC CHECKSUMS:
   React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
+  react-native-blurhash: ec98d751a9cb9075cef0b9e3188244c517d6ab22
   react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
   react-native-image-picker: b42940647478bf106ad3c491d6f5d9d40916d865
   react-native-payments: 0cb00209f3b25a72d5b614554abf688e2cc53002
@@ -978,6 +999,7 @@ SPEC CHECKSUMS:
   RNFBApp: bb830cc7f7598e46437b833adc841df345e19e2f
   RNFBAuth: d011f1b1a066a8bceba63c42369de9c5ce68de5e
   RNFBFirestore: 53c0bbc1903f039e791300bb821c55a0cf37bfb1
+  RNFBFunctions: 998b7b6568ecef2c8501168bd762a56e88d74194
   RNFBMessaging: ec695fc0b561e06afa33a731d86f7fa3ae49f4c1
   RNFBStorage: 301038338b021e19080338cfc89662c7e8ac117d
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211

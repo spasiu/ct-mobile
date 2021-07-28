@@ -1,0 +1,6 @@
+query UserImage($id: String) {
+  Users(where: { id: { _eq: $id } }) {
+    id
+    image
+  }
+}

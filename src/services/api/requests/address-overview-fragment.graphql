@@ -1,0 +1,11 @@
+fragment AddressOverview on Addresses {
+  first_name
+  last_name
+  is_default
+  line1
+  line2
+  postal_zip_code
+  state_provice_region
+  city
+  country
+}

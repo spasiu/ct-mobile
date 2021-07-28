@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Image,
   Text,
   PixelRatio,
   ScrollView,
@@ -11,7 +10,7 @@ import {
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import { WebView } from 'react-native-webview';
 
-import { WINDOW_WIDTH } from '../../theme/sizes';
+import { ICON_SIZE, WINDOW_WIDTH } from '../../theme/sizes';
 import { COLORS } from '../../theme/colors';
 import {
   Container,
@@ -24,48 +23,58 @@ import {
   SocialIcon,
   IconButton,
   ReadMore,
+  ServerImage,
+  ImageCardSizeTypes,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 
-import { breakerProfileSelector } from './breaker-detail-screen-utils';
+import { breakerDetailScreenSelector } from './breaker-detail-screen-utils';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 
 const RECENT_HITS = [
   {
-    id: 210,
-    name: 'Luis Robert',
+    id: 'hits-1',
+    image: '/temp-hits/Lionel-Messi-71.jpeg',
+    name: 'Lionel Messi',
   },
   {
-    id: 211,
+    id: 'hits-2',
+    image: '/temp-hits/Ceedee-Lamb.jpeg',
     name: 'Ceedee Lamb',
   },
   {
-    id: 212,
+    id: 'hits-3',
+    image: '/temp-hits/Deshaun-Watson.jpeg',
     name: 'Deshaun Watson',
   },
   {
-    id: 213,
-    name: 'Luis Robert',
+    id: 'hits-4',
+    image: '/temp-hits/Ja-Morant.jpeg',
+    name: 'Ja Morant',
   },
   {
-    id: 214,
-    name: 'Ceedee Lamb',
+    id: 'hits-5',
+    image: '/temp-hits/Justin-Herbert.jpeg',
+    name: 'Justin Herbert',
   },
   {
-    id: 215,
-    name: 'Deshaun Watson',
+    id: 'hits-6',
+    image: '/temp-hits/Mike-Trout.jpeg',
+    name: 'Mike Trout',
   },
 ];
 
 export const BreakerDetailScreen = ({ route, navigation }) => {
-  const { breaker, id, startOnEventsView = false } = route.params;
+  const { breaker, startOnEventsView = false } = route.params;
   const [eventsView, setEventsView] = useState(startOnEventsView);
 
-  const { image, name, description, social } = breakerProfileSelector(breaker);
-  const pixelRatio = PixelRatio.get();
+  const { id, name, image, social, description } = breakerDetailScreenSelector(
+    breaker,
+  );
 
+  const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
   const iframeHeight = (videoWidth * pixelRatio) / 2;
 
@@ -91,10 +100,12 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
         <View style={[s.mh3]}>
           <View style={[s.flx_row, s.jcsb, s.aic]}>
             <View style={[s.flx_row, s.jcfs, s.aic]}>
-              <Image
+              <ServerImage
                 resizeMode={'cover'}
+                width={ICON_SIZE.L}
+                height={ICON_SIZE.L}
                 style={[s.circle_l, s.mr3]}
-                source={image}
+                src={image}
               />
               <Text style={[s.ff_b, s.f5]}>{name}</Text>
             </View>
@@ -157,10 +168,9 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
               }
               showTitle={false}
               containerStyle={[s.mr3]}
-              image={{
-                uri: 'https://source.unsplash.com/363x522/?sports',
-              }}
+              image={item.image}
               title={item.name}
+              cardSize={ImageCardSizeTypes.small}
             />
           )}
         />

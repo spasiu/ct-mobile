@@ -21,12 +21,12 @@ export const SelectableRow = ({
   actionText,
   onActionPressed,
   children,
-  containerStyle = [],
+  rowStyle = [],
   ...bolderlessButtonProps
 }: SelectableRowProps): JSX.Element => {
   return (
     <BorderlessButton
-      style={[...containerPreset, ...containerStyle]}
+      style={[...containerPreset, ...rowStyle]}
       {...bolderlessButtonProps}>
       <View style={leftWrapperPreset}>
         {isRowStatusDefault(rowStatus) ? (

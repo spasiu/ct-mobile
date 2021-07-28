@@ -1,9 +1,9 @@
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import { PublicStackParamList } from '../../navigators';
+import { PublicStackParamList, ROUTES_IDS } from '../../navigators';
 
 type LandingScreenNavigationProp = NativeStackNavigationProp<
   PublicStackParamList,
-  'screen.landing'
+  typeof ROUTES_IDS.LANDING_SCREEN
 >;
 
 export interface LandingScreenProps {

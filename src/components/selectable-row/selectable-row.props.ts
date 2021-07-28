@@ -11,5 +11,5 @@ export interface SelectableRowProps extends BorderlessButtonProps {
   actionText?: string;
   onActionPressed?: () => void;
   children?: React.ReactNode;
-  containerStyle?: ViewStyle[];
+  rowStyle?: ViewStyle[];
 }

@@ -1,8 +1,12 @@
-import React from 'react';
-import { View, ScrollView, FlatList, Image } from 'react-native';
+import React, { useContext } from 'react';
+import { View, ScrollView, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { usersSelector } from '../../common/user-profile';
+import {
+  userImageSelector,
+  userSelector,
+  usersSelector,
+} from '../../common/user-profile';
 import { breaksSelector } from '../../common/break';
 import {
   Container,
@@ -18,7 +22,10 @@ import {
   IconButton,
   Loading,
   FilterItemTypes,
+  ImageCardSizeTypes,
+  ServerImage,
 } from '../../components';
+import { AuthContext, AuthContextType } from '../../providers/auth';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
@@ -26,6 +33,7 @@ import {
   useFeaturedBreaksQuery,
   NewFeaturedBreaksDocument,
   useFeaturedBreakersQuery,
+  useUserImageQuery,
   Breaks,
   Users,
 } from '../../services/api/requests';
@@ -43,8 +51,11 @@ import {
   featuredBreakerSelector,
 } from './home-screen.utils';
 import { HitsStackParamList, TabNavigatorParamList } from '../../navigators';
+import { ICON_SIZE } from '../../theme/sizes';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+
   const {
     data: featuredBreaks,
     subscribeToMore: featuredBreaksSubscription,
@@ -56,6 +67,13 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
+  const { data: users } = useUserImageQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      id: authUser?.uid,
+    },
+  });
+
   if (!featuredBreakers && !featuredBreaks) {
     return <Loading />;
   }
@@ -65,6 +83,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     updateQuery: (prev, { subscriptionData }) => subscriptionData.data || prev,
   });
 
+  const user = userSelector(users);
   return (
     <Container
       style={[s.mh0]}
@@ -86,9 +105,11 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
               onPress={() =>
                 navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
               }>
-              <Image
-                style={[s.circle_m]}
-                source={{ uri: 'https://source.unsplash.com/96x96/?user' }}
+              <ServerImage
+                src={userImageSelector(user)}
+                width={ICON_SIZE.M}
+                height={ICON_SIZE.M}
+                style={[s.circle_m, s.no_overflow]}
               />
             </IconButton>
           </View>
@@ -155,10 +176,9 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                             )
                           }
                           containerStyle={[s.mr3, s.mb3]}
-                          image={{
-                            uri: 'https://source.unsplash.com/363x522/?sports',
-                          }}
+                          image={item.image}
                           title={item.name}
+                          cardSize={ImageCardSizeTypes.small}
                         />
                       );
                     }
@@ -176,8 +196,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                                 screen: ROUTES_IDS.BREAKER_DETAIL_SCREEN,
                                 initial: false,
                                 params: {
-                                  id: item.id,
-                                  breaker: item.Profile,
+                                  breaker: item,
                                 },
                               },
                             )

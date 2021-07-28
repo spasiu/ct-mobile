@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { useNavigation } from '@react-navigation/native';
 
 import { BreakCard, Loading } from '../../components';
 import {
@@ -9,15 +8,13 @@ import {
   NewScheduledBreaksDocument,
   Breaks,
 } from '../../services/api/requests';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
-import {
-  breakScheduleSelector,
-  breakDetailSelector,
-} from './schedule-screen.utils';
+import { BreakDetailModal } from '../break-detail/break-detail-modal';
+
+import { breakScheduleSelector } from './schedule-screen.utils';
 
 export const BreaksView = (): JSX.Element => {
-  const navigation = useNavigation();
+  const [breakId, setBreakId] = useState('');
 
   const {
     loading,
@@ -37,23 +34,27 @@ export const BreaksView = (): JSX.Element => {
   });
 
   return (
-    <FlatList
-      style={[s.h_100, s.ph3]}
-      data={data?.Breaks}
-      keyExtractor={item => item.id}
-      renderItem={({ item }) => {
-        const eventBreak = item as Breaks;
-        return (
-          <BreakCard
-            {...breakScheduleSelector(eventBreak)}
-            onPress={() =>
-              navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {
-                ...breakDetailSelector(eventBreak),
-              })
-            }
-          />
-        );
-      }}
-    />
+    <>
+      <FlatList
+        style={[s.h_100, s.ph3]}
+        data={data?.Breaks}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => {
+          const eventBreak = item as Breaks;
+          return (
+            <BreakCard
+              {...breakScheduleSelector(eventBreak)}
+              onPressBuy={() => setBreakId(item.id)}
+              onPress={() => setBreakId(item.id)}
+            />
+          );
+        }}
+      />
+      <BreakDetailModal
+        breakId={breakId}
+        isVisible={Boolean(breakId)}
+        onPressClose={() => setBreakId('')}
+      />
+    </>
   );
 };

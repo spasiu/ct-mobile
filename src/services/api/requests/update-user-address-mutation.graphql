@@ -1,0 +1,14 @@
+# import "./address-overview-fragment.graphql"
+
+mutation UpdateUserAddress(
+  $address: Addresses_set_input!
+  $addressId: Addresses_pk_columns_input!
+) {
+  update_Addresses_by_pk(_set: $address, pk_columns: $addressId) {
+    id
+    ...AddressOverview
+    User {
+      id
+    }
+  }
+}

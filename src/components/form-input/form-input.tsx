@@ -14,9 +14,11 @@ import {
   errorTextPreset,
   errorIcon,
   errorIconPreset,
+  arrowStyle,
+  arrowIcon,
 } from './form-input.presets';
 import { FormInputProps, FormInputStatusTypes } from './form-input.props';
-import { isStatusError } from './form-input.utils';
+import { isStatusError, isStatusDisabled } from './form-input.utils';
 
 export const FormInput = forwardRef(
   (
@@ -29,6 +31,7 @@ export const FormInput = forwardRef(
       containerStyle = [],
       inputStyle = [],
       showTooltip = false,
+      isPicker = false,
       tooltipText = '',
       ...textInputProps
     }: FormInputProps,
@@ -43,6 +46,7 @@ export const FormInput = forwardRef(
             </Text>
           ) : null}
           <TextInput
+            editable={!isStatusDisabled(status) && !isPicker}
             ref={ref}
             autoCapitalize="none"
             autoCorrect={false}
@@ -61,6 +65,15 @@ export const FormInput = forwardRef(
               />
             </View>
           </Tooltip>
+        ) : null}
+        {isPicker ? (
+          <View style={viewPreset.iconWrapper}>
+            <Image
+              style={arrowStyle}
+              resizeMode={'contain'}
+              source={arrowIcon}
+            />
+          </View>
         ) : null}
       </View>
       <Text style={errorTextPreset}>

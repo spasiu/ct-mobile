@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 
 import { TextLink } from '../text-link';
+import { ServerImage } from '../server-image';
 
 import {
   baseContainerStyle,
@@ -11,6 +12,7 @@ import {
   contentWrapperStyle,
 } from './section-header.presets';
 import { SectionHeaderProps } from './section-header.props';
+import { ICON_SIZE } from '../../theme/sizes';
 
 export const SectionHeader = ({
   title = '',
@@ -25,7 +27,14 @@ export const SectionHeader = ({
   return (
     <View style={[...baseContainerStyle, ...containerStyle]}>
       <View style={contentWrapperStyle}>
-        {image ? <Image style={imageStyle} source={image} /> : null}
+        {image ? (
+          <ServerImage
+            style={imageStyle}
+            width={ICON_SIZE.S}
+            height={ICON_SIZE.S}
+            src={image}
+          />
+        ) : null}
         <Text style={[...baseTitleTextStyle, ...titleTextStyle]}>{title}</Text>
       </View>
       {actionComponent ? (

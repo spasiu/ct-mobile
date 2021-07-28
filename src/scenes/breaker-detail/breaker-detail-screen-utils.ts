@@ -1,23 +1,32 @@
-import { ImageSourcePropType } from 'react-native';
-import { pathOr, map, filter } from 'ramda';
+import { map, filter } from 'ramda';
 
 import { BreakCardProps, EventCardProps } from '../../components';
-import {
-  Profiles_Select_Column,
-  Breaks,
-  Events,
-} from '../../services/api/requests';
+import { BreakerProfiles, Breaks, Events } from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
+import { SOCIAL_PROFILES } from '../../common/breaker/social-profile-options';
+import { userImageSelector, userNameSelector } from '../../common/user-profile';
+import {
+  breakCardStatusSelector,
+  breakPriceSelector,
+  breakSpotsSelector,
+  breakTimeSelector,
+  breakTitleSelector,
+  breakTypeSelector,
+} from '../../common/break';
+import {
+  breakerBioSelector,
+  breakerProfileSelector,
+  breakerVideoSelector,
+} from '../../common/breaker';
+import {
+  eventTimeSelector,
+  eventCardStatusSelector,
+  eventImageSelector,
+  eventTitleSelector,
+} from '../../common/event';
+import { Sports } from '../../common/sports';
 
-const SOCIAL_PROFILES = [
-  Profiles_Select_Column.Instagram,
-  Profiles_Select_Column.Tiktok,
-  Profiles_Select_Column.Twitter,
-  Profiles_Select_Column.Facebook,
-  Profiles_Select_Column.Linkedin,
-];
-
-const getSocialProfiles = breaker =>
+const getSocialProfiles = (breaker: BreakerProfiles) =>
   map(profile => {
     return {
       name: profile,
@@ -25,63 +34,47 @@ const getSocialProfiles = breaker =>
     };
   }, SOCIAL_PROFILES);
 
-export const breakerProfileSelector = breaker => {
-  const firstName = pathOr('', ['first_name'], breaker);
-  const lastName = pathOr('', ['last_name'], breaker);
-  const breakerImage = pathOr('', ['image'], breaker);
-  const description = pathOr('', ['bio'], breaker);
-  const video = pathOr('', ['video'], breaker);
-
+export const breakerDetailScreenSelector = breaker => {
+  const breakerProfile = breakerProfileSelector(breaker);
   const social = filter(
     profile => profile.url,
-    getSocialProfiles({
-      ...breaker,
-      twitter: 'https://twitter.com/cardsntreasure',
-      facebook: 'https://www.facebook.com/cardsandtreasure/',
-      instagram: 'https://www.instagram.com/cardsandtreasure/',
-    }),
+    getSocialProfiles(breakerProfile),
   );
   return {
-    name: `${firstName} ${lastName}`.trim(),
-    image: { uri: breakerImage },
+    id: breaker.id,
+    name: userNameSelector(breaker),
+    image: userImageSelector(breaker),
+    video: breakerVideoSelector(breaker),
+    description: breakerBioSelector(breaker),
     social,
-    video,
-    description,
   };
 };
 
-export const breakerBreakSelector = (
-  breaks: Breaks,
-  breakerImage: ImageSourcePropType,
+export const breakerDetailBreakSelector = (
+  eventBreak: Breaks,
+  breakerImage: string,
 ): BreakCardProps => {
-  const eventPath = ['Event'];
-
-  const eventDate = pathOr('', [...eventPath, 'start_time'], breaks);
-  const status = pathOr('', [...eventPath, 'status'], breaks);
+  const breakTime = breakTimeSelector(eventBreak);
   return {
-    eventDate: formatScheduledStatus(eventDate),
-    status: status.toLowerCase(),
-    price: breaks.price,
-    spotsLeft: breaks.spots,
-    title: breaks.title,
-    breakType: breaks.break_type,
+    eventDate: formatScheduledStatus(breakTime),
+    status: breakCardStatusSelector(eventBreak),
+    price: breakPriceSelector(eventBreak),
+    spotsLeft: breakSpotsSelector(eventBreak),
+    title: breakTitleSelector(eventBreak),
+    breakType: breakTypeSelector(eventBreak),
+    league: Sports.baseball,
     breakerImage,
-    league: 'baseball',
   };
 };
 
-export const breakerEventSelector = ({
-  title,
-  image,
-  status,
-  start_time,
-}: Events): EventCardProps => {
+export const breakerEventDetailSelector = (event: Events): EventCardProps => {
+  const eventTime = eventTimeSelector(event);
   return {
-    eventDate: formatScheduledStatus(start_time),
-    league: 'baseball',
-    status: status.toLowerCase(),
-    image: { uri: image || 'https://source.unsplash.com/600x801/?sports' },
-    title,
+    eventDate: formatScheduledStatus(eventTime),
+    title: eventTitleSelector(event),
+    status: eventCardStatusSelector(event),
+    image: eventImageSelector(event),
+    league: Sports.baseball,
   };
 };
 

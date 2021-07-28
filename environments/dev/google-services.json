@@ -1,40 +1,48 @@
 {
   "project_info": {
-    "project_number": "812947530168",
-    "project_id": "candt-dev",
-    "storage_bucket": "candt-dev.appspot.com"
+    "project_number": "414739262677",
+    "project_id": "candt-admin-dev",
+    "storage_bucket": "candt-admin-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:812947530168:android:73bee96da67ceb47202f4d",
+        "mobilesdk_app_id": "1:414739262677:android:a489867f6a177e5d1d465c",
         "android_client_info": {
           "package_name": "com.cardsandtreasure"
         }
       },
       "oauth_client": [
         {
-          "client_id": "812947530168-8g4uktdt1tjmaahtheietmptt6oq5daa.apps.googleusercontent.com",
+          "client_id": "414739262677-o5sepuesgmcga282dqn6ke2odevsfar3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cardsandtreasure",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "414739262677-puel0688s1kh7tli45anmlrj1d951el9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB63Kp8-TlVnTtIGVj7XsSv9jTJLRafMKo"
+          "current_key": "AIzaSyC9tIIlPhWjGtNvL5XpzXSrg86X7chN2cA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "812947530168-8g4uktdt1tjmaahtheietmptt6oq5daa.apps.googleusercontent.com",
+              "client_id": "414739262677-puel0688s1kh7tli45anmlrj1d951el9.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "812947530168-48j4afvp87kuvv5v8ns9dpn6kv0dllfg.apps.googleusercontent.com",
+              "client_id": "414739262677-cmvbpra90i053dk7sqk9s8t2gorq69kv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cardsandtreasures"
+                "bundle_id": "com.cardsandtreasure"
               }
             }
           ]

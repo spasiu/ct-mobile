@@ -12,7 +12,7 @@ import {
 } from '../../services/api/requests';
 
 import {
-  breakerEventSelector,
+  breakerEventDetailSelector,
   eventDetailSelector,
 } from './breaker-detail-screen-utils';
 
@@ -54,7 +54,7 @@ export const EventsView = ({ breaker }) => {
             })
           }
           containerStyle={[s.mr3]}
-          {...breakerEventSelector(item)}
+          {...breakerEventDetailSelector(item)}
         />
       )}
     />

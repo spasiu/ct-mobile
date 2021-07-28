@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import { StatusBadgeTypes } from '../../components';
 import { LiveScreen } from '../../scenes/live/live-screen';
-import { BreakDetailModal } from '../../scenes/break-detail/break-detail-modal';
 import { EventDetailModal } from '../../scenes/event-detail/event-detail-modal';
 import { HitDetailModal } from '../../scenes/hit-detail/hit-detail-modal';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -28,12 +27,6 @@ export type ProtectedStackParamList = {
     league: string;
     eventDate: string;
     breaker: { name: string; image: ImageURISource };
-  };
-  [ROUTES_IDS.BREAK_DETAIL_MODAL]: {
-    productImage: ImageURISource;
-    productTitle: string;
-    productDescription: string;
-    price: number;
   };
   [ROUTES_IDS.HIT_DETAIL_MODAL]: undefined;
 };
@@ -68,10 +61,6 @@ export const ProtectedStack = (): JSX.Element => {
       <Stack.Screen
         name={ROUTES_IDS.EVENT_DETAIL_MODAL}
         component={EventDetailModal}
-      />
-      <Stack.Screen
-        name={ROUTES_IDS.BREAK_DETAIL_MODAL}
-        component={BreakDetailModal}
       />
       <Stack.Screen
         name={ROUTES_IDS.HIT_DETAIL_MODAL}

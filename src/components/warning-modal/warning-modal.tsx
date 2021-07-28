@@ -22,12 +22,14 @@ export const WarningModal = ({
   onPrimaryActionPressed = () => undefined,
   secondaryActionText = '',
   onSecondaryActionPressed = () => undefined,
+  loadingPrimaryAction = false,
 }: WarningModalProps): JSX.Element => (
   <Modal isVisible={visible}>
     <View style={containerWrapper}>
       <Text style={titleStyle}>{title}</Text>
       <Text style={descriptionStyle}>{description}</Text>
       <ActionFooter
+        isLoading={loadingPrimaryAction}
         buttonText={primaryActionText}
         onPress={onPrimaryActionPressed}>
         <TextLink

@@ -2,6 +2,12 @@ import { pathOr } from 'ramda';
 
 import { Addresses } from '../../services/api/requests';
 
+export const addressRecipientFirstNameSelector = (address: Addresses): string =>
+  pathOr('', ['first_name'], address);
+
+export const addressRecipientLastNameSelector = (address: Addresses): string =>
+  pathOr('', ['last_name'], address);
+
 export const addressLineOneSelector = (address: Addresses): string =>
   pathOr('', ['line1'], address);
 
@@ -19,6 +25,15 @@ export const addressStateSelector = (address: Addresses): string =>
 
 export const addressCountrySelector = (address: Addresses): string =>
   pathOr('', ['country'], address);
+
+export const addressIsDefaultSelector = (address: Addresses): boolean =>
+  pathOr(false, ['is_default'], address);
+
+export const addressRecipientSelector = (address: Addresses): string => {
+  const firstName = addressRecipientFirstNameSelector(address);
+  const lastName = addressRecipientLastNameSelector(address);
+  return `${firstName} ${lastName}`;
+};
 
 export const addressCityAndStateOneLine = (address: Addresses): string => {
   const city = addressCitySelector(address);

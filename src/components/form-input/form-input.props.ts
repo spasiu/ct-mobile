@@ -17,4 +17,5 @@ export interface FormInputProps extends TextInputProps {
   inputStyle?: ViewStyle[];
   showTooltip?: boolean;
   tooltipText?: string;
+  isPicker?: boolean;
 }

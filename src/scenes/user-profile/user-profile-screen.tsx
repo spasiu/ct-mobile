@@ -8,7 +8,6 @@ import {
   userUsernameSelector,
   userNameSelector,
   userImageSelector,
-  userAddressesSelector,
   userBreakPreferencesSelector,
   userNotificationsSelector,
   userDefaultAddressSingleLineSelector,
@@ -66,10 +65,10 @@ export const UserProfileScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data, refetch } = useLoggedUserQuery({
+  const { data, loading, refetch } = useLoggedUserQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
-      id: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+      id: authUser?.uid,
     },
   });
 
@@ -92,7 +91,7 @@ export const UserProfileScreen = ({
         title={t('profile.title')}
       />
       <ScrollView contentContainerStyle={[s.mh3]}>
-        {!user ? (
+        {loading ? (
           <Loading />
         ) : (
           <>
@@ -105,7 +104,7 @@ export const UserProfileScreen = ({
                   const url = await uploadPhoto(response);
                   updateUserMutation({
                     variables: {
-                      userId: 'jmrSPHmVoCOx7vBdDdNIr1ulE6u2',
+                      userId: authUser?.uid,
                       userInput: {
                         image: url,
                       },
@@ -138,10 +137,7 @@ export const UserProfileScreen = ({
                 address={userDefaultAddressSingleLineSelector(user as Users)}
                 containerStyle={[s.mb2]}
                 onPress={() => {
-                  navigation.navigate(ROUTES_IDS.ADDRESSES_LIST_SCREEN, {
-                    addresses: userAddressesSelector(user as Users),
-                    recipient: userNameSelector(user as Users),
-                  });
+                  navigation.navigate(ROUTES_IDS.ADDRESSES_LIST_SCREEN);
                 }}
               />
               <RowLink
