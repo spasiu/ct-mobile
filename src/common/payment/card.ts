@@ -5,8 +5,6 @@ export type CardExpiry = {
 
 export type CardInput = {
   singleUseToken: string;
-  profileId: string;
-  merchantRefNum: string;
 };
 
 export enum CardTypes {

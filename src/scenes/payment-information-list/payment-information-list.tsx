@@ -41,10 +41,7 @@ export const PaymentInformationList = ({
   useEffect(() => {
     if (cards.length === 0) {
       setLoading(true);
-      getCards(
-        user as FirebaseAuthTypes.User,
-        'b8c07a16-7e98-4d9f-a45d-b4254b590cf7',
-      );
+      getCards(user as FirebaseAuthTypes.User);
       setSelectedCard(defaultPaymentMethod);
       setLoading(false);
     } else {
@@ -133,11 +130,7 @@ export const PaymentInformationList = ({
         onPrimaryActionPressed={() => {
           setCardToDelete('');
           setLoading(true);
-          deleteCard(
-            user as FirebaseAuthTypes.User,
-            'b8c07a16-7e98-4d9f-a45d-b4254b590cf7',
-            cardToDelete,
-          ).then(() => {
+          deleteCard(user as FirebaseAuthTypes.User, cardToDelete).then(() => {
             setLoading(false);
           });
         }}

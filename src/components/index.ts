@@ -20,6 +20,7 @@ export * from './form-input';
 export * from './hit-card';
 export * from './icon-button';
 export * from './image-card';
+export * from './image-gallery';
 export * from './league-icon';
 export * from './live-count-badge';
 export * from './loading';

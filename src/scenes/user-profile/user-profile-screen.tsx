@@ -58,10 +58,7 @@ export const UserProfileScreen = ({
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
-    getCards(
-      authUser as FirebaseAuthTypes.User,
-      'b8c07a16-7e98-4d9f-a45d-b4254b590cf7',
-    );
+    getCards(authUser as FirebaseAuthTypes.User);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

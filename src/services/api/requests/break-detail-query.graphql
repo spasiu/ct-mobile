@@ -15,6 +15,13 @@ query BreakDetail($breakId: uuid, $userId: String) {
       bc_product_id
       bc_variant_id
     }
+    BreakProductItems_aggregate {
+      aggregate {
+        sum {
+          quantity
+        }
+      }
+    }
   }
   Users(where: { id: { _eq: $userId } }) {
     id

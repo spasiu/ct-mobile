@@ -31,7 +31,10 @@
     "enableNotifications": "Enable Notifications",
     "addPaymentMethod": "Add New Payment Method",
     "remove": "Remove",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "letsGo": "Let's Go!",
+    "backToPaymentDetails": "Back to Payment Details",
+    "soldOut": "Sold Out"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -158,7 +161,6 @@
     "upcoming": "Upcoming"
   },
   "payment": {
-    "paymentModalTitle": "Payment",
     "paymentTotal": "Total",
     "paymentDescription": "+ Tax",
     "paymentCurrencySign": "$",
@@ -177,7 +179,9 @@
     "cvvInstructions": "CVV is a three-digit code printed on the back of your credit card. For American Express cards you will find a four-digit code on the front of the card.",
     "deleteCardInstructions": "This action will permanently remove this payment method from the app.",
     "noShippingAddressSavedTitle": "No delivery address stored!",
-    "noShippingAddressSavedDescription": "Add a delivery address for a quick and easy way to buy your breaks."
+    "noShippingAddressSavedDescription": "Add a delivery address for a quick and easy way to buy your breaks.",
+    "purchaseSuccessfullMessage": "Purchase successful",
+    "purchaseFailedMessage": "Transaction failed, review payment information"
   },
   "event": {
     "detailTitle": "Event",
@@ -185,6 +189,7 @@
     "breakLineupTitle": "Break Lineup"
   },
   "break": {
+    "detailModalTitle": "Break Detail",
     "spotsLeft": "Spots Left",
     "breakTypes": {
       "pickYourTeam": "PYT",

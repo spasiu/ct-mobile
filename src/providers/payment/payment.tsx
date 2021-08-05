@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { append, reject, head, find, propEq } from 'ramda';
+import { append, reject, head } from 'ramda';
 
 import { Card, CardInput } from '../../common/payment';
 
@@ -11,6 +11,10 @@ import {
   deleteCardHandler,
   getDefaultPaymentMethodHandler,
   saveAndSetAsDefaultHandler,
+  createUserOnPaymentPlatformHandler,
+  removeDefaultPaymentHandler,
+  createOrderHandler,
+  getDefaultPaymentCard,
 } from './payment-handlers';
 
 export const PaymentContext = createContext({});
@@ -43,8 +47,8 @@ export const PaymentProvider = ({
           }
           return card;
         },
-        getCards: async (user: FirebaseAuthTypes.User, profileId: string) => {
-          const userCards = await getCardsHandler(profileId);
+        getCards: async (user: FirebaseAuthTypes.User) => {
+          const userCards = await getCardsHandler();
           if (userCards) {
             setCards(userCards);
           }
@@ -53,17 +57,14 @@ export const PaymentProvider = ({
             setDefaultPaymentMethod(id);
           }
         },
-        deleteCard: async (
-          user: FirebaseAuthTypes.User,
-          profileId: string,
-          cardId: string,
-        ) => {
-          const deleted = await deleteCardHandler(profileId, cardId);
+        deleteCard: async (user: FirebaseAuthTypes.User, cardId: string) => {
+          const deleted = await deleteCardHandler(cardId);
           if (deleted) {
             const newCardsList = reject(card => card.id === cardId, cards);
             setCards(newCardsList);
             const shouldTransferSelection =
               newCardsList.length > 0 && cardId === defaultPaymentMethod;
+            const isListEmpty = newCardsList.length === 0;
             if (shouldTransferSelection) {
               const firstCard = head(newCardsList) as Card;
               await saveAndSetAsDefaultHandler(
@@ -72,12 +73,16 @@ export const PaymentProvider = ({
                 setDefaultPaymentMethod,
               );
             }
+
+            if (isListEmpty) {
+              await removeDefaultPaymentHandler(user);
+            }
           }
         },
         defaultPaymentMethod,
         setDefaultPaymentMethod,
         getDefaultPaymentCard: () => {
-          return find(propEq('id', defaultPaymentMethod), cards);
+          return getDefaultPaymentCard(defaultPaymentMethod, cards);
         },
         getDefaultPaymentMethod: async (user: FirebaseAuthTypes.User) => {
           const id = await getDefaultPaymentMethodHandler(user);
@@ -88,12 +93,19 @@ export const PaymentProvider = ({
           user: FirebaseAuthTypes.User,
           paymentId: string,
         ) => {
-          const saved = await saveAndSetAsDefaultHandler(
+          return await saveAndSetAsDefaultHandler(
             user,
             paymentId,
             setDefaultPaymentMethod,
           );
-          return saved;
+        },
+        createUserOnPaymentPlatform: createUserOnPaymentPlatformHandler,
+        createOrder: async (cartId: string) => {
+          const defaultCard = getDefaultPaymentCard(
+            defaultPaymentMethod,
+            cards,
+          );
+          return await createOrderHandler(cartId, defaultCard.paymentToken);
         },
       }}>
       {children}

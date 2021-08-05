@@ -42,8 +42,6 @@ export const AddPaymentInformation = ({
             if (eventData.token) {
               createCard(authUser as FirebaseAuthTypes.User, {
                 singleUseToken: eventData.token,
-                profileId: 'b8c07a16-7e98-4d9f-a45d-b4254b590cf7',
-                merchantRefNum: 'testmerchantRefNum2',
               })
                 .then(() => onPaymentAdded())
                 .catch(() => setProcessing(false));

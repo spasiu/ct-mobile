@@ -5,9 +5,8 @@ import { showMessage } from 'react-native-flash-message';
 import { NetworkStatus } from '@apollo/client';
 
 import { t } from '../../i18n/i18n';
-import { OverScreenModal, Loading } from '../../components';
+import { OverScreenModal, Loading, WarningModal } from '../../components';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-
 import {
   BreakDetailQuery,
   BreakProductItems,
@@ -16,8 +15,11 @@ import {
 import { userSelector } from '../../common/user-profile';
 import { breakSelector } from '../../common/break';
 import { breakProductsFirstItemSelector } from '../../common/break-products';
+import { breakSoldOutSelector } from '../../common/break';
 import { ROUTES_IDS } from '../../navigators';
+import { PaymentContext, PaymentContextType } from '../../providers/payment';
 
+import { AddPaymentInformation } from '../add-payment-information/add-payment-information';
 import { AddressesList } from '../addresses-list/addresses-list';
 import { AddAddress } from '../add-address/add-address';
 import { EditAddress } from '../edit-address/edit-address';
@@ -35,6 +37,7 @@ import {
   isEditAddress,
   isPaymentList,
   isAddPayment,
+  updateCartAddress,
 } from './break-detail-modal.utils';
 import {
   BreakDetailModalProps,
@@ -42,20 +45,31 @@ import {
   CheckoutCart,
   ModalRoute,
 } from './break-detail-modal.props';
-import { AddPaymentInformation } from '../add-payment-information/add-payment-information';
+
+const successImage = require('../../assets/check-with-border.png');
+const failedImage = require('../../assets/failed-emoji.png');
 
 export const BreakDetailModal = ({
   breakId,
   isVisible,
+  onPressClose = () => undefined,
   ...modalProps
 }: BreakDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const { createOrder, getDefaultPaymentCard } = useContext(
+    PaymentContext,
+  ) as PaymentContextType;
 
   const [loading, setLoading] = useState(true);
   const [checkoutCart, setCheckoutCart] = useState<CheckoutCart>();
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
     route: ROUTES_IDS.BREAK_DETAIL_MODAL,
   });
+
+  const [purchasing, setPurchasing] = useState(false);
+  const [refetching, setRefetching] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFailedModal, setShowFailedModal] = useState(false);
 
   const {
     data,
@@ -83,12 +97,12 @@ export const BreakDetailModal = ({
             setCheckoutCart(cart);
             setLoading(false);
           })
-          .catch(() =>
+          .catch(() => {
             showMessage({
               message: t('errors.generic'),
               type: 'danger',
-            }),
-          );
+            });
+          });
       }
     },
     onError: () => {
@@ -103,19 +117,36 @@ export const BreakDetailModal = ({
 
   const breakData = breakSelector(data);
   const userData = userSelector(data);
-  const isRefetching = networkStatus === NetworkStatus.refetch;
+
+  const isBreakSoldOut = breakSoldOutSelector(breakData);
+  const showLoading = !checkoutCart || loading || firstLoading || refetching;
+
+  if (refetching && networkStatus !== NetworkStatus.refetch) {
+    updateCartAddress(
+      userData,
+      checkoutCart as CheckoutCart,
+      setCheckoutCart,
+      setRefetching,
+      setVisibleRoute,
+    );
+  }
+
   return (
     <OverScreenModal
       {...modalProps}
-      {...getRootModalProps(loading, checkoutCart, visibleRoute)}
+      {...getRootModalProps(
+        loading,
+        checkoutCart,
+        visibleRoute,
+        isBreakSoldOut,
+      )}
+      onPressClose={onPressClose}
       onPressBack={() => {
         if (isAddAddress(visibleRoute) || isEditAddress(visibleRoute)) {
           setVisibleRoute({ route: ROUTES_IDS.ADDRESSES_LIST_SCREEN });
         } else if (isAddressList(visibleRoute)) {
+          setRefetching(true);
           refetch();
-          setVisibleRoute({
-            route: ROUTES_IDS.BREAK_DETAIL_MODAL,
-          });
         } else if (isPaymentList(visibleRoute)) {
           setVisibleRoute({
             route: ROUTES_IDS.BREAK_DETAIL_MODAL,
@@ -126,6 +157,28 @@ export const BreakDetailModal = ({
           });
         }
       }}
+      actionLoading={purchasing}
+      onPressAction={async () => {
+        setPurchasing(true);
+        const card = getDefaultPaymentCard();
+        if (card && checkoutCart) {
+          const created = await createOrder(
+            checkoutCart.cartId,
+            card.paymentToken,
+          );
+
+          setPurchasing(false);
+          if (created) {
+            setShowSuccessModal(true);
+          } else {
+            setShowFailedModal(true);
+          }
+        } else {
+          setPurchasing(false);
+          setShowFailedModal(true);
+        }
+      }}
+      isVisible={isVisible}
       actionStyle={[s.ph3, s.pb3]}
       bottomComponent={
         isBreakDetailView(visibleRoute) ? (
@@ -134,7 +187,7 @@ export const BreakDetailModal = ({
           </Text>
         ) : null
       }>
-      {!checkoutCart || loading || firstLoading || isRefetching ? (
+      {showLoading ? (
         <Loading containerStyle={[s.jcc, s.aic]} />
       ) : (
         <View style={[s.flx_i, s.mv4, s.ph3]}>
@@ -142,10 +195,11 @@ export const BreakDetailModal = ({
             <BreakDetail
               breakData={breakData}
               userData={userData}
-              checkoutCart={checkoutCart}
+              checkoutCart={checkoutCart as CheckoutCart}
               setCheckoutCart={setCheckoutCart}
               setLoading={setLoading}
               setVisibleRoute={setVisibleRoute}
+              isBreakSoldOut={isBreakSoldOut}
             />
           ) : null}
           {isAddressList(visibleRoute) ? (
@@ -200,6 +254,22 @@ export const BreakDetailModal = ({
           ) : null}
         </View>
       )}
+      <WarningModal
+        imageSrc={successImage}
+        visible={showSuccessModal}
+        title={t('payment.purchaseSuccessfullMessage')}
+        primaryActionText={t('buttons.letsGo')}
+        titleStyle={[s.f4, s.mt3, s.mb4, s.tc, s.mh3]}
+        onPrimaryActionPressed={() => onPressClose()}
+      />
+      <WarningModal
+        imageSrc={failedImage}
+        visible={showFailedModal}
+        title={t('payment.purchaseFailedMessage')}
+        primaryActionText={t('buttons.backToPaymentDetails')}
+        titleStyle={[s.f4, s.mt3, s.mb4, s.tc, s.mh3]}
+        onPrimaryActionPressed={() => setShowFailedModal(false)}
+      />
     </OverScreenModal>
   );
 };

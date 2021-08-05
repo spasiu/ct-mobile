@@ -1750,7 +1750,6 @@ export enum Events_Update_Column {
 export type ExtensibleValues = {
   __typename?: 'ExtensibleValues';
   field: Scalars['String'];
-  id: Scalars['uuid'];
   value: Scalars['String'];
 };
 
@@ -1782,7 +1781,6 @@ export type ExtensibleValues_Bool_Exp = {
   _not?: Maybe<ExtensibleValues_Bool_Exp>;
   _or?: Maybe<Array<ExtensibleValues_Bool_Exp>>;
   field?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   value?: Maybe<String_Comparison_Exp>;
 };
 
@@ -1795,7 +1793,6 @@ export enum ExtensibleValues_Constraint {
 /** input type for inserting data into table "ExtensibleValues" */
 export type ExtensibleValues_Insert_Input = {
   field?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1803,7 +1800,6 @@ export type ExtensibleValues_Insert_Input = {
 export type ExtensibleValues_Max_Fields = {
   __typename?: 'ExtensibleValues_max_fields';
   field?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1811,7 +1807,6 @@ export type ExtensibleValues_Max_Fields = {
 export type ExtensibleValues_Min_Fields = {
   __typename?: 'ExtensibleValues_min_fields';
   field?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1834,13 +1829,13 @@ export type ExtensibleValues_On_Conflict = {
 /** Ordering options when selecting data from "ExtensibleValues". */
 export type ExtensibleValues_Order_By = {
   field?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   value?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: ExtensibleValues */
 export type ExtensibleValues_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  field: Scalars['String'];
+  value: Scalars['String'];
 };
 
 /** select columns of table "ExtensibleValues" */
@@ -1848,15 +1843,12 @@ export enum ExtensibleValues_Select_Column {
   /** column name */
   Field = 'field',
   /** column name */
-  Id = 'id',
-  /** column name */
   Value = 'value'
 }
 
 /** input type for updating data in table "ExtensibleValues" */
 export type ExtensibleValues_Set_Input = {
   field?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -1864,8 +1856,6 @@ export type ExtensibleValues_Set_Input = {
 export enum ExtensibleValues_Update_Column {
   /** column name */
   Field = 'field',
-  /** column name */
-  Id = 'id',
   /** column name */
   Value = 'value'
 }
@@ -2891,7 +2881,7 @@ export type Products = {
   category: Scalars['String'];
   created_at: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
-  grade?: Maybe<Scalars['numeric']>;
+  grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   image: Scalars['String'];
@@ -2900,7 +2890,7 @@ export type Products = {
   memoribillia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
-  paralell?: Maybe<Scalars['String']>;
+  parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
@@ -2989,7 +2979,6 @@ export type Products_Avg_Fields = {
   __typename?: 'Products_avg_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -2998,7 +2987,6 @@ export type Products_Avg_Fields = {
 export type Products_Avg_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3018,7 +3006,7 @@ export type Products_Bool_Exp = {
   category?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
-  grade?: Maybe<Numeric_Comparison_Exp>;
+  grade?: Maybe<String_Comparison_Exp>;
   grader?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
@@ -3027,7 +3015,7 @@ export type Products_Bool_Exp = {
   memoribillia?: Maybe<String_Comparison_Exp>;
   numbered?: Maybe<Int_Comparison_Exp>;
   packs_per_box?: Maybe<Int_Comparison_Exp>;
-  paralell?: Maybe<String_Comparison_Exp>;
+  parallel?: Maybe<String_Comparison_Exp>;
   player?: Maybe<String_Comparison_Exp>;
   rookie_card?: Maybe<Boolean_Comparison_Exp>;
   series?: Maybe<String_Comparison_Exp>;
@@ -3048,7 +3036,6 @@ export enum Products_Constraint {
 export type Products_Inc_Input = {
   boxes_per_case?: Maybe<Scalars['Int']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
-  grade?: Maybe<Scalars['numeric']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
 };
@@ -3065,7 +3052,7 @@ export type Products_Insert_Input = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  grade?: Maybe<Scalars['numeric']>;
+  grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
@@ -3074,7 +3061,7 @@ export type Products_Insert_Input = {
   memoribillia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
-  paralell?: Maybe<Scalars['String']>;
+  parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
@@ -3095,7 +3082,7 @@ export type Products_Max_Fields = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  grade?: Maybe<Scalars['numeric']>;
+  grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
@@ -3104,7 +3091,7 @@ export type Products_Max_Fields = {
   memoribillia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
-  paralell?: Maybe<Scalars['String']>;
+  parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   series?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -3130,7 +3117,7 @@ export type Products_Max_Order_By = {
   memoribillia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
-  paralell?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
@@ -3148,7 +3135,7 @@ export type Products_Min_Fields = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  grade?: Maybe<Scalars['numeric']>;
+  grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
@@ -3157,7 +3144,7 @@ export type Products_Min_Fields = {
   memoribillia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
-  paralell?: Maybe<Scalars['String']>;
+  parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   series?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
@@ -3183,7 +3170,7 @@ export type Products_Min_Order_By = {
   memoribillia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
-  paralell?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
@@ -3235,7 +3222,7 @@ export type Products_Order_By = {
   memoribillia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
-  paralell?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   rookie_card?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
@@ -3290,7 +3277,7 @@ export enum Products_Select_Column {
   /** column name */
   PacksPerBox = 'packs_per_box',
   /** column name */
-  Paralell = 'paralell',
+  Parallel = 'parallel',
   /** column name */
   Player = 'player',
   /** column name */
@@ -3318,7 +3305,7 @@ export type Products_Set_Input = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  grade?: Maybe<Scalars['numeric']>;
+  grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
@@ -3327,7 +3314,7 @@ export type Products_Set_Input = {
   memoribillia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
-  paralell?: Maybe<Scalars['String']>;
+  parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
@@ -3342,7 +3329,6 @@ export type Products_Stddev_Fields = {
   __typename?: 'Products_stddev_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3351,7 +3337,6 @@ export type Products_Stddev_Fields = {
 export type Products_Stddev_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3361,7 +3346,6 @@ export type Products_Stddev_Pop_Fields = {
   __typename?: 'Products_stddev_pop_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3370,7 +3354,6 @@ export type Products_Stddev_Pop_Fields = {
 export type Products_Stddev_Pop_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3380,7 +3363,6 @@ export type Products_Stddev_Samp_Fields = {
   __typename?: 'Products_stddev_samp_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3389,7 +3371,6 @@ export type Products_Stddev_Samp_Fields = {
 export type Products_Stddev_Samp_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3399,7 +3380,6 @@ export type Products_Sum_Fields = {
   __typename?: 'Products_sum_fields';
   boxes_per_case?: Maybe<Scalars['Int']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
-  grade?: Maybe<Scalars['numeric']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
 };
@@ -3408,7 +3388,6 @@ export type Products_Sum_Fields = {
 export type Products_Sum_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3452,7 +3431,7 @@ export enum Products_Update_Column {
   /** column name */
   PacksPerBox = 'packs_per_box',
   /** column name */
-  Paralell = 'paralell',
+  Parallel = 'parallel',
   /** column name */
   Player = 'player',
   /** column name */
@@ -3474,7 +3453,6 @@ export type Products_Var_Pop_Fields = {
   __typename?: 'Products_var_pop_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3483,7 +3461,6 @@ export type Products_Var_Pop_Fields = {
 export type Products_Var_Pop_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3493,7 +3470,6 @@ export type Products_Var_Samp_Fields = {
   __typename?: 'Products_var_samp_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3502,7 +3478,6 @@ export type Products_Var_Samp_Fields = {
 export type Products_Var_Samp_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3512,7 +3487,6 @@ export type Products_Variance_Fields = {
   __typename?: 'Products_variance_fields';
   boxes_per_case?: Maybe<Scalars['Float']>;
   cards_per_pack?: Maybe<Scalars['Float']>;
-  grade?: Maybe<Scalars['Float']>;
   numbered?: Maybe<Scalars['Float']>;
   packs_per_box?: Maybe<Scalars['Float']>;
 };
@@ -3521,7 +3495,6 @@ export type Products_Variance_Fields = {
 export type Products_Variance_Order_By = {
   boxes_per_case?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
-  grade?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
@@ -3768,11 +3741,12 @@ export type Users = {
   /** An object relationship */
   UserPreference: UserPreferences;
   created_at: Scalars['timestamptz'];
-  first_name: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   is_breaker: Scalars['Boolean'];
-  last_name: Scalars['String'];
+  last_name?: Maybe<Scalars['String']>;
   role: User_Role_Enum;
   updated_at: Scalars['timestamptz'];
   /** An object relationship */
@@ -3888,6 +3862,7 @@ export type Users_Bool_Exp = {
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Users_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
   first_name?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
@@ -3916,6 +3891,7 @@ export type Users_Insert_Input = {
   Orders?: Maybe<Orders_Arr_Rel_Insert_Input>;
   UserPreference?: Maybe<UserPreferences_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -3931,6 +3907,7 @@ export type Users_Insert_Input = {
 export type Users_Max_Fields = {
   __typename?: 'Users_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -3942,6 +3919,7 @@ export type Users_Max_Fields = {
 /** order by max() on columns of table "Users" */
 export type Users_Max_Order_By = {
   created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
   first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
@@ -3954,6 +3932,7 @@ export type Users_Max_Order_By = {
 export type Users_Min_Fields = {
   __typename?: 'Users_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -3965,6 +3944,7 @@ export type Users_Min_Fields = {
 /** order by min() on columns of table "Users" */
 export type Users_Min_Order_By = {
   created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
   first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
@@ -4005,6 +3985,7 @@ export type Users_Order_By = {
   Orders_aggregate?: Maybe<Orders_Aggregate_Order_By>;
   UserPreference?: Maybe<UserPreferences_Order_By>;
   created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
   first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
@@ -4026,6 +4007,8 @@ export enum Users_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Email = 'email',
+  /** column name */
   FirstName = 'first_name',
   /** column name */
   Id = 'id',
@@ -4046,6 +4029,7 @@ export enum Users_Select_Column {
 /** input type for updating data in table "Users" */
 export type Users_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
   first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -4060,6 +4044,8 @@ export type Users_Set_Input = {
 export enum Users_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
   /** column name */
   FirstName = 'first_name',
   /** column name */
@@ -4853,7 +4839,8 @@ export type Mutation_RootDelete_ExtensibleValuesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_ExtensibleValues_By_PkArgs = {
-  id: Scalars['uuid'];
+  field: Scalars['String'];
+  value: Scalars['String'];
 };
 
 
@@ -5755,7 +5742,8 @@ export type Query_RootExtensibleValues_AggregateArgs = {
 
 
 export type Query_RootExtensibleValues_By_PkArgs = {
-  id: Scalars['uuid'];
+  field: Scalars['String'];
+  value: Scalars['String'];
 };
 
 
@@ -6252,7 +6240,8 @@ export type Subscription_RootExtensibleValues_AggregateArgs = {
 
 
 export type Subscription_RootExtensibleValues_By_PkArgs = {
-  id: Scalars['uuid'];
+  field: Scalars['String'];
+  value: Scalars['String'];
 };
 
 
@@ -6744,6 +6733,7 @@ export enum User_Role_Constraint {
 export enum User_Role_Enum {
   Admin = 'ADMIN',
   Breaker = 'BREAKER',
+  Manager = 'MANAGER',
   User = 'USER'
 }
 
@@ -6858,7 +6848,16 @@ export type BreakDetailQuery = (
     & { BreakProductItems: Array<(
       { __typename?: 'BreakProductItems' }
       & Pick<BreakProductItems, 'id' | 'title' | 'price' | 'quantity' | 'bc_product_id' | 'bc_variant_id'>
-    )> }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ) }
   )>, Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'first_name' | 'last_name'>
@@ -7289,6 +7288,13 @@ export const BreakDetailDocument = gql`
       quantity
       bc_product_id
       bc_variant_id
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        sum {
+          quantity
+        }
+      }
     }
   }
   Users(where: {id: {_eq: $userId}}) {

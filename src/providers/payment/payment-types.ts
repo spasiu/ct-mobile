@@ -12,10 +12,9 @@ export type PaymentContextType = {
     user: FirebaseAuthTypes.User,
     cardInput: CardInput,
   ) => Promise<boolean>;
-  getCards: (user: FirebaseAuthTypes.User, profileId: string) => Promise<void>;
+  getCards: (user: FirebaseAuthTypes.User) => Promise<void>;
   deleteCard: (
     user: FirebaseAuthTypes.User,
-    profileId: string,
     cardId: string,
   ) => Promise<boolean>;
   defaultPaymentMethod: string;
@@ -26,4 +25,9 @@ export type PaymentContextType = {
     user: FirebaseAuthTypes.User,
     paymentId: string,
   ) => Promise<boolean>;
+  createUserOnPaymentPlatform: (
+    firstName: string,
+    lastName: string,
+  ) => Promise<boolean>;
+  createOrder: (cartId: string, paymentToken: string) => Promise<boolean>;
 };

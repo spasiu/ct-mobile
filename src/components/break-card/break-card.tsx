@@ -33,7 +33,7 @@ export const BreakCard = ({
   breakerImage,
   breakType,
   price,
-  spotsLeft,
+  spotsLeft = '',
   eventDate,
   onPressFollow = () => undefined,
   onPressBuy = () => undefined,
@@ -70,7 +70,11 @@ export const BreakCard = ({
       </View>
       <View style={actionsContainerStyle}>
         <FollowButton size={'short'} onPress={onPressFollow} />
-        <BuyButton containerStyle={buyButtonStyle} onPress={onPressBuy} />
+        <BuyButton
+          disabled={parseInt(spotsLeft, 10) === 0}
+          containerStyle={buyButtonStyle}
+          onPress={onPressBuy}
+        />
       </View>
     </BorderlessButton>
   );

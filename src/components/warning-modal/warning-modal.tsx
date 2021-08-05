@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import Modal from 'react-native-modal';
 
 import { TextLink } from '../text-link';
@@ -7,7 +7,7 @@ import { ActionFooter } from '../action-footer';
 
 import {
   containerWrapper,
-  titleStyle,
+  titleDefaultStyle,
   descriptionStyle,
   secondaryActionStyle,
   secondaryActionWrapperStyle,
@@ -19,25 +19,32 @@ export const WarningModal = ({
   title = '',
   description = '',
   primaryActionText = '',
+  imageSrc,
   onPrimaryActionPressed = () => undefined,
   secondaryActionText = '',
   onSecondaryActionPressed = () => undefined,
   loadingPrimaryAction = false,
+  titleStyle = [],
 }: WarningModalProps): JSX.Element => (
   <Modal isVisible={visible}>
     <View style={containerWrapper}>
-      <Text style={titleStyle}>{title}</Text>
-      <Text style={descriptionStyle}>{description}</Text>
+      {imageSrc ? <Image source={imageSrc} /> : null}
+      {title ? (
+        <Text style={[...titleDefaultStyle, ...titleStyle]}>{title}</Text>
+      ) : null}
+      {description ? <Text style={descriptionStyle}>{description}</Text> : null}
       <ActionFooter
         isLoading={loadingPrimaryAction}
         buttonText={primaryActionText}
         onPress={onPrimaryActionPressed}>
-        <TextLink
-          textStyle={secondaryActionStyle}
-          style={secondaryActionWrapperStyle}
-          text={secondaryActionText}
-          onPress={onSecondaryActionPressed}
-        />
+        {secondaryActionText ? (
+          <TextLink
+            textStyle={secondaryActionStyle}
+            style={secondaryActionWrapperStyle}
+            text={secondaryActionText}
+            onPress={onSecondaryActionPressed}
+          />
+        ) : null}
       </ActionFooter>
     </View>
   </Modal>

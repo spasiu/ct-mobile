@@ -1,7 +1,16 @@
-import { pathOr, map, set, lensProp, whereEq, find, length } from 'ramda';
+import {
+  pathOr,
+  map,
+  set,
+  lensProp,
+  whereEq,
+  find,
+  length,
+  isEmpty,
+} from 'ramda';
 import functions from '@react-native-firebase/functions';
-import { t } from '../../i18n/i18n';
 
+import { t } from '../../i18n/i18n';
 import {
   breakProductExternalProductId,
   breakProductExternalVariantId,
@@ -25,6 +34,12 @@ import {
 } from './break-detail-modal.props';
 import { ROUTES_IDS } from '../../navigators';
 
+export const createCheckout = functions().httpsCallable('createCheckout');
+export const addItemToCart = functions().httpsCallable('addItem');
+export const removeItemFromCart = functions().httpsCallable('removeItem');
+export const getCheckout = functions().httpsCallable('getCheckout');
+export const addAddress = functions().httpsCallable('addAddress');
+
 export const transformProductToCheckout = (
   product: BreakProductItems,
 ): CartProduct => {
@@ -38,15 +53,16 @@ export const transformProductToCheckout = (
 export const getCheckoutParams = (
   user: Users,
   breakProducts: BreakProductItems[],
+  products: CartProduct[] = [],
 ): CheckoutParams => {
+  const address = userDefaultAddressCleanSelector(user);
   return {
-    products: map(
-      product => transformProductToCheckout(product),
-      breakProducts,
-    ),
+    products: isEmpty(products)
+      ? map(product => transformProductToCheckout(product), breakProducts)
+      : products,
     first_name: userFirstNameSelector(user),
     last_name: userLastNameSelector(user),
-    address: userDefaultAddressCleanSelector(user),
+    ...((address.line1 && { address }) || {}),
   };
 };
 
@@ -127,11 +143,6 @@ export const findCartItem = (
 export const cartHasOnlyOneItem = (checkoutCart: CheckoutCart): boolean =>
   length(checkoutCart.cartItems) === 1;
 
-export const createCheckout = functions().httpsCallable('createCheckout');
-export const addItemToCart = functions().httpsCallable('addItem');
-export const removeItemFromCart = functions().httpsCallable('removeItem');
-export const getCheckout = functions().httpsCallable('getCheckout');
-
 export const isBreakDetailView = (visibleRoute: ModalRoute): boolean =>
   visibleRoute.route === ROUTES_IDS.BREAK_DETAIL_MODAL;
 
@@ -154,6 +165,7 @@ export const getRootModalProps = (
   loading: boolean,
   checkoutCart: CheckoutCart | undefined,
   visibleRoute: ModalRoute,
+  isBreakSoldOut: boolean,
 ): {
   action?: string | undefined;
   title: string | undefined;
@@ -177,11 +189,40 @@ export const getRootModalProps = (
     };
   }
 
+  const paymentAction = checkoutCart
+    ? `${t('buttons.purchase')} $${checkoutCart.total}`
+    : t('buttons.purchase');
+
   return {
-    action:
-      checkoutCart && !loading
-        ? `${t('buttons.purchase')} $${checkoutCart.total}`
-        : t('buttons.purchase'),
-    title: t('payment.paymentModalTitle'),
+    action: isBreakSoldOut || loading ? '' : paymentAction,
+    title: t('break.detailModalTitle'),
   };
+};
+
+export const updateCartAddress = async (
+  user: Users,
+  checkoutCart: CheckoutCart,
+  setCheckoutCart: (cart: CheckoutCart) => void,
+  setRefetching: (refetching: boolean) => void,
+  setVisibleRoute: (route: ModalRoute) => void,
+): Promise<void> => {
+  const address = userDefaultAddressCleanSelector(user);
+
+  let cart;
+  if (isEmpty(address)) {
+    const checkoutParams = getCheckoutParams(user, [], checkoutCart.cartItems);
+    cart = await createCheckout(checkoutParams);
+  } else {
+    cart = await addAddress({
+      cartId: checkoutCart.cartId,
+      address: userDefaultAddressCleanSelector(user),
+    });
+  }
+
+  const checkoutData = getCheckoutCartInfo(cart);
+  setRefetching(false);
+  setCheckoutCart(checkoutData);
+  setVisibleRoute({
+    route: ROUTES_IDS.BREAK_DETAIL_MODAL,
+  });
 };

@@ -50,11 +50,13 @@ export const BreaksView = (): JSX.Element => {
           );
         }}
       />
-      <BreakDetailModal
-        breakId={breakId}
-        isVisible={Boolean(breakId)}
-        onPressClose={() => setBreakId('')}
-      />
+      {breakId ? (
+        <BreakDetailModal
+          breakId={breakId}
+          isVisible={Boolean(breakId)}
+          onPressClose={() => setBreakId('')}
+        />
+      ) : null}
     </>
   );
 };

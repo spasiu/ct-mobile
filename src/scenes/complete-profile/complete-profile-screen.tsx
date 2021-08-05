@@ -14,6 +14,7 @@ import {
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { AuthContext, AuthContextType } from '../../providers/auth';
+import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import { useUpdateUserMutation } from '../../services/api/requests';
 import { getFieldStatus } from '../../utils/form-field';
 
@@ -32,6 +33,9 @@ export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
   const { user, uploadPhoto } = useContext(AuthContext) as AuthContextType;
+  const { createUserOnPaymentPlatform } = useContext(
+    PaymentContext,
+  ) as PaymentContextType;
 
   const [activeField, setActiveField] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -57,14 +61,20 @@ export const CompleteProfileScreen = ({
           ...getSuggestedName(user),
           ...getSuggestedUserPhotoURL(user),
         }}
-        onSubmit={values =>
-          updateUserMutation({
-            variables: {
-              userId: user?.uid,
-              userInput: values,
-            },
-          })
-        }>
+        onSubmit={async values => {
+          const created = await createUserOnPaymentPlatform(
+            values[COMPLETE_PROFILE_FORM_FIELDS.FIRST_NAME],
+            values[COMPLETE_PROFILE_FORM_FIELDS.LAST_NAME],
+          );
+          if (created) {
+            updateUserMutation({
+              variables: {
+                userId: user?.uid,
+                userInput: values,
+              },
+            });
+          }
+        }}>
         {({
           handleChange,
           handleBlur,

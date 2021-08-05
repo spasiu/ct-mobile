@@ -62,6 +62,11 @@ export const breakSpotsSelector = (eventBreak: Breaks): string => {
   return breakProductsQuantitySelector(aggregator);
 };
 
+export const breakSoldOutSelector = (eventBreak: Breaks): boolean => {
+  const spots = breakSpotsSelector(eventBreak);
+  return parseInt(spots, 10) === 0;
+};
+
 export const breakTypeSelector = (eventBreak: Breaks): Break_Type_Enum =>
   path(['break_type'], eventBreak) as Break_Type_Enum;
 

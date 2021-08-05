@@ -11,7 +11,7 @@ export const containerWrapper = [
   s.pb3,
 ] as ViewStyle[];
 
-export const titleStyle = [s.ff_b, s.f3, s.black];
+export const titleDefaultStyle = [s.ff_b, s.f3, s.black];
 
 export const descriptionStyle = [s.ff_alt_r, s.f5, s.black, s.mv3, s.lh_high];
 

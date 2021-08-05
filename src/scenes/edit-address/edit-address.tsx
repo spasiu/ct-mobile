@@ -76,7 +76,7 @@ export const EditAddress = ({
         type: 'danger',
       }),
     onCompleted: () => {
-      if (addresses.length !== 0 && addressIsDefaultSelector(address)) {
+      if (addresses.length > 1 && addressIsDefaultSelector(address)) {
         const addressIndex = findIndex(propEq('id', address.id), addresses);
         const newDefaultAddress = head(
           remove(addressIndex, 1, addresses),

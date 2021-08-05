@@ -42,7 +42,7 @@ export type CheckoutParams = {
   products: CartProduct[];
   first_name: string;
   last_name: string;
-  address: Addresses;
+  address?: Addresses;
 };
 
 export type CartProduct = {
@@ -69,4 +69,5 @@ export interface BreakDetailProps {
   setCheckoutCart: (cart: CheckoutCart) => void;
   setLoading: (loading: boolean) => void;
   setVisibleRoute: (route: ModalRoute) => void;
+  isBreakSoldOut: boolean;
 }

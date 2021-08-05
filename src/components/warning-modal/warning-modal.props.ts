@@ -1,3 +1,5 @@
+import { ImageSourcePropType, TextStyle } from 'react-native';
+
 export interface WarningModalProps {
   visible?: boolean;
   title?: string;
@@ -7,4 +9,6 @@ export interface WarningModalProps {
   secondaryActionText?: string;
   onSecondaryActionPressed?: () => void;
   loadingPrimaryAction?: boolean;
+  imageSrc?: ImageSourcePropType;
+  titleStyle?: TextStyle[];
 }
