@@ -14,10 +14,9 @@ import {
   closeButtonStyle,
   getModalWrapperStyle,
   overScreenModalStyle,
+  closeIcon,
 } from './over-screen-modal.presets';
 import { OverScreenModalProps } from './over-screen-modal.props';
-
-const closeIcon = require('../../assets/close-icon.png');
 
 export const OverScreenModal = ({
   ratio = 1,

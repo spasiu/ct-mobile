@@ -28,3 +28,5 @@ export const closeButtonStyle = [
   s.icon_xxs,
   s.mr3,
 ] as ImageStyle[];
+
+export const closeIcon = require('../../assets/close-icon.png');

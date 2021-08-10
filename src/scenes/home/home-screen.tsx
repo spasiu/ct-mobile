@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { isEmpty } from 'ramda';
 
 import {
   userImageSelector,
@@ -50,11 +51,14 @@ import {
   featuredBreakSelector,
   featuredBreakerSelector,
 } from './home-screen.utils';
-import { HitsStackParamList, TabNavigatorParamList } from '../../navigators';
+import { TabNavigatorParamList } from '../../navigators';
 import { ICON_SIZE } from '../../theme/sizes';
+import { HitDetailModal } from '../hit-detail/hit-detail-modal';
+import { Hit } from '../../common/hit';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [hitDetail, setHitDetail] = useState<Partial<Hit>>({});
 
   const {
     data: featuredBreaks,
@@ -170,11 +174,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                     if (key === HomeSection.hits) {
                       return (
                         <HitCard
-                          onPress={() =>
-                            navigation.navigate(
-                              ROUTES_IDS.HIT_DETAIL_MODAL as keyof HitsStackParamList,
-                            )
-                          }
+                          onPress={() => setHitDetail(item)}
                           containerStyle={[s.mr3, s.mb3]}
                           image={item.image}
                           title={item.name}
@@ -212,6 +212,11 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             );
           }, SectionsData)}
         </ScrollView>
+        <HitDetailModal
+          isVisible={!isEmpty(hitDetail)}
+          onPressClose={() => setHitDetail({})}
+          {...hitDetail}
+        />
       </View>
     </Container>
   );

@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
+import { isEmpty } from 'ramda';
 
 import {
   HitCard,
@@ -19,6 +20,10 @@ import { useUserImageQuery } from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { userSelector, userImageSelector } from '../../common/user-profile';
 import { ICON_SIZE } from '../../theme/sizes';
+
+import { HitDetailModal } from '../hit-detail/hit-detail-modal';
+
+import { HitsScreenProps } from './hits-screen.props';
 
 const HITS = [
   {
@@ -83,11 +88,12 @@ const HITS = [
   },
 ];
 
-export const HitsScreen = ({ navigation }) => {
+export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const cardWidth = (WINDOW_WIDTH - sizes.mv3 * 2 - 40) / 3;
   const cardHeight = cardWidth * 1.3;
 
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [hitDetail, setHitDetail] = useState({});
 
   const { data: users } = useUserImageQuery({
     fetchPolicy: 'cache-and-network',
@@ -131,7 +137,7 @@ export const HitsScreen = ({ navigation }) => {
         data={HITS}
         renderItem={({ item }) => (
           <HitCard
-            onPress={() => navigation.navigate(ROUTES_IDS.HIT_DETAIL_MODAL, {})}
+            onPress={() => setHitDetail(item)}
             title={item.name}
             image={item.image}
             containerStyle={[s.flx_i]}
@@ -141,6 +147,11 @@ export const HitsScreen = ({ navigation }) => {
             cardStyle={[s.br3]}
           />
         )}
+      />
+      <HitDetailModal
+        isVisible={!isEmpty(hitDetail)}
+        onPressClose={() => setHitDetail({})}
+        {...hitDetail}
       />
     </Container>
   );
