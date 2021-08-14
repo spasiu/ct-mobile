@@ -1,4 +1,4 @@
-query BreakerEvents($id: String!) {
+query BreakerEvents($id: String!, $userId: String!) {
   Events(
     where: {
       User: { id: { _eq: $id } }
@@ -12,5 +12,14 @@ query BreakerEvents($id: String!) {
     image
     start_time
     description
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
   }
 }

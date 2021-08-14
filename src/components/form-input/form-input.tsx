@@ -50,7 +50,7 @@ export const FormInput = forwardRef(
             ref={ref}
             autoCapitalize="none"
             autoCorrect={false}
-            placeholderTextColor={COLORS.black}
+            placeholderTextColor={COLORS.black_80}
             {...textInputProps}
             style={[...inputPreset[status], ...style]}
           />

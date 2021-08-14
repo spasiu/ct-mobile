@@ -1,14 +1,16 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 
 import { COLORS } from '../../theme/colors';
+import { ServerImage } from '../server-image';
 
 import {
   containerStyle,
   paginationStyle,
   paginationActiveItemStyle,
   imageStyle,
+  imageDimensions,
 } from './image-gallery.presets';
 import { ImageGalleryProps } from './image-gallery.props';
 
@@ -27,10 +29,11 @@ export const ImageGallery = ({
         }}
         renderItem={({ item }: { item: string }) => {
           return (
-            <Image
+            <ServerImage
               style={imageStyle}
-              source={{ uri: item }}
+              src={item}
               resizeMode={'contain'}
+              {...imageDimensions}
             />
           );
         }}

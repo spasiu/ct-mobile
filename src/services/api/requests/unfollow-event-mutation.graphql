@@ -1,0 +1,18 @@
+mutation UnfollowEvent($user_id: String, $event_id: uuid!) {
+  delete_SaveEvent(
+    where: {
+      User: { id: { _eq: $user_id } }
+      Event: { id: { _eq: $event_id } }
+    }
+  ) {
+    returning {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}

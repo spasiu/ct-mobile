@@ -1,0 +1,25 @@
+subscription NewBreakerEvents($id: String!, $userId: String!) {
+  Events(
+    where: {
+      User: { id: { _eq: $id } }
+      status: { _neq: DRAFT }
+      _and: { status: { _neq: COMPLETED } }
+    }
+  ) {
+    id
+    title
+    status
+    image
+    start_time
+    description
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+query Hits {
+  Hits {
+    id
+    image_front
+    description
+    player
+  }
+}

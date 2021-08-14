@@ -32,8 +32,8 @@ export type HomeSportsData = {
 
 export type HomeHitsData = {
   id: string;
-  image: string;
-  name: string;
+  image_front: string;
+  player: string;
 };
 
 export type HomeSectionDataSource = {

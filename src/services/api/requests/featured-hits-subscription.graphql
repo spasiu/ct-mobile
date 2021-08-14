@@ -1,0 +1,8 @@
+subscription NewFeaturedHits {
+  Hits(limit: 6) {
+    id
+    image_front
+    description
+    player
+  }
+}

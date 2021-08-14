@@ -1,0 +1,11 @@
+mutation FollowEvent($follow: SaveEvent_insert_input!) {
+  insert_SaveEvent_one(object: $follow) {
+    id
+    User {
+      id
+    }
+    Event {
+      id
+    }
+  }
+}

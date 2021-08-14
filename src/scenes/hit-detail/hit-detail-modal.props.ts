@@ -1,7 +1,7 @@
 export interface HitDetailModalProps {
   isVisible?: boolean;
   onPressClose?: () => void;
-  name?: string;
+  player?: string;
   description?: string;
-  image?: string;
+  image_front?: string;
 }

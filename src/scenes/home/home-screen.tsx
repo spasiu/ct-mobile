@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
@@ -20,11 +20,10 @@ import {
   SearchInput,
   FeaturedBreakCard,
   NavigationBar,
-  IconButton,
   Loading,
   FilterItemTypes,
   ImageCardSizeTypes,
-  ServerImage,
+  Avatar,
 } from '../../components';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { t } from '../../i18n/i18n';
@@ -37,6 +36,8 @@ import {
   useUserImageQuery,
   Breaks,
   Users,
+  useFeaturedHitsQuery,
+  NewFeaturedHitsDocument,
 } from '../../services/api/requests';
 
 import {
@@ -46,15 +47,15 @@ import {
   HomeSectionDataSource,
   HomeSportsData,
 } from './home-screen.props';
-import { SectionsData, SportsData, HitsData } from './home-screen.presets';
+import { SectionsData, SportsData } from './home-screen.presets';
 import {
   featuredBreakSelector,
   featuredBreakerSelector,
 } from './home-screen.utils';
 import { TabNavigatorParamList } from '../../navigators';
-import { ICON_SIZE } from '../../theme/sizes';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 import { Hit } from '../../common/hit';
+import { hitsSelector } from '../../common/hit/hit-selectors';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -62,8 +63,15 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
 
   const {
     data: featuredBreaks,
-    subscribeToMore: featuredBreaksSubscription,
+    subscribeToMore: subscribeToMoreBreaks,
   } = useFeaturedBreaksQuery({
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const {
+    data: featuredHits,
+    subscribeToMore: subscribeToMoreHits,
+  } = useFeaturedHitsQuery({
     fetchPolicy: 'cache-and-network',
   });
 
@@ -78,14 +86,24 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     },
   });
 
+  useEffect(() => {
+    subscribeToMoreBreaks({
+      document: NewFeaturedBreaksDocument,
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+
+    subscribeToMoreHits({
+      document: NewFeaturedHitsDocument,
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!featuredBreakers && !featuredBreaks) {
     return <Loading />;
   }
-
-  featuredBreaksSubscription({
-    document: NewFeaturedBreaksDocument,
-    updateQuery: (prev, { subscriptionData }) => subscriptionData.data || prev,
-  });
 
   const user = userSelector(users);
   return (
@@ -105,17 +123,10 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             />
           </View>
           <View style={[s.flx_ratio(0.15), s.aife, s.jcc]}>
-            <IconButton
-              onPress={() =>
-                navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
-              }>
-              <ServerImage
-                src={userImageSelector(user)}
-                width={ICON_SIZE.M}
-                height={ICON_SIZE.M}
-                style={[s.circle_m, s.no_overflow]}
-              />
-            </IconButton>
+            <Avatar
+              src={userImageSelector(user)}
+              onPress={() => navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)}
+            />
           </View>
         </NavigationBar>
         <ScrollView contentContainerStyle={[s.pb4, s.ml3]}>
@@ -124,7 +135,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             const dataSource: HomeSectionDataSource = {
               [HomeSection.sports]: SportsData,
               [HomeSection.breaks]: breaksSelector(featuredBreaks),
-              [HomeSection.hits]: HitsData,
+              [HomeSection.hits]: hitsSelector(featuredHits),
               [HomeSection.breakers]: usersSelector(featuredBreakers),
             };
 
@@ -176,8 +187,8 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                         <HitCard
                           onPress={() => setHitDetail(item)}
                           containerStyle={[s.mr3, s.mb3]}
-                          image={item.image}
-                          title={item.name}
+                          image={item.image_front}
+                          title={item.player}
                           cardSize={ImageCardSizeTypes.small}
                         />
                       );
@@ -189,6 +200,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                         <BreakerCard
                           {...featuredBreakerSelector(breaker)}
                           containerStyle={[s.mb3, s.mr3]}
+                          showFollow={false}
                           onPress={() =>
                             navigation.navigate(
                               ROUTES_IDS.BREAKERS_TAB as keyof TabNavigatorParamList,

@@ -1,0 +1,8 @@
+subscription NewHits {
+  Hits {
+    id
+    image_front
+    description
+    player
+  }
+}

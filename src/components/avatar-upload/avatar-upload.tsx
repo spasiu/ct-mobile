@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Image } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { launchCamera } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import ActionSheet from 'react-native-actionsheet';
 
 import { Loading } from '../loading';
+import { ServerImage } from '../server-image';
 
 import { AvatarUploadProps } from './avatar-upload.props';
 import {
@@ -14,6 +16,8 @@ import {
   borderlessButtonStyle,
   loadingWrapper,
   CAMERA_CONFIG,
+  ACTION_SHEET_OPTIONS,
+  AVATAR_DIMENSIONS,
 } from './avatar-upload.presets';
 
 export const AvatarUpload = ({
@@ -22,25 +26,57 @@ export const AvatarUpload = ({
   onNewImageSelected = () => undefined,
   image,
   isLoading = false,
-}: AvatarUploadProps): JSX.Element => (
-  <View style={[...viewContainerStyle, ...containerStyle]}>
-    {isLoading ? (
-      <Loading containerStyle={loadingWrapper} />
-    ) : (
-      <Image
-        style={[...imageSizeStyle, ...imageStyle]}
-        resizeMode={'cover'}
-        source={(image && { uri: image }) || avatar}
+}: AvatarUploadProps): JSX.Element => {
+  const actionSheetRef = useRef() as React.MutableRefObject<ActionSheet>;
+
+  const AvatarImage = image ? (
+    <ServerImage
+      style={[...imageSizeStyle, ...imageStyle]}
+      src={image}
+      width={AVATAR_DIMENSIONS.width}
+      height={AVATAR_DIMENSIONS.height}
+      fit="facearea"
+    />
+  ) : (
+    <Image
+      style={[...imageSizeStyle, ...imageStyle]}
+      resizeMode={'cover'}
+      source={avatar}
+    />
+  );
+
+  return (
+    <View style={[...viewContainerStyle, ...containerStyle]}>
+      {isLoading ? <Loading containerStyle={loadingWrapper} /> : AvatarImage}
+      <BorderlessButton
+        style={borderlessButtonStyle}
+        onPress={() => {
+          if (actionSheetRef && actionSheetRef.current) {
+            actionSheetRef.current.show();
+          }
+        }}>
+        <Image source={cameraIcon} />
+      </BorderlessButton>
+      <ActionSheet
+        ref={actionSheetRef}
+        options={ACTION_SHEET_OPTIONS}
+        cancelButtonIndex={2}
+        onPress={index => {
+          if (index === 0) {
+            launchCamera(CAMERA_CONFIG, async response => {
+              if (response.uri) {
+                onNewImageSelected(response);
+              }
+            });
+          } else if (index === 1) {
+            launchImageLibrary(CAMERA_CONFIG, async response => {
+              if (response.uri) {
+                onNewImageSelected(response);
+              }
+            });
+          }
+        }}
       />
-    )}
-    <BorderlessButton
-      style={borderlessButtonStyle}
-      onPress={() => {
-        launchCamera(CAMERA_CONFIG, async response => {
-          onNewImageSelected(response);
-        });
-      }}>
-      <Image source={cameraIcon} />
-    </BorderlessButton>
-  </View>
-);
+    </View>
+  );
+};

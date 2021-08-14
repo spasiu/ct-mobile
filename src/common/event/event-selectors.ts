@@ -1,6 +1,12 @@
-import { pathOr } from 'ramda';
+import { head, pathOr } from 'ramda';
 
-import { Events, Event_Status_Enum, Users } from '../../services/api/requests';
+import {
+  BreakerEventsQuery,
+  Events,
+  Event_Status_Enum,
+  SaveEvent,
+  Users,
+} from '../../services/api/requests';
 import { StatusBadgeTypes } from '../../components';
 
 import { EventStatusType } from './event';
@@ -43,3 +49,20 @@ export const eventDescriptionSelector = (event: Partial<Events>): string =>
 
 export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
   pathOr({}, ['User'], event);
+
+export const eventsSelector = (
+  requestData: BreakerEventsQuery | undefined,
+): Events[] => pathOr([], ['Events'], requestData);
+
+export const eventSavesSelector = (event: Events): SaveEvent[] =>
+  pathOr([], ['Saves'], event);
+
+export const eventFollowedByUserSelector = (event: Events): boolean => {
+  const saves = eventSavesSelector(event);
+  return saves.length > 0;
+};
+
+export const eventFollowedByUserIdSelector = (event: Events): string => {
+  const saves = eventSavesSelector(event);
+  return pathOr('', ['id'], head(saves));
+};

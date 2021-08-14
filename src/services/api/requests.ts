@@ -966,9 +966,17 @@ export type Breaks = {
   /** An object relationship */
   Event: Events;
   /** An array relationship */
+  Hits: Array<Hits>;
+  /** An aggregate relationship */
+  Hits_aggregate: Hits_Aggregate;
+  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
+  /** An array relationship */
+  Saves: Array<SaveBreak>;
+  /** An aggregate relationship */
+  Saves_aggregate: SaveBreak_Aggregate;
   /** An object relationship */
   break_status: Break_Status;
   break_type: Break_Type_Enum;
@@ -1010,6 +1018,26 @@ export type BreaksBreakProductItems_AggregateArgs = {
 
 
 /** columns and relationships of "Breaks" */
+export type BreaksHitsArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksHits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
 export type BreaksInventoryArgs = {
   distinct_on?: Maybe<Array<Inventory_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1026,6 +1054,26 @@ export type BreaksInventory_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Inventory_Order_By>>;
   where?: Maybe<Inventory_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksSavesArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksSaves_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
 };
 
 
@@ -1110,7 +1158,9 @@ export type Breaks_Avg_Order_By = {
 export type Breaks_Bool_Exp = {
   BreakProductItems?: Maybe<BreakProductItems_Bool_Exp>;
   Event?: Maybe<Events_Bool_Exp>;
+  Hits?: Maybe<Hits_Bool_Exp>;
   Inventory?: Maybe<Inventory_Bool_Exp>;
+  Saves?: Maybe<SaveBreak_Bool_Exp>;
   _and?: Maybe<Array<Breaks_Bool_Exp>>;
   _not?: Maybe<Breaks_Bool_Exp>;
   _or?: Maybe<Array<Breaks_Bool_Exp>>;
@@ -1163,7 +1213,9 @@ export type Breaks_Inc_Input = {
 export type Breaks_Insert_Input = {
   BreakProductItems?: Maybe<BreakProductItems_Arr_Rel_Insert_Input>;
   Event?: Maybe<Events_Obj_Rel_Insert_Input>;
+  Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
+  Saves?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -1266,7 +1318,9 @@ export type Breaks_On_Conflict = {
 export type Breaks_Order_By = {
   BreakProductItems_aggregate?: Maybe<BreakProductItems_Aggregate_Order_By>;
   Event?: Maybe<Events_Order_By>;
+  Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
+  Saves_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -1483,6 +1537,10 @@ export type Events = {
   Breaks: Array<Breaks>;
   /** An aggregate relationship */
   Breaks_aggregate: Breaks_Aggregate;
+  /** An array relationship */
+  Saves: Array<SaveEvent>;
+  /** An aggregate relationship */
+  Saves_aggregate: SaveEvent_Aggregate;
   /** An object relationship */
   User: Users;
   created_at: Scalars['timestamptz'];
@@ -1516,6 +1574,26 @@ export type EventsBreaks_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Breaks_Order_By>>;
   where?: Maybe<Breaks_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Events" */
+export type EventsSavesArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Events" */
+export type EventsSaves_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
 };
 
 /** aggregated selection of "Events" */
@@ -1557,6 +1635,7 @@ export type Events_Arr_Rel_Insert_Input = {
 /** Boolean expression to filter rows from the table "Events". All fields are combined with a logical 'AND'. */
 export type Events_Bool_Exp = {
   Breaks?: Maybe<Breaks_Bool_Exp>;
+  Saves?: Maybe<SaveEvent_Bool_Exp>;
   User?: Maybe<Users_Bool_Exp>;
   _and?: Maybe<Array<Events_Bool_Exp>>;
   _not?: Maybe<Events_Bool_Exp>;
@@ -1582,6 +1661,7 @@ export enum Events_Constraint {
 /** input type for inserting data into table "Events" */
 export type Events_Insert_Input = {
   Breaks?: Maybe<Breaks_Arr_Rel_Insert_Input>;
+  Saves?: Maybe<SaveEvent_Arr_Rel_Insert_Input>;
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
@@ -1671,6 +1751,7 @@ export type Events_On_Conflict = {
 /** Ordering options when selecting data from "Events". */
 export type Events_Order_By = {
   Breaks_aggregate?: Maybe<Breaks_Aggregate_Order_By>;
+  Saves_aggregate?: Maybe<SaveEvent_Aggregate_Order_By>;
   User?: Maybe<Users_Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
@@ -1859,6 +1940,503 @@ export enum ExtensibleValues_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+/** columns and relationships of "Hits" */
+export type Hits = {
+  __typename?: 'Hits';
+  /** An object relationship */
+  Break: Breaks;
+  /** An object relationship */
+  User: Users;
+  autograph?: Maybe<Scalars['Boolean']>;
+  brand: Scalars['String'];
+  break_id: Scalars['uuid'];
+  card_number: Scalars['String'];
+  category: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['uuid'];
+  image_back?: Maybe<Scalars['String']>;
+  image_front: Scalars['String'];
+  insert?: Maybe<Scalars['String']>;
+  manufacturer: Scalars['String'];
+  memoribillia?: Maybe<Scalars['String']>;
+  numbered?: Maybe<Scalars['Int']>;
+  parallel?: Maybe<Scalars['String']>;
+  player: Scalars['String'];
+  rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['String'];
+  year: Scalars['String'];
+};
+
+/** aggregated selection of "Hits" */
+export type Hits_Aggregate = {
+  __typename?: 'Hits_aggregate';
+  aggregate?: Maybe<Hits_Aggregate_Fields>;
+  nodes: Array<Hits>;
+};
+
+/** aggregate fields of "Hits" */
+export type Hits_Aggregate_Fields = {
+  __typename?: 'Hits_aggregate_fields';
+  avg?: Maybe<Hits_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Hits_Max_Fields>;
+  min?: Maybe<Hits_Min_Fields>;
+  stddev?: Maybe<Hits_Stddev_Fields>;
+  stddev_pop?: Maybe<Hits_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Hits_Stddev_Samp_Fields>;
+  sum?: Maybe<Hits_Sum_Fields>;
+  var_pop?: Maybe<Hits_Var_Pop_Fields>;
+  var_samp?: Maybe<Hits_Var_Samp_Fields>;
+  variance?: Maybe<Hits_Variance_Fields>;
+};
+
+
+/** aggregate fields of "Hits" */
+export type Hits_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Hits_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "Hits" */
+export type Hits_Aggregate_Order_By = {
+  avg?: Maybe<Hits_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Hits_Max_Order_By>;
+  min?: Maybe<Hits_Min_Order_By>;
+  stddev?: Maybe<Hits_Stddev_Order_By>;
+  stddev_pop?: Maybe<Hits_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Hits_Stddev_Samp_Order_By>;
+  sum?: Maybe<Hits_Sum_Order_By>;
+  var_pop?: Maybe<Hits_Var_Pop_Order_By>;
+  var_samp?: Maybe<Hits_Var_Samp_Order_By>;
+  variance?: Maybe<Hits_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "Hits" */
+export type Hits_Arr_Rel_Insert_Input = {
+  data: Array<Hits_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Hits_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Hits_Avg_Fields = {
+  __typename?: 'Hits_avg_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "Hits" */
+export type Hits_Avg_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "Hits". All fields are combined with a logical 'AND'. */
+export type Hits_Bool_Exp = {
+  Break?: Maybe<Breaks_Bool_Exp>;
+  User?: Maybe<Users_Bool_Exp>;
+  _and?: Maybe<Array<Hits_Bool_Exp>>;
+  _not?: Maybe<Hits_Bool_Exp>;
+  _or?: Maybe<Array<Hits_Bool_Exp>>;
+  autograph?: Maybe<Boolean_Comparison_Exp>;
+  brand?: Maybe<String_Comparison_Exp>;
+  break_id?: Maybe<Uuid_Comparison_Exp>;
+  card_number?: Maybe<String_Comparison_Exp>;
+  category?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  image_back?: Maybe<String_Comparison_Exp>;
+  image_front?: Maybe<String_Comparison_Exp>;
+  insert?: Maybe<String_Comparison_Exp>;
+  manufacturer?: Maybe<String_Comparison_Exp>;
+  memoribillia?: Maybe<String_Comparison_Exp>;
+  numbered?: Maybe<Int_Comparison_Exp>;
+  parallel?: Maybe<String_Comparison_Exp>;
+  player?: Maybe<String_Comparison_Exp>;
+  rookie_card?: Maybe<Boolean_Comparison_Exp>;
+  series?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+  year?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "Hits" */
+export enum Hits_Constraint {
+  /** unique or primary key constraint */
+  HitsPkey = 'Hits_pkey'
+}
+
+/** input type for incrementing numeric columns in table "Hits" */
+export type Hits_Inc_Input = {
+  numbered?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "Hits" */
+export type Hits_Insert_Input = {
+  Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
+  User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  autograph?: Maybe<Scalars['Boolean']>;
+  brand?: Maybe<Scalars['String']>;
+  break_id?: Maybe<Scalars['uuid']>;
+  card_number?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  image_back?: Maybe<Scalars['String']>;
+  image_front?: Maybe<Scalars['String']>;
+  insert?: Maybe<Scalars['String']>;
+  manufacturer?: Maybe<Scalars['String']>;
+  memoribillia?: Maybe<Scalars['String']>;
+  numbered?: Maybe<Scalars['Int']>;
+  parallel?: Maybe<Scalars['String']>;
+  player?: Maybe<Scalars['String']>;
+  rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Hits_Max_Fields = {
+  __typename?: 'Hits_max_fields';
+  brand?: Maybe<Scalars['String']>;
+  break_id?: Maybe<Scalars['uuid']>;
+  card_number?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  image_back?: Maybe<Scalars['String']>;
+  image_front?: Maybe<Scalars['String']>;
+  insert?: Maybe<Scalars['String']>;
+  manufacturer?: Maybe<Scalars['String']>;
+  memoribillia?: Maybe<Scalars['String']>;
+  numbered?: Maybe<Scalars['Int']>;
+  parallel?: Maybe<Scalars['String']>;
+  player?: Maybe<Scalars['String']>;
+  series?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "Hits" */
+export type Hits_Max_Order_By = {
+  brand?: Maybe<Order_By>;
+  break_id?: Maybe<Order_By>;
+  card_number?: Maybe<Order_By>;
+  category?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image_back?: Maybe<Order_By>;
+  image_front?: Maybe<Order_By>;
+  insert?: Maybe<Order_By>;
+  manufacturer?: Maybe<Order_By>;
+  memoribillia?: Maybe<Order_By>;
+  numbered?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
+  player?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+  year?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Hits_Min_Fields = {
+  __typename?: 'Hits_min_fields';
+  brand?: Maybe<Scalars['String']>;
+  break_id?: Maybe<Scalars['uuid']>;
+  card_number?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  image_back?: Maybe<Scalars['String']>;
+  image_front?: Maybe<Scalars['String']>;
+  insert?: Maybe<Scalars['String']>;
+  manufacturer?: Maybe<Scalars['String']>;
+  memoribillia?: Maybe<Scalars['String']>;
+  numbered?: Maybe<Scalars['Int']>;
+  parallel?: Maybe<Scalars['String']>;
+  player?: Maybe<Scalars['String']>;
+  series?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "Hits" */
+export type Hits_Min_Order_By = {
+  brand?: Maybe<Order_By>;
+  break_id?: Maybe<Order_By>;
+  card_number?: Maybe<Order_By>;
+  category?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image_back?: Maybe<Order_By>;
+  image_front?: Maybe<Order_By>;
+  insert?: Maybe<Order_By>;
+  manufacturer?: Maybe<Order_By>;
+  memoribillia?: Maybe<Order_By>;
+  numbered?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
+  player?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+  year?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "Hits" */
+export type Hits_Mutation_Response = {
+  __typename?: 'Hits_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Hits>;
+};
+
+/** on conflict condition type for table "Hits" */
+export type Hits_On_Conflict = {
+  constraint: Hits_Constraint;
+  update_columns?: Array<Hits_Update_Column>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "Hits". */
+export type Hits_Order_By = {
+  Break?: Maybe<Breaks_Order_By>;
+  User?: Maybe<Users_Order_By>;
+  autograph?: Maybe<Order_By>;
+  brand?: Maybe<Order_By>;
+  break_id?: Maybe<Order_By>;
+  card_number?: Maybe<Order_By>;
+  category?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image_back?: Maybe<Order_By>;
+  image_front?: Maybe<Order_By>;
+  insert?: Maybe<Order_By>;
+  manufacturer?: Maybe<Order_By>;
+  memoribillia?: Maybe<Order_By>;
+  numbered?: Maybe<Order_By>;
+  parallel?: Maybe<Order_By>;
+  player?: Maybe<Order_By>;
+  rookie_card?: Maybe<Order_By>;
+  series?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+  year?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: Hits */
+export type Hits_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "Hits" */
+export enum Hits_Select_Column {
+  /** column name */
+  Autograph = 'autograph',
+  /** column name */
+  Brand = 'brand',
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  CardNumber = 'card_number',
+  /** column name */
+  Category = 'category',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ImageBack = 'image_back',
+  /** column name */
+  ImageFront = 'image_front',
+  /** column name */
+  Insert = 'insert',
+  /** column name */
+  Manufacturer = 'manufacturer',
+  /** column name */
+  Memoribillia = 'memoribillia',
+  /** column name */
+  Numbered = 'numbered',
+  /** column name */
+  Parallel = 'parallel',
+  /** column name */
+  Player = 'player',
+  /** column name */
+  RookieCard = 'rookie_card',
+  /** column name */
+  Series = 'series',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Year = 'year'
+}
+
+/** input type for updating data in table "Hits" */
+export type Hits_Set_Input = {
+  autograph?: Maybe<Scalars['Boolean']>;
+  brand?: Maybe<Scalars['String']>;
+  break_id?: Maybe<Scalars['uuid']>;
+  card_number?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  image_back?: Maybe<Scalars['String']>;
+  image_front?: Maybe<Scalars['String']>;
+  insert?: Maybe<Scalars['String']>;
+  manufacturer?: Maybe<Scalars['String']>;
+  memoribillia?: Maybe<Scalars['String']>;
+  numbered?: Maybe<Scalars['Int']>;
+  parallel?: Maybe<Scalars['String']>;
+  player?: Maybe<Scalars['String']>;
+  rookie_card?: Maybe<Scalars['Boolean']>;
+  series?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Hits_Stddev_Fields = {
+  __typename?: 'Hits_stddev_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "Hits" */
+export type Hits_Stddev_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Hits_Stddev_Pop_Fields = {
+  __typename?: 'Hits_stddev_pop_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "Hits" */
+export type Hits_Stddev_Pop_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Hits_Stddev_Samp_Fields = {
+  __typename?: 'Hits_stddev_samp_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "Hits" */
+export type Hits_Stddev_Samp_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Hits_Sum_Fields = {
+  __typename?: 'Hits_sum_fields';
+  numbered?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "Hits" */
+export type Hits_Sum_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** update columns of table "Hits" */
+export enum Hits_Update_Column {
+  /** column name */
+  Autograph = 'autograph',
+  /** column name */
+  Brand = 'brand',
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  CardNumber = 'card_number',
+  /** column name */
+  Category = 'category',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ImageBack = 'image_back',
+  /** column name */
+  ImageFront = 'image_front',
+  /** column name */
+  Insert = 'insert',
+  /** column name */
+  Manufacturer = 'manufacturer',
+  /** column name */
+  Memoribillia = 'memoribillia',
+  /** column name */
+  Numbered = 'numbered',
+  /** column name */
+  Parallel = 'parallel',
+  /** column name */
+  Player = 'player',
+  /** column name */
+  RookieCard = 'rookie_card',
+  /** column name */
+  Series = 'series',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Year = 'year'
+}
+
+/** aggregate var_pop on columns */
+export type Hits_Var_Pop_Fields = {
+  __typename?: 'Hits_var_pop_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "Hits" */
+export type Hits_Var_Pop_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Hits_Var_Samp_Fields = {
+  __typename?: 'Hits_var_samp_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "Hits" */
+export type Hits_Var_Samp_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Hits_Variance_Fields = {
+  __typename?: 'Hits_variance_fields';
+  numbered?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "Hits" */
+export type Hits_Variance_Order_By = {
+  numbered?: Maybe<Order_By>;
+};
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
@@ -2884,7 +3462,6 @@ export type Products = {
   grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
-  image: Scalars['String'];
   insert?: Maybe<Scalars['String']>;
   manufacturer: Scalars['String'];
   memoribillia?: Maybe<Scalars['String']>;
@@ -3009,7 +3586,6 @@ export type Products_Bool_Exp = {
   grade?: Maybe<String_Comparison_Exp>;
   grader?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
-  image?: Maybe<String_Comparison_Exp>;
   insert?: Maybe<String_Comparison_Exp>;
   manufacturer?: Maybe<String_Comparison_Exp>;
   memoribillia?: Maybe<String_Comparison_Exp>;
@@ -3055,7 +3631,6 @@ export type Products_Insert_Input = {
   grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  image?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
   memoribillia?: Maybe<Scalars['String']>;
@@ -3085,7 +3660,6 @@ export type Products_Max_Fields = {
   grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  image?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
   memoribillia?: Maybe<Scalars['String']>;
@@ -3111,7 +3685,6 @@ export type Products_Max_Order_By = {
   grade?: Maybe<Order_By>;
   grader?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  image?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
   memoribillia?: Maybe<Order_By>;
@@ -3138,7 +3711,6 @@ export type Products_Min_Fields = {
   grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  image?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
   memoribillia?: Maybe<Scalars['String']>;
@@ -3164,7 +3736,6 @@ export type Products_Min_Order_By = {
   grade?: Maybe<Order_By>;
   grader?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  image?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
   memoribillia?: Maybe<Order_By>;
@@ -3216,7 +3787,6 @@ export type Products_Order_By = {
   grade?: Maybe<Order_By>;
   grader?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  image?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
   memoribillia?: Maybe<Order_By>;
@@ -3265,8 +3835,6 @@ export enum Products_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Image = 'image',
-  /** column name */
   Insert = 'insert',
   /** column name */
   Manufacturer = 'manufacturer',
@@ -3308,7 +3876,6 @@ export type Products_Set_Input = {
   grade?: Maybe<Scalars['String']>;
   grader?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  image?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
   memoribillia?: Maybe<Scalars['String']>;
@@ -3419,8 +3986,6 @@ export enum Products_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  Image = 'image',
-  /** column name */
   Insert = 'insert',
   /** column name */
   Manufacturer = 'manufacturer',
@@ -3498,6 +4063,570 @@ export type Products_Variance_Order_By = {
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
 };
+
+/** columns and relationships of "SaveBreak" */
+export type SaveBreak = {
+  __typename?: 'SaveBreak';
+  /** An object relationship */
+  Break: Breaks;
+  /** An object relationship */
+  User: Users;
+  break_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "SaveBreak" */
+export type SaveBreak_Aggregate = {
+  __typename?: 'SaveBreak_aggregate';
+  aggregate?: Maybe<SaveBreak_Aggregate_Fields>;
+  nodes: Array<SaveBreak>;
+};
+
+/** aggregate fields of "SaveBreak" */
+export type SaveBreak_Aggregate_Fields = {
+  __typename?: 'SaveBreak_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<SaveBreak_Max_Fields>;
+  min?: Maybe<SaveBreak_Min_Fields>;
+};
+
+
+/** aggregate fields of "SaveBreak" */
+export type SaveBreak_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<SaveBreak_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "SaveBreak" */
+export type SaveBreak_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<SaveBreak_Max_Order_By>;
+  min?: Maybe<SaveBreak_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "SaveBreak" */
+export type SaveBreak_Arr_Rel_Insert_Input = {
+  data: Array<SaveBreak_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<SaveBreak_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "SaveBreak". All fields are combined with a logical 'AND'. */
+export type SaveBreak_Bool_Exp = {
+  Break?: Maybe<Breaks_Bool_Exp>;
+  User?: Maybe<Users_Bool_Exp>;
+  _and?: Maybe<Array<SaveBreak_Bool_Exp>>;
+  _not?: Maybe<SaveBreak_Bool_Exp>;
+  _or?: Maybe<Array<SaveBreak_Bool_Exp>>;
+  break_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "SaveBreak" */
+export enum SaveBreak_Constraint {
+  /** unique or primary key constraint */
+  SaveBreakPkey = 'SaveBreak_pkey'
+}
+
+/** input type for inserting data into table "SaveBreak" */
+export type SaveBreak_Insert_Input = {
+  Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
+  User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  break_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type SaveBreak_Max_Fields = {
+  __typename?: 'SaveBreak_max_fields';
+  break_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "SaveBreak" */
+export type SaveBreak_Max_Order_By = {
+  break_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type SaveBreak_Min_Fields = {
+  __typename?: 'SaveBreak_min_fields';
+  break_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "SaveBreak" */
+export type SaveBreak_Min_Order_By = {
+  break_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "SaveBreak" */
+export type SaveBreak_Mutation_Response = {
+  __typename?: 'SaveBreak_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<SaveBreak>;
+};
+
+/** on conflict condition type for table "SaveBreak" */
+export type SaveBreak_On_Conflict = {
+  constraint: SaveBreak_Constraint;
+  update_columns?: Array<SaveBreak_Update_Column>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "SaveBreak". */
+export type SaveBreak_Order_By = {
+  Break?: Maybe<Breaks_Order_By>;
+  User?: Maybe<Users_Order_By>;
+  break_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: SaveBreak */
+export type SaveBreak_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "SaveBreak" */
+export enum SaveBreak_Select_Column {
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "SaveBreak" */
+export type SaveBreak_Set_Input = {
+  break_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "SaveBreak" */
+export enum SaveBreak_Update_Column {
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "SaveBreaker" */
+export type SaveBreaker = {
+  __typename?: 'SaveBreaker';
+  /** An object relationship */
+  Breaker: Users;
+  /** An object relationship */
+  User: Users;
+  breaker_id: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "SaveBreaker" */
+export type SaveBreaker_Aggregate = {
+  __typename?: 'SaveBreaker_aggregate';
+  aggregate?: Maybe<SaveBreaker_Aggregate_Fields>;
+  nodes: Array<SaveBreaker>;
+};
+
+/** aggregate fields of "SaveBreaker" */
+export type SaveBreaker_Aggregate_Fields = {
+  __typename?: 'SaveBreaker_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<SaveBreaker_Max_Fields>;
+  min?: Maybe<SaveBreaker_Min_Fields>;
+};
+
+
+/** aggregate fields of "SaveBreaker" */
+export type SaveBreaker_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<SaveBreaker_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "SaveBreaker" */
+export type SaveBreaker_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<SaveBreaker_Max_Order_By>;
+  min?: Maybe<SaveBreaker_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "SaveBreaker" */
+export type SaveBreaker_Arr_Rel_Insert_Input = {
+  data: Array<SaveBreaker_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<SaveBreaker_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "SaveBreaker". All fields are combined with a logical 'AND'. */
+export type SaveBreaker_Bool_Exp = {
+  Breaker?: Maybe<Users_Bool_Exp>;
+  User?: Maybe<Users_Bool_Exp>;
+  _and?: Maybe<Array<SaveBreaker_Bool_Exp>>;
+  _not?: Maybe<SaveBreaker_Bool_Exp>;
+  _or?: Maybe<Array<SaveBreaker_Bool_Exp>>;
+  breaker_id?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "SaveBreaker" */
+export enum SaveBreaker_Constraint {
+  /** unique or primary key constraint */
+  SaveBreakerPkey = 'SaveBreaker_pkey'
+}
+
+/** input type for inserting data into table "SaveBreaker" */
+export type SaveBreaker_Insert_Input = {
+  Breaker?: Maybe<Users_Obj_Rel_Insert_Input>;
+  User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  breaker_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type SaveBreaker_Max_Fields = {
+  __typename?: 'SaveBreaker_max_fields';
+  breaker_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "SaveBreaker" */
+export type SaveBreaker_Max_Order_By = {
+  breaker_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type SaveBreaker_Min_Fields = {
+  __typename?: 'SaveBreaker_min_fields';
+  breaker_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "SaveBreaker" */
+export type SaveBreaker_Min_Order_By = {
+  breaker_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "SaveBreaker" */
+export type SaveBreaker_Mutation_Response = {
+  __typename?: 'SaveBreaker_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<SaveBreaker>;
+};
+
+/** on conflict condition type for table "SaveBreaker" */
+export type SaveBreaker_On_Conflict = {
+  constraint: SaveBreaker_Constraint;
+  update_columns?: Array<SaveBreaker_Update_Column>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "SaveBreaker". */
+export type SaveBreaker_Order_By = {
+  Breaker?: Maybe<Users_Order_By>;
+  User?: Maybe<Users_Order_By>;
+  breaker_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: SaveBreaker */
+export type SaveBreaker_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "SaveBreaker" */
+export enum SaveBreaker_Select_Column {
+  /** column name */
+  BreakerId = 'breaker_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "SaveBreaker" */
+export type SaveBreaker_Set_Input = {
+  breaker_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "SaveBreaker" */
+export enum SaveBreaker_Update_Column {
+  /** column name */
+  BreakerId = 'breaker_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "SaveEvent" */
+export type SaveEvent = {
+  __typename?: 'SaveEvent';
+  /** An object relationship */
+  Event: Events;
+  /** An object relationship */
+  User: Users;
+  created_at: Scalars['timestamptz'];
+  event_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "SaveEvent" */
+export type SaveEvent_Aggregate = {
+  __typename?: 'SaveEvent_aggregate';
+  aggregate?: Maybe<SaveEvent_Aggregate_Fields>;
+  nodes: Array<SaveEvent>;
+};
+
+/** aggregate fields of "SaveEvent" */
+export type SaveEvent_Aggregate_Fields = {
+  __typename?: 'SaveEvent_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<SaveEvent_Max_Fields>;
+  min?: Maybe<SaveEvent_Min_Fields>;
+};
+
+
+/** aggregate fields of "SaveEvent" */
+export type SaveEvent_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<SaveEvent_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "SaveEvent" */
+export type SaveEvent_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<SaveEvent_Max_Order_By>;
+  min?: Maybe<SaveEvent_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "SaveEvent" */
+export type SaveEvent_Arr_Rel_Insert_Input = {
+  data: Array<SaveEvent_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<SaveEvent_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "SaveEvent". All fields are combined with a logical 'AND'. */
+export type SaveEvent_Bool_Exp = {
+  Event?: Maybe<Events_Bool_Exp>;
+  User?: Maybe<Users_Bool_Exp>;
+  _and?: Maybe<Array<SaveEvent_Bool_Exp>>;
+  _not?: Maybe<SaveEvent_Bool_Exp>;
+  _or?: Maybe<Array<SaveEvent_Bool_Exp>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  event_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "SaveEvent" */
+export enum SaveEvent_Constraint {
+  /** unique or primary key constraint */
+  SaveEventPkey = 'SaveEvent_pkey'
+}
+
+/** input type for inserting data into table "SaveEvent" */
+export type SaveEvent_Insert_Input = {
+  Event?: Maybe<Events_Obj_Rel_Insert_Input>;
+  User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type SaveEvent_Max_Fields = {
+  __typename?: 'SaveEvent_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "SaveEvent" */
+export type SaveEvent_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type SaveEvent_Min_Fields = {
+  __typename?: 'SaveEvent_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "SaveEvent" */
+export type SaveEvent_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "SaveEvent" */
+export type SaveEvent_Mutation_Response = {
+  __typename?: 'SaveEvent_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<SaveEvent>;
+};
+
+/** on conflict condition type for table "SaveEvent" */
+export type SaveEvent_On_Conflict = {
+  constraint: SaveEvent_Constraint;
+  update_columns?: Array<SaveEvent_Update_Column>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "SaveEvent". */
+export type SaveEvent_Order_By = {
+  Event?: Maybe<Events_Order_By>;
+  User?: Maybe<Users_Order_By>;
+  created_at?: Maybe<Order_By>;
+  event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: SaveEvent */
+export type SaveEvent_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "SaveEvent" */
+export enum SaveEvent_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EventId = 'event_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "SaveEvent" */
+export type SaveEvent_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "SaveEvent" */
+export enum SaveEvent_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EventId = 'event_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
@@ -3732,12 +4861,32 @@ export type Users = {
   Events: Array<Events>;
   /** An aggregate relationship */
   Events_aggregate: Events_Aggregate;
+  /** An array relationship */
+  Followers: Array<SaveBreaker>;
+  /** An aggregate relationship */
+  Followers_aggregate: SaveBreaker_Aggregate;
+  /** An array relationship */
+  Hits: Array<Hits>;
+  /** An aggregate relationship */
+  Hits_aggregate: Hits_Aggregate;
   /** An object relationship */
   Notification: Notifications;
   /** fetch data from the table: "Orders" */
   Orders: Array<Orders>;
   /** An aggregate relationship */
   Orders_aggregate: Orders_Aggregate;
+  /** An array relationship */
+  SavedBreakers: Array<SaveBreaker>;
+  /** An aggregate relationship */
+  SavedBreakers_aggregate: SaveBreaker_Aggregate;
+  /** An array relationship */
+  SavedBreaks: Array<SaveBreak>;
+  /** An aggregate relationship */
+  SavedBreaks_aggregate: SaveBreak_Aggregate;
+  /** An array relationship */
+  SavedEvents: Array<SaveEvent>;
+  /** An aggregate relationship */
+  SavedEvents_aggregate: SaveEvent_Aggregate;
   /** An object relationship */
   UserPreference: UserPreferences;
   created_at: Scalars['timestamptz'];
@@ -3796,6 +4945,46 @@ export type UsersEvents_AggregateArgs = {
 
 
 /** columns and relationships of "Users" */
+export type UsersFollowersArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersFollowers_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersHitsArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersHits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
 export type UsersOrdersArgs = {
   distinct_on?: Maybe<Array<Orders_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3812,6 +5001,66 @@ export type UsersOrders_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Orders_Order_By>>;
   where?: Maybe<Orders_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedBreakersArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedBreakers_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedBreaksArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedBreaks_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedEventsArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Users" */
+export type UsersSavedEvents_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
 };
 
 /** aggregated selection of "Users" */
@@ -3855,8 +5104,13 @@ export type Users_Bool_Exp = {
   Addresses?: Maybe<Addresses_Bool_Exp>;
   BreakerProfile?: Maybe<BreakerProfiles_Bool_Exp>;
   Events?: Maybe<Events_Bool_Exp>;
+  Followers?: Maybe<SaveBreaker_Bool_Exp>;
+  Hits?: Maybe<Hits_Bool_Exp>;
   Notification?: Maybe<Notifications_Bool_Exp>;
   Orders?: Maybe<Orders_Bool_Exp>;
+  SavedBreakers?: Maybe<SaveBreaker_Bool_Exp>;
+  SavedBreaks?: Maybe<SaveBreak_Bool_Exp>;
+  SavedEvents?: Maybe<SaveEvent_Bool_Exp>;
   UserPreference?: Maybe<UserPreferences_Bool_Exp>;
   _and?: Maybe<Array<Users_Bool_Exp>>;
   _not?: Maybe<Users_Bool_Exp>;
@@ -3887,8 +5141,13 @@ export type Users_Insert_Input = {
   Addresses?: Maybe<Addresses_Arr_Rel_Insert_Input>;
   BreakerProfile?: Maybe<BreakerProfiles_Obj_Rel_Insert_Input>;
   Events?: Maybe<Events_Arr_Rel_Insert_Input>;
+  Followers?: Maybe<SaveBreaker_Arr_Rel_Insert_Input>;
+  Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Notification?: Maybe<Notifications_Obj_Rel_Insert_Input>;
   Orders?: Maybe<Orders_Arr_Rel_Insert_Input>;
+  SavedBreakers?: Maybe<SaveBreaker_Arr_Rel_Insert_Input>;
+  SavedBreaks?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
+  SavedEvents?: Maybe<SaveEvent_Arr_Rel_Insert_Input>;
   UserPreference?: Maybe<UserPreferences_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
@@ -3981,8 +5240,13 @@ export type Users_Order_By = {
   Addresses_aggregate?: Maybe<Addresses_Aggregate_Order_By>;
   BreakerProfile?: Maybe<BreakerProfiles_Order_By>;
   Events_aggregate?: Maybe<Events_Aggregate_Order_By>;
+  Followers_aggregate?: Maybe<SaveBreaker_Aggregate_Order_By>;
+  Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Notification?: Maybe<Notifications_Order_By>;
   Orders_aggregate?: Maybe<Orders_Aggregate_Order_By>;
+  SavedBreakers_aggregate?: Maybe<SaveBreaker_Aggregate_Order_By>;
+  SavedBreaks_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
+  SavedEvents_aggregate?: Maybe<SaveEvent_Aggregate_Order_By>;
   UserPreference?: Maybe<UserPreferences_Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
@@ -4588,6 +5852,10 @@ export type Mutation_Root = {
   delete_ExtensibleValues?: Maybe<ExtensibleValues_Mutation_Response>;
   /** delete single row from the table: "ExtensibleValues" */
   delete_ExtensibleValues_by_pk?: Maybe<ExtensibleValues>;
+  /** delete data from the table: "Hits" */
+  delete_Hits?: Maybe<Hits_Mutation_Response>;
+  /** delete single row from the table: "Hits" */
+  delete_Hits_by_pk?: Maybe<Hits>;
   /** delete data from the table: "Inventory" */
   delete_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** delete single row from the table: "Inventory" */
@@ -4604,6 +5872,18 @@ export type Mutation_Root = {
   delete_Products?: Maybe<Products_Mutation_Response>;
   /** delete single row from the table: "Products" */
   delete_Products_by_pk?: Maybe<Products>;
+  /** delete data from the table: "SaveBreak" */
+  delete_SaveBreak?: Maybe<SaveBreak_Mutation_Response>;
+  /** delete single row from the table: "SaveBreak" */
+  delete_SaveBreak_by_pk?: Maybe<SaveBreak>;
+  /** delete data from the table: "SaveBreaker" */
+  delete_SaveBreaker?: Maybe<SaveBreaker_Mutation_Response>;
+  /** delete single row from the table: "SaveBreaker" */
+  delete_SaveBreaker_by_pk?: Maybe<SaveBreaker>;
+  /** delete data from the table: "SaveEvent" */
+  delete_SaveEvent?: Maybe<SaveEvent_Mutation_Response>;
+  /** delete single row from the table: "SaveEvent" */
+  delete_SaveEvent_by_pk?: Maybe<SaveEvent>;
   /** delete data from the table: "UserPreferences" */
   delete_UserPreferences?: Maybe<UserPreferences_Mutation_Response>;
   /** delete single row from the table: "UserPreferences" */
@@ -4656,6 +5936,10 @@ export type Mutation_Root = {
   insert_ExtensibleValues?: Maybe<ExtensibleValues_Mutation_Response>;
   /** insert a single row into the table: "ExtensibleValues" */
   insert_ExtensibleValues_one?: Maybe<ExtensibleValues>;
+  /** insert data into the table: "Hits" */
+  insert_Hits?: Maybe<Hits_Mutation_Response>;
+  /** insert a single row into the table: "Hits" */
+  insert_Hits_one?: Maybe<Hits>;
   /** insert data into the table: "Inventory" */
   insert_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** insert a single row into the table: "Inventory" */
@@ -4672,6 +5956,18 @@ export type Mutation_Root = {
   insert_Products?: Maybe<Products_Mutation_Response>;
   /** insert a single row into the table: "Products" */
   insert_Products_one?: Maybe<Products>;
+  /** insert data into the table: "SaveBreak" */
+  insert_SaveBreak?: Maybe<SaveBreak_Mutation_Response>;
+  /** insert a single row into the table: "SaveBreak" */
+  insert_SaveBreak_one?: Maybe<SaveBreak>;
+  /** insert data into the table: "SaveBreaker" */
+  insert_SaveBreaker?: Maybe<SaveBreaker_Mutation_Response>;
+  /** insert a single row into the table: "SaveBreaker" */
+  insert_SaveBreaker_one?: Maybe<SaveBreaker>;
+  /** insert data into the table: "SaveEvent" */
+  insert_SaveEvent?: Maybe<SaveEvent_Mutation_Response>;
+  /** insert a single row into the table: "SaveEvent" */
+  insert_SaveEvent_one?: Maybe<SaveEvent>;
   /** insert data into the table: "UserPreferences" */
   insert_UserPreferences?: Maybe<UserPreferences_Mutation_Response>;
   /** insert a single row into the table: "UserPreferences" */
@@ -4724,6 +6020,10 @@ export type Mutation_Root = {
   update_ExtensibleValues?: Maybe<ExtensibleValues_Mutation_Response>;
   /** update single row of the table: "ExtensibleValues" */
   update_ExtensibleValues_by_pk?: Maybe<ExtensibleValues>;
+  /** update data of the table: "Hits" */
+  update_Hits?: Maybe<Hits_Mutation_Response>;
+  /** update single row of the table: "Hits" */
+  update_Hits_by_pk?: Maybe<Hits>;
   /** update data of the table: "Inventory" */
   update_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** update single row of the table: "Inventory" */
@@ -4740,6 +6040,18 @@ export type Mutation_Root = {
   update_Products?: Maybe<Products_Mutation_Response>;
   /** update single row of the table: "Products" */
   update_Products_by_pk?: Maybe<Products>;
+  /** update data of the table: "SaveBreak" */
+  update_SaveBreak?: Maybe<SaveBreak_Mutation_Response>;
+  /** update single row of the table: "SaveBreak" */
+  update_SaveBreak_by_pk?: Maybe<SaveBreak>;
+  /** update data of the table: "SaveBreaker" */
+  update_SaveBreaker?: Maybe<SaveBreaker_Mutation_Response>;
+  /** update single row of the table: "SaveBreaker" */
+  update_SaveBreaker_by_pk?: Maybe<SaveBreaker>;
+  /** update data of the table: "SaveEvent" */
+  update_SaveEvent?: Maybe<SaveEvent_Mutation_Response>;
+  /** update single row of the table: "SaveEvent" */
+  update_SaveEvent_by_pk?: Maybe<SaveEvent>;
   /** update data of the table: "UserPreferences" */
   update_UserPreferences?: Maybe<UserPreferences_Mutation_Response>;
   /** update single row of the table: "UserPreferences" */
@@ -4845,6 +6157,18 @@ export type Mutation_RootDelete_ExtensibleValues_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_HitsArgs = {
+  where: Hits_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Hits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_InventoryArgs = {
   where: Inventory_Bool_Exp;
 };
@@ -4888,6 +6212,42 @@ export type Mutation_RootDelete_ProductsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Products_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveBreakArgs = {
+  where: SaveBreak_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveBreak_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveBreakerArgs = {
+  where: SaveBreaker_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveBreaker_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveEventArgs = {
+  where: SaveEvent_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SaveEvent_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -5061,6 +6421,20 @@ export type Mutation_RootInsert_ExtensibleValues_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_HitsArgs = {
+  objects: Array<Hits_Insert_Input>;
+  on_conflict?: Maybe<Hits_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Hits_OneArgs = {
+  object: Hits_Insert_Input;
+  on_conflict?: Maybe<Hits_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_InventoryArgs = {
   objects: Array<Inventory_Insert_Input>;
   on_conflict?: Maybe<Inventory_On_Conflict>;
@@ -5113,6 +6487,48 @@ export type Mutation_RootInsert_ProductsArgs = {
 export type Mutation_RootInsert_Products_OneArgs = {
   object: Products_Insert_Input;
   on_conflict?: Maybe<Products_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveBreakArgs = {
+  objects: Array<SaveBreak_Insert_Input>;
+  on_conflict?: Maybe<SaveBreak_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveBreak_OneArgs = {
+  object: SaveBreak_Insert_Input;
+  on_conflict?: Maybe<SaveBreak_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveBreakerArgs = {
+  objects: Array<SaveBreaker_Insert_Input>;
+  on_conflict?: Maybe<SaveBreaker_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveBreaker_OneArgs = {
+  object: SaveBreaker_Insert_Input;
+  on_conflict?: Maybe<SaveBreaker_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveEventArgs = {
+  objects: Array<SaveEvent_Insert_Input>;
+  on_conflict?: Maybe<SaveEvent_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_SaveEvent_OneArgs = {
+  object: SaveEvent_Insert_Input;
+  on_conflict?: Maybe<SaveEvent_On_Conflict>;
 };
 
 
@@ -5313,6 +6729,22 @@ export type Mutation_RootUpdate_ExtensibleValues_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_HitsArgs = {
+  _inc?: Maybe<Hits_Inc_Input>;
+  _set?: Maybe<Hits_Set_Input>;
+  where: Hits_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Hits_By_PkArgs = {
+  _inc?: Maybe<Hits_Inc_Input>;
+  _set?: Maybe<Hits_Set_Input>;
+  pk_columns: Hits_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_InventoryArgs = {
   _inc?: Maybe<Inventory_Inc_Input>;
   _set?: Maybe<Inventory_Set_Input>;
@@ -5371,6 +6803,48 @@ export type Mutation_RootUpdate_Products_By_PkArgs = {
   _inc?: Maybe<Products_Inc_Input>;
   _set?: Maybe<Products_Set_Input>;
   pk_columns: Products_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveBreakArgs = {
+  _set?: Maybe<SaveBreak_Set_Input>;
+  where: SaveBreak_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveBreak_By_PkArgs = {
+  _set?: Maybe<SaveBreak_Set_Input>;
+  pk_columns: SaveBreak_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveBreakerArgs = {
+  _set?: Maybe<SaveBreaker_Set_Input>;
+  where: SaveBreaker_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveBreaker_By_PkArgs = {
+  _set?: Maybe<SaveBreaker_Set_Input>;
+  pk_columns: SaveBreaker_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveEventArgs = {
+  _set?: Maybe<SaveEvent_Set_Input>;
+  where: SaveEvent_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SaveEvent_By_PkArgs = {
+  _set?: Maybe<SaveEvent_Set_Input>;
+  pk_columns: SaveEvent_Pk_Columns_Input;
 };
 
 
@@ -5540,6 +7014,12 @@ export type Query_Root = {
   /** fetch data from the table: "ExtensibleValues" using primary key columns */
   ExtensibleValues_by_pk?: Maybe<ExtensibleValues>;
   /** An array relationship */
+  Hits: Array<Hits>;
+  /** An aggregate relationship */
+  Hits_aggregate: Hits_Aggregate;
+  /** fetch data from the table: "Hits" using primary key columns */
+  Hits_by_pk?: Maybe<Hits>;
+  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
@@ -5563,6 +7043,24 @@ export type Query_Root = {
   Products_aggregate: Products_Aggregate;
   /** fetch data from the table: "Products" using primary key columns */
   Products_by_pk?: Maybe<Products>;
+  /** fetch data from the table: "SaveBreak" */
+  SaveBreak: Array<SaveBreak>;
+  /** fetch aggregated fields from the table: "SaveBreak" */
+  SaveBreak_aggregate: SaveBreak_Aggregate;
+  /** fetch data from the table: "SaveBreak" using primary key columns */
+  SaveBreak_by_pk?: Maybe<SaveBreak>;
+  /** fetch data from the table: "SaveBreaker" */
+  SaveBreaker: Array<SaveBreaker>;
+  /** fetch aggregated fields from the table: "SaveBreaker" */
+  SaveBreaker_aggregate: SaveBreaker_Aggregate;
+  /** fetch data from the table: "SaveBreaker" using primary key columns */
+  SaveBreaker_by_pk?: Maybe<SaveBreaker>;
+  /** fetch data from the table: "SaveEvent" */
+  SaveEvent: Array<SaveEvent>;
+  /** fetch aggregated fields from the table: "SaveEvent" */
+  SaveEvent_aggregate: SaveEvent_Aggregate;
+  /** fetch data from the table: "SaveEvent" using primary key columns */
+  SaveEvent_by_pk?: Maybe<SaveEvent>;
   /** fetch data from the table: "UserPreferences" */
   UserPreferences: Array<UserPreferences>;
   /** fetch aggregated fields from the table: "UserPreferences" */
@@ -5747,6 +7245,29 @@ export type Query_RootExtensibleValues_By_PkArgs = {
 };
 
 
+export type Query_RootHitsArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+export type Query_RootHits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+export type Query_RootHits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootInventoryArgs = {
   distinct_on?: Maybe<Array<Inventory_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5835,6 +7356,75 @@ export type Query_RootProducts_AggregateArgs = {
 
 
 export type Query_RootProducts_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootSaveBreakArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+export type Query_RootSaveBreak_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+export type Query_RootSaveBreak_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootSaveBreakerArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+export type Query_RootSaveBreaker_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+export type Query_RootSaveBreaker_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootSaveEventArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+export type Query_RootSaveEvent_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+export type Query_RootSaveEvent_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6038,6 +7628,12 @@ export type Subscription_Root = {
   /** fetch data from the table: "ExtensibleValues" using primary key columns */
   ExtensibleValues_by_pk?: Maybe<ExtensibleValues>;
   /** An array relationship */
+  Hits: Array<Hits>;
+  /** An aggregate relationship */
+  Hits_aggregate: Hits_Aggregate;
+  /** fetch data from the table: "Hits" using primary key columns */
+  Hits_by_pk?: Maybe<Hits>;
+  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
@@ -6061,6 +7657,24 @@ export type Subscription_Root = {
   Products_aggregate: Products_Aggregate;
   /** fetch data from the table: "Products" using primary key columns */
   Products_by_pk?: Maybe<Products>;
+  /** fetch data from the table: "SaveBreak" */
+  SaveBreak: Array<SaveBreak>;
+  /** fetch aggregated fields from the table: "SaveBreak" */
+  SaveBreak_aggregate: SaveBreak_Aggregate;
+  /** fetch data from the table: "SaveBreak" using primary key columns */
+  SaveBreak_by_pk?: Maybe<SaveBreak>;
+  /** fetch data from the table: "SaveBreaker" */
+  SaveBreaker: Array<SaveBreaker>;
+  /** fetch aggregated fields from the table: "SaveBreaker" */
+  SaveBreaker_aggregate: SaveBreaker_Aggregate;
+  /** fetch data from the table: "SaveBreaker" using primary key columns */
+  SaveBreaker_by_pk?: Maybe<SaveBreaker>;
+  /** fetch data from the table: "SaveEvent" */
+  SaveEvent: Array<SaveEvent>;
+  /** fetch aggregated fields from the table: "SaveEvent" */
+  SaveEvent_aggregate: SaveEvent_Aggregate;
+  /** fetch data from the table: "SaveEvent" using primary key columns */
+  SaveEvent_by_pk?: Maybe<SaveEvent>;
   /** fetch data from the table: "UserPreferences" */
   UserPreferences: Array<UserPreferences>;
   /** fetch aggregated fields from the table: "UserPreferences" */
@@ -6245,6 +7859,29 @@ export type Subscription_RootExtensibleValues_By_PkArgs = {
 };
 
 
+export type Subscription_RootHitsArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+export type Subscription_RootHits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+export type Subscription_RootHits_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootInventoryArgs = {
   distinct_on?: Maybe<Array<Inventory_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6333,6 +7970,75 @@ export type Subscription_RootProducts_AggregateArgs = {
 
 
 export type Subscription_RootProducts_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootSaveBreakArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveBreak_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreak_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreak_Order_By>>;
+  where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveBreak_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootSaveBreakerArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveBreaker_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveBreaker_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveBreaker_Order_By>>;
+  where?: Maybe<SaveBreaker_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveBreaker_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootSaveEventArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveEvent_AggregateArgs = {
+  distinct_on?: Maybe<Array<SaveEvent_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<SaveEvent_Order_By>>;
+  where?: Maybe<SaveEvent_Bool_Exp>;
+};
+
+
+export type Subscription_RootSaveEvent_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6869,36 +8575,9 @@ export type BreakDetailQuery = (
   )> }
 );
 
-export type BreakOverviewFragment = (
-  { __typename?: 'Breaks' }
-  & Pick<Breaks, 'break_type' | 'description' | 'status' | 'title'>
-  & { BreakProductItems_aggregate: (
-    { __typename?: 'BreakProductItems_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'BreakProductItems_aggregate_fields' }
-      & { max?: Maybe<(
-        { __typename?: 'BreakProductItems_max_fields' }
-        & Pick<BreakProductItems_Max_Fields, 'price'>
-      )>, min?: Maybe<(
-        { __typename?: 'BreakProductItems_min_fields' }
-        & Pick<BreakProductItems_Min_Fields, 'price'>
-      )>, sum?: Maybe<(
-        { __typename?: 'BreakProductItems_sum_fields' }
-        & Pick<BreakProductItems_Sum_Fields, 'quantity'>
-      )> }
-    )> }
-  ), Event: (
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'status' | 'start_time'>
-    & { User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'image'>
-    ) }
-  ) }
-);
-
 export type BreakerBreaksQueryVariables = Exact<{
   id: Scalars['String'];
+  userId?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -6906,13 +8585,105 @@ export type BreakerBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id'>
-    & BreakOverviewFragment
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
+  )> }
+);
+
+export type NewBreakerBreaksSubscriptionVariables = Exact<{
+  id: Scalars['String'];
+  userId?: Maybe<Scalars['String']>;
+}>;
+
+
+export type NewBreakerBreaksSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Breaks: Array<(
+    { __typename?: 'Breaks' }
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
   )> }
 );
 
 export type BreakerEventsQueryVariables = Exact<{
   id: Scalars['String'];
+  userId: Scalars['String'];
 }>;
 
 
@@ -6921,10 +8692,48 @@ export type BreakerEventsQuery = (
   & { Events: Array<(
     { __typename?: 'Events' }
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { Saves: Array<(
+      { __typename?: 'SaveEvent' }
+      & Pick<SaveEvent, 'id'>
+      & { Event: (
+        { __typename?: 'Events' }
+        & Pick<Events, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
   )> }
 );
 
-export type BreakersQueryVariables = Exact<{ [key: string]: never; }>;
+export type NewBreakerEventsSubscriptionVariables = Exact<{
+  id: Scalars['String'];
+  userId: Scalars['String'];
+}>;
+
+
+export type NewBreakerEventsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { Saves: Array<(
+      { __typename?: 'SaveEvent' }
+      & Pick<SaveEvent, 'id'>
+      & { Event: (
+        { __typename?: 'Events' }
+        & Pick<Events, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
+  )> }
+);
+
+export type BreakersQueryVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
 
 
 export type BreakersQuery = (
@@ -6935,7 +8744,44 @@ export type BreakersQuery = (
     & { BreakerProfile: (
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ) }
+    ), Followers: Array<(
+      { __typename?: 'SaveBreaker' }
+      & Pick<SaveBreaker, 'id'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ), Breaker: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
+  )> }
+);
+
+export type NewBreakersSubscriptionVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
+
+
+export type NewBreakersSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Users: Array<(
+    { __typename?: 'Users' }
+    & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
+    & { BreakerProfile: (
+      { __typename?: 'BreakerProfiles' }
+      & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
+    ), Followers: Array<(
+      { __typename?: 'SaveBreaker' }
+      & Pick<SaveBreaker, 'id'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ), Breaker: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
   )> }
 );
 
@@ -6958,6 +8804,7 @@ export type DeleteUserAddressMutation = (
 
 export type EventBreaksQueryVariables = Exact<{
   id: Scalars['uuid'];
+  userId?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -6965,12 +8812,52 @@ export type EventBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'price' | 'spots' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
   )> }
 );
 
 export type NewEventBreaksSubscriptionVariables = Exact<{
   id: Scalars['uuid'];
+  userId?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -6978,7 +8865,46 @@ export type NewEventBreaksSubscription = (
   { __typename?: 'subscription_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'price' | 'spots' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
   )> }
 );
 
@@ -7024,6 +8950,110 @@ export type NewFeaturedBreaksQuery = (
       { __typename?: 'Events' }
       & Pick<Events, 'id' | 'status' | 'start_time'>
     ) }
+  )> }
+);
+
+export type FeaturedHitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeaturedHitsQuery = (
+  { __typename?: 'query_root' }
+  & { Hits: Array<(
+    { __typename?: 'Hits' }
+    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+  )> }
+);
+
+export type NewFeaturedHitsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewFeaturedHitsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Hits: Array<(
+    { __typename?: 'Hits' }
+    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+  )> }
+);
+
+export type FollowBreakMutationVariables = Exact<{
+  follow: SaveBreak_Insert_Input;
+}>;
+
+
+export type FollowBreakMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_SaveBreak_one?: Maybe<(
+    { __typename?: 'SaveBreak' }
+    & Pick<SaveBreak, 'id'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id'>
+    ), Break: (
+      { __typename?: 'Breaks' }
+      & Pick<Breaks, 'id'>
+    ) }
+  )> }
+);
+
+export type FollowBreakerMutationVariables = Exact<{
+  follow: SaveBreaker_Insert_Input;
+}>;
+
+
+export type FollowBreakerMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_SaveBreaker_one?: Maybe<(
+    { __typename?: 'SaveBreaker' }
+    & Pick<SaveBreaker, 'id'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id'>
+    ), Breaker: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id'>
+    ) }
+  )> }
+);
+
+export type FollowEventMutationVariables = Exact<{
+  follow: SaveEvent_Insert_Input;
+}>;
+
+
+export type FollowEventMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_SaveEvent_one?: Maybe<(
+    { __typename?: 'SaveEvent' }
+    & Pick<SaveEvent, 'id'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id'>
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id'>
+    ) }
+  )> }
+);
+
+export type HitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HitsQuery = (
+  { __typename?: 'query_root' }
+  & { Hits: Array<(
+    { __typename?: 'Hits' }
+    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+  )> }
+);
+
+export type NewHitsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewHitsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Hits: Array<(
+    { __typename?: 'Hits' }
+    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
   )> }
 );
 
@@ -7103,31 +9133,113 @@ export type LoggedUserQuery = (
   )> }
 );
 
-export type ScheduledBreaksQueryVariables = Exact<{ [key: string]: never; }>;
+export type ScheduledBreaksQueryVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
 
 
 export type ScheduledBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id'>
-    & BreakOverviewFragment
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
   )> }
 );
 
-export type NewScheduledBreaksSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type NewScheduledBreaksSubscriptionVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
 
 
 export type NewScheduledBreaksSubscription = (
   { __typename?: 'subscription_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id'>
-    & BreakOverviewFragment
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
+      & { Product: (
+        { __typename?: 'Products' }
+        & Pick<Products, 'category'>
+      ) }
+    )>, Saves: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, BreakProductItems_aggregate: (
+      { __typename?: 'BreakProductItems_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'BreakProductItems_aggregate_fields' }
+        & { max?: Maybe<(
+          { __typename?: 'BreakProductItems_max_fields' }
+          & Pick<BreakProductItems_Max_Fields, 'price'>
+        )>, min?: Maybe<(
+          { __typename?: 'BreakProductItems_min_fields' }
+          & Pick<BreakProductItems_Min_Fields, 'price'>
+        )>, sum?: Maybe<(
+          { __typename?: 'BreakProductItems_sum_fields' }
+          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+        )> }
+      )> }
+    ), Event: (
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'status' | 'start_time'>
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id' | 'image'>
+      ) }
+    ) }
   )> }
 );
 
-export type ScheduledEventsQueryVariables = Exact<{ [key: string]: never; }>;
+export type ScheduledEventsQueryVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
 
 
 export type ScheduledEventsQuery = (
@@ -7138,6 +9250,17 @@ export type ScheduledEventsQuery = (
     & { Events: Array<(
       { __typename?: 'Events' }
       & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+      & { Saves: Array<(
+        { __typename?: 'SaveEvent' }
+        & Pick<SaveEvent, 'id'>
+        & { Event: (
+          { __typename?: 'Events' }
+          & Pick<Events, 'id'>
+        ), User: (
+          { __typename?: 'Users' }
+          & Pick<Users, 'id'>
+        ) }
+      )> }
     )>, BreakerProfile: (
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
@@ -7145,7 +9268,9 @@ export type ScheduledEventsQuery = (
   )> }
 );
 
-export type NewScheduledEventsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type NewScheduledEventsSubscriptionVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
 
 
 export type NewScheduledEventsSubscription = (
@@ -7156,10 +9281,93 @@ export type NewScheduledEventsSubscription = (
     & { Events: Array<(
       { __typename?: 'Events' }
       & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+      & { Saves: Array<(
+        { __typename?: 'SaveEvent' }
+        & Pick<SaveEvent, 'id'>
+        & { Event: (
+          { __typename?: 'Events' }
+          & Pick<Events, 'id'>
+        ), User: (
+          { __typename?: 'Users' }
+          & Pick<Users, 'id'>
+        ) }
+      )> }
     )>, BreakerProfile: (
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
     ) }
+  )> }
+);
+
+export type UnfollowBreakMutationVariables = Exact<{
+  user_id?: Maybe<Scalars['String']>;
+  break_id: Scalars['uuid'];
+}>;
+
+
+export type UnfollowBreakMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_SaveBreak?: Maybe<(
+    { __typename?: 'SaveBreak_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'SaveBreak' }
+      & Pick<SaveBreak, 'id'>
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & Pick<Breaks, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
+  )> }
+);
+
+export type UnfollowBreakerMutationVariables = Exact<{
+  user_id?: Maybe<Scalars['String']>;
+  breaker_id?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UnfollowBreakerMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_SaveBreaker?: Maybe<(
+    { __typename?: 'SaveBreaker_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'SaveBreaker' }
+      & Pick<SaveBreaker, 'id'>
+      & { Breaker: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
+  )> }
+);
+
+export type UnfollowEventMutationVariables = Exact<{
+  user_id?: Maybe<Scalars['String']>;
+  event_id: Scalars['uuid'];
+}>;
+
+
+export type UnfollowEventMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_SaveEvent?: Maybe<(
+    { __typename?: 'SaveEvent_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'SaveEvent' }
+      & Pick<SaveEvent, 'id'>
+      & { Event: (
+        { __typename?: 'Events' }
+        & Pick<Events, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )> }
   )> }
 );
 
@@ -7194,7 +9402,7 @@ export type UpdateUserMutation = (
     { __typename?: 'Users_mutation_response' }
     & { returning: Array<(
       { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'username' | 'image'>
+      & Pick<Users, 'id' | 'username' | 'image' | 'first_name' | 'last_name'>
     )> }
   )> }
 );
@@ -7241,36 +9449,6 @@ export const AddressOverviewFragmentDoc = gql`
   state_provice_region
   city
   country
-}
-    `;
-export const BreakOverviewFragmentDoc = gql`
-    fragment BreakOverview on Breaks {
-  break_type
-  description
-  status
-  title
-  BreakProductItems_aggregate {
-    aggregate {
-      max {
-        price
-      }
-      min {
-        price
-      }
-      sum {
-        quantity
-      }
-    }
-  }
-  Event {
-    id
-    status
-    start_time
-    User {
-      id
-      image
-    }
-  }
 }
     `;
 export const BreakDetailDocument = gql`
@@ -7338,16 +9516,55 @@ export type BreakDetailQueryHookResult = ReturnType<typeof useBreakDetailQuery>;
 export type BreakDetailLazyQueryHookResult = ReturnType<typeof useBreakDetailLazyQuery>;
 export type BreakDetailQueryResult = Apollo.QueryResult<BreakDetailQuery, BreakDetailQueryVariables>;
 export const BreakerBreaksDocument = gql`
-    query BreakerBreaks($id: String!) {
+    query BreakerBreaks($id: String!, $userId: String) {
   Breaks(
-    where: {Event: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}}
+    where: {Event: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
     order_by: {Event: {start_time: asc}}
   ) {
     id
-    ...BreakOverview
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }
-    ${BreakOverviewFragmentDoc}`;
+    `;
 
 /**
  * __useBreakerBreaksQuery__
@@ -7362,6 +9579,7 @@ export const BreakerBreaksDocument = gql`
  * const { data, loading, error } = useBreakerBreaksQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7376,8 +9594,82 @@ export function useBreakerBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type BreakerBreaksQueryHookResult = ReturnType<typeof useBreakerBreaksQuery>;
 export type BreakerBreaksLazyQueryHookResult = ReturnType<typeof useBreakerBreaksLazyQuery>;
 export type BreakerBreaksQueryResult = Apollo.QueryResult<BreakerBreaksQuery, BreakerBreaksQueryVariables>;
+export const NewBreakerBreaksDocument = gql`
+    subscription NewBreakerBreaks($id: String!, $userId: String) {
+  Breaks(
+    where: {Event: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+    order_by: {Event: {start_time: asc}}
+  ) {
+    id
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNewBreakerBreaksSubscription__
+ *
+ * To run a query within a React component, call `useNewBreakerBreaksSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewBreakerBreaksSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewBreakerBreaksSubscription({
+ *   variables: {
+ *      id: // value for 'id'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useNewBreakerBreaksSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<NewBreakerBreaksSubscription, NewBreakerBreaksSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<NewBreakerBreaksSubscription, NewBreakerBreaksSubscriptionVariables>(NewBreakerBreaksDocument, options);
+      }
+export type NewBreakerBreaksSubscriptionHookResult = ReturnType<typeof useNewBreakerBreaksSubscription>;
+export type NewBreakerBreaksSubscriptionResult = Apollo.SubscriptionResult<NewBreakerBreaksSubscription>;
 export const BreakerEventsDocument = gql`
-    query BreakerEvents($id: String!) {
+    query BreakerEvents($id: String!, $userId: String!) {
   Events(
     where: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
   ) {
@@ -7387,6 +9679,15 @@ export const BreakerEventsDocument = gql`
     image
     start_time
     description
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
   }
 }
     `;
@@ -7404,6 +9705,7 @@ export const BreakerEventsDocument = gql`
  * const { data, loading, error } = useBreakerEventsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7418,9 +9720,56 @@ export function useBreakerEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type BreakerEventsQueryHookResult = ReturnType<typeof useBreakerEventsQuery>;
 export type BreakerEventsLazyQueryHookResult = ReturnType<typeof useBreakerEventsLazyQuery>;
 export type BreakerEventsQueryResult = Apollo.QueryResult<BreakerEventsQuery, BreakerEventsQueryVariables>;
+export const NewBreakerEventsDocument = gql`
+    subscription NewBreakerEvents($id: String!, $userId: String!) {
+  Events(
+    where: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+  ) {
+    id
+    title
+    status
+    image
+    start_time
+    description
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNewBreakerEventsSubscription__
+ *
+ * To run a query within a React component, call `useNewBreakerEventsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewBreakerEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewBreakerEventsSubscription({
+ *   variables: {
+ *      id: // value for 'id'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useNewBreakerEventsSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<NewBreakerEventsSubscription, NewBreakerEventsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<NewBreakerEventsSubscription, NewBreakerEventsSubscriptionVariables>(NewBreakerEventsDocument, options);
+      }
+export type NewBreakerEventsSubscriptionHookResult = ReturnType<typeof useNewBreakerEventsSubscription>;
+export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerEventsSubscription>;
 export const BreakersDocument = gql`
-    query Breakers {
-  Users(where: {role: {_eq: BREAKER}}) {
+    query Breakers($userId: String) {
+  Users(where: {is_breaker: {_eq: true}}) {
     id
     first_name
     last_name
@@ -7432,6 +9781,15 @@ export const BreakersDocument = gql`
       instagram
       video
       bio
+    }
+    Followers(where: {user_id: {_eq: $userId}}) {
+      id
+      User {
+        id
+      }
+      Breaker {
+        id
+      }
     }
   }
 }
@@ -7449,6 +9807,7 @@ export const BreakersDocument = gql`
  * @example
  * const { data, loading, error } = useBreakersQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7463,6 +9822,56 @@ export function useBreakersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type BreakersQueryHookResult = ReturnType<typeof useBreakersQuery>;
 export type BreakersLazyQueryHookResult = ReturnType<typeof useBreakersLazyQuery>;
 export type BreakersQueryResult = Apollo.QueryResult<BreakersQuery, BreakersQueryVariables>;
+export const NewBreakersDocument = gql`
+    subscription NewBreakers($userId: String) {
+  Users(where: {is_breaker: {_eq: true}}) {
+    id
+    first_name
+    last_name
+    image
+    BreakerProfile {
+      id
+      twitter
+      facebook
+      instagram
+      video
+      bio
+    }
+    Followers(where: {user_id: {_eq: $userId}}) {
+      id
+      User {
+        id
+      }
+      Breaker {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNewBreakersSubscription__
+ *
+ * To run a query within a React component, call `useNewBreakersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewBreakersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewBreakersSubscription({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useNewBreakersSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewBreakersSubscription, NewBreakersSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<NewBreakersSubscription, NewBreakersSubscriptionVariables>(NewBreakersDocument, options);
+      }
+export type NewBreakersSubscriptionHookResult = ReturnType<typeof useNewBreakersSubscription>;
+export type NewBreakersSubscriptionResult = Apollo.SubscriptionResult<NewBreakersSubscription>;
 export const DeleteUserAddressDocument = gql`
     mutation DeleteUserAddress($addressId: uuid!) {
   delete_Addresses_by_pk(id: $addressId) {
@@ -7500,15 +9909,51 @@ export type DeleteUserAddressMutationHookResult = ReturnType<typeof useDeleteUse
 export type DeleteUserAddressMutationResult = Apollo.MutationResult<DeleteUserAddressMutation>;
 export type DeleteUserAddressMutationOptions = Apollo.BaseMutationOptions<DeleteUserAddressMutation, DeleteUserAddressMutationVariables>;
 export const EventBreaksDocument = gql`
-    query EventBreaks($id: uuid!) {
-  Breaks(where: {status: {_neq: COMPLETED}, Event: {id: {_eq: $id}}}) {
+    query EventBreaks($id: uuid!, $userId: String) {
+  Breaks(
+    where: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}, Event: {id: {_eq: $id}}}
+  ) {
     id
     break_type
     description
-    price
-    spots
     status
     title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }
     `;
@@ -7526,6 +9971,7 @@ export const EventBreaksDocument = gql`
  * const { data, loading, error } = useEventBreaksQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7541,15 +9987,51 @@ export type EventBreaksQueryHookResult = ReturnType<typeof useEventBreaksQuery>;
 export type EventBreaksLazyQueryHookResult = ReturnType<typeof useEventBreaksLazyQuery>;
 export type EventBreaksQueryResult = Apollo.QueryResult<EventBreaksQuery, EventBreaksQueryVariables>;
 export const NewEventBreaksDocument = gql`
-    subscription NewEventBreaks($id: uuid!) {
-  Breaks(where: {status: {_neq: COMPLETED}, Event: {id: {_eq: $id}}}) {
+    subscription NewEventBreaks($id: uuid!, $userId: String) {
+  Breaks(
+    where: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}, Event: {id: {_eq: $id}}}
+  ) {
     id
     break_type
     description
-    price
-    spots
     status
     title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }
     `;
@@ -7567,6 +10049,7 @@ export const NewEventBreaksDocument = gql`
  * const { data, loading, error } = useNewEventBreaksSubscription({
  *   variables: {
  *      id: // value for 'id'
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7578,7 +10061,7 @@ export type NewEventBreaksSubscriptionHookResult = ReturnType<typeof useNewEvent
 export type NewEventBreaksSubscriptionResult = Apollo.SubscriptionResult<NewEventBreaksSubscription>;
 export const FeaturedBreakersDocument = gql`
     query FeaturedBreakers {
-  Users(where: {role: {_eq: BREAKER}}, limit: 6) {
+  Users(where: {is_breaker: {_eq: true}}, limit: 6) {
     id
     first_name
     last_name
@@ -7624,8 +10107,7 @@ export type FeaturedBreakersQueryResult = Apollo.QueryResult<FeaturedBreakersQue
 export const FeaturedBreaksDocument = gql`
     query FeaturedBreaks {
   Breaks(
-    limit: 6
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}}
+    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
     order_by: {Event: {start_time: asc}}
   ) {
     id
@@ -7671,7 +10153,7 @@ export const NewFeaturedBreaksDocument = gql`
     query NewFeaturedBreaks {
   Breaks(
     limit: 6
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}}
+    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
     order_by: {Event: {start_time: asc}}
   ) {
     id
@@ -7713,6 +10195,261 @@ export function useNewFeaturedBreaksLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type NewFeaturedBreaksQueryHookResult = ReturnType<typeof useNewFeaturedBreaksQuery>;
 export type NewFeaturedBreaksLazyQueryHookResult = ReturnType<typeof useNewFeaturedBreaksLazyQuery>;
 export type NewFeaturedBreaksQueryResult = Apollo.QueryResult<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>;
+export const FeaturedHitsDocument = gql`
+    query FeaturedHits {
+  Hits(limit: 6) {
+    id
+    image_front
+    description
+    player
+  }
+}
+    `;
+
+/**
+ * __useFeaturedHitsQuery__
+ *
+ * To run a query within a React component, call `useFeaturedHitsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedHitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeaturedHitsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeaturedHitsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FeaturedHitsQuery, FeaturedHitsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<FeaturedHitsQuery, FeaturedHitsQueryVariables>(FeaturedHitsDocument, options);
+      }
+export function useFeaturedHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeaturedHitsQuery, FeaturedHitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<FeaturedHitsQuery, FeaturedHitsQueryVariables>(FeaturedHitsDocument, options);
+        }
+export type FeaturedHitsQueryHookResult = ReturnType<typeof useFeaturedHitsQuery>;
+export type FeaturedHitsLazyQueryHookResult = ReturnType<typeof useFeaturedHitsLazyQuery>;
+export type FeaturedHitsQueryResult = Apollo.QueryResult<FeaturedHitsQuery, FeaturedHitsQueryVariables>;
+export const NewFeaturedHitsDocument = gql`
+    subscription NewFeaturedHits {
+  Hits(limit: 6) {
+    id
+    image_front
+    description
+    player
+  }
+}
+    `;
+
+/**
+ * __useNewFeaturedHitsSubscription__
+ *
+ * To run a query within a React component, call `useNewFeaturedHitsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewFeaturedHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewFeaturedHitsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewFeaturedHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewFeaturedHitsSubscription, NewFeaturedHitsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<NewFeaturedHitsSubscription, NewFeaturedHitsSubscriptionVariables>(NewFeaturedHitsDocument, options);
+      }
+export type NewFeaturedHitsSubscriptionHookResult = ReturnType<typeof useNewFeaturedHitsSubscription>;
+export type NewFeaturedHitsSubscriptionResult = Apollo.SubscriptionResult<NewFeaturedHitsSubscription>;
+export const FollowBreakDocument = gql`
+    mutation FollowBreak($follow: SaveBreak_insert_input!) {
+  insert_SaveBreak_one(object: $follow) {
+    id
+    User {
+      id
+    }
+    Break {
+      id
+    }
+  }
+}
+    `;
+export type FollowBreakMutationFn = Apollo.MutationFunction<FollowBreakMutation, FollowBreakMutationVariables>;
+
+/**
+ * __useFollowBreakMutation__
+ *
+ * To run a mutation, you first call `useFollowBreakMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowBreakMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followBreakMutation, { data, loading, error }] = useFollowBreakMutation({
+ *   variables: {
+ *      follow: // value for 'follow'
+ *   },
+ * });
+ */
+export function useFollowBreakMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<FollowBreakMutation, FollowBreakMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<FollowBreakMutation, FollowBreakMutationVariables>(FollowBreakDocument, options);
+      }
+export type FollowBreakMutationHookResult = ReturnType<typeof useFollowBreakMutation>;
+export type FollowBreakMutationResult = Apollo.MutationResult<FollowBreakMutation>;
+export type FollowBreakMutationOptions = Apollo.BaseMutationOptions<FollowBreakMutation, FollowBreakMutationVariables>;
+export const FollowBreakerDocument = gql`
+    mutation FollowBreaker($follow: SaveBreaker_insert_input!) {
+  insert_SaveBreaker_one(object: $follow) {
+    id
+    User {
+      id
+    }
+    Breaker {
+      id
+    }
+  }
+}
+    `;
+export type FollowBreakerMutationFn = Apollo.MutationFunction<FollowBreakerMutation, FollowBreakerMutationVariables>;
+
+/**
+ * __useFollowBreakerMutation__
+ *
+ * To run a mutation, you first call `useFollowBreakerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowBreakerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followBreakerMutation, { data, loading, error }] = useFollowBreakerMutation({
+ *   variables: {
+ *      follow: // value for 'follow'
+ *   },
+ * });
+ */
+export function useFollowBreakerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<FollowBreakerMutation, FollowBreakerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<FollowBreakerMutation, FollowBreakerMutationVariables>(FollowBreakerDocument, options);
+      }
+export type FollowBreakerMutationHookResult = ReturnType<typeof useFollowBreakerMutation>;
+export type FollowBreakerMutationResult = Apollo.MutationResult<FollowBreakerMutation>;
+export type FollowBreakerMutationOptions = Apollo.BaseMutationOptions<FollowBreakerMutation, FollowBreakerMutationVariables>;
+export const FollowEventDocument = gql`
+    mutation FollowEvent($follow: SaveEvent_insert_input!) {
+  insert_SaveEvent_one(object: $follow) {
+    id
+    User {
+      id
+    }
+    Event {
+      id
+    }
+  }
+}
+    `;
+export type FollowEventMutationFn = Apollo.MutationFunction<FollowEventMutation, FollowEventMutationVariables>;
+
+/**
+ * __useFollowEventMutation__
+ *
+ * To run a mutation, you first call `useFollowEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followEventMutation, { data, loading, error }] = useFollowEventMutation({
+ *   variables: {
+ *      follow: // value for 'follow'
+ *   },
+ * });
+ */
+export function useFollowEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<FollowEventMutation, FollowEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<FollowEventMutation, FollowEventMutationVariables>(FollowEventDocument, options);
+      }
+export type FollowEventMutationHookResult = ReturnType<typeof useFollowEventMutation>;
+export type FollowEventMutationResult = Apollo.MutationResult<FollowEventMutation>;
+export type FollowEventMutationOptions = Apollo.BaseMutationOptions<FollowEventMutation, FollowEventMutationVariables>;
+export const HitsDocument = gql`
+    query Hits {
+  Hits {
+    id
+    image_front
+    description
+    player
+  }
+}
+    `;
+
+/**
+ * __useHitsQuery__
+ *
+ * To run a query within a React component, call `useHitsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHitsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHitsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<HitsQuery, HitsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<HitsQuery, HitsQueryVariables>(HitsDocument, options);
+      }
+export function useHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<HitsQuery, HitsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<HitsQuery, HitsQueryVariables>(HitsDocument, options);
+        }
+export type HitsQueryHookResult = ReturnType<typeof useHitsQuery>;
+export type HitsLazyQueryHookResult = ReturnType<typeof useHitsLazyQuery>;
+export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
+export const NewHitsDocument = gql`
+    subscription NewHits {
+  Hits {
+    id
+    image_front
+    description
+    player
+  }
+}
+    `;
+
+/**
+ * __useNewHitsSubscription__
+ *
+ * To run a query within a React component, call `useNewHitsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewHitsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNewHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewHitsSubscription, NewHitsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<NewHitsSubscription, NewHitsSubscriptionVariables>(NewHitsDocument, options);
+      }
+export type NewHitsSubscriptionHookResult = ReturnType<typeof useNewHitsSubscription>;
+export type NewHitsSubscriptionResult = Apollo.SubscriptionResult<NewHitsSubscription>;
 export const InsertUserAddressDocument = gql`
     mutation InsertUserAddress($address: Addresses_insert_input!) {
   insert_Addresses_one(object: $address) {
@@ -7883,16 +10620,55 @@ export type LoggedUserQueryHookResult = ReturnType<typeof useLoggedUserQuery>;
 export type LoggedUserLazyQueryHookResult = ReturnType<typeof useLoggedUserLazyQuery>;
 export type LoggedUserQueryResult = Apollo.QueryResult<LoggedUserQuery, LoggedUserQueryVariables>;
 export const ScheduledBreaksDocument = gql`
-    query ScheduledBreaks {
+    query ScheduledBreaks($userId: String) {
   Breaks(
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}}
+    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
     order_by: {Event: {start_time: asc}}
   ) {
     id
-    ...BreakOverview
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }
-    ${BreakOverviewFragmentDoc}`;
+    `;
 
 /**
  * __useScheduledBreaksQuery__
@@ -7906,6 +10682,7 @@ export const ScheduledBreaksDocument = gql`
  * @example
  * const { data, loading, error } = useScheduledBreaksQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7921,16 +10698,55 @@ export type ScheduledBreaksQueryHookResult = ReturnType<typeof useScheduledBreak
 export type ScheduledBreaksLazyQueryHookResult = ReturnType<typeof useScheduledBreaksLazyQuery>;
 export type ScheduledBreaksQueryResult = Apollo.QueryResult<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>;
 export const NewScheduledBreaksDocument = gql`
-    subscription NewScheduledBreaks {
+    subscription NewScheduledBreaks($userId: String) {
   Breaks(
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}}
+    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
     order_by: {Event: {start_time: asc}}
   ) {
     id
-    ...BreakOverview
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }
-    ${BreakOverviewFragmentDoc}`;
+    `;
 
 /**
  * __useNewScheduledBreaksSubscription__
@@ -7944,6 +10760,7 @@ export const NewScheduledBreaksDocument = gql`
  * @example
  * const { data, loading, error } = useNewScheduledBreaksSubscription({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -7954,8 +10771,8 @@ export function useNewScheduledBreaksSubscription(baseOptions?: ApolloReactHooks
 export type NewScheduledBreaksSubscriptionHookResult = ReturnType<typeof useNewScheduledBreaksSubscription>;
 export type NewScheduledBreaksSubscriptionResult = Apollo.SubscriptionResult<NewScheduledBreaksSubscription>;
 export const ScheduledEventsDocument = gql`
-    query ScheduledEvents {
-  Users(where: {role: {_eq: BREAKER}}) {
+    query ScheduledEvents($userId: String) {
+  Users(where: {is_breaker: {_eq: true}}) {
     id
     image
     first_name
@@ -7970,6 +10787,15 @@ export const ScheduledEventsDocument = gql`
       image
       start_time
       description
+      Saves(where: {User: {id: {_eq: $userId}}}) {
+        id
+        Event {
+          id
+        }
+        User {
+          id
+        }
+      }
     }
     BreakerProfile {
       id
@@ -7995,6 +10821,7 @@ export const ScheduledEventsDocument = gql`
  * @example
  * const { data, loading, error } = useScheduledEventsQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -8010,8 +10837,8 @@ export type ScheduledEventsQueryHookResult = ReturnType<typeof useScheduledEvent
 export type ScheduledEventsLazyQueryHookResult = ReturnType<typeof useScheduledEventsLazyQuery>;
 export type ScheduledEventsQueryResult = Apollo.QueryResult<ScheduledEventsQuery, ScheduledEventsQueryVariables>;
 export const NewScheduledEventsDocument = gql`
-    subscription NewScheduledEvents {
-  Users(where: {role: {_eq: BREAKER}}) {
+    subscription NewScheduledEvents($userId: String) {
+  Users(where: {is_breaker: {_eq: true}}) {
     id
     image
     first_name
@@ -8026,6 +10853,15 @@ export const NewScheduledEventsDocument = gql`
       image
       start_time
       description
+      Saves(where: {User: {id: {_eq: $userId}}}) {
+        id
+        Event {
+          id
+        }
+        User {
+          id
+        }
+      }
     }
     BreakerProfile {
       id
@@ -8051,6 +10887,7 @@ export const NewScheduledEventsDocument = gql`
  * @example
  * const { data, loading, error } = useNewScheduledEventsSubscription({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -8060,6 +10897,138 @@ export function useNewScheduledEventsSubscription(baseOptions?: ApolloReactHooks
       }
 export type NewScheduledEventsSubscriptionHookResult = ReturnType<typeof useNewScheduledEventsSubscription>;
 export type NewScheduledEventsSubscriptionResult = Apollo.SubscriptionResult<NewScheduledEventsSubscription>;
+export const UnfollowBreakDocument = gql`
+    mutation UnfollowBreak($user_id: String, $break_id: uuid!) {
+  delete_SaveBreak(
+    where: {User: {id: {_eq: $user_id}}, Break: {id: {_eq: $break_id}}}
+  ) {
+    returning {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}
+    `;
+export type UnfollowBreakMutationFn = Apollo.MutationFunction<UnfollowBreakMutation, UnfollowBreakMutationVariables>;
+
+/**
+ * __useUnfollowBreakMutation__
+ *
+ * To run a mutation, you first call `useUnfollowBreakMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfollowBreakMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfollowBreakMutation, { data, loading, error }] = useUnfollowBreakMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      break_id: // value for 'break_id'
+ *   },
+ * });
+ */
+export function useUnfollowBreakMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnfollowBreakMutation, UnfollowBreakMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UnfollowBreakMutation, UnfollowBreakMutationVariables>(UnfollowBreakDocument, options);
+      }
+export type UnfollowBreakMutationHookResult = ReturnType<typeof useUnfollowBreakMutation>;
+export type UnfollowBreakMutationResult = Apollo.MutationResult<UnfollowBreakMutation>;
+export type UnfollowBreakMutationOptions = Apollo.BaseMutationOptions<UnfollowBreakMutation, UnfollowBreakMutationVariables>;
+export const UnfollowBreakerDocument = gql`
+    mutation UnfollowBreaker($user_id: String, $breaker_id: String) {
+  delete_SaveBreaker(
+    where: {User: {id: {_eq: $user_id}}, Breaker: {id: {_eq: $breaker_id}}}
+  ) {
+    returning {
+      id
+      Breaker {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}
+    `;
+export type UnfollowBreakerMutationFn = Apollo.MutationFunction<UnfollowBreakerMutation, UnfollowBreakerMutationVariables>;
+
+/**
+ * __useUnfollowBreakerMutation__
+ *
+ * To run a mutation, you first call `useUnfollowBreakerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfollowBreakerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfollowBreakerMutation, { data, loading, error }] = useUnfollowBreakerMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      breaker_id: // value for 'breaker_id'
+ *   },
+ * });
+ */
+export function useUnfollowBreakerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnfollowBreakerMutation, UnfollowBreakerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UnfollowBreakerMutation, UnfollowBreakerMutationVariables>(UnfollowBreakerDocument, options);
+      }
+export type UnfollowBreakerMutationHookResult = ReturnType<typeof useUnfollowBreakerMutation>;
+export type UnfollowBreakerMutationResult = Apollo.MutationResult<UnfollowBreakerMutation>;
+export type UnfollowBreakerMutationOptions = Apollo.BaseMutationOptions<UnfollowBreakerMutation, UnfollowBreakerMutationVariables>;
+export const UnfollowEventDocument = gql`
+    mutation UnfollowEvent($user_id: String, $event_id: uuid!) {
+  delete_SaveEvent(
+    where: {User: {id: {_eq: $user_id}}, Event: {id: {_eq: $event_id}}}
+  ) {
+    returning {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}
+    `;
+export type UnfollowEventMutationFn = Apollo.MutationFunction<UnfollowEventMutation, UnfollowEventMutationVariables>;
+
+/**
+ * __useUnfollowEventMutation__
+ *
+ * To run a mutation, you first call `useUnfollowEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfollowEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfollowEventMutation, { data, loading, error }] = useUnfollowEventMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      event_id: // value for 'event_id'
+ *   },
+ * });
+ */
+export function useUnfollowEventMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnfollowEventMutation, UnfollowEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UnfollowEventMutation, UnfollowEventMutationVariables>(UnfollowEventDocument, options);
+      }
+export type UnfollowEventMutationHookResult = ReturnType<typeof useUnfollowEventMutation>;
+export type UnfollowEventMutationResult = Apollo.MutationResult<UnfollowEventMutation>;
+export type UnfollowEventMutationOptions = Apollo.BaseMutationOptions<UnfollowEventMutation, UnfollowEventMutationVariables>;
 export const UpdateUserAddressDocument = gql`
     mutation UpdateUserAddress($address: Addresses_set_input!, $addressId: Addresses_pk_columns_input!) {
   update_Addresses_by_pk(_set: $address, pk_columns: $addressId) {
@@ -8105,6 +11074,8 @@ export const UpdateUserDocument = gql`
       id
       username
       image
+      first_name
+      last_name
     }
   }
 }

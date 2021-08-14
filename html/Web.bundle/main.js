@@ -21,7 +21,7 @@ const options = {
     },
     expiryDate: {
       selector: '#expiryDate',
-      placeholder: 'Exp. Date',
+      placeholder: 'Exp. Date (MM / YY)',
     },
     cvv: {
       selector: '#cvv',
@@ -76,9 +76,14 @@ function getVaultFields() {
   };
 }
 
+function transformPostalCode(e, fieldInput) {
+  fieldInput.value = e.target.value.replace(/[^a-z0-9]/gi, '').toUpperCase();
+}
+
 paysafe.fields.setup(apiKey, options, function (instance, error) {
   if (error) {
-    console.log(error);
+    const initializationError = { initError: error };
+    window.ReactNativeWebView.postMessage(JSON.stringify(initializationError));
   } else {
     instance
       .fields('cvv')
@@ -112,6 +117,13 @@ paysafe.fields.setup(apiKey, options, function (instance, error) {
 
     requiredVaultFields.map(function (fieldSelector) {
       const fieldInput = document.querySelector(fieldSelector);
+
+      if (fieldSelector === '#postalCode') {
+        fieldInput.addEventListener('input', function (e) {
+          transformPostalCode(e, fieldInput);
+        });
+      }
+
       fieldInput.onfocus = function () {
         setOnFocusBorderColor(fieldInput);
       };
@@ -132,7 +144,7 @@ paysafe.fields.setup(apiKey, options, function (instance, error) {
 
   document.getElementById('save').addEventListener(
     'click',
-    function (event) {
+    function () {
       const isFormValid = instance.areAllFieldsValid() && areVaultFieldsValid();
       if (isFormValid) {
         const vaultFieldsObject = getVaultFields();
@@ -140,9 +152,9 @@ paysafe.fields.setup(apiKey, options, function (instance, error) {
           {
             vault: vaultFieldsObject,
           },
-          function (instance, error, result) {
-            if (error) {
-              const errorMessage = { error };
+          function (_, tokenizeError, result) {
+            if (tokenizeError) {
+              const errorMessage = { error: tokenizeError };
               window.ReactNativeWebView.postMessage(
                 JSON.stringify(errorMessage),
               );

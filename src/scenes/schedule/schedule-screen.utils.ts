@@ -4,8 +4,9 @@ import {
   eventCardStatusSelector,
   eventImageSelector,
   eventTitleSelector,
-  eventIdSelector,
   eventDescriptionSelector,
+  eventIdSelector,
+  eventFollowedByUserSelector,
 } from '../../common/event';
 import {
   BreakCardProps,
@@ -13,20 +14,21 @@ import {
   SectionHeaderProps,
 } from '../../components';
 import { BreakersStackParamList } from '../../navigators/stacks/breakers-stack';
-import { ProtectedStackParamList } from '../../navigators/stacks/protected-stack';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { Breaks, Events, Users } from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 import {
   breakBreakerSelector,
   breakCardStatusSelector,
+  breakFollowedByUserSelector,
   breakPriceSelector,
+  breakSportSelector,
   breakSpotsSelector,
   breakTimeSelector,
   breakTitleSelector,
   breakTypeSelector,
 } from '../../common/break';
-import { Sports } from '../../common/sports';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 
 export const breakScheduleSelector = (
   eventBreak: Breaks,
@@ -40,6 +42,7 @@ export const breakScheduleSelector = (
   | 'breakType'
   | 'breakerImage'
   | 'league'
+  | 'userFollows'
 > => {
   const breaker = breakBreakerSelector(eventBreak);
   const breakTime = breakTimeSelector(eventBreak);
@@ -51,7 +54,8 @@ export const breakScheduleSelector = (
     title: breakTitleSelector(eventBreak),
     breakType: breakTypeSelector(eventBreak),
     breakerImage: userImageSelector(breaker as Users),
-    league: Sports.baseball,
+    league: breakSportSelector(eventBreak),
+    userFollows: breakFollowedByUserSelector(eventBreak),
   };
 };
 
@@ -78,28 +82,25 @@ export const scheduleEventSelector = (event: Events): EventCardProps => {
     title: eventTitleSelector(event),
     status: eventCardStatusSelector(event),
     image: eventImageSelector(event),
-    league: Sports.baseball,
+    userFollows: eventFollowedByUserSelector(event),
   };
 };
 
 export const eventDetailSelector = (
   event: Events,
   breaker: Users,
-): Partial<ProtectedStackParamList[typeof ROUTES_IDS.EVENT_DETAIL_MODAL]> => {
-  const breakerImage = userImageSelector(breaker);
-  const image = eventImageSelector(event);
+): EventDetailModalProps => {
   const eventTime = eventTimeSelector(event);
   return {
-    id: eventIdSelector(event),
+    eventId: eventIdSelector(event),
     title: eventTitleSelector(event),
-    image: { uri: image || 'https://source.unsplash.com/600x801/?sports' },
+    image: eventImageSelector(event),
     breaker: {
       name: userNameSelector(breaker),
-      image: { uri: breakerImage },
+      image: userImageSelector(breaker),
     },
     status: eventCardStatusSelector(event),
     description: eventDescriptionSelector(event),
     eventDate: formatScheduledStatus(eventTime),
-    league: 'baseball',
   };
 };

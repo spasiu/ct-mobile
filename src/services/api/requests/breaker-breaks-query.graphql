@@ -1,6 +1,4 @@
-# import "./break-overview-fragment.graphql"
-
-query BreakerBreaks($id: String!) {
+query BreakerBreaks($id: String!, $userId: String) {
   Breaks(
     where: {
       Event: {
@@ -8,10 +6,51 @@ query BreakerBreaks($id: String!) {
         status: { _neq: DRAFT }
         _and: { status: { _neq: COMPLETED } }
       }
+      status: { _neq: DRAFT }
+      _and: { status: { _neq: COMPLETED } }
     }
     order_by: { Event: { start_time: asc } }
   ) {
     id
-    ...BreakOverview
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }

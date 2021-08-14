@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Platform } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { WebView } from 'react-native-webview';
+import { showMessage } from 'react-native-flash-message';
 
 import { Loading } from '../../components';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
@@ -9,6 +10,7 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 
 import { AddPaymentInformationProps } from './add-payment-information.props';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { t } from '../../i18n/i18n';
 
 const sourceUri =
   (Platform.OS === 'android' ? 'file:///android_asset/' : '') +
@@ -37,16 +39,27 @@ export const AddPaymentInformation = ({
           originWhitelist={['*']}
           source={{ uri: sourceUri }}
           onMessage={event => {
-            setProcessing(true);
             const eventData = JSON.parse(event.nativeEvent.data);
-            if (eventData.token) {
-              createCard(authUser as FirebaseAuthTypes.User, {
-                singleUseToken: eventData.token,
-              })
-                .then(() => onPaymentAdded())
-                .catch(() => setProcessing(false));
+            if (eventData.initError) {
+              showMessage({
+                message: t('errors.generic'),
+                type: 'danger',
+              });
             } else {
-              setProcessing(false);
+              setProcessing(true);
+              if (eventData.token) {
+                createCard(authUser as FirebaseAuthTypes.User, {
+                  singleUseToken: eventData.token,
+                })
+                  .then(() => onPaymentAdded())
+                  .catch(() => setProcessing(false));
+              } else {
+                setProcessing(false);
+                showMessage({
+                  message: eventData.error.detailedMessage,
+                  type: 'danger',
+                });
+              }
             }
           }}
         />

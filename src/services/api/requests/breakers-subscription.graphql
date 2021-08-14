@@ -1,0 +1,25 @@
+subscription NewBreakers($userId: String) {
+  Users(where: { is_breaker: { _eq: true } }) {
+    id
+    first_name
+    last_name
+    image
+    BreakerProfile {
+      id
+      twitter
+      facebook
+      instagram
+      video
+      bio
+    }
+    Followers(where: { user_id: { _eq: $userId } }) {
+      id
+      User {
+        id
+      }
+      Breaker {
+        id
+      }
+    }
+  }
+}

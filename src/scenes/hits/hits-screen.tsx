@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
@@ -9,87 +9,29 @@ import {
   Container,
   ContainerTypes,
   SearchInput,
-  IconButton,
   FilterItem,
-  ServerImage,
+  Avatar,
+  Loading,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { WINDOW_WIDTH } from '../../theme/sizes';
 import { t } from '../../i18n/i18n';
-import { useUserImageQuery } from '../../services/api/requests';
+import {
+  NewHitsDocument,
+  useHitsQuery,
+  useUserImageQuery,
+} from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { userSelector, userImageSelector } from '../../common/user-profile';
-import { ICON_SIZE } from '../../theme/sizes';
 
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
+import { hitsSelector } from '../../common/hit/hit-selectors';
 
 import { HitsScreenProps } from './hits-screen.props';
-
-const HITS = [
-  {
-    id: 'hits-1',
-    image: '/temp-hits/Lionel-Messi-71.jpeg',
-    name: 'Lionel Messi',
-  },
-  {
-    id: 'hits-2',
-    image: '/temp-hits/Ceedee-Lamb.jpeg',
-    name: 'Ceedee Lamb',
-  },
-  {
-    id: 'hits-3',
-    image: '/temp-hits/Deshaun-Watson.jpeg',
-    name: 'Deshaun Watson',
-  },
-  {
-    id: 'hits-4',
-    image: '/temp-hits/Ja-Morant.jpeg',
-    name: 'Ja Morant',
-  },
-  {
-    id: 'hits-5',
-    image: '/temp-hits/Justin-Herbert.jpeg',
-    name: 'Justin Herbert',
-  },
-  {
-    id: 'hits-6',
-    image: '/temp-hits/Mike-Trout.jpeg',
-    name: 'Mike Trout',
-  },
-  {
-    id: 'hits-7',
-    image: '/temp-hits/Mitch-Marner.jpeg',
-    name: 'Mitch Marner',
-  },
-  {
-    id: 'hits-8',
-    image: '/temp-hits/Tray-Young.jpeg',
-    name: 'Trae Young',
-  },
-  {
-    id: 'hits-9',
-    image: '/temp-hits/Zion-Williamson.jpeg',
-    name: 'Zion Willamson',
-  },
-  {
-    id: 'hits-10',
-    image: '/temp-hits/Shohei-Ohtani-1.png',
-    name: 'Shohei Ohtani',
-  },
-  {
-    id: 'hits-11',
-    image: '/temp-hits/Tua-Tagovailoa-RC-Auto.jpeg',
-    name: 'Tua Tagovailoa',
-  },
-  {
-    id: 'hits-12',
-    image: '/temp-hits/Konrad-de-la-Fuente-RC.jpeg',
-    name: 'Konrad de la Fuente',
-  },
-];
+import { completeHits, NUMBER_OF_COLUMNS } from './hits-screen.utils';
 
 export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
-  const cardWidth = (WINDOW_WIDTH - sizes.mv3 * 2 - 40) / 3;
+  const cardWidth = (WINDOW_WIDTH - sizes.mv3 * 2 - 40) / NUMBER_OF_COLUMNS;
   const cardHeight = cardWidth * 1.3;
 
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -102,7 +44,21 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
+  const { data: requestData, loading, subscribeToMore } = useHitsQuery({
+    fetchPolicy: 'cache-and-network',
+  });
+
+  useEffect(() => {
+    subscribeToMore({
+      document: NewHitsDocument,
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const user = userSelector(users);
+  const hits = hitsSelector(requestData);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -113,46 +69,59 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           title={t('hits.title')}
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
-              <FilterItem type="pill_alt" text={t('buttons.myHits')} />
-              <IconButton
-                style={[s.ml3]}
+              <FilterItem
+                style={[s.mr3]}
+                type="pill_alt"
+                text={t('buttons.myHits')}
+              />
+              <Avatar
+                src={userImageSelector(user)}
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
-                }>
-                <ServerImage
-                  src={userImageSelector(user)}
-                  width={ICON_SIZE.M}
-                  height={ICON_SIZE.M}
-                  style={[s.circle_m, s.no_overflow]}
-                />
-              </IconButton>
+                }
+              />
             </View>
           }
         />
         <SearchInput editable={false} />
       </View>
-      <FlatList
-        style={[s.flx_i, s.ph3]}
-        numColumns={3}
-        data={HITS}
-        renderItem={({ item }) => (
-          <HitCard
-            onPress={() => setHitDetail(item)}
-            title={item.name}
-            image={item.image}
-            containerStyle={[s.flx_i]}
-            textStyle={[s.flx_i, { height: sizes.h2 * 1.8 }, s.f6]}
-            cardWidth={cardWidth}
-            cardHeight={cardHeight}
-            cardStyle={[s.br3]}
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <FlatList
+            style={[s.flx_i, s.ph3]}
+            numColumns={NUMBER_OF_COLUMNS}
+            data={hits.length < NUMBER_OF_COLUMNS ? completeHits(hits) : hits}
+            contentContainerStyle={[s.jcfs]}
+            keyExtractor={(_, index) => `main-hits-${index}`}
+            renderItem={({ item }) => {
+              if (isEmpty(item)) {
+                return (
+                  <View style={[{ width: cardWidth, height: cardHeight }]} />
+                );
+              }
+              return (
+                <HitCard
+                  onPress={() => setHitDetail(item)}
+                  title={item.player}
+                  image={item.image_front}
+                  containerStyle={[s.flx_i, s.jcfs]}
+                  textStyle={[s.flx_i, { height: sizes.h2 * 1.8 }, s.f6]}
+                  cardWidth={cardWidth}
+                  cardHeight={cardHeight}
+                  cardStyle={[s.br3]}
+                />
+              );
+            }}
           />
-        )}
-      />
-      <HitDetailModal
-        isVisible={!isEmpty(hitDetail)}
-        onPressClose={() => setHitDetail({})}
-        {...hitDetail}
-      />
+          <HitDetailModal
+            isVisible={!isEmpty(hitDetail)}
+            onPressClose={() => setHitDetail({})}
+            {...hitDetail}
+          />
+        </>
+      )}
     </Container>
   );
 };

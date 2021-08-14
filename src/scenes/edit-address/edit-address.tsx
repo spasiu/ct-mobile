@@ -16,10 +16,11 @@ import {
   FormInput,
   WarningModal,
   CountryInput,
+  AddressPredictionList,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { getFieldStatus } from '../../utils/form-field';
-import { getPredictions } from '../../services/places-api';
+import { getPredictions, PredictionType } from '../../services/places-api';
 import { addressIsDefaultSelector } from '../../common/address/address-selectors';
 import {
   useUpdateUserAddressMutation,
@@ -40,8 +41,10 @@ export const EditAddress = ({
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
   const [activeField, setActiveField] = useState('');
+  const [addressPredictions, setAddressPredictions] = useState<
+    PredictionType[]
+  >([]);
   const [deleteAddress, setDeleteAddress] = useState(false);
-  const [addressPredictions, setAddressPredictions] = useState([]);
 
   const [updateUserAddressMutation, { loading }] = useUpdateUserAddressMutation(
     {
@@ -215,10 +218,13 @@ export const EditAddress = ({
                   errors,
                   touched,
                 )}
-                onChangeText={text => {
+                onChangeText={async text => {
                   handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(text);
-                  // const predictions = await getPredictions(text);
-                  // setAddressPredictions(predictions);
+                  const predictions = await getPredictions(
+                    text,
+                    values[ADDRESS_FORM_FIELDS.COUNTRY],
+                  );
+                  setAddressPredictions(predictions);
                 }}
                 onBlur={event => {
                   handleBlur(ADDRESS_FORM_FIELDS.FIRST_LINE)(event);
@@ -234,17 +240,29 @@ export const EditAddress = ({
                   }
                 }}
               />
-              {/* {addressPredictions.length !== 0 && (
-                <View style={[s.mb3]}>
-                  {map(prediction => {
-                    return (
-                      <View key={prediction.placeId} style={[s.mb3]}>
-                        <Text>{prediction.description}</Text>
-                      </View>
+              {addressPredictions.length !== 0 && (
+                <AddressPredictionList
+                  addressPredictions={addressPredictions}
+                  onItemPressed={suggestion => {
+                    const addressFirstLine =
+                      suggestion[ADDRESS_FORM_FIELDS.FIRST_LINE];
+                    handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(
+                      addressFirstLine,
                     );
-                  }, addressPredictions)}
-                </View>
-              )} */}
+
+                    const addressCity = suggestion[ADDRESS_FORM_FIELDS.CITY];
+                    handleChange(ADDRESS_FORM_FIELDS.CITY)(addressCity);
+
+                    const addressState =
+                      suggestion[ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION];
+                    handleChange(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(
+                      addressState,
+                    );
+
+                    setAddressPredictions([]);
+                  }}
+                />
+              )}
               <FormInput
                 ref={secondAddressLine}
                 onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.SECOND_LINE)}
@@ -279,7 +297,11 @@ export const EditAddress = ({
                   errors,
                   touched,
                 )}
-                onChangeText={handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)}
+                onChangeText={text =>
+                  handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
+                    text.replace(/[^a-z0-9]/gi, '').toUpperCase(),
+                  )
+                }
                 onBlur={event => {
                   handleBlur(ADDRESS_FORM_FIELDS.POSTAL_CODE)(event);
                   setActiveField('');
@@ -332,9 +354,11 @@ export const EditAddress = ({
                     errors,
                     touched,
                   )}
-                  onChangeText={handleChange(
-                    ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION,
-                  )}
+                  onChangeText={text =>
+                    handleChange(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(
+                      text.toUpperCase(),
+                    )
+                  }
                   onBlur={event => {
                     handleBlur(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(
                       event,

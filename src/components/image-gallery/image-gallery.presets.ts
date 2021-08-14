@@ -20,9 +20,9 @@ export const paginationInactiveItemStyle = {
   backgroundColor: COLORS.black_40,
 };
 
-export const imageStyle = [
-  {
-    height: sizes.h3 + sizes.h3,
-  },
-  s.w4,
-];
+export const imageDimensions = {
+  height: 2 * sizes.h3,
+  width: sizes.w4,
+};
+
+export const imageStyle = [imageDimensions];

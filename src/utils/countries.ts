@@ -1,6 +1,45 @@
+import { find, propEq } from 'ramda';
 import * as RNLocalize from 'react-native-localize';
 
+const CountryRegionData = require('../../node_modules/country-region-data/data.json');
+
 export const getUserCountry = (): string => RNLocalize.getCountry();
+
+export type RegionDataType = {
+  name: string;
+  shortCode: string;
+};
+
+export type CountryRegionDataType = {
+  countryName: string;
+  countryShortCode: string;
+  regions: RegionDataType[];
+};
+
+export const isRegionCodeValid = (
+  countryCode = '',
+  regionCode = '',
+): boolean => {
+  if (!countryCode || !regionCode) {
+    return false;
+  }
+
+  const country = find(
+    propEq('countryShortCode', countryCode),
+    CountryRegionData,
+  ) as CountryRegionDataType;
+
+  if (country) {
+    const regions = country.regions || [];
+    const region = find(regionEntry => {
+      return propEq('shortCode', regionCode)(regionEntry as RegionDataType);
+    }, regions);
+
+    return Boolean(region);
+  }
+
+  return false;
+};
 
 export const SUPPORTED_COUNTRIES = [
   'AF',

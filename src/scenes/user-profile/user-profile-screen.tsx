@@ -44,6 +44,8 @@ import {
   chatIcon,
   logoutIcon,
 } from './user-profile-screen.presets';
+import { NetworkStatus } from '@apollo/client';
+import Intercom from '@intercom/intercom-react-native';
 
 export const UserProfileScreen = ({
   navigation,
@@ -62,7 +64,7 @@ export const UserProfileScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data, loading, refetch } = useLoggedUserQuery({
+  const { data, loading, refetch, networkStatus } = useLoggedUserQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,
@@ -77,6 +79,7 @@ export const UserProfileScreen = ({
     },
   });
 
+  const isRefetching = networkStatus === NetworkStatus.refetch;
   const user = userSelector(data);
   return (
     <Container
@@ -88,7 +91,7 @@ export const UserProfileScreen = ({
         title={t('profile.title')}
       />
       <ScrollView contentContainerStyle={[s.mh3]}>
-        {loading ? (
+        {loading && !isRefetching ? (
           <Loading />
         ) : (
           <>
@@ -173,21 +176,25 @@ export const UserProfileScreen = ({
                 icon={rulesOfPlayIcon}
                 text={t('profile.rulesOfPlay')}
                 containerStyle={[s.mb2]}
+                onPress={() => Intercom.displayArticle('5489308')}
               />
               <RowLink
                 icon={termsOfServiceIcon}
                 text={t('profile.termsOfService')}
                 containerStyle={[s.mb2]}
+                onPress={() => Intercom.displayArticle('5489317')}
               />
               <RowLink
                 icon={privacyPolicyIcon}
                 text={t('profile.privacyPolicy')}
                 containerStyle={[s.mb2]}
+                onPress={() => Intercom.displayArticle('5489316')}
               />
               <RowLink
                 icon={chatIcon}
                 text={t('profile.chat')}
                 containerStyle={[s.mb2]}
+                onPress={() => Intercom.displayMessenger()}
               />
               <RowLink
                 icon={logoutIcon}

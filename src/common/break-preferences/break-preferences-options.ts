@@ -3,6 +3,7 @@ import { Break_Type_Enum } from '../../services/api/requests';
 import { Pricing } from '../pricing';
 import { Sports } from '../sports';
 import { Frequency } from '../frequency';
+import { toUpper } from 'ramda';
 export interface QuestionOption {
   value: string;
   label: string;
@@ -58,23 +59,23 @@ export const SPORTS_OPTIONS = {
   allowMultipleSelection: true,
   options: [
     {
-      value: Sports.baseball,
+      value: toUpper(Sports.baseball),
       label: 'baseball',
     },
     {
-      value: Sports.basketball,
+      value: toUpper(Sports.basketball),
       label: 'basketball',
     },
     {
-      value: Sports.football,
+      value: toUpper(Sports.football),
       label: 'football',
     },
     {
-      value: Sports.hockey,
+      value: toUpper(Sports.hockey),
       label: 'hockey',
     },
     {
-      value: Sports.soccer,
+      value: toUpper(Sports.soccer),
       label: 'soccer',
     },
     {

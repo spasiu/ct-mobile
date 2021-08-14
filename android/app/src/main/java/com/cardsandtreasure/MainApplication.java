@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+import com.intercom.reactnative.IntercomModule;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    IntercomModule.initialize(this, BuildConfig.INTERCOM_ANDROID_API_KEY, BuildConfig.INTERCOM_APP_ID);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 

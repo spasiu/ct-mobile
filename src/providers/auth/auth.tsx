@@ -14,6 +14,7 @@ import {
 } from './auth-handlers';
 
 import { AuthProviderProps, AuthUser } from './auth.types';
+import { ImagePickerResponse } from 'react-native-image-picker';
 
 export const AuthContext = createContext({});
 
@@ -46,7 +47,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         logout: async () => {
           await logoutHandler(client);
         },
-        uploadPhoto: uploadPhotoHandler,
+        uploadPhoto: async (photo: ImagePickerResponse) =>
+          await uploadPhotoHandler(photo, user?.uid as string),
       }}>
       {children}
     </AuthContext.Provider>

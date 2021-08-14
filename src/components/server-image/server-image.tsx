@@ -24,6 +24,7 @@ export const ServerImage = ({
   style = [],
   children,
   resizeMode = 'contain',
+  fit = 'fill',
 }: ServerImageProps): JSX.Element => {
   const opacity = useSharedValue(1);
   const opacityStyle = useAnimatedStyle(() => {
@@ -33,8 +34,9 @@ export const ServerImage = ({
   });
 
   const [blurHash, setBlurHash] = useState('');
+  const [showOriginal, setShowOriginal] = useState(false);
 
-  const imageUrl = `${Config.IMAGE_SERVICE_URL}${src}?auto=compress&q=${quality}&w=${width}&h=${height}&fit=fill&fill=blur`;
+  const imageUrl = `${Config.IMAGE_SERVICE_URL}${src}?auto=compress&q=${quality}&w=${width}&h=${height}&fit=${fit}&fill=blur`;
   const blurHashUrl = `${imageUrl}&fm=blurhash`;
 
   useEffect(() => {
@@ -53,14 +55,19 @@ export const ServerImage = ({
       <ImageBackground
         source={{ uri: imageUrl }}
         style={[
-          { width: width, height: height },
+          // eslint-disable-next-line react-native/no-inline-styles
+          {
+            width: width,
+            height: height,
+            opacity: showOriginal ? 1 : 0,
+          },
           ...imageBackgroundDefaultStyle,
           ...style,
         ]}
         resizeMode={resizeMode}
         onLoadEnd={() => {
           opacity.value = withTiming(0, {
-            duration: 500,
+            duration: 2000,
             easing: Easing.out(Easing.exp),
           });
         }}>
@@ -71,6 +78,7 @@ export const ServerImage = ({
           resizeMode={resizeMode}
           blurhash={blurHash}
           style={[{ width: width, height: height }, ...style]}
+          onLoadEnd={() => setShowOriginal(true)}
         />
       </Animated.View>
     </>

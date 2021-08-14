@@ -1,0 +1,18 @@
+mutation UnfollowBreaker($user_id: String, $breaker_id: String) {
+  delete_SaveBreaker(
+    where: {
+      User: { id: { _eq: $user_id } }
+      Breaker: { id: { _eq: $breaker_id } }
+    }
+  ) {
+    returning {
+      id
+      Breaker {
+        id
+      }
+      User {
+        id
+      }
+    }
+  }
+}

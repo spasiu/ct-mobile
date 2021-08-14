@@ -1,5 +1,5 @@
-query Breakers {
-  Users(where: { role: { _eq: BREAKER } }) {
+query Breakers($userId: String) {
+  Users(where: { is_breaker: { _eq: true } }) {
     id
     first_name
     last_name
@@ -11,6 +11,15 @@ query Breakers {
       instagram
       video
       bio
+    }
+    Followers(where: { user_id: { _eq: $userId } }) {
+      id
+      User {
+        id
+      }
+      Breaker {
+        id
+      }
     }
   }
 }

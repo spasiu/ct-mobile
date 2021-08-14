@@ -36,3 +36,5 @@ export const followButtonStyle = {
   container: [s.bg_white],
   image: [s.tint_black],
 };
+
+export const buttonAbsoluteWrapper = [s.absolute, s.right_2, s.bottom_1];

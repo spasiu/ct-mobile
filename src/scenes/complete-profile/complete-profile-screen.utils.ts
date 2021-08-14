@@ -1,8 +1,9 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { pipe, split, head, replace } from 'ramda';
+import { pipe, split, head, replace, pathOr } from 'ramda';
 import { showMessage } from 'react-native-flash-message';
 
 import { t } from '../../i18n/i18n';
+import { UpdateUserMutation, Users } from '../../services/api/requests';
 
 import { COMPLETE_PROFILE_FORM_FIELDS } from './complete-profile-screen.presets';
 
@@ -35,9 +36,11 @@ export const getSuggestedUserPhotoURL = (
   user: FirebaseAuthTypes.User | null,
 ): { [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: string } => {
   if (user && user.photoURL) {
-    return {
-      [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: user.photoURL,
-    };
+    /* we are disabling the pre-load of image from google for now
+      return {
+        [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: user.photoURL,
+      };
+    */
   }
 
   return {
@@ -45,9 +48,14 @@ export const getSuggestedUserPhotoURL = (
   };
 };
 
-export const showError = (): void => {
+export const showError = (message = ''): void => {
   showMessage({
-    message: t('errors.generic'),
+    message: message ? message : t('errors.generic'),
     type: 'danger',
   });
+};
+
+export const getUserFromUpdate = (data: UpdateUserMutation): Partial<Users> => {
+  const users = pathOr([], ['update_Users', 'returning'], data) as Users[];
+  return head(users) || {};
 };

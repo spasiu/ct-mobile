@@ -201,6 +201,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				B4CE68E4F95E8994B3B15401 /* [CP] Copy Pods Resources */,
+				F8E51B1B40F722750611812D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,6 +225,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				78A474B0249381307F6866AA /* [CP] Copy Pods Resources */,
 				2C3835D5FB321A9EA2AEF9EC /* [CP-User] [RNFB] Core Configuration */,
+				B0EF2C429126B5908898642E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -362,6 +364,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B0EF2C429126B5908898642E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B4CE68E4F95E8994B3B15401 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,6 +418,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8E51B1B40F722750611812D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

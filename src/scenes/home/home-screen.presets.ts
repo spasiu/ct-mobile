@@ -6,7 +6,6 @@ import {
   HomeSectionData,
   HomeSection,
   HomeSportsData,
-  HomeHitsData,
 } from './home-screen.props';
 
 export const SportsData: HomeSportsData[] = [
@@ -29,39 +28,6 @@ export const SportsData: HomeSportsData[] = [
   {
     id: `${Sports.hockey}-4`,
     key: Sports.hockey,
-  },
-];
-
-export const HitsData: HomeHitsData[] = [
-  {
-    id: 'hits-1',
-    image: '/temp-hits/Lionel-Messi-71.jpeg',
-    name: 'Lionel Messi',
-  },
-  {
-    id: 'hits-2',
-    image: '/temp-hits/Ceedee-Lamb.jpeg',
-    name: 'Ceedee Lamb',
-  },
-  {
-    id: 'hits-3',
-    image: '/temp-hits/Deshaun-Watson.jpeg',
-    name: 'Deshaun Watson',
-  },
-  {
-    id: 'hits-4',
-    image: '/temp-hits/Ja-Morant.jpeg',
-    name: 'Ja Morant',
-  },
-  {
-    id: 'hits-5',
-    image: '/temp-hits/Justin-Herbert.jpeg',
-    name: 'Justin Herbert',
-  },
-  {
-    id: 'hits-6',
-    image: '/temp-hits/Mike-Trout.jpeg',
-    name: 'Mike Trout',
   },
 ];
 

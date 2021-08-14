@@ -1,13 +1,25 @@
 import { map, filter } from 'ramda';
 
-import { BreakCardProps, EventCardProps } from '../../components';
-import { BreakerProfiles, Breaks, Events } from '../../services/api/requests';
+import {
+  BreakCardProps,
+  EventCardProps,
+  SocialIconTypes,
+} from '../../components';
+import {
+  BreakerProfiles,
+  BreakerProfiles_Select_Column,
+  Breaks,
+  Events,
+  Users,
+} from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 import { SOCIAL_PROFILES } from '../../common/breaker/social-profile-options';
 import { userImageSelector, userNameSelector } from '../../common/user-profile';
 import {
   breakCardStatusSelector,
+  breakFollowedByUserSelector,
   breakPriceSelector,
+  breakSportSelector,
   breakSpotsSelector,
   breakTimeSelector,
   breakTitleSelector,
@@ -15,6 +27,7 @@ import {
 } from '../../common/break';
 import {
   breakerBioSelector,
+  breakerFollowedByUser,
   breakerProfileSelector,
   breakerVideoSelector,
 } from '../../common/breaker';
@@ -23,22 +36,31 @@ import {
   eventCardStatusSelector,
   eventImageSelector,
   eventTitleSelector,
+  eventIdSelector,
+  eventDescriptionSelector,
+  eventFollowedByUserSelector,
 } from '../../common/event';
-import { Sports } from '../../common/sports';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import {
+  BreakerProfileComponentProps,
+  SimpleBreaker,
+} from './breaker-detail-screen.props';
 
 const getSocialProfiles = (breaker: BreakerProfiles) =>
   map(profile => {
     return {
-      name: profile,
-      url: breaker[profile],
+      name: profile as keyof typeof SocialIconTypes,
+      url: breaker[profile as BreakerProfiles_Select_Column],
     };
   }, SOCIAL_PROFILES);
 
-export const breakerDetailScreenSelector = breaker => {
+export const breakerDetailScreenSelector = (
+  breaker: Users,
+): BreakerProfileComponentProps => {
   const breakerProfile = breakerProfileSelector(breaker);
   const social = filter(
     profile => profile.url,
-    getSocialProfiles(breakerProfile),
+    getSocialProfiles(breakerProfile as BreakerProfiles),
   );
   return {
     id: breaker.id,
@@ -46,6 +68,7 @@ export const breakerDetailScreenSelector = breaker => {
     image: userImageSelector(breaker),
     video: breakerVideoSelector(breaker),
     description: breakerBioSelector(breaker),
+    userFollows: breakerFollowedByUser(breaker),
     social,
   };
 };
@@ -62,8 +85,9 @@ export const breakerDetailBreakSelector = (
     spotsLeft: breakSpotsSelector(eventBreak),
     title: breakTitleSelector(eventBreak),
     breakType: breakTypeSelector(eventBreak),
-    league: Sports.baseball,
+    league: breakSportSelector(eventBreak),
     breakerImage,
+    userFollows: breakFollowedByUserSelector(eventBreak),
   };
 };
 
@@ -74,36 +98,25 @@ export const breakerEventDetailSelector = (event: Events): EventCardProps => {
     title: eventTitleSelector(event),
     status: eventCardStatusSelector(event),
     image: eventImageSelector(event),
-    league: Sports.baseball,
+    userFollows: eventFollowedByUserSelector(event),
   };
 };
 
-export const breakDetailSelector = ({
-  price,
-  title,
-  description,
-  image,
-}: Breaks) => {
+export const eventDetailSelector = (
+  event: Events,
+  breaker: SimpleBreaker,
+): EventDetailModalProps => {
+  const eventTime = eventTimeSelector(event);
   return {
-    productImage: {
-      uri: image || 'https://source.unsplash.com/600x801/?sports',
+    eventId: eventIdSelector(event),
+    title: eventTitleSelector(event),
+    image: eventImageSelector(event),
+    breaker: {
+      name: breaker.name as string,
+      image: breaker.image as string,
     },
-    productTitle: title,
-    productDescription: description,
-    price,
-  };
-};
-
-export const eventDetailSelector = (event, breaker) => {
-  const { id, image, title, status, description, start_time } = event;
-  return {
-    id,
-    title,
-    image: { uri: image || 'https://source.unsplash.com/600x801/?sports' },
-    breaker,
-    status: status.toLowerCase(),
-    description,
-    league: 'baseball',
-    eventDate: formatScheduledStatus(start_time),
+    status: eventCardStatusSelector(event),
+    description: eventDescriptionSelector(event),
+    eventDate: formatScheduledStatus(eventTime),
   };
 };

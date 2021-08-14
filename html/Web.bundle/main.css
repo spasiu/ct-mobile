@@ -78,3 +78,10 @@ body {
 .footer {
   margin-top: 32px;
 }
+
+select.arrow {
+  background-image: url('arrow-down.png');
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  background-position: calc(100% - 10px) center;
+}

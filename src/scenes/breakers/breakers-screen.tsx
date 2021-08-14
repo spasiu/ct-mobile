@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
-import { breakerProfileSelector } from '../../common/breaker';
 import {
   usersSelector,
   userSelector,
@@ -14,20 +13,27 @@ import {
   Container,
   ContainerTypes,
   SearchInput,
-  IconButton,
   FilterItem,
   Loading,
   BreakerCard,
-  ServerImage,
+  Avatar,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-import { ICON_SIZE } from '../../theme/sizes';
 import {
+  NewBreakersDocument,
   useBreakersQuery,
+  useFollowBreakerMutation,
+  useUnfollowBreakerMutation,
   useUserImageQuery,
 } from '../../services/api/requests';
+import {
+  optimisticFollowBreakerResponse,
+  optimisticUnfollowBreakerResponse,
+  updateFollowBreakerCache,
+  updateUnfollowBreakerCache,
+} from '../../utils/cache';
 
 import { breakerCardSelector } from './breakers-screen-utils';
 import { BreakersScreenProps } from './breakers-screen.props';
@@ -36,8 +42,11 @@ export const BreakersScreen = ({
   navigation,
 }: BreakersScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { loading, data } = useBreakersQuery({
+  const { loading, data, subscribeToMore } = useBreakersQuery({
     fetchPolicy: 'cache-and-network',
+    variables: {
+      userId: authUser?.uid as string,
+    },
   });
 
   const { data: users } = useUserImageQuery({
@@ -46,6 +55,21 @@ export const BreakersScreen = ({
       id: authUser?.uid,
     },
   });
+
+  const [followBreaker] = useFollowBreakerMutation();
+  const [unfollowBreaker] = useUnfollowBreakerMutation();
+
+  useEffect(() => {
+    subscribeToMore({
+      document: NewBreakersDocument,
+      variables: {
+        userId: authUser?.uid,
+      },
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const user = userSelector(users);
   const breakers = usersSelector(data);
@@ -60,19 +84,17 @@ export const BreakersScreen = ({
           title={t('breakers.title')}
           rightElement={
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
-              <FilterItem type="pill_alt" text={t('buttons.showFollowing')} />
-              <IconButton
-                style={[s.ml3]}
+              <FilterItem
+                style={[s.mr3]}
+                type="pill_alt"
+                text={t('buttons.showFollowing')}
+              />
+              <Avatar
+                src={userImageSelector(user)}
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.USER_PROFILE_STACK)
-                }>
-                <ServerImage
-                  src={userImageSelector(user)}
-                  width={ICON_SIZE.M}
-                  height={ICON_SIZE.M}
-                  style={[s.circle_m, s.no_overflow]}
-                />
-              </IconButton>
+                }
+              />
             </View>
           }
         />
@@ -85,21 +107,56 @@ export const BreakersScreen = ({
           keyExtractor={item => item.id}
           style={[s.flx_i, s.ph3]}
           data={breakers}
-          renderItem={({ item }) => (
-            <View style={[s.flx_i, s.aic, s.mb4]}>
-              <BreakerCard
-                {...breakerCardSelector(item)}
-                onPress={() =>
-                  navigation.navigate(ROUTES_IDS.BREAKER_DETAIL_SCREEN, {
-                    breaker: item,
-                  })
-                }
-                cardWidth={cardWidth}
-                containerStyle={[s.flx_i, { width: cardWidth }]}
-                cardSize="large"
-              />
-            </View>
-          )}
+          renderItem={({ item }) => {
+            const breakerCard = breakerCardSelector(item);
+            return (
+              <View style={[s.flx_i, s.aic, s.mb4]}>
+                <BreakerCard
+                  {...breakerCard}
+                  onPress={() =>
+                    navigation.navigate(ROUTES_IDS.BREAKER_DETAIL_SCREEN, {
+                      breaker: item,
+                    })
+                  }
+                  cardWidth={cardWidth}
+                  containerStyle={[s.flx_i, { width: cardWidth }]}
+                  cardSize="large"
+                  onPressFollow={() => {
+                    const followData = {
+                      user_id: authUser?.uid,
+                      breaker_id: item.id,
+                    };
+
+                    breakerCard.userFollows
+                      ? unfollowBreaker({
+                          optimisticResponse: optimisticUnfollowBreakerResponse(
+                            item,
+                            authUser?.uid as string,
+                          ),
+                          update: cache =>
+                            updateUnfollowBreakerCache(cache, item),
+                          variables: followData,
+                        })
+                      : followBreaker({
+                          optimisticResponse: optimisticFollowBreakerResponse(
+                            item,
+                            authUser?.uid as string,
+                          ),
+                          update: (cache, followResponse) =>
+                            updateFollowBreakerCache(
+                              cache,
+                              followResponse,
+                              item,
+                            ),
+                          variables: {
+                            follow: followData,
+                          },
+                        });
+                  }}
+                />
+              </View>
+            );
+          }}
         />
       )}
     </Container>

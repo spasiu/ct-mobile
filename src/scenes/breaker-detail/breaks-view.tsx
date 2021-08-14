@@ -1,62 +1,111 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { useNavigation } from '@react-navigation/native';
 
 import { BreakCard, Loading } from '../../components';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import {
   useBreakerBreaksQuery,
   BreakerBreaksDocument,
+  Breaks,
+  useFollowBreakMutation,
+  useUnfollowBreakMutation,
 } from '../../services/api/requests';
 import { indexedMap } from '../../utils/ramda';
 
+import { breakerDetailBreakSelector } from './breaker-detail-screen.utils';
+import { BreakDetailModal } from '../break-detail/break-detail-modal';
+import { breaksSelector } from '../../common/break';
+import { SimpleBreaker } from './breaker-detail-screen.props';
+import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  breakerDetailBreakSelector,
-  breakDetailSelector,
-} from './breaker-detail-screen-utils';
+  optimisticFollowBreakResponse,
+  optimisticUnfollowBreakResponse,
+  updateFollowBreakCache,
+  updateUnfollowBreakCache,
+} from '../../utils/cache';
 
 export const BreaksView = ({
   breaker,
 }: {
-  breaker: { id: string; image: string };
+  breaker: SimpleBreaker;
 }): JSX.Element => {
-  const navigation = useNavigation();
+  const [breakId, setBreakId] = useState('');
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
-  const {
-    loading,
-    data,
-    subscribeToMore: scheduledBreaksSubscription,
-  } = useBreakerBreaksQuery({
+  const { loading, data, subscribeToMore } = useBreakerBreaksQuery({
     fetchPolicy: 'cache-and-network',
-    variables: { id: breaker.id },
+    variables: { id: breaker.id, userId: authUser?.uid },
   });
+
+  const [followBreak] = useFollowBreakMutation();
+  const [unfollowBreak] = useUnfollowBreakMutation();
+
+  useEffect(() => {
+    subscribeToMore({
+      document: BreakerBreaksDocument,
+      variables: { id: breaker.id, userId: authUser?.uid },
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading && !data) {
     return <Loading />;
   }
 
-  scheduledBreaksSubscription({
-    document: BreakerBreaksDocument,
-    variables: { id: breaker.id },
-    updateQuery: (prev, { subscriptionData }) => subscriptionData.data || prev,
-  });
-
+  const breaks = breaksSelector(data);
   return (
     <View style={[s.mh3]}>
       {indexedMap((item, index) => {
+        const breakItem = item as Breaks;
+        const breakerBreakDetail = breakerDetailBreakSelector(
+          breakItem,
+          breaker.image,
+        );
         return (
           <BreakCard
-            onPress={() =>
-              navigation.navigate(ROUTES_IDS.BREAK_DETAIL_MODAL, {
-                ...breakDetailSelector(item),
-              })
-            }
+            onPressBuy={() => setBreakId(breakItem.id)}
+            onPress={() => setBreakId(breakItem.id)}
             key={`breaker-break-${index}`}
-            {...breakerDetailBreakSelector(item, breaker.image)}
+            {...breakerBreakDetail}
+            onPressFollow={() => {
+              const followData = {
+                user_id: authUser?.uid,
+                break_id: breakItem.id,
+              };
+
+              breakerBreakDetail.userFollows
+                ? unfollowBreak({
+                    optimisticResponse: optimisticUnfollowBreakResponse(
+                      breakItem,
+                      authUser?.uid as string,
+                    ),
+                    update: cache => updateUnfollowBreakCache(cache, breakItem),
+                    variables: followData,
+                  })
+                : followBreak({
+                    optimisticResponse: optimisticFollowBreakResponse(
+                      breakItem,
+                      authUser?.uid as string,
+                    ),
+                    update: (cache, followResponse) =>
+                      updateFollowBreakCache(cache, followResponse, breakItem),
+                    variables: {
+                      follow: followData,
+                    },
+                  });
+            }}
           />
         );
-      }, data?.Breaks)}
+      }, breaks)}
+      {breakId ? (
+        <BreakDetailModal
+          breakId={breakId}
+          isVisible={Boolean(breakId)}
+          onPressClose={() => setBreakId('')}
+        />
+      ) : null}
     </View>
   );
 };

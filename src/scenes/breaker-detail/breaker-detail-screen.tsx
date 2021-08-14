@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import { WebView } from 'react-native-webview';
+import { isEmpty } from 'ramda';
 
 import { ICON_SIZE, WINDOW_WIDTH } from '../../theme/sizes';
 import { COLORS } from '../../theme/colors';
@@ -25,13 +26,23 @@ import {
   ReadMore,
   ServerImage,
   ImageCardSizeTypes,
+  FollowButtonTypes,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 
-import { breakerDetailScreenSelector } from './breaker-detail-screen-utils';
+import { breakerDetailScreenSelector } from './breaker-detail-screen.utils';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
+import { HitDetailModal } from '../hit-detail/hit-detail-modal';
+import { Hit } from '../../common/hit';
+
+import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
+import { AuthContext, AuthContextType } from '../../providers/auth';
+import {
+  useFollowBreakerMutation,
+  useUnfollowBreakerMutation,
+} from '../../services/api/requests';
 
 const RECENT_HITS = [
   {
@@ -66,13 +77,32 @@ const RECENT_HITS = [
   },
 ];
 
-export const BreakerDetailScreen = ({ route, navigation }) => {
+export const BreakerDetailScreen = ({
+  route,
+  navigation,
+}: BreakerDetailScreenProps): JSX.Element => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { breaker, startOnEventsView = false } = route.params;
   const [eventsView, setEventsView] = useState(startOnEventsView);
+  const [hitDetail, setHitDetail] = useState<Partial<Hit>>({});
 
-  const { id, name, image, social, description } = breakerDetailScreenSelector(
-    breaker,
-  );
+  const [followBreaker] = useFollowBreakerMutation({
+    onError: () => setUserFollowsBreaker(false),
+  });
+  const [unfollowBreaker] = useUnfollowBreakerMutation({
+    onError: () => setUserFollowsBreaker(true),
+  });
+
+  const {
+    id,
+    name,
+    image,
+    social,
+    description,
+    video,
+    userFollows,
+  } = breakerDetailScreenSelector(breaker);
+  const [userFollowsBreaker, setUserFollowsBreaker] = useState(userFollows);
 
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
@@ -80,12 +110,8 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
 
   const videoHtml = `
     <html>
-      <body style="display:flex;justify-content:center;align-items:center;background-color:${
-        COLORS.black_5
-      }">
-      <iframe style="border-radius:${
-        sizes.br5
-      }px;" src="https://player.vimeo.com/video/${541190711}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
+      <iframe style="border-radius:${sizes.br5}px;" src="${video}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       </body>
     </html>
   `;
@@ -109,7 +135,33 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
               />
               <Text style={[s.ff_b, s.f5]}>{name}</Text>
             </View>
-            <FollowButton />
+            <FollowButton
+              onPress={() => {
+                const followData = {
+                  user_id: authUser?.uid,
+                  breaker_id: id,
+                };
+
+                if (userFollowsBreaker) {
+                  setUserFollowsBreaker(false);
+                  unfollowBreaker({
+                    variables: followData,
+                  });
+                } else {
+                  setUserFollowsBreaker(true);
+                  followBreaker({
+                    variables: {
+                      follow: followData,
+                    },
+                  });
+                }
+              }}
+              type={
+                userFollowsBreaker
+                  ? FollowButtonTypes.selected
+                  : FollowButtonTypes.default
+              }
+            />
           </View>
           <FlatList
             horizontal
@@ -163,9 +215,7 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
           horizontal
           renderItem={({ item }) => (
             <HitCard
-              onPress={() =>
-                navigation.navigate(ROUTES_IDS.HIT_DETAIL_MODAL, {})
-              }
+              onPress={() => setHitDetail(item)}
               showTitle={false}
               containerStyle={[s.mr3]}
               image={item.image}
@@ -201,6 +251,11 @@ export const BreakerDetailScreen = ({ route, navigation }) => {
           />
         )}
       </ScrollView>
+      <HitDetailModal
+        isVisible={!isEmpty(hitDetail)}
+        onPressClose={() => setHitDetail({})}
+        {...hitDetail}
+      />
     </Container>
   );
 };

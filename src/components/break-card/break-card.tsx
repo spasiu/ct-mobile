@@ -4,7 +4,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { StatusBadge } from '../status-badge';
 import { LeagueIcon } from '../league-icon/league-icon';
-import { FollowButton } from '../follow-button';
+import { FollowButton, FollowButtonTypes } from '../follow-button';
 import { BuyButton } from '../buy-button';
 import { BreakTypeBadge } from '../break-type-badge';
 import { ServerImage } from '../server-image';
@@ -36,6 +36,7 @@ export const BreakCard = ({
   spotsLeft = '',
   eventDate,
   onPressFollow = () => undefined,
+  userFollows = false,
   onPressBuy = () => undefined,
   containerStyle = [],
   ...borderlessButtonProps
@@ -69,7 +70,13 @@ export const BreakCard = ({
         )}`}</Text>
       </View>
       <View style={actionsContainerStyle}>
-        <FollowButton size={'short'} onPress={onPressFollow} />
+        <FollowButton
+          size={'short'}
+          onPress={onPressFollow}
+          type={
+            userFollows ? FollowButtonTypes.selected : FollowButtonTypes.default
+          }
+        />
         <BuyButton
           disabled={parseInt(spotsLeft, 10) === 0}
           containerStyle={buyButtonStyle}

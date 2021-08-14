@@ -1,11 +1,51 @@
-query EventBreaks($id: uuid!) {
-  Breaks(where: { status: { _neq: COMPLETED }, Event: { id: { _eq: $id } } }) {
+query EventBreaks($id: uuid!, $userId: String) {
+  Breaks(
+    where: {
+      status: { _neq: DRAFT }
+      _and: { status: { _neq: COMPLETED } }
+      Event: { id: { _eq: $id } }
+    }
+  ) {
     id
     break_type
     description
-    price
-    spots
     status
     title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
   }
 }

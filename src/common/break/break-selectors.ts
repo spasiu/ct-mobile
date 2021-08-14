@@ -9,6 +9,9 @@ import {
   Users,
   BreakProductItems_Aggregate,
   BreakDetailQuery,
+  EventBreaksQuery,
+  SaveBreak,
+  Inventory,
 } from '../../services/api/requests';
 import {
   breakProductsMaxPriceSelector,
@@ -21,13 +24,22 @@ import {
   eventCardStatusSelector,
   eventTimeSelector,
 } from '../event';
+import { Sports } from '../sports';
 
 export const breaksSelector = (
-  requestData: FeaturedBreaksQuery | BreakDetailQuery | undefined,
+  requestData:
+    | FeaturedBreaksQuery
+    | BreakDetailQuery
+    | EventBreaksQuery
+    | undefined,
 ): Breaks[] => pathOr([], ['Breaks'], requestData);
 
 export const breakSelector = (
-  requestData: FeaturedBreaksQuery | BreakDetailQuery | undefined,
+  requestData:
+    | FeaturedBreaksQuery
+    | BreakDetailQuery
+    | EventBreaksQuery
+    | undefined,
 ): Breaks => {
   const breaks = breaksSelector(requestData);
   return head(breaks) as Breaks;
@@ -85,4 +97,25 @@ export const breakTimeSelector = (eventBreak: Breaks): string => {
 export const breakBreakerSelector = (eventBreak: Breaks): Partial<Users> => {
   const event = breakEventSelector(eventBreak);
   return eventBreakerSelector(event);
+};
+
+export const breakSavesSelector = (eventBreak: Breaks): SaveBreak[] =>
+  pathOr([], ['Saves'], eventBreak);
+
+export const breakFollowedByUserSelector = (eventBreak: Breaks): boolean => {
+  const saves = breakSavesSelector(eventBreak);
+  return saves.length > 0;
+};
+
+export const breakFollowedByUserIdSelector = (eventBreak: Breaks): string => {
+  const saves = breakSavesSelector(eventBreak);
+  return pathOr('', ['id'], head(saves));
+};
+
+export const breakInventorySelector = (eventBreak: Breaks): Inventory[] =>
+  pathOr([], ['Inventory'], eventBreak);
+
+export const breakSportSelector = (eventBreak: Breaks): Sports | string => {
+  const inventory = breakInventorySelector(eventBreak);
+  return pathOr('', ['Product', 'category'], head(inventory));
 };

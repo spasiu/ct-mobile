@@ -4,6 +4,8 @@ mutation UpdateUser($userInput: Users_set_input, $userId: String) {
       id
       username
       image
+      first_name
+      last_name
     }
   }
 }

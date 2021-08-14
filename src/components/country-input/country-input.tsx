@@ -37,6 +37,7 @@ export const CountryInput = ({
     ]).then((countries: Country[]) => {
       const firstCountry = head(countries) as Country;
       setCountry(firstCountry);
+      onSelected(firstCountry.cca2);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

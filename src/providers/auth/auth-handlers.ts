@@ -6,6 +6,7 @@ import { showMessage } from 'react-native-flash-message';
 import { ApolloClient } from '@apollo/client';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+// import Intercom from '@intercom/intercom-react-native';
 
 import { t } from '../../i18n/i18n';
 
@@ -113,6 +114,7 @@ export const logoutHandler = async (
   client: ApolloClient<unknown>,
 ): Promise<void> => {
   try {
+    // Intercom.logout();
     await auth().signOut();
     client.clearStore();
   } catch (e) {
@@ -171,14 +173,15 @@ export const setOnboardingCompleteHandler = async (
 
 export const uploadPhotoHandler = async (
   photo: ImagePickerResponse,
+  userId: string,
 ): Promise<string> => {
   try {
     const { fileName, uri } = photo;
-    if (uri) {
-      const reference = storage().ref(fileName);
+    if (uri && fileName) {
+      const avatarPath = `users/${userId}/${fileName}`;
+      const reference = storage().ref(avatarPath);
       await reference.putFile(uri);
-      const url = await storage().ref(fileName).getDownloadURL();
-      return url;
+      return `/${avatarPath}`;
     }
     showMessage({
       message: t('errors.generic'),

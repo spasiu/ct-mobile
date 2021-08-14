@@ -1,7 +1,7 @@
 export enum Sports {
-  baseball = 'BASEBALL',
-  basketball = 'BASKETBALL',
-  football = 'FOOTBALL',
-  hockey = 'HOCKEY',
-  soccer = 'SOCCER',
+  baseball = 'Baseball',
+  basketball = 'Basketball',
+  football = 'Football',
+  hockey = 'Hockey',
+  soccer = 'Soccer',
 }

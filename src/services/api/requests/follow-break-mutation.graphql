@@ -1,0 +1,11 @@
+mutation FollowBreak($follow: SaveBreak_insert_input!) {
+  insert_SaveBreak_one(object: $follow) {
+    id
+    User {
+      id
+    }
+    Break {
+      id
+    }
+  }
+}

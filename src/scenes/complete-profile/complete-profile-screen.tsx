@@ -26,8 +26,10 @@ import {
 import {
   getSuggestedName,
   getSuggestedUserPhotoURL,
+  getUserFromUpdate,
   showError,
 } from './complete-profile-screen.utils';
+import { errorDuplicateUsernameSelector } from '../../common/error';
 
 export const CompleteProfileScreen = ({
   navigation,
@@ -39,11 +41,29 @@ export const CompleteProfileScreen = ({
 
   const [activeField, setActiveField] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   const [updateUserMutation, { loading }] = useUpdateUserMutation({
-    onError: () => showError(),
-    onCompleted: () =>
-      navigation.navigate(ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN),
+    onError: e => {
+      if (errorDuplicateUsernameSelector(e.graphQLErrors)) {
+        showError(t('errors.duplicatedUsername'));
+      } else {
+        showError();
+      }
+    },
+    onCompleted: async data => {
+      setProcessing(true);
+      const updatedUser = getUserFromUpdate(data);
+      const created = await createUserOnPaymentPlatform(
+        updatedUser[COMPLETE_PROFILE_FORM_FIELDS.FIRST_NAME] || '',
+        updatedUser[COMPLETE_PROFILE_FORM_FIELDS.LAST_NAME] || '',
+      );
+
+      setProcessing(false);
+      if (created) {
+        navigation.navigate(ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN);
+      }
+    },
   });
 
   const firstNameField = useRef<TextInput>(null);
@@ -61,20 +81,14 @@ export const CompleteProfileScreen = ({
           ...getSuggestedName(user),
           ...getSuggestedUserPhotoURL(user),
         }}
-        onSubmit={async values => {
-          const created = await createUserOnPaymentPlatform(
-            values[COMPLETE_PROFILE_FORM_FIELDS.FIRST_NAME],
-            values[COMPLETE_PROFILE_FORM_FIELDS.LAST_NAME],
-          );
-          if (created) {
-            updateUserMutation({
-              variables: {
-                userId: user?.uid,
-                userInput: values,
-              },
-            });
-          }
-        }}>
+        onSubmit={values =>
+          updateUserMutation({
+            variables: {
+              userId: user?.uid,
+              userInput: values,
+            },
+          })
+        }>
         {({
           handleChange,
           handleBlur,
@@ -186,7 +200,7 @@ export const CompleteProfileScreen = ({
               </View>
             </View>
             <ActionFooter
-              isLoading={loading}
+              isLoading={loading || processing}
               buttonText={t('buttons.createAccount')}
               onPress={handleSubmit}
             />

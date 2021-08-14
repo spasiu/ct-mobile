@@ -8,4 +8,7 @@ export interface BreakerCardProps extends ImageCardProps {
   titleTextStyle?: TextStyle[];
   descriptionTextStyle?: TextStyle[];
   contentContainerStyle?: ViewStyle[];
+  userFollows?: boolean;
+  onPressFollow?: () => void;
+  showFollow?: boolean;
 }

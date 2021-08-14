@@ -30,3 +30,10 @@ export const descriptionStylePreset = {
   medium: [s.ff_alt_r, s.f7, s.white] as TextStyle[],
   large: [s.ff_alt_r, s.f5, s.white] as TextStyle[],
 };
+
+export const buttonAbsoluteWrapper = [s.absolute, s.right_2, s.top_1];
+
+export const followButtonStyle = {
+  container: [s.bg_white],
+  image: [s.tint_black],
+};

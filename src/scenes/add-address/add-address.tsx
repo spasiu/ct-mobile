@@ -9,23 +9,32 @@ import {
   ADDRESS_FORM_SCHEMA,
   ADDRESS_FORM_FIELDS,
 } from '../../common/address/address-form';
-import { ActionFooter, FormInput, CountryInput } from '../../components';
+import {
+  ActionFooter,
+  FormInput,
+  CountryInput,
+  AddressPredictionList,
+} from '../../components';
 import { t } from '../../i18n/i18n';
 import { getFieldStatus } from '../../utils/form-field';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-
-import { AddAddressProps } from './add-address-screen.props';
-import { ADD_ADDRESS_FORM_INITIAL_VALUES } from './add-address-screen.presets';
 import {
   useInsertUserAddressMutation,
   LoggedUserDocument,
 } from '../../services/api/requests';
+import { getPredictions, PredictionType } from '../../services/places-api';
+
+import { AddAddressProps } from './add-address-screen.props';
+import { ADD_ADDRESS_FORM_INITIAL_VALUES } from './add-address-screen.presets';
 
 export const AddAddress = ({
   onAddressAdded,
   shouldBeDefault,
 }: AddAddressProps): JSX.Element => {
   const [activeField, setActiveField] = useState('');
+  const [addressPredictions, setAddressPredictions] = useState<
+    PredictionType[]
+  >([]);
 
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
@@ -154,10 +163,13 @@ export const AddAddress = ({
                 errors,
                 touched,
               )}
-              onChangeText={text => {
+              onChangeText={async text => {
                 handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(text);
-                // const predictions = await getPredictions(text);
-                // setAddressPredictions(predictions);
+                const predictions = await getPredictions(
+                  text,
+                  values[ADDRESS_FORM_FIELDS.COUNTRY],
+                );
+                setAddressPredictions(predictions);
               }}
               onBlur={event => {
                 handleBlur(ADDRESS_FORM_FIELDS.FIRST_LINE)(event);
@@ -173,17 +185,29 @@ export const AddAddress = ({
                 }
               }}
             />
-            {/* {addressPredictions.length !== 0 && (
-                <View style={[s.mb3]}>
-                  {map(prediction => {
-                    return (
-                      <View key={prediction.placeId} style={[s.mb3]}>
-                        <Text>{prediction.description}</Text>
-                      </View>
-                    );
-                  }, addressPredictions)}
-                </View>
-              )} */}
+            {addressPredictions.length !== 0 && (
+              <AddressPredictionList
+                addressPredictions={addressPredictions}
+                onItemPressed={suggestion => {
+                  const addressFirstLine =
+                    suggestion[ADDRESS_FORM_FIELDS.FIRST_LINE];
+                  handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(
+                    addressFirstLine,
+                  );
+
+                  const addressCity = suggestion[ADDRESS_FORM_FIELDS.CITY];
+                  handleChange(ADDRESS_FORM_FIELDS.CITY)(addressCity);
+
+                  const addressState =
+                    suggestion[ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION];
+                  handleChange(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(
+                    addressState,
+                  );
+
+                  setAddressPredictions([]);
+                }}
+              />
+            )}
             <FormInput
               ref={secondAddressLine}
               onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.SECOND_LINE)}
@@ -218,7 +242,11 @@ export const AddAddress = ({
                 errors,
                 touched,
               )}
-              onChangeText={handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)}
+              onChangeText={text =>
+                handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
+                  text.replace(/[^a-z0-9]/gi, '').toUpperCase(),
+                )
+              }
               onBlur={event => {
                 handleBlur(ADDRESS_FORM_FIELDS.POSTAL_CODE)(event);
                 setActiveField('');
@@ -271,9 +299,11 @@ export const AddAddress = ({
                   errors,
                   touched,
                 )}
-                onChangeText={handleChange(
-                  ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION,
-                )}
+                onChangeText={text =>
+                  handleChange(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(
+                    text.toUpperCase(),
+                  )
+                }
                 onBlur={event => {
                   handleBlur(ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION)(event);
                   setActiveField('');

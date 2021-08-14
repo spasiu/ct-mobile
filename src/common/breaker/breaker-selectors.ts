@@ -1,6 +1,11 @@
-import { pathOr } from 'ramda';
+import { pathOr, head } from 'ramda';
 
-import { BreakerProfiles, Events, Users } from '../../services/api/requests';
+import {
+  BreakerProfiles,
+  Events,
+  SaveBreaker,
+  Users,
+} from '../../services/api/requests';
 
 export const breakerProfileSelector = (
   breaker: Users,
@@ -18,3 +23,16 @@ export const breakerVideoSelector = (breaker: Users): string => {
 
 export const breakerEventsSelector = (breaker: Users): Events[] =>
   pathOr([], ['Events'], breaker);
+
+export const breakerFollowersSelector = (breaker: Users): SaveBreaker[] =>
+  pathOr([], ['Followers'], breaker);
+
+export const breakerFollowedByUser = (breaker: Users): boolean => {
+  const follows = breakerFollowersSelector(breaker);
+  return follows.length > 0;
+};
+
+export const breakerFollowedByUserIdSelector = (breaker: Users): string => {
+  const follows = breakerFollowersSelector(breaker);
+  return pathOr('', ['id'], head(follows));
+};

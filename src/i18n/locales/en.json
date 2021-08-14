@@ -34,7 +34,9 @@
     "cancel": "Cancel",
     "letsGo": "Let's Go!",
     "backToPaymentDetails": "Back to Payment Details",
-    "soldOut": "Sold Out"
+    "soldOut": "Sold Out",
+    "camera": "Camera",
+    "imageLibrary": "Image Library"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -68,7 +70,8 @@
     "expirationYear": "Exp. Year",
     "nameOnCard": "Name On Card",
     "numberField": "Must only contain numbers",
-    "cvvField": "CVV"
+    "cvvField": "CVV",
+    "fieldInvalidRegion": "State/Province code is not valid"
   },
   "calendar": {
     "today": "Today"
@@ -258,7 +261,8 @@
   "errors": {
     "generic": "Something went wrong. Check your internet connection and try again.",
     "emailInUse": "The email provided is already in use.",
-    "validateEmail": "Check your email to validate your account."
+    "validateEmail": "Check your email to validate your account.",
+    "duplicatedUsername": "Username already in use. Please try another combination."
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

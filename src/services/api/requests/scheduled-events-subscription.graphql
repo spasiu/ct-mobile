@@ -1,5 +1,5 @@
-subscription NewScheduledEvents {
-  Users(where: { role: { _eq: BREAKER } }) {
+subscription NewScheduledEvents($userId: String) {
+  Users(where: { is_breaker: { _eq: true } }) {
     id
     image
     first_name
@@ -14,6 +14,15 @@ subscription NewScheduledEvents {
       image
       start_time
       description
+      Saves(where: { User: { id: { _eq: $userId } } }) {
+        id
+        Event {
+          id
+        }
+        User {
+          id
+        }
+      }
     }
     BreakerProfile {
       id

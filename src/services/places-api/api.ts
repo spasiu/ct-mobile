@@ -13,6 +13,7 @@ export type PredictionType = {
 
 export const getPredictions = async (
   term: string,
+  country: string,
 ): Promise<PredictionType[]> => {
   if (term.trim() === '') {
     return [];
@@ -21,7 +22,7 @@ export const getPredictions = async (
   try {
     const encodedTerm = encodeURIComponent(term);
     const result = await axios.post(
-      `${GOOGLE_PLACES_API_BASE_URL}/autocomplete/json?key=${Config.GOOGLE_PLACES_API_KEY}&types=address&input=${encodedTerm}`,
+      `${GOOGLE_PLACES_API_BASE_URL}/autocomplete/json?key=${Config.GOOGLE_PLACES_API_KEY}&types=address&input=${encodedTerm}&components=country:${country}`,
     );
     return pathOr([], ['data', 'predictions'], result);
   } catch (e) {
