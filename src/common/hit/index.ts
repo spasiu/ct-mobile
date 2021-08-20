@@ -1,1 +1,1 @@
-export * from './hit';
+export * from './hit-selectors';

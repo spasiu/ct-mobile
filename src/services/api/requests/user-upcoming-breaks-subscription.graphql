@@ -1,0 +1,53 @@
+subscription NewUserUpcomingBreaks($userId: String) {
+  Breaks(
+    where: {
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      Event: {
+        _and: [{ status: { _neq: COMPLETED } }, { status: { _neq: DRAFT } }]
+      }
+      Saves: { user_id: { _eq: $userId } }
+    }
+  ) {
+    id
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
+  }
+}

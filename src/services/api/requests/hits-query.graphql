@@ -1,5 +1,13 @@
-query Hits {
-  Hits {
+query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
+  Hits(
+    where: {
+      user_id: $userHitsFilter
+      _or: [
+        { player: { _ilike: $searchInput } }
+        { description: { _ilike: $searchInput } }
+      ]
+    }
+  ) {
     id
     image_front
     description

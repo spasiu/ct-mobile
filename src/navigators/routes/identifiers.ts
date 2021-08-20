@@ -14,7 +14,7 @@ export const ROUTES_IDS = {
   ONBOARDING_QUESTIONS_SCREEN: 'screen.onboardingQuestions',
   ALLOW_NOTIFICATIONS_SCREEN: 'screen.allowNotifications',
   HOME_SCREEN: 'screen.home',
-  SEARCH_SCREEN: 'screen.search',
+  SEARCH_MODAL: 'modal.search',
   BREAKERS_SCREEN: 'screen.breakers',
   BREAKER_DETAIL_SCREEN: 'screen.breaker',
   USER_PROFILE_SCREEN: 'screen.userProfile',

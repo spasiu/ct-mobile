@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import FlashMessage from 'react-native-flash-message';
-import Intercom from '@intercom/intercom-react-native';
 
 import { AuthContext, AuthContextType } from '../providers/auth';
 
@@ -30,11 +29,6 @@ export const RootNavigator = (): JSX.Element => {
       async (authUser: FirebaseAuthTypes.User | null) => {
         await checkOnboardingStatus(authUser);
         setUser(authUser);
-        // Intercom.registerIdentifiedUser({
-        //   email: authUser.email || '',
-        //   userId: authUser.uid,
-        // });
-        Intercom.registerUnidentifiedUser();
 
         if (initializing) {
           SplashScreen.hide();

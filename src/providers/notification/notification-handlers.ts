@@ -9,7 +9,6 @@ export const requestNotificationPermissionHandler = async (): Promise<boolean> =
 
     return enabled;
   } catch (e) {
-    console.log(e);
     return false;
   }
 };

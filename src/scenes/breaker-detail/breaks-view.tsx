@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { BreakCard, Loading } from '../../components';
+import { BreakCard, EmptyState, Loading } from '../../components';
 import {
   useBreakerBreaksQuery,
   BreakerBreaksDocument,
@@ -23,6 +23,8 @@ import {
   updateFollowBreakCache,
   updateUnfollowBreakCache,
 } from '../../utils/cache';
+import { isEmpty } from 'ramda';
+import { t } from '../../i18n/i18n';
 
 export const BreaksView = ({
   breaker,
@@ -55,6 +57,14 @@ export const BreaksView = ({
   }
 
   const breaks = breaksSelector(data);
+  if (isEmpty(breaks)) {
+    return (
+      <EmptyState
+        title={t('search.noBreaks')}
+        description={t('search.noResultDescription')}
+      />
+    );
+  }
   return (
     <View style={[s.mh3]}>
       {indexedMap((item, index) => {

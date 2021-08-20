@@ -1,9 +1,13 @@
-import { map, range } from 'ramda';
-import { Hits } from '../../services/api/requests';
+import { String_Comparison_Exp } from '../../services/api/requests';
+import { isSearchTermValid } from '../../utils/search';
 
-export const NUMBER_OF_COLUMNS = 3;
-
-export const completeHits = (hits: Hits[]): Hits[] => {
-  const missingHits = range(0, NUMBER_OF_COLUMNS - hits.length);
-  return [...hits, ...map(() => ({} as Hits), missingHits)];
+export const getHitsSearchAndFilterParams = (
+  userId: string,
+  searchTerm: string,
+  userHitsFilterActive: boolean,
+): { userHitsFilter: String_Comparison_Exp; searchInput: string } => {
+  return {
+    userHitsFilter: userHitsFilterActive ? { _eq: userId } : {},
+    searchInput: isSearchTermValid(searchTerm) ? `%${searchTerm}%` : '%%',
+  };
 };

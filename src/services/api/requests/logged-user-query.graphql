@@ -11,12 +11,6 @@ query LoggedUser($id: String) {
       id
       ...AddressOverview
     }
-    UserPreference {
-      id
-      pricing
-      sports
-      break_type
-    }
     Notification {
       id
       before_15_min

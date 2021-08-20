@@ -9,6 +9,8 @@ import {
   HitsStackParamList,
   ProtectedStackParamList,
   BreakersStackParamList,
+  ROUTES_IDS,
+  HomeStackParamList,
 } from '../../navigators';
 import { Breaks, Users } from '../../services/api/requests';
 
@@ -45,22 +47,32 @@ export type HomeSectionDataSource = {
 
 type HitsTabNavigationProp = BottomTabNavigationProp<
   TabNavigatorParamList,
-  'tab.hits'
+  typeof ROUTES_IDS.HITS_TAB
 >;
 
 type HitDetailModalProp = NativeStackNavigationProp<
   HitsStackParamList,
-  'screen.hits'
+  typeof ROUTES_IDS.HITS_SCREEN
 >;
 
 type LiveModalProp = NativeStackNavigationProp<
   ProtectedStackParamList,
-  'modal.live'
+  typeof ROUTES_IDS.LIVE_MODAL
+>;
+
+type SearchModalProp = NativeStackNavigationProp<
+  HomeStackParamList,
+  typeof ROUTES_IDS.SEARCH_MODAL
+>;
+
+type HitsAndLiveNavigationProps = CompositeNavigationProp<
+  HitsTabNavigationProp,
+  CompositeNavigationProp<HitDetailModalProp, LiveModalProp>
 >;
 
 type HomeNavigationProp = CompositeNavigationProp<
-  HitsTabNavigationProp,
-  CompositeNavigationProp<HitDetailModalProp, LiveModalProp>
+  HitsAndLiveNavigationProps,
+  SearchModalProp
 >;
 
 export type BreakersTabNavigation = NavigatorScreenParams<BreakersStackParamList>;

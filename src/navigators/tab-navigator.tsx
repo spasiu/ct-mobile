@@ -15,14 +15,23 @@ import { ROUTES_IDS } from './routes/identifiers';
 
 export type TabNavigatorParamList = {
   [ROUTES_IDS.HOME_TAB]: undefined;
-  [ROUTES_IDS.SCHEDULE_TAB]: {
-    screen?: string;
-    initial?: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    params?: any;
-  };
+  [ROUTES_IDS.SCHEDULE_TAB]:
+    | {
+        screen?: string;
+        initial?: boolean;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params?: any;
+      }
+    | undefined;
   [ROUTES_IDS.HITS_TAB]: undefined;
-  [ROUTES_IDS.BREAKERS_TAB]: undefined;
+  [ROUTES_IDS.BREAKERS_TAB]:
+    | {
+        screen?: string;
+        initial?: boolean;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params?: any;
+      }
+    | undefined;
 };
 
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();

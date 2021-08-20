@@ -6,7 +6,12 @@ import { isEmpty } from 'ramda';
 
 import { usersSelector } from '../../common/user-profile';
 import { breakerEventsSelector } from '../../common/breaker';
-import { SectionHeader, EventCard, Loading } from '../../components';
+import {
+  SectionHeader,
+  EventCard,
+  Loading,
+  EmptyState,
+} from '../../components';
 import { t } from '../../i18n/i18n';
 import { indexedMap } from '../../utils/ramda';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -26,16 +31,23 @@ import {
   optimisticFollowEventResponse,
   updateFollowEventCache,
 } from '../../utils/cache';
+import { FilterContext, FilterContextType } from '../../providers/filter';
 
 import {
   eventBreakerSelector,
   eventDetailSelector,
   scheduleEventSelector,
   eventBreakerDetailSelector,
+  getBreakTypeFilter,
+  shouldShowEventsEmptyState,
+  getSportTypeFilter,
 } from './schedule-screen.utils';
 
 export const EventsView = (): JSX.Element => {
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
+  const { breakTypeFilter, sportTypeFilter } = useContext(
+    FilterContext,
+  ) as FilterContextType;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
   const navigation = useNavigation();
@@ -43,6 +55,8 @@ export const EventsView = (): JSX.Element => {
     fetchPolicy: 'cache-and-network',
     variables: {
       userId: authUser?.uid,
+      breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
+      sportTypeFilter: getSportTypeFilter(sportTypeFilter),
     },
   });
 
@@ -50,19 +64,34 @@ export const EventsView = (): JSX.Element => {
   const [unfollowEvent] = useUnfollowEventMutation();
 
   useEffect(() => {
-    subscribeToMore({
+    const unsubscribe = subscribeToMore({
       document: NewScheduledEventsDocument,
       variables: {
         userId: authUser?.uid,
+        breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
+        sportTypeFilter: getSportTypeFilter(sportTypeFilter),
       },
       updateQuery: (prev, { subscriptionData }) =>
         subscriptionData.data || prev,
     });
+
+    return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [breakTypeFilter, sportTypeFilter]);
 
   if (loading && !data) {
     return <Loading />;
+  }
+
+  const breakers = usersSelector(data);
+  const hasNoEvents = shouldShowEventsEmptyState(breakers);
+  if (hasNoEvents) {
+    return (
+      <EmptyState
+        title={t('search.noResultTitle')}
+        description={t('search.noResultDescription')}
+      />
+    );
   }
 
   return (
@@ -70,6 +99,11 @@ export const EventsView = (): JSX.Element => {
       <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
         {indexedMap((user, index: number) => {
           const breaker = user as Users;
+          const breakerEvents = breakerEventsSelector(breaker);
+
+          if (isEmpty(breakerEvents)) {
+            return null;
+          }
           return (
             <View key={index}>
               <SectionHeader
@@ -136,7 +170,7 @@ export const EventsView = (): JSX.Element => {
               />
             </View>
           );
-        }, usersSelector(data))}
+        }, breakers)}
       </ScrollView>
       {!isEmpty(event) ? (
         <EventDetailModal

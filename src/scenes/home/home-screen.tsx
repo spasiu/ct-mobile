@@ -38,6 +38,7 @@ import {
   Users,
   useFeaturedHitsQuery,
   NewFeaturedHitsDocument,
+  Hits,
 } from '../../services/api/requests';
 
 import {
@@ -54,12 +55,18 @@ import {
 } from './home-screen.utils';
 import { TabNavigatorParamList } from '../../navigators';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
-import { Hit } from '../../common/hit';
-import { hitsSelector } from '../../common/hit/hit-selectors';
+import {
+  hitImageFrontSelector,
+  hitPlayerSelector,
+  hitsSelector,
+} from '../../common/hit';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
+import { FilterContext, FilterContextType } from '../../providers/filter';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [hitDetail, setHitDetail] = useState<Partial<Hit>>({});
+  const { setSportTypeFilter } = useContext(FilterContext) as FilterContextType;
+  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
   const {
     data: featuredBreaks,
@@ -117,9 +124,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             <SearchInput
               style={[s.flx_i, s.mv3]}
               editable={false}
-              onTouchStart={() => {
-                console.log('on search');
-              }}
+              onTouchStart={() => navigation.navigate(ROUTES_IDS.SEARCH_MODAL)}
             />
           </View>
           <View style={[s.flx_ratio(0.15), s.aife, s.jcc]}>
@@ -159,12 +164,16 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => {
                     if (key === HomeSection.sports) {
-                      const sports = item as HomeSportsData;
+                      const sport = item as HomeSportsData;
                       return (
                         <FilterItem
+                          onPress={() => {
+                            setSportTypeFilter(sport.key);
+                            navigation.navigate(ROUTES_IDS.SCHEDULE_TAB);
+                          }}
                           type={FilterItemTypes.circle}
                           style={[s.ml1, s.mb2, s.mr2]}>
-                          <LeagueIcon league={sports.key} />
+                          <LeagueIcon league={sport.key} />
                         </FilterItem>
                       );
                     }
@@ -187,8 +196,8 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                         <HitCard
                           onPress={() => setHitDetail(item)}
                           containerStyle={[s.mr3, s.mb3]}
-                          image={item.image_front}
-                          title={item.player}
+                          image={hitImageFrontSelector(item)}
+                          title={hitPlayerSelector(item)}
                           cardSize={ImageCardSizeTypes.small}
                         />
                       );
@@ -227,7 +236,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
         <HitDetailModal
           isVisible={!isEmpty(hitDetail)}
           onPressClose={() => setHitDetail({})}
-          {...hitDetail}
+          {...hitDetailForModalSelector(hitDetail)}
         />
       </View>
     </Container>

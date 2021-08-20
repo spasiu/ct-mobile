@@ -2,13 +2,15 @@ import React, { useContext, useState, useEffect } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import Config from 'react-native-config';
+import { NetworkStatus } from '@apollo/client';
+import Intercom from '@intercom/intercom-react-native';
 
 import {
   userSelector,
   userUsernameSelector,
   userNameSelector,
   userImageSelector,
-  userBreakPreferencesSelector,
   userNotificationsSelector,
   userDefaultAddressSingleLineSelector,
 } from '../../common/user-profile';
@@ -44,8 +46,7 @@ import {
   chatIcon,
   logoutIcon,
 } from './user-profile-screen.presets';
-import { NetworkStatus } from '@apollo/client';
-import Intercom from '@intercom/intercom-react-native';
+import { UserSaves } from './user-saves';
 
 export const UserProfileScreen = ({
   navigation,
@@ -116,6 +117,7 @@ export const UserProfileScreen = ({
                 {`@${userUsernameSelector(user as Users)}`}
               </Text>
             </View>
+            <UserSaves />
             <View style={[s.mb4]}>
               <Text style={[s.ff_b, s.f4, s.mb3]}>
                 {t('profile.accountDetailsSection')}
@@ -144,13 +146,9 @@ export const UserProfileScreen = ({
                 icon={breakPreferencesIcon}
                 text={t('profile.breakPreferences')}
                 containerStyle={[s.mb2]}
-                onPress={() => {
-                  navigation.navigate(ROUTES_IDS.BREAK_PREFERENCES_SCREEN, {
-                    breakPreferences: userBreakPreferencesSelector(
-                      user as Users,
-                    ),
-                  });
-                }}
+                onPress={() =>
+                  navigation.navigate(ROUTES_IDS.BREAK_PREFERENCES_SCREEN)
+                }
               />
               <RowLink
                 icon={notificationsIcon}
@@ -176,19 +174,27 @@ export const UserProfileScreen = ({
                 icon={rulesOfPlayIcon}
                 text={t('profile.rulesOfPlay')}
                 containerStyle={[s.mb2]}
-                onPress={() => Intercom.displayArticle('5489308')}
+                onPress={() => Intercom.displayHelpCenter()}
               />
               <RowLink
                 icon={termsOfServiceIcon}
                 text={t('profile.termsOfService')}
                 containerStyle={[s.mb2]}
-                onPress={() => Intercom.displayArticle('5489317')}
+                onPress={() =>
+                  Intercom.displayArticle(
+                    Config.INTERCOM_PRIVACY_TERMS_OF_SERVICE_ARTICLE_ID,
+                  )
+                }
               />
               <RowLink
                 icon={privacyPolicyIcon}
                 text={t('profile.privacyPolicy')}
                 containerStyle={[s.mb2]}
-                onPress={() => Intercom.displayArticle('5489316')}
+                onPress={() =>
+                  Intercom.displayArticle(
+                    Config.INTERCOM_PRIVACY_POLICY_ARTICLE_ID,
+                  )
+                }
               />
               <RowLink
                 icon={chatIcon}

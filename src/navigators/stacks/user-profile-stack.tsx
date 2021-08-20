@@ -10,20 +10,20 @@ import { AddressesListScreen } from '../../scenes/addresses-list/addresses-list-
 import { AddAddressScreen } from '../../scenes/add-address/add-address-screen';
 import { EditAddressScreen } from '../../scenes/edit-address/edit-address-screen';
 
-import {
-  Notifications,
-  Addresses,
-  UserPreferences,
-} from '../../services/api/requests';
+import { Notifications, Addresses } from '../../services/api/requests';
 
 import { PaymentStack } from './payment-stack';
+import { Question } from '../../common/break-preferences';
+import { BreakType } from '../../common/break';
 
 export type UserProfileStackParamList = {
   [ROUTES_IDS.USER_PROFILE_SCREEN]: undefined;
-  [ROUTES_IDS.BREAK_PREFERENCES_SCREEN]: {
-    breakPreferences: Partial<UserPreferences>;
+  [ROUTES_IDS.BREAK_PREFERENCES_SCREEN]: undefined;
+  [ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN]: {
+    content: Question;
+    userSelection: BreakType;
+    pageTitle: string;
   };
-  [ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN]: undefined;
   [ROUTES_IDS.NOTIFICATION_PREFERENCES_SCREEN]: {
     notificationPreferences: Partial<Notifications>;
   };

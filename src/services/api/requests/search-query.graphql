@@ -1,0 +1,190 @@
+query Search($searchInput: String, $userId: String) {
+  Users(
+    where: {
+      is_breaker: { _eq: true }
+      _or: [
+        { username: { _ilike: $searchInput } }
+        { first_name: { _ilike: $searchInput } }
+        { last_name: { _ilike: $searchInput } }
+      ]
+    }
+  ) {
+    id
+    image
+    first_name
+    last_name
+    BreakerProfile {
+      id
+      twitter
+      facebook
+      instagram
+      video
+      bio
+    }
+  }
+  Breaks(
+    where: {
+      _and: [
+        { status: { _neq: DRAFT } }
+        { status: { _neq: COMPLETED } }
+        {
+          Event: {
+            _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+          }
+        }
+      ]
+      _or: [
+        { title: { _ilike: $searchInput } }
+        { description: { _ilike: $searchInput } }
+        {
+          Event: {
+            _or: [
+              {
+                User: {
+                  _or: [
+                    { first_name: { _ilike: $searchInput } }
+                    { last_name: { _ilike: $searchInput } }
+                  ]
+                }
+              }
+              { title: { _ilike: $searchInput } }
+              { description: { _ilike: $searchInput } }
+            ]
+          }
+        }
+      ]
+    }
+  ) {
+    id
+    break_type
+    description
+    status
+    title
+    Inventory(limit: 1) {
+      Product {
+        category
+      }
+    }
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Break {
+        id
+      }
+      User {
+        id
+      }
+    }
+    BreakProductItems_aggregate {
+      aggregate {
+        max {
+          price
+        }
+        min {
+          price
+        }
+        sum {
+          quantity
+        }
+      }
+    }
+    Event {
+      id
+      status
+      start_time
+      User {
+        id
+        image
+      }
+    }
+  }
+  EventBreakers: Users(where: { is_breaker: { _eq: true } }) {
+    id
+    image
+    first_name
+    last_name
+    BreakerProfile {
+      id
+      twitter
+      facebook
+      instagram
+      video
+      bio
+    }
+    Events(
+      where: {
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+        _or: [
+          { title: { _ilike: $searchInput } }
+          { description: { _ilike: $searchInput } }
+          {
+            User: {
+              _or: [
+                { first_name: { _ilike: $searchInput } }
+                { last_name: { _ilike: $searchInput } }
+              ]
+            }
+          }
+          {
+            Breaks: {
+              _and: [
+                { status: { _neq: DRAFT } }
+                { status: { _neq: COMPLETED } }
+              ]
+              _or: [
+                { title: { _ilike: $searchInput } }
+                { description: { _ilike: $searchInput } }
+              ]
+            }
+          }
+        ]
+      }
+    ) {
+      id
+      title
+      status
+      image
+      start_time
+      description
+      User {
+        id
+        image
+        first_name
+        last_name
+      }
+      Saves(where: { User: { id: { _eq: $userId } } }) {
+        id
+        Event {
+          id
+        }
+        User {
+          id
+        }
+      }
+    }
+  }
+  Hits(
+    where: {
+      _or: [
+        { player: { _ilike: $searchInput } }
+        { description: { _ilike: $searchInput } }
+        {
+          Break: {
+            Event: {
+              User: {
+                _or: [
+                  { first_name: { _ilike: $searchInput } }
+                  { last_name: { _ilike: $searchInput } }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ) {
+    id
+    player
+    description
+    image_front
+  }
+}

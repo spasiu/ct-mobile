@@ -6,7 +6,7 @@ import { showMessage } from 'react-native-flash-message';
 import { ApolloClient } from '@apollo/client';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-// import Intercom from '@intercom/intercom-react-native';
+import Intercom from '@intercom/intercom-react-native';
 
 import { t } from '../../i18n/i18n';
 
@@ -114,7 +114,7 @@ export const logoutHandler = async (
   client: ApolloClient<unknown>,
 ): Promise<void> => {
   try {
-    // Intercom.logout();
+    Intercom.logout();
     await auth().signOut();
     client.clearStore();
   } catch (e) {

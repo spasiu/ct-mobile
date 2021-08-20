@@ -36,7 +36,8 @@
     "backToPaymentDetails": "Back to Payment Details",
     "soldOut": "Sold Out",
     "camera": "Camera",
-    "imageLibrary": "Image Library"
+    "imageLibrary": "Image Library",
+    "filter": "Filter"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -154,10 +155,21 @@
     "event": "Event Schedule"
   },
   "search": {
+    "searchType": {
+      "breaks": "Breaks",
+      "events": "Events",
+      "breakers": "Breakers",
+      "hits": "Hits"
+    },
     "action": "Search",
     "emptyState": "Search for Breaks, Events, Breakers or Hits",
     "noResultTitle": "No hits is no fun at all!",
-    "noResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!"
+    "noResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!",
+    "noFollowedBreakersTitle": "No breakers is no fun at all!",
+    "noFollowedBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?",
+    "noHits": "No hits is no fun at all!",
+    "noEvents": "No events is no fun at all!",
+    "noBreaks": "No breaks is no fun at all!"
   },
   "status": {
     "live": "Live",
@@ -206,13 +218,23 @@
   "filter": {
     "all": "All",
     "breakTypes": {
+      "title": "Break Type",
       "pickYourTeam": "Pick Your Team",
       "pickYourDivision": "Pick Your Division",
       "randomTeam": "Random Team",
       "randomDivision": "Random Division",
       "hitDraft": "Hit Draft",
       "personal": "Personal"
-    }
+    },
+    "sportTypes": {
+      "title": "Sport",
+      "baseball": "Baseball",
+      "basketball": "Basketball",
+      "football": "Football",
+      "hockey": "Hockey",
+      "soccer": "Soccer"
+    },
+    "modalTitle": "Filter"
   },
   "profile": {
     "title": "Profile",

@@ -1,9 +1,16 @@
-subscription NewScheduledBreaks($userId: String) {
+subscription NewScheduledBreaks(
+  $userId: String
+  $breakTypeFilter: break_type_enum_comparison_exp
+  $sportTypeFilter: String_comparison_exp
+) {
   Breaks(
     where: {
-      Event: { status: { _neq: DRAFT }, _and: { status: { _neq: COMPLETED } } }
-      status: { _neq: DRAFT }
-      _and: { status: { _neq: COMPLETED } }
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      Event: {
+        _and: [{ status: { _neq: COMPLETED } }, { status: { _neq: DRAFT } }]
+      }
+      Inventory: { Product: { category: $sportTypeFilter } }
+      break_type: $breakTypeFilter
     }
     order_by: { Event: { start_time: asc } }
   ) {

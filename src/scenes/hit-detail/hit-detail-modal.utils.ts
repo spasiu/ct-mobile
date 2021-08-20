@@ -4,6 +4,13 @@ import Share from 'react-native-share';
 import { showMessage } from 'react-native-flash-message';
 
 import { t } from '../../i18n/i18n';
+import { HitDetailModalProps } from './hit-detail-modal.props';
+import {
+  hitDescriptionSelector,
+  hitImageFrontSelector,
+  hitPlayerSelector,
+} from '../../common/hit';
+import { Hits } from '../../services/api/requests';
 
 export const shareHit = (
   title: string,
@@ -40,4 +47,14 @@ export const shareHit = (
           });
       }
     });
+};
+
+export const hitDetailForModalSelector = (
+  hit: Partial<Hits>,
+): HitDetailModalProps => {
+  return {
+    image_front: hitImageFrontSelector(hit),
+    description: hitDescriptionSelector(hit),
+    player: hitPlayerSelector(hit),
+  };
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -16,12 +16,39 @@ import {
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
 
-const breakTypeIcon = require('../../assets/hits-icon.png');
-const sportIcon = require('../../assets/sport-icon.png');
-const pricingIcon = require('../../assets/price-icon.png');
+import { BreakPreferencesScreenProps } from './break-preferences-screen.props';
+import {
+  breakTypeIcon,
+  sportIcon,
+  pricingIcon,
+} from './break-preferences-screen.presets';
+import { BreakType } from '../../common/break';
+import { useUserPreferencesLazyQuery } from '../../services/api/requests';
+import { AuthContext, AuthContextType } from '../../providers/auth';
+import {
+  userBreakPreferencesSelector,
+  userSelector,
+} from '../../common/user-profile';
 
-export const BreakPreferencesScreen = ({ navigation, route }) => {
-  const { breakPreferences } = route.params;
+export const BreakPreferencesScreen = ({
+  navigation,
+}: BreakPreferencesScreenProps): JSX.Element => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+
+  const [getUserPreferences, { data }] = useUserPreferencesLazyQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      id: authUser?.uid,
+    },
+  });
+
+  useEffect(() => {
+    getUserPreferences();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const user = userSelector(data);
+  const breakPreferences = userBreakPreferencesSelector(user);
   return (
     <Container
       style={[s.mh0]}
@@ -40,7 +67,7 @@ export const BreakPreferencesScreen = ({ navigation, route }) => {
           onPress={() =>
             navigation.navigate(ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN, {
               content: BREAK_TYPE_OPTIONS,
-              userSelection: breakPreferences.break_type,
+              userSelection: breakPreferences.break_type as BreakType,
               pageTitle: t('breakPreferences.breakTypeRow'),
             })
           }
@@ -52,7 +79,7 @@ export const BreakPreferencesScreen = ({ navigation, route }) => {
           onPress={() =>
             navigation.navigate(ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN, {
               content: SPORTS_OPTIONS,
-              userSelection: breakPreferences.sports,
+              userSelection: breakPreferences.sports as BreakType,
               pageTitle: t('breakPreferences.sportRow'),
             })
           }
@@ -64,7 +91,7 @@ export const BreakPreferencesScreen = ({ navigation, route }) => {
           onPress={() =>
             navigation.navigate(ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN, {
               content: PRICING_OPTIONS,
-              userSelection: breakPreferences.pricing,
+              userSelection: breakPreferences.pricing as BreakType,
               pageTitle: t('breakPreferences.pricingRow'),
             })
           }

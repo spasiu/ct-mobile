@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import { NetworkStatus } from '@apollo/client';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
@@ -17,13 +18,16 @@ import {
   Loading,
   BreakerCard,
   Avatar,
+  FilterItemStatusTypes,
+  EmptyState,
+  FilterItemTypes,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  NewBreakersDocument,
-  useBreakersQuery,
+  BreakersDocument,
+  useBreakersLazyQuery,
   useFollowBreakerMutation,
   useUnfollowBreakerMutation,
   useUserImageQuery,
@@ -35,17 +39,30 @@ import {
   updateUnfollowBreakerCache,
 } from '../../utils/cache';
 
-import { breakerCardSelector } from './breakers-screen-utils';
+import { breakerCardSelector, getBreakerFilter } from './breakers-screen-utils';
 import { BreakersScreenProps } from './breakers-screen.props';
 
 export const BreakersScreen = ({
   navigation,
 }: BreakersScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { loading, data, subscribeToMore } = useBreakersQuery({
+  const [userBreakersFilterActive, setUserBreakersFilterActive] = useState(
+    false,
+  );
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [
+    getBreakers,
+    { loading, data, refetch, networkStatus },
+  ] = useBreakersLazyQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       userId: authUser?.uid as string,
+      breakerFilter: getBreakerFilter(
+        userBreakersFilterActive,
+        authUser?.uid as string,
+        searchTerm,
+      ),
     },
   });
 
@@ -56,20 +73,50 @@ export const BreakersScreen = ({
     },
   });
 
-  const [followBreaker] = useFollowBreakerMutation();
-  const [unfollowBreaker] = useUnfollowBreakerMutation();
+  const [followBreaker] = useFollowBreakerMutation({
+    refetchQueries: [
+      {
+        query: BreakersDocument,
+        variables: {
+          userId: authUser?.uid as string,
+          breakerFilter: getBreakerFilter(
+            userBreakersFilterActive,
+            authUser?.uid as string,
+            searchTerm,
+          ),
+        },
+      },
+    ],
+  });
+  const [unfollowBreaker] = useUnfollowBreakerMutation({
+    refetchQueries: [
+      {
+        query: BreakersDocument,
+        variables: {
+          userId: authUser?.uid as string,
+          breakerFilter: getBreakerFilter(
+            userBreakersFilterActive,
+            authUser?.uid as string,
+            searchTerm,
+          ),
+        },
+      },
+    ],
+  });
 
   useEffect(() => {
-    subscribeToMore({
-      document: NewBreakersDocument,
+    getBreakers({
       variables: {
-        userId: authUser?.uid,
+        userId: authUser?.uid as string,
+        breakerFilter: getBreakerFilter(
+          userBreakersFilterActive,
+          authUser?.uid as string,
+          searchTerm,
+        ),
       },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchTerm, userBreakersFilterActive]);
 
   const user = userSelector(users);
   const breakers = usersSelector(data);
@@ -86,8 +133,16 @@ export const BreakersScreen = ({
             <View style={[s.flx_i, s.flx_row, s.jcfe, s.aic]}>
               <FilterItem
                 style={[s.mr3]}
-                type="pill_alt"
+                type={FilterItemTypes.pill_alt}
                 text={t('buttons.showFollowing')}
+                status={
+                  userBreakersFilterActive
+                    ? FilterItemStatusTypes.selected
+                    : FilterItemStatusTypes.default
+                }
+                onPress={() =>
+                  setUserBreakersFilterActive(!userBreakersFilterActive)
+                }
               />
               <Avatar
                 src={userImageSelector(user)}
@@ -98,12 +153,23 @@ export const BreakersScreen = ({
             </View>
           }
         />
-        <SearchInput editable={false} />
+        <SearchInput
+          value={searchTerm}
+          onChangeText={text => setSearchTerm(text)}
+        />
       </View>
       {loading && !data ? (
         <Loading />
       ) : (
         <FlatList
+          onRefresh={() => refetch && refetch()}
+          refreshing={networkStatus === NetworkStatus.refetch}
+          ListEmptyComponent={() => (
+            <EmptyState
+              title={t('search.noFollowedBreakersTitle')}
+              description={t('search.noFollowedBreakersDescription')}
+            />
+          )}
           keyExtractor={item => item.id}
           style={[s.flx_i, s.ph3]}
           data={breakers}

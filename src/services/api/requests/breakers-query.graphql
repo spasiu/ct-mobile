@@ -1,5 +1,5 @@
-query Breakers($userId: String) {
-  Users(where: { is_breaker: { _eq: true } }) {
+query Breakers($userId: String, $breakerFilter: Users_bool_exp) {
+  Users(where: $breakerFilter) {
     id
     first_name
     last_name

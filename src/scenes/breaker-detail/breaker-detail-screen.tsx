@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -35,47 +35,22 @@ import { breakerDetailScreenSelector } from './breaker-detail-screen.utils';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
-import { Hit } from '../../common/hit';
 
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
+  Hits,
+  NewBreakerHitsDocument,
+  useBreakerHitsQuery,
   useFollowBreakerMutation,
   useUnfollowBreakerMutation,
 } from '../../services/api/requests';
-
-const RECENT_HITS = [
-  {
-    id: 'hits-1',
-    image: '/temp-hits/Lionel-Messi-71.jpeg',
-    name: 'Lionel Messi',
-  },
-  {
-    id: 'hits-2',
-    image: '/temp-hits/Ceedee-Lamb.jpeg',
-    name: 'Ceedee Lamb',
-  },
-  {
-    id: 'hits-3',
-    image: '/temp-hits/Deshaun-Watson.jpeg',
-    name: 'Deshaun Watson',
-  },
-  {
-    id: 'hits-4',
-    image: '/temp-hits/Ja-Morant.jpeg',
-    name: 'Ja Morant',
-  },
-  {
-    id: 'hits-5',
-    image: '/temp-hits/Justin-Herbert.jpeg',
-    name: 'Justin Herbert',
-  },
-  {
-    id: 'hits-6',
-    image: '/temp-hits/Mike-Trout.jpeg',
-    name: 'Mike Trout',
-  },
-];
+import {
+  hitImageFrontSelector,
+  hitPlayerSelector,
+  hitsSelector,
+} from '../../common/hit';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
 
 export const BreakerDetailScreen = ({
   route,
@@ -84,7 +59,7 @@ export const BreakerDetailScreen = ({
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { breaker, startOnEventsView = false } = route.params;
   const [eventsView, setEventsView] = useState(startOnEventsView);
-  const [hitDetail, setHitDetail] = useState<Partial<Hit>>({});
+  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
   const [followBreaker] = useFollowBreakerMutation({
     onError: () => setUserFollowsBreaker(false),
@@ -104,6 +79,25 @@ export const BreakerDetailScreen = ({
   } = breakerDetailScreenSelector(breaker);
   const [userFollowsBreaker, setUserFollowsBreaker] = useState(userFollows);
 
+  const { data: hitsRequestData, subscribeToMore } = useBreakerHitsQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      breakerId: id,
+    },
+  });
+
+  useEffect(() => {
+    subscribeToMore({
+      document: NewBreakerHitsDocument,
+      variables: {
+        breakerId: id,
+      },
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
   const iframeHeight = (videoWidth * pixelRatio) / 2;
@@ -116,6 +110,7 @@ export const BreakerDetailScreen = ({
     </html>
   `;
 
+  const hits = hitsSelector(hitsRequestData);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -201,29 +196,33 @@ export const BreakerDetailScreen = ({
             source={{ html: videoHtml }}
           />
         </View>
-        <SectionHeader
-          containerStyle={[s.mh3, s.h1]}
-          title={t('sections.recentHits')}
-          actionText={t('buttons.seeAll')}
-          onActionPressed={() => navigation.navigate(ROUTES_IDS.HITS_TAB)}
-        />
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          style={[s.h5, s.w_100, s.pl3, s.mb3]}
-          contentContainerStyle={[s.pr3]}
-          data={RECENT_HITS}
-          horizontal
-          renderItem={({ item }) => (
-            <HitCard
-              onPress={() => setHitDetail(item)}
-              showTitle={false}
-              containerStyle={[s.mr3]}
-              image={item.image}
-              title={item.name}
-              cardSize={ImageCardSizeTypes.small}
+        {isEmpty(hits) ? null : (
+          <>
+            <SectionHeader
+              containerStyle={[s.mh3, s.h1]}
+              title={t('sections.recentHits')}
+              actionText={t('buttons.seeAll')}
+              onActionPressed={() => navigation.navigate(ROUTES_IDS.HITS_TAB)}
             />
-          )}
-        />
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              style={[s.h5, s.w_100, s.pl3, s.mb3]}
+              contentContainerStyle={[s.pr3]}
+              data={hits}
+              horizontal
+              renderItem={({ item }) => (
+                <HitCard
+                  onPress={() => setHitDetail(item)}
+                  showTitle={false}
+                  containerStyle={[s.mr3]}
+                  image={hitImageFrontSelector(item)}
+                  title={hitPlayerSelector(item)}
+                  cardSize={ImageCardSizeTypes.small}
+                />
+              )}
+            />
+          </>
+        )}
         <SectionHeader
           containerStyle={[s.mh3, s.h3, s.mb2]}
           title={t('sections.break')}
@@ -254,7 +253,7 @@ export const BreakerDetailScreen = ({
       <HitDetailModal
         isVisible={!isEmpty(hitDetail)}
         onPressClose={() => setHitDetail({})}
-        {...hitDetail}
+        {...hitDetailForModalSelector(hitDetail)}
       />
     </Container>
   );

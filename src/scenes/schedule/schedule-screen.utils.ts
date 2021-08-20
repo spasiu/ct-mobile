@@ -15,7 +15,13 @@ import {
 } from '../../components';
 import { BreakersStackParamList } from '../../navigators/stacks/breakers-stack';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
-import { Breaks, Events, Users } from '../../services/api/requests';
+import {
+  Breaks,
+  Break_Type_Enum_Comparison_Exp,
+  Events,
+  String_Comparison_Exp,
+  Users,
+} from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 import {
   breakBreakerSelector,
@@ -29,6 +35,13 @@ import {
   breakTypeSelector,
 } from '../../common/break';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import { none } from 'ramda';
+import { breakerEventsSelector } from '../../common/breaker';
+import {
+  BreakTypeFilterOptions,
+  SportTypeFilterOptions,
+} from '../../providers/filter';
+import { ALL_FILTER_OPTION } from '../../providers/filter/filter.presets';
 
 export const breakScheduleSelector = (
   eventBreak: Breaks,
@@ -103,4 +116,31 @@ export const eventDetailSelector = (
     description: eventDescriptionSelector(event),
     eventDate: formatScheduledStatus(eventTime),
   };
+};
+
+export const getBreakTypeFilter = (
+  breakType: BreakTypeFilterOptions,
+): Break_Type_Enum_Comparison_Exp => {
+  if (breakType === ALL_FILTER_OPTION) {
+    return {};
+  }
+
+  return { _eq: breakType };
+};
+
+export const getSportTypeFilter = (
+  sportType: SportTypeFilterOptions,
+): String_Comparison_Exp => {
+  if (sportType === ALL_FILTER_OPTION) {
+    return {};
+  }
+
+  return { _eq: sportType };
+};
+
+export const shouldShowEventsEmptyState = (breakers: Users[]): boolean => {
+  return none(breaker => {
+    const events = breakerEventsSelector(breaker);
+    return events.length !== 0;
+  }, breakers);
 };

@@ -29,6 +29,7 @@ export const SearchInput = ({
       style={searchInputStyle}
       placeholder={inputPlaceholderText}
       placeholderTextColor={placeholderTextColor}
+      autoCapitalize={'none'}
     />
   </View>
 );

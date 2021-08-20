@@ -78,7 +78,7 @@ export const userDefaultAddressCleanSelector = (user: Users): Addresses => {
 
 export const userBreakPreferencesSelector = (
   user: Users,
-): Partial<UserPreferences> => pathOr({}, ['UserPreferences'], user);
+): Partial<UserPreferences> => pathOr({}, ['UserPreference'], user);
 
 export const userNotificationsSelector = (
   user: Users,

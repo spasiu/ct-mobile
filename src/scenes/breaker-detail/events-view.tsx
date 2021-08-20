@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { EventCard, Loading } from '../../components';
+import { EmptyState, EventCard, Loading } from '../../components';
 import { t } from '../../i18n/i18n';
 import {
   useBreakerEventsQuery,
@@ -59,6 +59,14 @@ export const EventsView = ({
   }
 
   const events = eventsSelector(data);
+  if (isEmpty(events)) {
+    return (
+      <EmptyState
+        title={t('search.noEvents')}
+        description={t('search.noResultDescription')}
+      />
+    );
+  }
   return (
     <>
       <FlatList

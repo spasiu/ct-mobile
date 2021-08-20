@@ -1,0 +1,8 @@
+subscription NewBreakerHits($breakerId: String) {
+  Hits(where: { Break: { Event: { user_id: { _eq: $breakerId } } } }) {
+    id
+    image_front
+    description
+    player
+  }
+}

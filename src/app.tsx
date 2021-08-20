@@ -16,6 +16,7 @@ import { client } from './services/api/api';
 import { AuthProvider } from './providers/auth';
 import { NotificationProvider } from './providers/notification';
 import { PaymentProvider } from './providers/payment';
+import { FilterProvider } from './providers/filter';
 
 import { initLibraries } from './initializer';
 
@@ -47,11 +48,13 @@ const App = (): JSX.Element | null => {
     <ApolloProvider client={client}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <AuthProvider>
-          <NotificationProvider>
-            <PaymentProvider>
-              <RootNavigator />
-            </PaymentProvider>
-          </NotificationProvider>
+          <FilterProvider>
+            <NotificationProvider>
+              <PaymentProvider>
+                <RootNavigator />
+              </PaymentProvider>
+            </NotificationProvider>
+          </FilterProvider>
         </AuthProvider>
       </SafeAreaProvider>
     </ApolloProvider>

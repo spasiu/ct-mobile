@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import Emoji from 'node-emoji';
 
 import {
   ActionFooter,
@@ -14,6 +13,7 @@ import {
   WarningModal,
   PaymentRowLink,
   PaymentMethods,
+  EmptyState,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
@@ -57,15 +57,10 @@ export const PaymentInformationList = ({
       ) : (
         <FlatList
           ListEmptyComponent={() => (
-            <View style={[s.jcc, s.aic, s.ma3]}>
-              <Text style={[s.f4]}>{Emoji.get('cry')}</Text>
-              <Text style={[s.ff_b, s.f4, s.mv2]}>
-                {t('payment.noPaymentSavedTitle')}
-              </Text>
-              <Text style={[s.ff_alt_r, s.f5, s.tc]}>
-                {t('payment.noPaymentSavedDescription')}
-              </Text>
-            </View>
+            <EmptyState
+              title={t('payment.noPaymentSavedTitle')}
+              description={t('payment.noPaymentSavedDescription')}
+            />
           )}
           data={cards}
           contentContainerStyle={[s.ph3]}

@@ -1,4 +1,8 @@
-query ScheduledEvents($userId: String) {
+query ScheduledEvents(
+  $userId: String
+  $breakTypeFilter: break_type_enum_comparison_exp
+  $sportTypeFilter: String_comparison_exp
+) {
   Users(where: { is_breaker: { _eq: true } }) {
     id
     image
@@ -6,7 +10,13 @@ query ScheduledEvents($userId: String) {
     last_name
     Events(
       limit: 5
-      where: { status: { _neq: DRAFT }, _and: { status: { _neq: COMPLETED } } }
+      where: {
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+        Breaks: {
+          break_type: $breakTypeFilter
+          Inventory: { Product: { category: $sportTypeFilter } }
+        }
+      }
     ) {
       id
       title
