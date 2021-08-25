@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
+import { useNavigation } from '@react-navigation/native';
 
 import { EmptyState, EventCard, Loading } from '../../components';
 import { t } from '../../i18n/i18n';
@@ -9,12 +10,13 @@ import {
   useUnfollowEventMutation,
   useUserUpcomingEventsQuery,
   NewUserUpcomingEventsDocument,
+  Event_Status_Enum,
 } from '../../services/api/requests';
 
 import { isEmpty } from 'ramda';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
-import { eventsSelector } from '../../common/event';
+import { eventsSelector, eventStatusSelector } from '../../common/event';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   optimisticFollowEventResponse,
@@ -27,8 +29,10 @@ import {
   upcomingEventSelector,
   eventDetailSelector,
 } from './user-profile-screen.utils';
+import { ROUTES_IDS } from '../../navigators';
 
 export const UserUpcomingEvents = (): JSX.Element => {
+  const navigation = useNavigation();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
 
@@ -76,7 +80,16 @@ export const UserUpcomingEvents = (): JSX.Element => {
           return (
             <EventCard
               {...eventData}
-              onPress={() => setEvent(eventDetailSelector(item))}
+              onPress={() => {
+                const eventStatus = eventStatusSelector(item);
+                if (eventStatus === Event_Status_Enum.Live) {
+                  navigation.navigate(ROUTES_IDS.LIVE_MODAL, {
+                    eventId: item.id,
+                  });
+                } else {
+                  setEvent(eventDetailSelector(item));
+                }
+              }}
               containerStyle={[s.mr3]}
               onPressFollow={() => {
                 const followData = {

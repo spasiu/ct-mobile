@@ -30,7 +30,7 @@ import {
   useBreakersLazyQuery,
   useFollowBreakerMutation,
   useUnfollowBreakerMutation,
-  useUserImageQuery,
+  useUserMinimalInformationQuery,
 } from '../../services/api/requests';
 import {
   optimisticFollowBreakerResponse,
@@ -66,7 +66,7 @@ export const BreakersScreen = ({
     },
   });
 
-  const { data: users } = useUserImageQuery({
+  const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,

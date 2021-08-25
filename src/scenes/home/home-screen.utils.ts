@@ -1,27 +1,50 @@
-import { Breaks, Users } from '../../services/api/requests';
-import { BreakerCardProps, FeaturedBreakCardProps } from '../../components';
-import {
-  breakCardStatusSelector,
-  breakImageSelector,
-  breakDescriptionSelector,
-  breakTitleSelector,
-  breakTimeSelector,
-} from '../../common/break';
+import { Events, Users } from '../../services/api/requests';
+import { BreakerCardProps, FeaturedEventCardProps } from '../../components';
 import { formatScheduledStatus } from '../../utils/date';
 import { userImageSelector, userNameSelector } from '../../common/user-profile';
 import { breakerBioSelector } from '../../common/breaker';
+import {
+  eventBreakerSelector,
+  eventCardStatusSelector,
+  eventDescriptionSelector,
+  eventIdSelector,
+  eventImageSelector,
+  eventTimeSelector,
+  eventTitleSelector,
+  eventViewCountSelector,
+} from '../../common/event';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 
-export const featuredBreakSelector = (
-  eventBreak: Breaks,
-): FeaturedBreakCardProps => {
-  const breakTime = breakTimeSelector(eventBreak);
+export const featuredEventSelector = (
+  event: Events,
+): FeaturedEventCardProps => {
+  const eventTime = eventTimeSelector(event);
   return {
-    status: breakCardStatusSelector(eventBreak),
-    eventDate: formatScheduledStatus(breakTime),
-    viewCount: '321',
-    image: breakImageSelector(eventBreak),
-    title: breakTitleSelector(eventBreak),
-    description: breakDescriptionSelector(eventBreak),
+    status: eventCardStatusSelector(event),
+    eventDate: formatScheduledStatus(eventTime),
+    viewCount: eventViewCountSelector(event),
+    image: eventImageSelector(event),
+    title: eventTitleSelector(event),
+    description: eventDescriptionSelector(event),
+  };
+};
+
+export const featuredEventDetailSelector = (
+  event: Events,
+): EventDetailModalProps => {
+  const eventTime = eventTimeSelector(event);
+  const eventBreaker = eventBreakerSelector(event);
+  return {
+    eventId: eventIdSelector(event),
+    title: eventTitleSelector(event),
+    image: eventImageSelector(event),
+    breaker: {
+      name: userNameSelector(eventBreaker),
+      image: userImageSelector(eventBreaker),
+    },
+    status: eventCardStatusSelector(event),
+    description: eventDescriptionSelector(event),
+    eventDate: formatScheduledStatus(eventTime),
   };
 };
 

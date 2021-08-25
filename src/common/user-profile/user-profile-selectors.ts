@@ -9,7 +9,7 @@ import {
   LoggedUserQuery,
   ScheduledEventsQuery,
   UserAddressesQuery,
-  UserImageQuery,
+  UserMinimalInformationQuery,
 } from '../../services/api/requests';
 
 import {
@@ -24,7 +24,7 @@ export const usersSelector = (
     | ScheduledEventsQuery
     | LoggedUserQuery
     | UserAddressesQuery
-    | UserImageQuery
+    | UserMinimalInformationQuery
     | undefined,
 ): Users[] => pathOr([], ['Users'], requestData);
 
@@ -34,7 +34,7 @@ export const userSelector = (
     | ScheduledEventsQuery
     | LoggedUserQuery
     | UserAddressesQuery
-    | UserImageQuery
+    | UserMinimalInformationQuery
     | undefined,
 ): Users => {
   const users = usersSelector(requestData) as Users[];
@@ -57,7 +57,7 @@ export const userNameSelector = (user: Partial<Users>): string => {
   return `${userFirstNameSelector(user)} ${userLastNameSelector(user)}`;
 };
 
-export const userImageSelector = (user: Users): string =>
+export const userImageSelector = (user: Partial<Users>): string =>
   pathOr('', ['image'], user);
 
 export const userAddressesSelector = (user: Users): Addresses[] =>
@@ -92,3 +92,6 @@ export const userDefaultAddressSingleLineSelector = (user: Users): string => {
       )}, ${addressStateSelector(defaultAddress)}`
     : '';
 };
+
+export const userStreamUrlSelector = (user: Partial<Users>): string =>
+  pathOr('', ['Stream', 'stream_url'], user);

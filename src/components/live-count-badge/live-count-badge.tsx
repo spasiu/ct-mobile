@@ -8,6 +8,9 @@ import { eyeIcon } from './live-count-badge.presets';
 export const LiveCountBadge = ({
   count,
   ...badgeProps
-}: LiveCountBadgeProps): JSX.Element => (
-  <Badge image={eyeIcon} text={count} {...badgeProps} />
-);
+}: LiveCountBadgeProps): JSX.Element | null => {
+  if (!count) {
+    return null;
+  }
+  return <Badge image={eyeIcon} text={count} {...badgeProps} />;
+};

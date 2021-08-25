@@ -28,7 +28,10 @@ import {
   breakImageSelector,
   breakTitleSelector,
 } from '../../common/break';
-import { breakProductsItemsSelector } from '../../common/break-products';
+import {
+  breakProductItemsWithQuantitySelector,
+  breakProductsItemsSelector,
+} from '../../common/break-products';
 
 import {
   getCheckoutCartInfo,
@@ -185,7 +188,7 @@ export const BreakDetail = ({
                   <View style={[s.h_custom(1), s.bg_black_10]} />
                 )}
                 style={[s.mb4]}
-                data={breakProductsItemsSelector(breakData)}
+                data={breakProductItemsWithQuantitySelector(breakData)}
                 renderItem={({ item, index }) => {
                   const cartItem = findCartItem(
                     item,

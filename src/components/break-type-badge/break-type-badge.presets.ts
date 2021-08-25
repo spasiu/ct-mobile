@@ -6,7 +6,7 @@ import { Break_Type_Enum } from '../../services/api/requests';
 export const textKeyForBreakType = {
   [Break_Type_Enum.HitDraft]: 'break.breakTypes.hitDraft',
   [Break_Type_Enum.Personal]: 'break.breakTypes.personal',
-  [Break_Type_Enum.PickYourDivision]: 'break.breakTypes.pickYourTeam',
+  [Break_Type_Enum.PickYourDivision]: 'break.breakTypes.pickYourDivision',
   [Break_Type_Enum.PickYourTeam]: 'break.breakTypes.pickYourTeam',
   [Break_Type_Enum.RandomDivision]: 'break.breakTypes.randomDivision',
   [Break_Type_Enum.RandomTeam]: 'break.breakTypes.randomTeam',

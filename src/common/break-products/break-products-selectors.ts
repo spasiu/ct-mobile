@@ -1,4 +1,4 @@
-import { head, pathOr } from 'ramda';
+import { filter, head, pathOr } from 'ramda';
 
 import {
   BreakProductItems_Aggregate,
@@ -22,10 +22,24 @@ export const breakProductsItemsSelector = (
   eventBreak: Breaks,
 ): BreakProductItems[] => pathOr([], ['BreakProductItems'], eventBreak);
 
+export const breakProductExternalQuantity = (
+  product: BreakProductItems,
+): number => pathOr(0, ['quantity'], product);
+
+export const breakProductItemsWithQuantitySelector = (
+  eventBreak: Breaks,
+): BreakProductItems[] => {
+  const breakProductItems = breakProductsItemsSelector(eventBreak);
+  return filter(
+    item => breakProductExternalQuantity(item) !== 0,
+    breakProductItems,
+  );
+};
+
 export const breakProductsFirstItemSelector = (
   eventBreak: Breaks,
 ): Partial<BreakProductItems> => {
-  const breakProductItems = breakProductsItemsSelector(eventBreak);
+  const breakProductItems = breakProductItemsWithQuantitySelector(eventBreak);
   return head(breakProductItems) || {};
 };
 

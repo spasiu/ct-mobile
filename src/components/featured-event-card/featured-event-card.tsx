@@ -6,7 +6,7 @@ import { ImageCard, ImageCardSizeTypes } from '../image-card';
 import { StatusBadge } from '../status-badge';
 import { LiveCountBadge } from '../live-count-badge';
 
-import { FeaturedBreakCardProps } from './featured-break-card.props';
+import { FeaturedEventCardProps } from './featured-event-card.props';
 import {
   gradientPresets,
   contentContainerStylePreset,
@@ -14,9 +14,9 @@ import {
   descriptionStylePreset,
   badgeWrapperStylePreset,
   contentWrapperStylePreset,
-} from './featured-break-card.presets';
+} from './featured-event-card.presets';
 
-export const FeaturedBreakCard = ({
+export const FeaturedEventCard = ({
   title = '',
   description = '',
   status,
@@ -26,7 +26,7 @@ export const FeaturedBreakCard = ({
   contentContainerStyle = [],
   eventDate,
   ...imageCardProps
-}: FeaturedBreakCardProps): JSX.Element => (
+}: FeaturedEventCardProps): JSX.Element => (
   <ImageCard cardSize={ImageCardSizeTypes.medium} {...imageCardProps}>
     <LinearGradient {...gradientPresets}>
       <View style={[...contentContainerStylePreset, ...contentContainerStyle]}>

@@ -981,12 +981,14 @@ export type Breaks = {
   break_status: Break_Status;
   break_type: Break_Type_Enum;
   created_at: Scalars['timestamptz'];
+  dataset?: Maybe<Scalars['jsonb']>;
   description: Scalars['String'];
   event_id: Scalars['uuid'];
   id: Scalars['uuid'];
   image: Scalars['String'];
   line_items?: Maybe<Scalars['jsonb']>;
   price?: Maybe<Scalars['numeric']>;
+  result?: Maybe<Scalars['jsonb']>;
   spots: Scalars['Int'];
   status: Break_Status_Enum;
   teams_per_spot?: Maybe<Scalars['Int']>;
@@ -1078,7 +1080,19 @@ export type BreaksSaves_AggregateArgs = {
 
 
 /** columns and relationships of "Breaks" */
+export type BreaksDatasetArgs = {
+  path?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "Breaks" */
 export type BreaksLine_ItemsArgs = {
+  path?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksResultArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
@@ -1129,7 +1143,9 @@ export type Breaks_Aggregate_Order_By = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type Breaks_Append_Input = {
+  dataset?: Maybe<Scalars['jsonb']>;
   line_items?: Maybe<Scalars['jsonb']>;
+  result?: Maybe<Scalars['jsonb']>;
 };
 
 /** input type for inserting array relation for remote table "Breaks" */
@@ -1167,12 +1183,14 @@ export type Breaks_Bool_Exp = {
   break_status?: Maybe<Break_Status_Bool_Exp>;
   break_type?: Maybe<Break_Type_Enum_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  dataset?: Maybe<Jsonb_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
   line_items?: Maybe<Jsonb_Comparison_Exp>;
   price?: Maybe<Numeric_Comparison_Exp>;
+  result?: Maybe<Jsonb_Comparison_Exp>;
   spots?: Maybe<Int_Comparison_Exp>;
   status?: Maybe<Break_Status_Enum_Comparison_Exp>;
   teams_per_spot?: Maybe<Int_Comparison_Exp>;
@@ -1189,17 +1207,23 @@ export enum Breaks_Constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type Breaks_Delete_At_Path_Input = {
+  dataset?: Maybe<Array<Scalars['String']>>;
   line_items?: Maybe<Array<Scalars['String']>>;
+  result?: Maybe<Array<Scalars['String']>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
 export type Breaks_Delete_Elem_Input = {
+  dataset?: Maybe<Scalars['Int']>;
   line_items?: Maybe<Scalars['Int']>;
+  result?: Maybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type Breaks_Delete_Key_Input = {
+  dataset?: Maybe<Scalars['String']>;
   line_items?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
 };
 
 /** input type for incrementing numeric columns in table "Breaks" */
@@ -1219,12 +1243,14 @@ export type Breaks_Insert_Input = {
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  dataset?: Maybe<Scalars['jsonb']>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
   line_items?: Maybe<Scalars['jsonb']>;
   price?: Maybe<Scalars['numeric']>;
+  result?: Maybe<Scalars['jsonb']>;
   spots?: Maybe<Scalars['Int']>;
   status?: Maybe<Break_Status_Enum>;
   teams_per_spot?: Maybe<Scalars['Int']>;
@@ -1324,12 +1350,14 @@ export type Breaks_Order_By = {
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  dataset?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
   line_items?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
+  result?: Maybe<Order_By>;
   spots?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
   teams_per_spot?: Maybe<Order_By>;
@@ -1345,7 +1373,9 @@ export type Breaks_Pk_Columns_Input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type Breaks_Prepend_Input = {
+  dataset?: Maybe<Scalars['jsonb']>;
   line_items?: Maybe<Scalars['jsonb']>;
+  result?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "Breaks" */
@@ -1354,6 +1384,8 @@ export enum Breaks_Select_Column {
   BreakType = 'break_type',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Dataset = 'dataset',
   /** column name */
   Description = 'description',
   /** column name */
@@ -1366,6 +1398,8 @@ export enum Breaks_Select_Column {
   LineItems = 'line_items',
   /** column name */
   Price = 'price',
+  /** column name */
+  Result = 'result',
   /** column name */
   Spots = 'spots',
   /** column name */
@@ -1382,12 +1416,14 @@ export enum Breaks_Select_Column {
 export type Breaks_Set_Input = {
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  dataset?: Maybe<Scalars['jsonb']>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
   line_items?: Maybe<Scalars['jsonb']>;
   price?: Maybe<Scalars['numeric']>;
+  result?: Maybe<Scalars['jsonb']>;
   spots?: Maybe<Scalars['Int']>;
   status?: Maybe<Break_Status_Enum>;
   teams_per_spot?: Maybe<Scalars['Int']>;
@@ -1462,6 +1498,8 @@ export enum Breaks_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Dataset = 'dataset',
+  /** column name */
   Description = 'description',
   /** column name */
   EventId = 'event_id',
@@ -1473,6 +1511,8 @@ export enum Breaks_Update_Column {
   LineItems = 'line_items',
   /** column name */
   Price = 'price',
+  /** column name */
+  Result = 'result',
   /** column name */
   Spots = 'spots',
   /** column name */
@@ -9259,32 +9299,32 @@ export type FeaturedBreakersQuery = (
   )> }
 );
 
-export type FeaturedBreaksQueryVariables = Exact<{ [key: string]: never; }>;
+export type FeaturedEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeaturedBreaksQuery = (
+export type FeaturedEventsQuery = (
   { __typename?: 'query_root' }
-  & { Breaks: Array<(
-    { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'image' | 'title' | 'description'>
-    & { Event: (
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'status' | 'start_time'>
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
     ) }
   )> }
 );
 
-export type NewFeaturedBreaksQueryVariables = Exact<{ [key: string]: never; }>;
+export type NewFeaturedEventsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NewFeaturedBreaksQuery = (
-  { __typename?: 'query_root' }
-  & { Breaks: Array<(
-    { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'image' | 'title' | 'description'>
-    & { Event: (
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'status' | 'start_time'>
+export type NewFeaturedEventsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
     ) }
   )> }
 );
@@ -9448,6 +9488,76 @@ export type InsertUserPreferencesMutation = (
       { __typename?: 'Users' }
       & Pick<Users, 'id'>
     ) }
+  )> }
+);
+
+export type LiveStreamSubscriptionVariables = Exact<{
+  eventId?: Maybe<Scalars['uuid']>;
+  userId?: Maybe<Scalars['String']>;
+}>;
+
+
+export type LiveStreamSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'start_time' | 'status'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
+      & { Stream?: Maybe<(
+        { __typename?: 'Streams' }
+        & Pick<Streams, 'id' | 'stream_id' | 'stream_key' | 'stream_url'>
+      )>, BreakerProfile: (
+        { __typename?: 'BreakerProfiles' }
+        & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
+      ) }
+    ), Saves: Array<(
+      { __typename?: 'SaveEvent' }
+      & Pick<SaveEvent, 'id'>
+      & { Event: (
+        { __typename?: 'Events' }
+        & Pick<Events, 'id'>
+      ), User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
+    )>, Breaks: Array<(
+      { __typename?: 'Breaks' }
+      & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
+      & { Inventory: Array<(
+        { __typename?: 'Inventory' }
+        & { Product: (
+          { __typename?: 'Products' }
+          & Pick<Products, 'category'>
+        ) }
+      )>, BreakProductItems_aggregate: (
+        { __typename?: 'BreakProductItems_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'BreakProductItems_aggregate_fields' }
+          & { max?: Maybe<(
+            { __typename?: 'BreakProductItems_max_fields' }
+            & Pick<BreakProductItems_Max_Fields, 'price'>
+          )>, min?: Maybe<(
+            { __typename?: 'BreakProductItems_min_fields' }
+            & Pick<BreakProductItems_Min_Fields, 'price'>
+          )>, sum?: Maybe<(
+            { __typename?: 'BreakProductItems_sum_fields' }
+            & Pick<BreakProductItems_Sum_Fields, 'quantity'>
+          )> }
+        )> }
+      ), Saves: Array<(
+        { __typename?: 'SaveBreak' }
+        & Pick<SaveBreak, 'id'>
+        & { Break: (
+          { __typename?: 'Breaks' }
+          & Pick<Breaks, 'id'>
+        ), User: (
+          { __typename?: 'Users' }
+          & Pick<Users, 'id'>
+        ) }
+      )> }
+    )> }
   )> }
 );
 
@@ -9876,16 +9986,16 @@ export type UserAddressesQuery = (
   )> }
 );
 
-export type UserImageQueryVariables = Exact<{
+export type UserMinimalInformationQueryVariables = Exact<{
   id?: Maybe<Scalars['String']>;
 }>;
 
 
-export type UserImageQuery = (
+export type UserMinimalInformationQuery = (
   { __typename?: 'query_root' }
   & { Users: Array<(
     { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'image'>
+    & Pick<Users, 'id' | 'image' | 'username'>
   )> }
 );
 
@@ -10811,97 +10921,99 @@ export function useFeaturedBreakersLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type FeaturedBreakersQueryHookResult = ReturnType<typeof useFeaturedBreakersQuery>;
 export type FeaturedBreakersLazyQueryHookResult = ReturnType<typeof useFeaturedBreakersLazyQuery>;
 export type FeaturedBreakersQueryResult = Apollo.QueryResult<FeaturedBreakersQuery, FeaturedBreakersQueryVariables>;
-export const FeaturedBreaksDocument = gql`
-    query FeaturedBreaks {
-  Breaks(
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
-    order_by: {Event: {start_time: asc}}
+export const FeaturedEventsDocument = gql`
+    query FeaturedEvents {
+  Events(
+    limit: 5
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
+    order_by: {start_time: asc_nulls_last}
   ) {
     id
-    image
     title
+    status
+    image
+    start_time
     description
-    Event {
+    User {
       id
-      status
-      start_time
+      first_name
+      last_name
+      image
     }
   }
 }
     `;
 
 /**
- * __useFeaturedBreaksQuery__
+ * __useFeaturedEventsQuery__
  *
- * To run a query within a React component, call `useFeaturedBreaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useFeaturedBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFeaturedEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useFeaturedBreaksQuery({
+ * const { data, loading, error } = useFeaturedEventsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useFeaturedBreaksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FeaturedBreaksQuery, FeaturedBreaksQueryVariables>) {
+export function useFeaturedEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FeaturedEventsQuery, FeaturedEventsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<FeaturedBreaksQuery, FeaturedBreaksQueryVariables>(FeaturedBreaksDocument, options);
+        return ApolloReactHooks.useQuery<FeaturedEventsQuery, FeaturedEventsQueryVariables>(FeaturedEventsDocument, options);
       }
-export function useFeaturedBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeaturedBreaksQuery, FeaturedBreaksQueryVariables>) {
+export function useFeaturedEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeaturedEventsQuery, FeaturedEventsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<FeaturedBreaksQuery, FeaturedBreaksQueryVariables>(FeaturedBreaksDocument, options);
+          return ApolloReactHooks.useLazyQuery<FeaturedEventsQuery, FeaturedEventsQueryVariables>(FeaturedEventsDocument, options);
         }
-export type FeaturedBreaksQueryHookResult = ReturnType<typeof useFeaturedBreaksQuery>;
-export type FeaturedBreaksLazyQueryHookResult = ReturnType<typeof useFeaturedBreaksLazyQuery>;
-export type FeaturedBreaksQueryResult = Apollo.QueryResult<FeaturedBreaksQuery, FeaturedBreaksQueryVariables>;
-export const NewFeaturedBreaksDocument = gql`
-    query NewFeaturedBreaks {
-  Breaks(
-    limit: 6
-    where: {Event: {status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
-    order_by: {Event: {start_time: asc}}
+export type FeaturedEventsQueryHookResult = ReturnType<typeof useFeaturedEventsQuery>;
+export type FeaturedEventsLazyQueryHookResult = ReturnType<typeof useFeaturedEventsLazyQuery>;
+export type FeaturedEventsQueryResult = Apollo.QueryResult<FeaturedEventsQuery, FeaturedEventsQueryVariables>;
+export const NewFeaturedEventsDocument = gql`
+    subscription NewFeaturedEvents {
+  Events(
+    limit: 5
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
+    order_by: {start_time: asc_nulls_last}
   ) {
     id
-    image
     title
+    status
+    image
+    start_time
     description
-    Event {
+    User {
       id
-      status
-      start_time
+      first_name
+      last_name
+      image
     }
   }
 }
     `;
 
 /**
- * __useNewFeaturedBreaksQuery__
+ * __useNewFeaturedEventsSubscription__
  *
- * To run a query within a React component, call `useNewFeaturedBreaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useNewFeaturedBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useNewFeaturedEventsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewFeaturedEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewFeaturedBreaksQuery({
+ * const { data, loading, error } = useNewFeaturedEventsSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useNewFeaturedBreaksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>) {
+export function useNewFeaturedEventsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewFeaturedEventsSubscription, NewFeaturedEventsSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>(NewFeaturedBreaksDocument, options);
+        return ApolloReactHooks.useSubscription<NewFeaturedEventsSubscription, NewFeaturedEventsSubscriptionVariables>(NewFeaturedEventsDocument, options);
       }
-export function useNewFeaturedBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>(NewFeaturedBreaksDocument, options);
-        }
-export type NewFeaturedBreaksQueryHookResult = ReturnType<typeof useNewFeaturedBreaksQuery>;
-export type NewFeaturedBreaksLazyQueryHookResult = ReturnType<typeof useNewFeaturedBreaksLazyQuery>;
-export type NewFeaturedBreaksQueryResult = Apollo.QueryResult<NewFeaturedBreaksQuery, NewFeaturedBreaksQueryVariables>;
+export type NewFeaturedEventsSubscriptionHookResult = ReturnType<typeof useNewFeaturedEventsSubscription>;
+export type NewFeaturedEventsSubscriptionResult = Apollo.SubscriptionResult<NewFeaturedEventsSubscription>;
 export const FeaturedHitsDocument = gql`
     query FeaturedHits {
   Hits(limit: 6) {
@@ -11280,6 +11392,103 @@ export function useInsertUserPreferencesMutation(baseOptions?: ApolloReactHooks.
 export type InsertUserPreferencesMutationHookResult = ReturnType<typeof useInsertUserPreferencesMutation>;
 export type InsertUserPreferencesMutationResult = Apollo.MutationResult<InsertUserPreferencesMutation>;
 export type InsertUserPreferencesMutationOptions = Apollo.BaseMutationOptions<InsertUserPreferencesMutation, InsertUserPreferencesMutationVariables>;
+export const LiveStreamDocument = gql`
+    subscription LiveStream($eventId: uuid, $userId: String) {
+  Events(where: {id: {_eq: $eventId}}) {
+    id
+    start_time
+    status
+    User {
+      id
+      first_name
+      last_name
+      image
+      Stream {
+        id
+        stream_id
+        stream_key
+        stream_url
+      }
+      BreakerProfile {
+        id
+        twitter
+        facebook
+        instagram
+        video
+        bio
+      }
+    }
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+    Breaks(where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}) {
+      id
+      break_type
+      description
+      status
+      title
+      result
+      Inventory(limit: 1) {
+        Product {
+          category
+        }
+      }
+      BreakProductItems_aggregate {
+        aggregate {
+          max {
+            price
+          }
+          min {
+            price
+          }
+          sum {
+            quantity
+          }
+        }
+      }
+      Saves(where: {User: {id: {_eq: $userId}}}) {
+        id
+        Break {
+          id
+        }
+        User {
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useLiveStreamSubscription__
+ *
+ * To run a query within a React component, call `useLiveStreamSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useLiveStreamSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLiveStreamSubscription({
+ *   variables: {
+ *      eventId: // value for 'eventId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useLiveStreamSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<LiveStreamSubscription, LiveStreamSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<LiveStreamSubscription, LiveStreamSubscriptionVariables>(LiveStreamDocument, options);
+      }
+export type LiveStreamSubscriptionHookResult = ReturnType<typeof useLiveStreamSubscription>;
+export type LiveStreamSubscriptionResult = Apollo.SubscriptionResult<LiveStreamSubscription>;
 export const LoggedUserDocument = gql`
     query LoggedUser($id: String) {
   Users(where: {id: {_eq: $id}}) {
@@ -12045,42 +12254,43 @@ export function useUserAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type UserAddressesQueryHookResult = ReturnType<typeof useUserAddressesQuery>;
 export type UserAddressesLazyQueryHookResult = ReturnType<typeof useUserAddressesLazyQuery>;
 export type UserAddressesQueryResult = Apollo.QueryResult<UserAddressesQuery, UserAddressesQueryVariables>;
-export const UserImageDocument = gql`
-    query UserImage($id: String) {
+export const UserMinimalInformationDocument = gql`
+    query UserMinimalInformation($id: String) {
   Users(where: {id: {_eq: $id}}) {
     id
     image
+    username
   }
 }
     `;
 
 /**
- * __useUserImageQuery__
+ * __useUserMinimalInformationQuery__
  *
- * To run a query within a React component, call `useUserImageQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserImageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserMinimalInformationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserMinimalInformationQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUserImageQuery({
+ * const { data, loading, error } = useUserMinimalInformationQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useUserImageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserImageQuery, UserImageQueryVariables>) {
+export function useUserMinimalInformationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserMinimalInformationQuery, UserMinimalInformationQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<UserImageQuery, UserImageQueryVariables>(UserImageDocument, options);
+        return ApolloReactHooks.useQuery<UserMinimalInformationQuery, UserMinimalInformationQueryVariables>(UserMinimalInformationDocument, options);
       }
-export function useUserImageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserImageQuery, UserImageQueryVariables>) {
+export function useUserMinimalInformationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserMinimalInformationQuery, UserMinimalInformationQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<UserImageQuery, UserImageQueryVariables>(UserImageDocument, options);
+          return ApolloReactHooks.useLazyQuery<UserMinimalInformationQuery, UserMinimalInformationQueryVariables>(UserMinimalInformationDocument, options);
         }
-export type UserImageQueryHookResult = ReturnType<typeof useUserImageQuery>;
-export type UserImageLazyQueryHookResult = ReturnType<typeof useUserImageLazyQuery>;
-export type UserImageQueryResult = Apollo.QueryResult<UserImageQuery, UserImageQueryVariables>;
+export type UserMinimalInformationQueryHookResult = ReturnType<typeof useUserMinimalInformationQuery>;
+export type UserMinimalInformationLazyQueryHookResult = ReturnType<typeof useUserMinimalInformationLazyQuery>;
+export type UserMinimalInformationQueryResult = Apollo.QueryResult<UserMinimalInformationQuery, UserMinimalInformationQueryVariables>;
 export const UserPreferencesDocument = gql`
     query UserPreferences($id: String) {
   Users(where: {id: {_eq: $id}}) {

@@ -1,0 +1,75 @@
+subscription LiveStream($eventId: uuid, $userId: String) {
+  Events(where: { id: { _eq: $eventId } }) {
+    id
+    start_time
+    status
+    User {
+      id
+      first_name
+      last_name
+      image
+      Stream {
+        id
+        stream_id
+        stream_key
+        stream_url
+      }
+      BreakerProfile {
+        id
+        twitter
+        facebook
+        instagram
+        video
+        bio
+      }
+    }
+    Saves(where: { User: { id: { _eq: $userId } } }) {
+      id
+      Event {
+        id
+      }
+      User {
+        id
+      }
+    }
+    Breaks(
+      where: {
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      }
+    ) {
+      id
+      break_type
+      description
+      status
+      title
+      result
+      Inventory(limit: 1) {
+        Product {
+          category
+        }
+      }
+      BreakProductItems_aggregate {
+        aggregate {
+          max {
+            price
+          }
+          min {
+            price
+          }
+          sum {
+            quantity
+          }
+        }
+      }
+      Saves(where: { User: { id: { _eq: $userId } } }) {
+        id
+        Break {
+          id
+        }
+        User {
+          id
+        }
+      }
+    }
+  }
+}

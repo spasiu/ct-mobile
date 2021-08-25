@@ -1,8 +1,8 @@
 import { pathOr, path, head } from 'ramda';
 
 import { StatusBadgeTypes } from '../../components';
+import { t } from '../../i18n/i18n';
 import {
-  FeaturedBreaksQuery,
   Breaks,
   Events,
   Break_Type_Enum,
@@ -12,6 +12,7 @@ import {
   EventBreaksQuery,
   SaveBreak,
   Inventory,
+  Break_Status_Enum,
 } from '../../services/api/requests';
 import {
   breakProductsMaxPriceSelector,
@@ -25,21 +26,14 @@ import {
   eventTimeSelector,
 } from '../event';
 import { Sports } from '../sports';
+import { BreakResult } from './break';
 
 export const breaksSelector = (
-  requestData:
-    | FeaturedBreaksQuery
-    | BreakDetailQuery
-    | EventBreaksQuery
-    | undefined,
+  requestData: BreakDetailQuery | EventBreaksQuery | undefined,
 ): Breaks[] => pathOr([], ['Breaks'], requestData);
 
 export const breakSelector = (
-  requestData:
-    | FeaturedBreaksQuery
-    | BreakDetailQuery
-    | EventBreaksQuery
-    | undefined,
+  requestData: BreakDetailQuery | EventBreaksQuery | undefined,
 ): Breaks => {
   const breaks = breaksSelector(requestData);
   return head(breaks) as Breaks;
@@ -49,7 +43,7 @@ export const breakEventSelector = (eventBreak: Breaks): Partial<Events> =>
   pathOr({}, ['Event'], eventBreak);
 
 export const breakProductAggregateSelector = (
-  eventBreak: Breaks,
+  eventBreak: Partial<Breaks>,
 ): Partial<BreakProductItems_Aggregate> =>
   pathOr({}, ['BreakProductItems_aggregate'], eventBreak);
 
@@ -59,17 +53,19 @@ export const breakImageSelector = (eventBreak: Breaks): string =>
 export const breakDescriptionSelector = (eventBreak: Breaks): string =>
   pathOr('', ['description'], eventBreak);
 
-export const breakTitleSelector = (eventBreak: Breaks): string =>
+export const breakTitleSelector = (eventBreak: Partial<Breaks>): string =>
   pathOr('', ['title'], eventBreak);
 
-export const breakPriceSelector = (eventBreak: Breaks): string => {
+export const breakPriceSelector = (eventBreak: Partial<Breaks>): string => {
   const aggregator = breakProductAggregateSelector(eventBreak);
   const maxPrice = breakProductsMaxPriceSelector(aggregator);
   const minPrice = breakProductsMinPriceSelector(aggregator);
-  return maxPrice === minPrice ? `$${maxPrice}` : `$${minPrice} - $${maxPrice}`;
+  return maxPrice === minPrice
+    ? `${t('payment.paymentCurrencySign')}${maxPrice}`
+    : `${t('payment.paymentCurrencySign')}${minPrice} - $${maxPrice}`;
 };
 
-export const breakSpotsSelector = (eventBreak: Breaks): string => {
+export const breakSpotsSelector = (eventBreak: Partial<Breaks>): string => {
   const aggregator = breakProductAggregateSelector(eventBreak);
   return breakProductsQuantitySelector(aggregator);
 };
@@ -79,14 +75,29 @@ export const breakSoldOutSelector = (eventBreak: Breaks): boolean => {
   return parseInt(spots, 10) === 0;
 };
 
-export const breakTypeSelector = (eventBreak: Breaks): Break_Type_Enum =>
-  path(['break_type'], eventBreak) as Break_Type_Enum;
+export const breakTypeSelector = (
+  eventBreak: Partial<Breaks>,
+): Break_Type_Enum => path(['break_type'], eventBreak) as Break_Type_Enum;
 
 export const breakCardStatusSelector = (
   eventBreak: Breaks,
+  optionalEvent?: Partial<Events>,
 ): StatusBadgeTypes => {
-  const event = breakEventSelector(eventBreak);
-  return eventCardStatusSelector(event);
+  const event = optionalEvent ? optionalEvent : breakEventSelector(eventBreak);
+  const eventStatus = eventCardStatusSelector(event);
+  const breakStatus = breakStatusSelector(eventBreak);
+
+  if (breakStatus === Break_Status_Enum.Available) {
+    return eventStatus === StatusBadgeTypes.live
+      ? StatusBadgeTypes.upcoming
+      : StatusBadgeTypes.scheduled;
+  }
+
+  if (breakStatus === Break_Status_Enum.Live) {
+    return StatusBadgeTypes.live;
+  }
+
+  return StatusBadgeTypes.completed;
 };
 
 export const breakTimeSelector = (eventBreak: Breaks): string => {
@@ -119,3 +130,11 @@ export const breakSportSelector = (eventBreak: Breaks): Sports | string => {
   const inventory = breakInventorySelector(eventBreak);
   return pathOr('', ['Product', 'category'], head(inventory));
 };
+
+export const breakStatusSelector = (
+  eventBreak: Partial<Breaks>,
+): Break_Status_Enum | string => pathOr('', ['status'], eventBreak);
+
+export const breakResultSelector = (
+  eventBreak: Partial<Breaks>,
+): BreakResult[] => pathOr([], ['result'], eventBreak);

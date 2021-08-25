@@ -8,7 +8,6 @@ import {
   userSelector,
   usersSelector,
 } from '../../common/user-profile';
-import { breaksSelector } from '../../common/break';
 import {
   Container,
   ContainerTypes,
@@ -18,7 +17,7 @@ import {
   LeagueIcon,
   SectionHeader,
   SearchInput,
-  FeaturedBreakCard,
+  FeaturedEventCard,
   NavigationBar,
   Loading,
   FilterItemTypes,
@@ -30,15 +29,16 @@ import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
 import {
-  useFeaturedBreaksQuery,
-  NewFeaturedBreaksDocument,
+  useFeaturedEventsQuery,
   useFeaturedBreakersQuery,
-  useUserImageQuery,
-  Breaks,
+  useUserMinimalInformationQuery,
   Users,
   useFeaturedHitsQuery,
   NewFeaturedHitsDocument,
   Hits,
+  NewFeaturedEventsDocument,
+  Events,
+  Event_Status_Enum,
 } from '../../services/api/requests';
 
 import {
@@ -50,8 +50,9 @@ import {
 } from './home-screen.props';
 import { SectionsData, SportsData } from './home-screen.presets';
 import {
-  featuredBreakSelector,
+  featuredEventSelector,
   featuredBreakerSelector,
+  featuredEventDetailSelector,
 } from './home-screen.utils';
 import { TabNavigatorParamList } from '../../navigators';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
@@ -62,16 +63,20 @@ import {
 } from '../../common/hit';
 import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
 import { FilterContext, FilterContextType } from '../../providers/filter';
+import { eventsSelector, eventStatusSelector } from '../../common/event';
+import { EventDetailModal } from '../event-detail/event-detail-modal';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
+  const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { setSportTypeFilter } = useContext(FilterContext) as FilterContextType;
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
   const {
-    data: featuredBreaks,
-    subscribeToMore: subscribeToMoreBreaks,
-  } = useFeaturedBreaksQuery({
+    data: featuredEvents,
+    subscribeToMore: subscribeToMoreEvents,
+  } = useFeaturedEventsQuery({
     fetchPolicy: 'cache-and-network',
   });
 
@@ -86,7 +91,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const { data: users } = useUserImageQuery({
+  const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,
@@ -94,21 +99,28 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   });
 
   useEffect(() => {
-    subscribeToMoreBreaks({
-      document: NewFeaturedBreaksDocument,
+    const unsubscribe = subscribeToMoreEvents({
+      document: NewFeaturedEventsDocument,
       updateQuery: (prev, { subscriptionData }) =>
         subscriptionData.data || prev,
     });
 
-    subscribeToMoreHits({
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMoreHits({
       document: NewFeaturedHitsDocument,
       updateQuery: (prev, { subscriptionData }) =>
         subscriptionData.data || prev,
     });
+
+    return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!featuredBreakers && !featuredBreaks) {
+  if (!featuredBreakers && !featuredEvents) {
     return <Loading />;
   }
 
@@ -139,7 +151,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
             const { title, key, destination } = section as HomeSectionData;
             const dataSource: HomeSectionDataSource = {
               [HomeSection.sports]: SportsData,
-              [HomeSection.breaks]: breaksSelector(featuredBreaks),
+              [HomeSection.events]: eventsSelector(featuredEvents),
               [HomeSection.hits]: hitsSelector(featuredHits),
               [HomeSection.breakers]: usersSelector(featuredBreakers),
             };
@@ -178,15 +190,22 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                       );
                     }
 
-                    if (key === HomeSection.breaks) {
-                      const eventBreak = item as Breaks;
+                    if (key === HomeSection.events) {
+                      const homeEvent = item as Events;
                       return (
-                        <FeaturedBreakCard
-                          {...featuredBreakSelector(eventBreak)}
+                        <FeaturedEventCard
+                          {...featuredEventSelector(homeEvent)}
                           containerStyle={[s.mr3, s.mb3]}
-                          onPress={() =>
-                            navigation.navigate(ROUTES_IDS.LIVE_MODAL)
-                          }
+                          onPress={() => {
+                            const eventStatus = eventStatusSelector(homeEvent);
+                            if (eventStatus === Event_Status_Enum.Live) {
+                              navigation.navigate(ROUTES_IDS.LIVE_MODAL, {
+                                eventId: homeEvent.id,
+                              });
+                            } else {
+                              setEvent(featuredEventDetailSelector(homeEvent));
+                            }
+                          }}
                         />
                       );
                     }
@@ -238,6 +257,14 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           onPressClose={() => setHitDetail({})}
           {...hitDetailForModalSelector(hitDetail)}
         />
+        {!isEmpty(event) ? (
+          <EventDetailModal
+            isVisible={!isEmpty(event)}
+            onPressClose={() => setEvent({})}
+            modalTitle={t('event.detailTitle')}
+            {...(event as EventDetailModalProps)}
+          />
+        ) : null}
       </View>
     </Container>
   );

@@ -1,15 +1,20 @@
-import { head, pathOr } from 'ramda';
+import { filter, find, head, isEmpty, pathOr, propEq } from 'ramda';
 
 import {
   BreakerEventsQuery,
+  Breaks,
+  Break_Status_Enum,
   Events,
   Event_Status_Enum,
+  FeaturedEventsQuery,
+  LiveStreamSubscription,
   SaveEvent,
   Users,
 } from '../../services/api/requests';
 import { StatusBadgeTypes } from '../../components';
 
 import { EventStatusType } from './event';
+import { breakStatusSelector } from '../break';
 
 export const eventStatusSelector = (event: Partial<Events>): EventStatusType =>
   pathOr(Event_Status_Enum.Completed, ['status'], event);
@@ -23,8 +28,6 @@ export const eventCardStatusSelector = (
   const eventStatus = eventStatusSelector(event);
 
   if (eventStatus === Event_Status_Enum.Live) {
-    // StatusBadgeTypes.upcoming depends on the status of the event being live
-    // but currently there is no way of knowing which break is hapenning
     return StatusBadgeTypes.live;
   }
 
@@ -51,13 +54,22 @@ export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
   pathOr({}, ['User'], event);
 
 export const eventsSelector = (
-  requestData: BreakerEventsQuery | undefined,
+  requestData:
+    | BreakerEventsQuery
+    | LiveStreamSubscription
+    | FeaturedEventsQuery
+    | undefined,
 ): Events[] => pathOr([], ['Events'], requestData);
 
-export const eventSavesSelector = (event: Events): SaveEvent[] =>
+export const eventSavesSelector = (event: Partial<Events>): SaveEvent[] =>
   pathOr([], ['Saves'], event);
 
-export const eventFollowedByUserSelector = (event: Events): boolean => {
+export const eventBreaksSelector = (event: Partial<Events>): Breaks[] =>
+  pathOr([], ['Breaks'], event);
+
+export const eventFollowedByUserSelector = (
+  event: Partial<Events>,
+): boolean => {
   const saves = eventSavesSelector(event);
   return saves.length > 0;
 };
@@ -65,4 +77,78 @@ export const eventFollowedByUserSelector = (event: Events): boolean => {
 export const eventFollowedByUserIdSelector = (event: Events): string => {
   const saves = eventSavesSelector(event);
   return pathOr('', ['id'], head(saves));
+};
+
+export const eventSelector = (
+  requestData: LiveStreamSubscription | undefined,
+): Partial<Events> => {
+  const events = eventsSelector(requestData);
+  return isEmpty(events) ? {} : (head(events) as Events);
+};
+
+export const eventViewCountSelector = (event: Partial<Events>): string =>
+  pathOr('', ['viewCount'], event);
+
+export const eventLiveBreakSelector = (
+  event: Partial<Events>,
+): Partial<Breaks> => {
+  const breaks = eventBreaksSelector(event);
+  const liveBreak = find(propEq('status', Break_Status_Enum.Live), breaks);
+  return liveBreak || {};
+};
+
+export const eventUpcomingBreaksSelector = (
+  event: Partial<Events>,
+): Breaks[] => {
+  const eventBreaks = eventBreaksSelector(event);
+  return filter(eventBreak => {
+    const breakStatus = breakStatusSelector(eventBreak);
+    return (
+      breakStatus !== Break_Status_Enum.Live &&
+      breakStatus !== Break_Status_Enum.Completed
+    );
+  }, eventBreaks);
+};
+
+export const eventUpcomingBreakSelector = (
+  event: Partial<Events>,
+): Partial<Breaks> => {
+  const breaks = eventUpcomingBreaksSelector(event);
+  // this logic will be updated after the breaks have an order
+  // const liveBreakIndex = findIndex(
+  //   propEq('status', Break_Status_Enum.Live),
+  //   breaks,
+  // );
+  // const completedBreakIndex = findIndex(
+  //   propEq('status', Break_Status_Enum.Completed),
+  //   breaks,
+  // );
+
+  // /*
+  //   state where the event might have:
+  //    1 - just started or
+  //    2 - is starting a next break
+  //    3 - event just ended
+  // */
+  // const noLiveBreaks = liveBreakIndex === -1;
+  // if (noLiveBreaks) {
+  //   // no live breaks or completed breaks
+  //   // the event is just starting
+  //   if (completedBreakIndex === -1) {
+  //     return head(breaks) as Breaks;
+  //   }
+
+  //   const isTheLastBreak = completedBreakIndex === breaks.length - 1;
+
+  //   // in case of existing a completed break
+  //   // if its not the last, return it
+  //   return isTheLastBreak ? {} : breaks[completedBreakIndex + 1];
+  // }
+
+  // const isLiveEventTheLast = liveBreakIndex === breaks.length - 1;
+  // // if a live break is happening
+  // // return it if it's not the last
+  // return isLiveEventTheLast ? {} : breaks[liveBreakIndex + 1];
+
+  return head(breaks) || {};
 };

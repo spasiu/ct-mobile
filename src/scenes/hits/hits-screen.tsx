@@ -17,7 +17,7 @@ import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 import {
   useNewHitsSubscription,
-  useUserImageQuery,
+  useUserMinimalInformationQuery,
 } from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { userSelector, userImageSelector } from '../../common/user-profile';
@@ -32,7 +32,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: users } = useUserImageQuery({
+  const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,

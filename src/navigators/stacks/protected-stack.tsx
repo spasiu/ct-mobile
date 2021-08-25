@@ -15,7 +15,9 @@ import { Platform } from 'react-native';
 export type ProtectedStackParamList = {
   [ROUTES_IDS.ONBOARDING_STACK]: undefined;
   [ROUTES_IDS.TAB_NAVIGATOR]: undefined;
-  [ROUTES_IDS.LIVE_MODAL]: undefined;
+  [ROUTES_IDS.LIVE_MODAL]: {
+    eventId: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();

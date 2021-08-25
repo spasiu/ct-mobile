@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
+import { useNavigation } from '@react-navigation/native';
 
 import { breakerEventsSelector } from '../../common/breaker';
 import { SectionHeader, EventCard, EmptyState } from '../../components';
@@ -11,6 +12,7 @@ import {
   Users,
   useFollowEventMutation,
   useUnfollowEventMutation,
+  Event_Status_Enum,
 } from '../../services/api/requests';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -29,10 +31,13 @@ import {
   shouldShowEventsEmptyState,
 } from './search-modal.utils';
 import { SearchEventsViewProps } from './search-modal.props';
+import { eventStatusSelector } from '../../common/event';
+import { ROUTES_IDS } from '../../navigators';
 
 export const SearchEventsView = ({
   breakers,
 }: SearchEventsViewProps): JSX.Element => {
+  const navigation = useNavigation();
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
@@ -74,9 +79,16 @@ export const SearchEventsView = ({
                   return (
                     <EventCard
                       {...eventData}
-                      onPress={() =>
-                        setEvent(eventDetailSelector(item, breaker))
-                      }
+                      onPress={() => {
+                        const eventStatus = eventStatusSelector(item);
+                        if (eventStatus === Event_Status_Enum.Live) {
+                          navigation.navigate(ROUTES_IDS.LIVE_MODAL, {
+                            eventId: item.id,
+                          });
+                        } else {
+                          setEvent(eventDetailSelector(item, breaker));
+                        }
+                      }}
                       containerStyle={[s.mr3]}
                       onPressFollow={() => {
                         const followData = {

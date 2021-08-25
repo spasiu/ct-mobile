@@ -21,6 +21,7 @@ import {
   Users,
   useFollowEventMutation,
   useUnfollowEventMutation,
+  Event_Status_Enum,
 } from '../../services/api/requests';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -42,6 +43,7 @@ import {
   shouldShowEventsEmptyState,
   getSportTypeFilter,
 } from './schedule-screen.utils';
+import { eventStatusSelector } from '../../common/event';
 
 export const EventsView = (): JSX.Element => {
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
@@ -128,9 +130,16 @@ export const EventsView = (): JSX.Element => {
                   return (
                     <EventCard
                       {...eventData}
-                      onPress={() =>
-                        setEvent(eventDetailSelector(item, breaker))
-                      }
+                      onPress={() => {
+                        const eventStatus = eventStatusSelector(item);
+                        if (eventStatus === Event_Status_Enum.Live) {
+                          navigation.navigate(ROUTES_IDS.LIVE_MODAL, {
+                            eventId: item.id,
+                          });
+                        } else {
+                          setEvent(eventDetailSelector(item, breaker));
+                        }
+                      }}
                       containerStyle={[s.mr3]}
                       onPressFollow={() => {
                         const followData = {

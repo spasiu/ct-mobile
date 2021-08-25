@@ -10,6 +10,7 @@ import {
   FormInput,
   TitleBar,
   AvatarUpload,
+  TextLink,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -34,7 +35,9 @@ import { errorDuplicateUsernameSelector } from '../../common/error';
 export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
-  const { user, uploadPhoto } = useContext(AuthContext) as AuthContextType;
+  const { user, uploadPhoto, logout } = useContext(
+    AuthContext,
+  ) as AuthContextType;
   const { createUserOnPaymentPlatform } = useContext(
     PaymentContext,
   ) as PaymentContextType;
@@ -202,8 +205,14 @@ export const CompleteProfileScreen = ({
             <ActionFooter
               isLoading={loading || processing}
               buttonText={t('buttons.createAccount')}
-              onPress={handleSubmit}
-            />
+              onPress={handleSubmit}>
+              <TextLink
+                style={[s.ml1]}
+                textStyle={[s.underline]}
+                text={t('buttons.backToLogin')}
+                onPress={() => logout()}
+              />
+            </ActionFooter>
           </>
         )}
       </Formik>

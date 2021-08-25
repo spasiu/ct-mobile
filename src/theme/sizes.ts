@@ -6,6 +6,7 @@ export const ICON_SIZE = {
   XS: 20,
   S: 25,
   M: 32,
+  M2: 44,
   L: 48,
   XL: 91,
 } as const;

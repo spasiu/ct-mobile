@@ -12,11 +12,11 @@ import {
   ROUTES_IDS,
   HomeStackParamList,
 } from '../../navigators';
-import { Breaks, Users } from '../../services/api/requests';
+import { Events, Users } from '../../services/api/requests';
 
 export enum HomeSection {
   sports = 'sports',
-  breaks = 'breaks',
+  events = 'events',
   hits = 'hits',
   breakers = 'breakers',
 }
@@ -40,7 +40,7 @@ export type HomeHitsData = {
 
 export type HomeSectionDataSource = {
   [HomeSection.sports]: HomeSportsData[];
-  [HomeSection.breaks]: Breaks[];
+  [HomeSection.events]: Events[];
   [HomeSection.hits]: HomeHitsData[];
   [HomeSection.breakers]: Users[];
 };

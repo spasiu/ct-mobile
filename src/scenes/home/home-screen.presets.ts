@@ -38,7 +38,7 @@ export const SectionsData: HomeSectionData[] = [
   },
   {
     title: t('sections.featuredBreaks'),
-    key: HomeSection.breaks,
+    key: HomeSection.events,
     destination: ROUTES_IDS.SCHEDULE_TAB,
   },
   {
