@@ -14,7 +14,8 @@
     "clean:ios": "cd ios && pod cache clean --all && rm -rf build && xcodebuild clean && pod install && cd ../",
     "clean": "yarn clean:js && yarn clean:ios && yarn clean:android && yarn start -- --reset-cache",
     "wrap": "yarn lint && yarn test",
-    "generate": "graphql-codegen --config codegen.js -r dotenv/config ./.env"
+    "generate": "graphql-codegen --config codegen.js -r dotenv/config ./.env",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@apollo/client": "3.3.15",
@@ -33,6 +34,7 @@
     "@react-navigation/bottom-tabs": "5.11.8",
     "@react-navigation/native": "5.9.3",
     "@react-navigation/stack": "5.14.3",
+    "@sentry/react-native": "2.6.2",
     "axios": "0.21.1",
     "country-region-data": "1.10.0",
     "dayjs": "1.10.4",
@@ -40,6 +42,8 @@
     "graphql": "15.5.0",
     "i18n-js": "3.8.0",
     "node-emoji": "1.10.0",
+    "patch-package": "6.4.7",
+    "postinstall-postinstall": "2.1.0",
     "ramda": "0.27.1",
     "react": "17.0.1",
     "react-native": "0.64.0",

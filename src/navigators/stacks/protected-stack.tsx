@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 import Intercom from '@intercom/intercom-react-native';
 
 import { LiveScreen } from '../../scenes/live/live-screen';
@@ -28,7 +29,7 @@ export const ProtectedStack = (): JSX.Element => {
   ) as AuthContextType;
 
   useEffect(() => {
-    const subscriber = firestore()
+    const unsubscribe = firestore()
       .collection('Users')
       .doc(user?.uid)
       .onSnapshot(documentSnapshot => {
@@ -39,7 +40,7 @@ export const ProtectedStack = (): JSX.Element => {
             email: user?.email as string,
             userId: user?.uid,
           });
-          subscriber();
+          unsubscribe();
         }
 
         if (Platform.OS === 'android' && data?.intercomAndroid) {
@@ -48,12 +49,27 @@ export const ProtectedStack = (): JSX.Element => {
             email: user?.email as string,
             userId: user?.uid,
           });
-          subscriber();
+          unsubscribe();
         }
       });
 
-    return () => subscriber();
+    return () => unsubscribe();
   }, [user]);
+
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        console.log('FCM TOKEN', token);
+        Intercom.sendTokenToIntercom(token);
+      });
+
+    const unsubscribe = messaging().onTokenRefresh(token => {
+      console.log('FCM TOKEN REFRESHED', token);
+      Intercom.sendTokenToIntercom(token);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Stack.Navigator

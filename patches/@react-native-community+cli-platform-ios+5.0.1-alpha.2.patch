@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-community/cli-platform-ios/build/commands/runIOS/index.js b/node_modules/@react-native-community/cli-platform-ios/build/commands/runIOS/index.js
+index ac4cd9f..ce330d8 100644
+--- a/node_modules/@react-native-community/cli-platform-ios/build/commands/runIOS/index.js
++++ b/node_modules/@react-native-community/cli-platform-ios/build/commands/runIOS/index.js
+@@ -128,7 +128,7 @@ function runIOS(_, ctx, args) {
+   let devices;
+ 
+   try {
+-    devices = (0, _parseXctraceIOSDevicesList.default)(_execa().default.sync('xcrun', ['xctrace', 'list', 'devices']).stderr);
++    devices = (0, _parseXctraceIOSDevicesList.default)(_execa().default.sync('xcrun', ['xctrace', 'list', 'devices']).stdout);
+   } catch (e) {
+     _cliTools().logger.warn('Support for Xcode 11 and older is deprecated. Please upgrade to Xcode 12.');
+ 

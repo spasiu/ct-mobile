@@ -8,6 +8,7 @@ import {
 import { ApolloProvider } from '@apollo/client';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from 'react-native-config';
+import * as Sentry from '@sentry/react-native';
 
 import './theme/tachyons';
 import { RootNavigator } from './navigators/root-navigator';
@@ -32,6 +33,9 @@ const App = (): JSX.Element | null => {
     setI18nConfig();
     RNLocalize.addEventListener('change', setI18nConfig);
     GoogleSignin.configure({ webClientId: Config.GOOGLE_SIGN_IN_CLIENT_ID });
+    Sentry.init({
+      dsn: Config.SENTRY_DSN_URL,
+    });
 
     initLibraries();
     setLoaded(true);

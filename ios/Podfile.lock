@@ -715,10 +715,16 @@ PODS:
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
+  - RNSentry (2.6.2):
+    - React-Core
+    - Sentry (= 7.1.4)
   - RNShare (7.0.0):
     - React-Core
   - RNSVG (12.1.0):
     - React
+  - Sentry (7.1.4):
+    - Sentry/Core (= 7.1.4)
+  - Sentry/Core (7.1.4)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -775,6 +781,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -806,6 +813,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Sentry
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -910,6 +918,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -994,8 +1004,10 @@ SPEC CHECKSUMS:
   RNLocalize: 43f6c30d8e19ad92282ae434d310fb463b31f419
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
+  RNSentry: 68644ef607b780551cc555f084869764f2566652
   RNShare: 00e7409201e3cab13e0febc41fd4465a83ae8225
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
+  Sentry: 1d3eb1a25f8c5333c88dd5603904a6d461cd9fcf
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
 PODFILE CHECKSUM: 73d687177ea01b10fb24d9ac2dc3da12bd290993
