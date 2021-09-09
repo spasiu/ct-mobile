@@ -9,6 +9,16 @@
 - [ ] Key restriction for maps API
 - [ ] Key restriction for other google APIs
 
+## Local Setup
+
+1. Using _nvm_ or _n_ make sure your node version is v14+.
+2. Clone the repo and run `yarn install` in the project directory.
+3. Install Watchman `brew install watchman`.
+4. Rename the _.env.sample_ file to _.env_ and fill in the missing API keys and IDs.
+5. Make sure Xcode and Android Sturdio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
+6. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
+7. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour.
+
 ## Project Structure
 
 ```
