@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Text, FlatList, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -29,8 +29,9 @@ import {
   updateUnfollowBreakCache,
 } from '../../utils/cache';
 
-import { breakCardSelector } from './event-detail-motal.utils';
+import { breakCardSelector } from './event-detail-modal.utils';
 import { EventDetailModalProps } from './event-detail-modal.props';
+import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
 export const EventDetailModal = ({
   modalTitle = '',
@@ -47,6 +48,7 @@ export const EventDetailModal = ({
   ...modalProps
 }: EventDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [breakId, setBreakId] = useState('');
 
   const { loading, data, subscribeToMore } = useEventBreaksQuery({
     fetchPolicy: 'cache-and-network',
@@ -119,6 +121,8 @@ export const EventDetailModal = ({
               <BreakCard
                 {...breakCardDetails}
                 eventDate={eventDate}
+                onPressBuy={() => setBreakId(item.id)}
+                onPress={() => setBreakId(item.id)}
                 onPressFollow={() => {
                   const followData = {
                     user_id: authUser?.uid,
@@ -151,6 +155,13 @@ export const EventDetailModal = ({
           }}
         />
       )}
+      {breakId ? (
+        <BreakDetailModal
+          breakId={breakId}
+          isVisible={Boolean(breakId)}
+          onPressClose={() => setBreakId('')}
+        />
+      ) : null}
     </OverScreenModal>
   );
 };

@@ -3,11 +3,9 @@ query BreakerBreaks($id: String!, $userId: String) {
     where: {
       Event: {
         User: { id: { _eq: $id } }
-        status: { _neq: DRAFT }
-        _and: { status: { _neq: COMPLETED } }
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
       }
-      status: { _neq: DRAFT }
-      _and: { status: { _neq: COMPLETED } }
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
     }
     order_by: { Event: { start_time: asc } }
   ) {

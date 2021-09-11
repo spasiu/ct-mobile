@@ -7,6 +7,7 @@ export interface OverScreenModalProps {
   title?: string;
   action?: string;
   actionLoading?: boolean;
+  actionEnabled?: boolean;
   onPressClose?: () => void;
   onPressAction?: () => void;
   onPressBack?: () => void;

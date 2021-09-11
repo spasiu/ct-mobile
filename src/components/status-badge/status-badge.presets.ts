@@ -9,12 +9,12 @@ export const badgeContainerPresets = {
   [StatusBadgeTypes.live]: [s.bg_secondary] as ViewStyle[],
   [StatusBadgeTypes.upcoming]: [s.bg_positive] as ViewStyle[],
   [StatusBadgeTypes.scheduled]: [s.bg_primary] as ViewStyle[],
-  [StatusBadgeTypes.completed]: [] as ViewStyle[],
+  [StatusBadgeTypes.completed]: [s.bg_black_40] as ViewStyle[],
 };
 
 export const badgeTextPresets = {
   [StatusBadgeTypes.live]: 'status.live',
   [StatusBadgeTypes.upcoming]: 'status.upcoming',
   [StatusBadgeTypes.scheduled]: '',
-  [StatusBadgeTypes.completed]: '',
+  [StatusBadgeTypes.completed]: 'status.completed',
 };

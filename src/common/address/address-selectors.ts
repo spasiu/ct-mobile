@@ -1,4 +1,4 @@
-import { pathOr } from 'ramda';
+import { omit, pathOr } from 'ramda';
 
 import { Addresses } from '../../services/api/requests';
 
@@ -21,7 +21,7 @@ export const addressPostalCodeSelector = (address: Addresses): string =>
   pathOr('', ['postal_zip_code'], address);
 
 export const addressStateSelector = (address: Addresses): string =>
-  pathOr('', ['state_provice_region'], address);
+  pathOr('', ['state_province_region'], address);
 
 export const addressCountrySelector = (address: Addresses): string =>
   pathOr('', ['country'], address);
@@ -48,3 +48,27 @@ export const addressPostalCodeAndCountryOneLine = (
   const country = addressCountrySelector(address);
   return `${postalCode}, ${country}`;
 };
+
+export const addressSingleLineSelector = (
+  address: Addresses | undefined,
+): string => {
+  return address
+    ? `${addressLineOneSelector(address)}, ${
+        addressLineTwoSelector(address)
+          ? addressLineTwoSelector(address) + ', '
+          : ''
+      }${addressCitySelector(address)}, ${addressStateSelector(
+        address,
+      )}, ${addressPostalCodeSelector(address)}, ${addressCountrySelector(
+        address,
+      )}`
+    : '';
+};
+
+export const addressCleanSelector = (address: Addresses): Addresses => {
+  return omit(['is_default', '__typename', 'id'], address) as Addresses;
+};
+
+export const addressWithoutRecipientSelector = (
+  address: Addresses,
+): Addresses => omit(['first_name', 'last_name'], address) as Addresses;

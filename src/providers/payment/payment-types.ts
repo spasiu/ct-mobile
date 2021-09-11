@@ -30,4 +30,5 @@ export type PaymentContextType = {
     lastName: string,
   ) => Promise<boolean>;
   createOrder: (cartId: string, paymentToken: string) => Promise<boolean>;
+  cleanPaymentInfo: () => void;
 };

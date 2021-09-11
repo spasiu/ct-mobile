@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import Config from 'react-native-config';
 import { Blurhash } from 'react-native-blurhash';
 import axios from 'axios';
 import Animated, {
@@ -15,6 +14,7 @@ import {
   blurhashContainer,
   imageBackgroundDefaultStyle,
 } from './server-image.presets';
+import { getImgixUrlWithQueryParams } from '../../services/imgix';
 
 export const ServerImage = ({
   src,
@@ -36,8 +36,20 @@ export const ServerImage = ({
   const [blurHash, setBlurHash] = useState('');
   const [showOriginal, setShowOriginal] = useState(false);
 
-  const imageUrl = `${Config.IMAGE_SERVICE_URL}${src}?auto=compress&q=${quality}&w=${width}&h=${height}&fit=${fit}&fill=blur`;
-  const blurHashUrl = `${imageUrl}&fm=blurhash`;
+  const imgixQueryParamsConfig = {
+    auto: 'compress',
+    q: quality,
+    w: width,
+    h: height,
+    fill: 'blur',
+    fit,
+  };
+
+  const imageUrl = getImgixUrlWithQueryParams(src, imgixQueryParamsConfig);
+  const blurHashUrl = getImgixUrlWithQueryParams(src, {
+    ...imgixQueryParamsConfig,
+    fm: 'blurhash',
+  });
 
   useEffect(() => {
     axios

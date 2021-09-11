@@ -114,41 +114,5 @@ export const eventUpcomingBreakSelector = (
   event: Partial<Events>,
 ): Partial<Breaks> => {
   const breaks = eventUpcomingBreaksSelector(event);
-  // this logic will be updated after the breaks have an order
-  // const liveBreakIndex = findIndex(
-  //   propEq('status', Break_Status_Enum.Live),
-  //   breaks,
-  // );
-  // const completedBreakIndex = findIndex(
-  //   propEq('status', Break_Status_Enum.Completed),
-  //   breaks,
-  // );
-
-  // /*
-  //   state where the event might have:
-  //    1 - just started or
-  //    2 - is starting a next break
-  //    3 - event just ended
-  // */
-  // const noLiveBreaks = liveBreakIndex === -1;
-  // if (noLiveBreaks) {
-  //   // no live breaks or completed breaks
-  //   // the event is just starting
-  //   if (completedBreakIndex === -1) {
-  //     return head(breaks) as Breaks;
-  //   }
-
-  //   const isTheLastBreak = completedBreakIndex === breaks.length - 1;
-
-  //   // in case of existing a completed break
-  //   // if its not the last, return it
-  //   return isTheLastBreak ? {} : breaks[completedBreakIndex + 1];
-  // }
-
-  // const isLiveEventTheLast = liveBreakIndex === breaks.length - 1;
-  // // if a live break is happening
-  // // return it if it's not the last
-  // return isLiveEventTheLast ? {} : breaks[liveBreakIndex + 1];
-
   return head(breaks) || {};
 };

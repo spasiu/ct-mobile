@@ -4,11 +4,19 @@ import YupPassword from 'yup-password';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import firestore from '@react-native-firebase/firestore';
 
 import { t } from './i18n/i18n';
 import { getLocale } from './utils/localization';
 
-export const initLibraries = (): void => {
+export const initLibraries = async (
+  setLoaded: (loaded: boolean) => void,
+): Promise<void> => {
+  // disable offline persistence
+  await firestore().settings({
+    persistence: false,
+  });
+
   // start yup password validators
   Yup.setLocale({
     mixed: { notType: t('forms.numberField') },
@@ -29,4 +37,6 @@ export const initLibraries = (): void => {
       sameElse: 'MMM D, h:mma',
     },
   });
+
+  setLoaded(true);
 };

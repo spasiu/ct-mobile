@@ -62,7 +62,9 @@ export const breakPriceSelector = (eventBreak: Partial<Breaks>): string => {
   const minPrice = breakProductsMinPriceSelector(aggregator);
   return maxPrice === minPrice
     ? `${t('payment.paymentCurrencySign')}${maxPrice}`
-    : `${t('payment.paymentCurrencySign')}${minPrice} - $${maxPrice}`;
+    : `${t('payment.paymentCurrencySign')}${minPrice} - ${t(
+        'payment.paymentCurrencySign',
+      )}${maxPrice}`;
 };
 
 export const breakSpotsSelector = (eventBreak: Partial<Breaks>): string => {
@@ -138,3 +140,11 @@ export const breakStatusSelector = (
 export const breakResultSelector = (
   eventBreak: Partial<Breaks>,
 ): BreakResult[] => pathOr([], ['result'], eventBreak);
+
+export const breakIdSelector = (eventBreak: Partial<Breaks>): string =>
+  pathOr('', ['id'], eventBreak);
+
+export const breakCompletedSelector = (eventBreak: Breaks): boolean => {
+  const status = breakStatusSelector(eventBreak);
+  return status === Break_Status_Enum.Completed;
+};

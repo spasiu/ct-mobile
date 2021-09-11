@@ -47,6 +47,8 @@ import {
   logoutIcon,
 } from './user-profile-screen.presets';
 import { UserSaves } from './user-saves';
+import { FilterContext, FilterContextType } from '../../providers/filter';
+import { isEmpty } from 'ramda';
 
 export const UserProfileScreen = ({
   navigation,
@@ -54,14 +56,21 @@ export const UserProfileScreen = ({
   const { logout, uploadPhoto, user: authUser } = useContext(
     AuthContext,
   ) as AuthContextType;
-  const { getCards, getDefaultPaymentCard } = useContext(
-    PaymentContext,
-  ) as PaymentContextType;
+  const {
+    cards,
+    getCards,
+    getDefaultPaymentCard,
+    cleanPaymentInfo,
+  } = useContext(PaymentContext) as PaymentContextType;
+  const { cleanFilters } = useContext(FilterContext) as FilterContextType;
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
-    getCards(authUser as FirebaseAuthTypes.User);
+    if (isEmpty(cards)) {
+      getCards(authUser as FirebaseAuthTypes.User);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -206,7 +215,11 @@ export const UserProfileScreen = ({
                 icon={logoutIcon}
                 text={t('buttons.logout')}
                 containerStyle={[s.mb2]}
-                onPress={() => logout()}
+                onPress={() => {
+                  cleanPaymentInfo();
+                  cleanFilters();
+                  logout();
+                }}
               />
             </View>
           </>

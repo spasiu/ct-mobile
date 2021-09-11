@@ -1,6 +1,11 @@
-import { OverScreenModalProps } from '../../components';
+import { Card } from '../../common/payment';
+import { OverScreenModalProps, WarningModalProps } from '../../components';
 
-import { Addresses, Breaks, Users } from '../../services/api/requests';
+import {
+  Addresses,
+  BreakProductItems,
+  Breaks,
+} from '../../services/api/requests';
 
 export type CheckoutCartData = {
   id: string;
@@ -20,12 +25,6 @@ export type CheckoutData = {
 export type CheckoutResponse = {
   data: {
     data: CheckoutData;
-  };
-};
-
-export type UpdateCheckoutResponse = {
-  data: {
-    data: CheckoutCartData;
   };
 };
 
@@ -64,10 +63,19 @@ export interface BreakDetailModalProps extends OverScreenModalProps {
 
 export interface BreakDetailProps {
   breakData: Breaks;
-  userData: Users;
-  checkoutCart: CheckoutCart;
-  setCheckoutCart: (cart: CheckoutCart) => void;
-  setLoading: (loading: boolean) => void;
+  selectedItems: BreakProductItems[];
+  setSelectedItems: (items: BreakProductItems[]) => void;
   setVisibleRoute: (route: ModalRoute) => void;
   isBreakSoldOut: boolean;
+  isBreakCompleted: boolean;
+  paymentData: Card | undefined;
+  userAddress: Addresses | undefined;
+}
+
+export interface PurchaseModalProps extends WarningModalProps {
+  userAddress: Addresses;
+  userPaymentData: Card | undefined;
+  cartItems: BreakProductItems[];
+  onSuccess: () => void;
+  onCancel: () => void;
 }

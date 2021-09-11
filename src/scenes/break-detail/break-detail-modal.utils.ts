@@ -1,13 +1,4 @@
-import {
-  pathOr,
-  map,
-  set,
-  lensProp,
-  whereEq,
-  find,
-  length,
-  isEmpty,
-} from 'ramda';
+import { pathOr, map, pluck, findIndex, propEq } from 'ramda';
 import functions from '@react-native-firebase/functions';
 
 import { t } from '../../i18n/i18n';
@@ -15,12 +6,7 @@ import {
   breakProductExternalProductId,
   breakProductExternalVariantId,
 } from '../../common/break-products';
-import {
-  userDefaultAddressCleanSelector,
-  userFirstNameSelector,
-  userLastNameSelector,
-} from '../../common/user-profile';
-import { BreakProductItems, Users } from '../../services/api/requests';
+import { Addresses, BreakProductItems } from '../../services/api/requests';
 
 import {
   CheckoutCart,
@@ -28,17 +14,19 @@ import {
   CheckoutResponse,
   CheckoutParams,
   CartProduct,
-  CheckoutCartData,
-  UpdateCheckoutResponse,
   ModalRoute,
 } from './break-detail-modal.props';
 import { ROUTES_IDS } from '../../navigators';
+import {
+  addressRecipientFirstNameSelector,
+  addressRecipientLastNameSelector,
+  addressWithoutRecipientSelector,
+} from '../../common/address/address-selectors';
+import { Card } from '../../common/payment';
+import { failedImage, successImage } from './break-detail-modal.presets';
+import { ImageSourcePropType } from 'react-native';
 
 export const createCheckout = functions().httpsCallable('createCheckout');
-export const addItemToCart = functions().httpsCallable('addItem');
-export const removeItemFromCart = functions().httpsCallable('removeItem');
-export const getCheckout = functions().httpsCallable('getCheckout');
-export const addAddress = functions().httpsCallable('addAddress');
 
 export const transformProductToCheckout = (
   product: BreakProductItems,
@@ -51,20 +39,14 @@ export const transformProductToCheckout = (
 };
 
 export const getCheckoutParams = (
-  user: Users,
+  userAddress: Addresses,
   breakProducts: BreakProductItems[],
-  products: CartProduct[] = [],
-): CheckoutParams => {
-  const address = userDefaultAddressCleanSelector(user);
-  return {
-    products: isEmpty(products)
-      ? map(product => transformProductToCheckout(product), breakProducts)
-      : products,
-    first_name: userFirstNameSelector(user),
-    last_name: userLastNameSelector(user),
-    ...((address.line1 && { address }) || {}),
-  };
-};
+): CheckoutParams => ({
+  first_name: addressRecipientFirstNameSelector(userAddress),
+  last_name: addressRecipientLastNameSelector(userAddress),
+  address: addressWithoutRecipientSelector(userAddress),
+  products: map(product => transformProductToCheckout(product), breakProducts),
+});
 
 export const getCheckoutCartInfo = (
   response: CheckoutResponse,
@@ -86,62 +68,17 @@ export const getCheckoutCartInfo = (
   };
 };
 
-export const updateCheckoutCart = (
-  updatedCartResponse: UpdateCheckoutResponse,
-  checkoutCart: CheckoutCart,
-): CheckoutCart => {
-  const updatedCart = pathOr(
-    {},
-    ['data', 'data'],
-    updatedCartResponse,
-  ) as CheckoutCartData;
-  const cartItems = pathOr([], ['line_items', 'physical_items'], updatedCart);
-  return set(lensProp('cartItems'), cartItems, checkoutCart);
-};
-
-export const findBreakProductItem = (
-  productId: string,
-  variantId: string,
-  breakProductItems: BreakProductItems[],
-): BreakProductItems | undefined =>
-  find(
-    whereEq({
-      bc_product_id: productId,
-      bc_variant_id: variantId,
-    }),
-    breakProductItems,
-  );
-
 export const getProductsPreview = (
-  checkoutCart: CheckoutCart,
-  breakProducts: BreakProductItems[],
+  selectedItems: BreakProductItems[],
 ): string => {
-  const cartItemTitles = map(cartItem => {
-    const breakProductItem = findBreakProductItem(
-      cartItem.product_id,
-      cartItem.variant_id,
-      breakProducts,
-    );
-    return breakProductItem ? breakProductItem.title : '';
-  }, checkoutCart.cartItems);
+  const cartItemTitles = pluck('title', selectedItems);
   return cartItemTitles.join(', ');
 };
 
-export const findCartItem = (
+export const findSelectedItem = (
   breakProduct: BreakProductItems,
-  checkoutCart: CheckoutCart,
-): CartProduct | undefined =>
-  find(
-    whereEq({
-      product_id: breakProduct.bc_product_id,
-      variant_id: breakProduct.bc_variant_id,
-      quantity: 1,
-    }),
-    checkoutCart.cartItems || [],
-  );
-
-export const cartHasOnlyOneItem = (checkoutCart: CheckoutCart): boolean =>
-  length(checkoutCart.cartItems) === 1;
+  selectedItems: BreakProductItems[] = [],
+): number => findIndex(propEq('id', breakProduct.id), selectedItems);
 
 export const isBreakDetailView = (visibleRoute: ModalRoute): boolean =>
   visibleRoute.route === ROUTES_IDS.BREAK_DETAIL_MODAL;
@@ -163,7 +100,6 @@ export const isAddPayment = (visibleRoute: ModalRoute): boolean =>
 
 export const getRootModalProps = (
   loading: boolean,
-  checkoutCart: CheckoutCart | undefined,
   visibleRoute: ModalRoute,
   isBreakSoldOut: boolean,
 ): {
@@ -189,40 +125,113 @@ export const getRootModalProps = (
     };
   }
 
-  const paymentAction = checkoutCart
-    ? `${t('buttons.purchase')} $${checkoutCart.total}`
-    : t('buttons.purchase');
-
   return {
-    action: isBreakSoldOut || loading ? '' : paymentAction,
+    action: isBreakSoldOut || loading ? '' : t('buttons.continueToCheckout'),
     title: t('break.detailModalTitle'),
   };
 };
 
-export const updateCartAddress = async (
-  user: Users,
-  checkoutCart: CheckoutCart,
-  setCheckoutCart: (cart: CheckoutCart) => void,
-  setRefetching: (refetching: boolean) => void,
-  setVisibleRoute: (route: ModalRoute) => void,
-): Promise<void> => {
-  const address = userDefaultAddressCleanSelector(user);
+export const checkoutCartSubtotalSelector = (
+  checkoutCart: CheckoutCart | undefined,
+): string => {
+  const subtotal = pathOr('', ['subtotal'], checkoutCart);
+  return subtotal ? `${t('payment.paymentCurrencySign')}${subtotal}` : '';
+};
 
-  let cart;
-  if (isEmpty(address)) {
-    const checkoutParams = getCheckoutParams(user, [], checkoutCart.cartItems);
-    cart = await createCheckout(checkoutParams);
-  } else {
-    cart = await addAddress({
-      cartId: checkoutCart.cartId,
-      address: userDefaultAddressCleanSelector(user),
-    });
+export const checkoutCartTaxSelector = (
+  checkoutCart: CheckoutCart | undefined,
+): string => {
+  const tax = pathOr('', ['tax'], checkoutCart);
+  return tax ? `${t('payment.paymentCurrencySign')}${tax}` : '';
+};
+
+export const checkoutCartShippingSelector = (
+  checkoutCart: CheckoutCart | undefined,
+): string => {
+  const shipping = pathOr('', ['shipping'], checkoutCart);
+  return shipping ? `${t('payment.paymentCurrencySign')}${shipping}` : '';
+};
+
+export const checkoutCartTotalSelector = (
+  checkoutCart: CheckoutCart | undefined,
+): string => {
+  const total = pathOr('', ['total'], checkoutCart);
+  return total ? `${t('payment.paymentCurrencySign')}${total}` : '';
+};
+
+export const processPayment = async (
+  checkoutCart: CheckoutCart,
+  userPaymentData: Card,
+  createOrder: (cardId: string, paymentToken: string) => Promise<boolean>,
+  setOrderCreated: (status: boolean) => void,
+  setPurchasing: (purchasing: boolean) => void,
+): Promise<void> => {
+  if (checkoutCart && userPaymentData) {
+    setPurchasing(true);
+    const created = await createOrder(
+      checkoutCart.cartId,
+      userPaymentData.paymentToken,
+    );
+
+    if (created) {
+      setOrderCreated(true);
+    } else {
+      setOrderCreated(false);
+    }
+
+    setPurchasing(false);
+  }
+};
+
+export const getWarningModalProps = (
+  orderCreated: boolean | undefined,
+  checkoutCart: CheckoutCart,
+  userPaymentData: Card,
+  createOrder: (cardId: string, paymentToken: string) => Promise<boolean>,
+  setOrderCreated: (status: boolean) => void,
+  onSuccess: () => void,
+  onCancel: () => void,
+  setPurchasing: (purchasing: boolean) => void,
+): {
+  title: string;
+  primaryActionText: string;
+  secondaryActionText?: string;
+  onPrimaryActionPressed: () => void | Promise<void>;
+  onSecondaryActionPressed?: () => void;
+  imageSrc?: ImageSourcePropType;
+} => {
+  if (orderCreated === undefined) {
+    return {
+      title: t('payment.purchaseModalTitle'),
+      primaryActionText: `${t('buttons.purchase')} ${checkoutCartTotalSelector(
+        checkoutCart,
+      )}`,
+      secondaryActionText: t('buttons.cancel'),
+      onPrimaryActionPressed: async () =>
+        await processPayment(
+          checkoutCart as CheckoutCart,
+          userPaymentData,
+          createOrder,
+          setOrderCreated,
+          setPurchasing,
+        ),
+      onSecondaryActionPressed: onCancel,
+    };
   }
 
-  const checkoutData = getCheckoutCartInfo(cart);
-  setRefetching(false);
-  setCheckoutCart(checkoutData);
-  setVisibleRoute({
-    route: ROUTES_IDS.BREAK_DETAIL_MODAL,
-  });
+  if (orderCreated) {
+    return {
+      imageSrc: successImage,
+      title: t('payment.purchaseSuccessfullMessage'),
+      primaryActionText: t('buttons.letsGo'),
+      onPrimaryActionPressed: onSuccess,
+    };
+  } else {
+    return {
+      imageSrc: failedImage,
+      title: t('payment.purchaseFailedMessage'),
+      primaryActionText: t('buttons.backToPaymentDetails'),
+      onPrimaryActionPressed: onCancel,
+    };
+  }
 };

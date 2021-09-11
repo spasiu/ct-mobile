@@ -10,7 +10,7 @@ export const ADDRESS_FORM_FIELDS = {
   SECOND_LINE: 'line2',
   CITY: 'city',
   POSTAL_CODE: 'postal_zip_code',
-  STATE_PROVINCE_REGION: 'state_provice_region',
+  STATE_PROVINCE_REGION: 'state_province_region',
   COUNTRY: 'country',
 } as const;
 

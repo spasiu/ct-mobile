@@ -36,7 +36,7 @@ export type Addresses = {
   line1: Scalars['String'];
   line2?: Maybe<Scalars['String']>;
   postal_zip_code: Scalars['String'];
-  state_provice_region: Scalars['String'];
+  state_province_region: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -93,7 +93,7 @@ export type Addresses_Bool_Exp = {
   line1?: Maybe<String_Comparison_Exp>;
   line2?: Maybe<String_Comparison_Exp>;
   postal_zip_code?: Maybe<String_Comparison_Exp>;
-  state_provice_region?: Maybe<String_Comparison_Exp>;
+  state_province_region?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -117,7 +117,7 @@ export type Addresses_Insert_Input = {
   line1?: Maybe<Scalars['String']>;
   line2?: Maybe<Scalars['String']>;
   postal_zip_code?: Maybe<Scalars['String']>;
-  state_provice_region?: Maybe<Scalars['String']>;
+  state_province_region?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -134,7 +134,7 @@ export type Addresses_Max_Fields = {
   line1?: Maybe<Scalars['String']>;
   line2?: Maybe<Scalars['String']>;
   postal_zip_code?: Maybe<Scalars['String']>;
-  state_provice_region?: Maybe<Scalars['String']>;
+  state_province_region?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -150,7 +150,7 @@ export type Addresses_Max_Order_By = {
   line1?: Maybe<Order_By>;
   line2?: Maybe<Order_By>;
   postal_zip_code?: Maybe<Order_By>;
-  state_provice_region?: Maybe<Order_By>;
+  state_province_region?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -167,7 +167,7 @@ export type Addresses_Min_Fields = {
   line1?: Maybe<Scalars['String']>;
   line2?: Maybe<Scalars['String']>;
   postal_zip_code?: Maybe<Scalars['String']>;
-  state_provice_region?: Maybe<Scalars['String']>;
+  state_province_region?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -183,7 +183,7 @@ export type Addresses_Min_Order_By = {
   line1?: Maybe<Order_By>;
   line2?: Maybe<Order_By>;
   postal_zip_code?: Maybe<Order_By>;
-  state_provice_region?: Maybe<Order_By>;
+  state_province_region?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -217,7 +217,7 @@ export type Addresses_Order_By = {
   line1?: Maybe<Order_By>;
   line2?: Maybe<Order_By>;
   postal_zip_code?: Maybe<Order_By>;
-  state_provice_region?: Maybe<Order_By>;
+  state_province_region?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -250,7 +250,7 @@ export enum Addresses_Select_Column {
   /** column name */
   PostalZipCode = 'postal_zip_code',
   /** column name */
-  StateProviceRegion = 'state_provice_region',
+  StateProvinceRegion = 'state_province_region',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -269,7 +269,7 @@ export type Addresses_Set_Input = {
   line1?: Maybe<Scalars['String']>;
   line2?: Maybe<Scalars['String']>;
   postal_zip_code?: Maybe<Scalars['String']>;
-  state_provice_region?: Maybe<Scalars['String']>;
+  state_province_region?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -297,7 +297,7 @@ export enum Addresses_Update_Column {
   /** column name */
   PostalZipCode = 'postal_zip_code',
   /** column name */
-  StateProviceRegion = 'state_provice_region',
+  StateProvinceRegion = 'state_province_region',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5089,7 +5089,7 @@ export type Users = {
   /** An aggregate relationship */
   Addresses_aggregate: Addresses_Aggregate;
   /** An object relationship */
-  BreakerProfile: BreakerProfiles;
+  BreakerProfile?: Maybe<BreakerProfiles>;
   /** An array relationship */
   Events: Array<Events>;
   /** An aggregate relationship */
@@ -5103,7 +5103,7 @@ export type Users = {
   /** An aggregate relationship */
   Hits_aggregate: Hits_Aggregate;
   /** An object relationship */
-  Notification: Notifications;
+  Notification?: Maybe<Notifications>;
   /** fetch data from the table: "Orders" */
   Orders: Array<Orders>;
   /** An aggregate relationship */
@@ -5123,7 +5123,7 @@ export type Users = {
   /** An object relationship */
   Stream?: Maybe<Streams>;
   /** An object relationship */
-  UserPreference: UserPreferences;
+  UserPreference?: Maybe<UserPreferences>;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   first_name?: Maybe<Scalars['String']>;
@@ -8885,7 +8885,7 @@ export type Uuid_Comparison_Exp = {
 
 export type AddressOverviewFragment = (
   { __typename?: 'Addresses' }
-  & Pick<Addresses, 'first_name' | 'last_name' | 'is_default' | 'line1' | 'line2' | 'postal_zip_code' | 'state_provice_region' | 'city' | 'country'>
+  & Pick<Addresses, 'first_name' | 'last_name' | 'is_default' | 'line1' | 'line2' | 'postal_zip_code' | 'state_province_region' | 'city' | 'country'>
 );
 
 export type BreakDetailQueryVariables = Exact<{
@@ -9116,10 +9116,10 @@ export type BreakersQuery = (
   & { Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
-    & { BreakerProfile: (
+    & { BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ), Followers: Array<(
+    )>, Followers: Array<(
       { __typename?: 'SaveBreaker' }
       & Pick<SaveBreaker, 'id'>
       & { User: (
@@ -9144,10 +9144,10 @@ export type NewBreakersSubscription = (
   & { Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
-    & { BreakerProfile: (
+    & { BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ), Followers: Array<(
+    )>, Followers: Array<(
       { __typename?: 'SaveBreaker' }
       & Pick<SaveBreaker, 'id'>
       & { User: (
@@ -9292,10 +9292,10 @@ export type FeaturedBreakersQuery = (
   & { Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
-    & { BreakerProfile: (
+    & { BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ) }
+    )> }
   )> }
 );
 
@@ -9508,10 +9508,10 @@ export type LiveStreamSubscription = (
       & { Stream?: Maybe<(
         { __typename?: 'Streams' }
         & Pick<Streams, 'id' | 'stream_id' | 'stream_key' | 'stream_url'>
-      )>, BreakerProfile: (
+      )>, BreakerProfile?: Maybe<(
         { __typename?: 'BreakerProfiles' }
         & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-      ) }
+      )> }
     ), Saves: Array<(
       { __typename?: 'SaveEvent' }
       & Pick<SaveEvent, 'id'>
@@ -9575,10 +9575,10 @@ export type LoggedUserQuery = (
       { __typename?: 'Addresses' }
       & Pick<Addresses, 'id'>
       & AddressOverviewFragment
-    )>, Notification: (
+    )>, Notification?: Maybe<(
       { __typename?: 'Notifications' }
       & Pick<Notifications, 'id' | 'before_15_min' | 'when_live'>
-    ) }
+    )> }
   )> }
 );
 
@@ -9716,10 +9716,10 @@ export type ScheduledEventsQuery = (
           & Pick<Users, 'id'>
         ) }
       )> }
-    )>, BreakerProfile: (
+    )>, BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ) }
+    )> }
   )> }
 );
 
@@ -9749,10 +9749,10 @@ export type NewScheduledEventsSubscription = (
           & Pick<Users, 'id'>
         ) }
       )> }
-    )>, BreakerProfile: (
+    )>, BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ) }
+    )> }
   )> }
 );
 
@@ -9767,10 +9767,10 @@ export type SearchQuery = (
   & { Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    & { BreakerProfile: (
+    & { BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ) }
+    )> }
   )>, Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
@@ -9816,10 +9816,10 @@ export type SearchQuery = (
   )>, EventBreakers: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    & { BreakerProfile: (
+    & { BreakerProfile?: Maybe<(
       { __typename?: 'BreakerProfiles' }
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-    ), Events: Array<(
+    )>, Events: Array<(
       { __typename?: 'Events' }
       & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
       & { User: (
@@ -10009,10 +10009,10 @@ export type UserPreferencesQuery = (
   & { Users: Array<(
     { __typename?: 'Users' }
     & Pick<Users, 'id'>
-    & { UserPreference: (
+    & { UserPreference?: Maybe<(
       { __typename?: 'UserPreferences' }
       & Pick<UserPreferences, 'id' | 'pricing' | 'sports' | 'break_type'>
-    ) }
+    )> }
   )> }
 );
 
@@ -10143,10 +10143,10 @@ export type NewUserUpcomingEventsSubscription = (
     )>, User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id' | 'first_name' | 'image' | 'last_name'>
-      & { BreakerProfile: (
+      & { BreakerProfile?: Maybe<(
         { __typename?: 'BreakerProfiles' }
         & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-      ) }
+      )> }
     ) }
   )> }
 );
@@ -10174,10 +10174,10 @@ export type UserUpcomingEventsQuery = (
     )>, User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id' | 'first_name' | 'image' | 'last_name'>
-      & { BreakerProfile: (
+      & { BreakerProfile?: Maybe<(
         { __typename?: 'BreakerProfiles' }
         & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-      ) }
+      )> }
     ) }
   )> }
 );
@@ -10190,7 +10190,7 @@ export const AddressOverviewFragmentDoc = gql`
   line1
   line2
   postal_zip_code
-  state_provice_region
+  state_province_region
   city
   country
 }
@@ -10262,7 +10262,7 @@ export type BreakDetailQueryResult = Apollo.QueryResult<BreakDetailQuery, BreakD
 export const BreakerBreaksDocument = gql`
     query BreakerBreaks($id: String!, $userId: String) {
   Breaks(
-    where: {Event: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+    where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
     order_by: {Event: {start_time: asc}}
   ) {
     id
@@ -10341,7 +10341,7 @@ export type BreakerBreaksQueryResult = Apollo.QueryResult<BreakerBreaksQuery, Br
 export const NewBreakerBreaksDocument = gql`
     subscription NewBreakerBreaks($id: String!, $userId: String) {
   Breaks(
-    where: {Event: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+    where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
     order_by: {Event: {start_time: asc}}
   ) {
     id
@@ -10415,7 +10415,7 @@ export type NewBreakerBreaksSubscriptionResult = Apollo.SubscriptionResult<NewBr
 export const BreakerEventsDocument = gql`
     query BreakerEvents($id: String!, $userId: String!) {
   Events(
-    where: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+    where: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
   ) {
     id
     title
@@ -10467,7 +10467,7 @@ export type BreakerEventsQueryResult = Apollo.QueryResult<BreakerEventsQuery, Br
 export const NewBreakerEventsDocument = gql`
     subscription NewBreakerEvents($id: String!, $userId: String!) {
   Events(
-    where: {User: {id: {_eq: $id}}, status: {_neq: DRAFT}, _and: {status: {_neq: COMPLETED}}}
+    where: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}
   ) {
     id
     title
@@ -11427,7 +11427,7 @@ export const LiveStreamDocument = gql`
         id
       }
     }
-    Breaks(where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}) {
+    Breaks(where: {status: {_neq: DRAFT}}) {
       id
       break_type
       description

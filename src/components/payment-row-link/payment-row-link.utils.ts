@@ -23,7 +23,7 @@ export const getRowIcon = (
   if (paymentMethod === PaymentMethods.card) {
     const cardDetails = cardInfo as PaymentRowCardInfo;
     if (cardDetails.cardType === CardTypes.AM) {
-      return masterIcon;
+      return paymentIcon;
     }
 
     if (cardDetails.cardType === CardTypes.VI) {

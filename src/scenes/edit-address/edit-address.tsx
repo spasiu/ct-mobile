@@ -25,8 +25,8 @@ import { addressIsDefaultSelector } from '../../common/address/address-selectors
 import {
   useUpdateUserAddressMutation,
   useDeleteUserAddressMutation,
-  LoggedUserDocument,
   Addresses,
+  UserAddressesDocument,
 } from '../../services/api/requests';
 
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -53,10 +53,10 @@ export const EditAddress = ({
           message: t('errors.generic'),
           type: 'danger',
         }),
-      onCompleted: onAddressEdited,
+      onCompleted: () => onAddressEdited(),
       refetchQueries: [
         {
-          query: LoggedUserDocument,
+          query: UserAddressesDocument,
           variables: {
             id: authUser?.uid,
           },
@@ -100,7 +100,7 @@ export const EditAddress = ({
     },
     refetchQueries: [
       {
-        query: LoggedUserDocument,
+        query: UserAddressesDocument,
         variables: {
           id: authUser?.uid,
         },
@@ -402,7 +402,7 @@ export const EditAddress = ({
         onPrimaryActionPressed={() => deleteUserAddressMutation()}
         secondaryActionText={t('buttons.cancel')}
         onSecondaryActionPressed={() => setDeleteAddress(false)}
-        loadingPrimaryAction={deleting}
+        loadingPrimaryAction={deleting || loading}
       />
     </>
   );

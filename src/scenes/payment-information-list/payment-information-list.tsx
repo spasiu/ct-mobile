@@ -21,6 +21,7 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 import { Card } from '../../common/payment';
 
 import { PaymentInformationListProps } from './payment-information-list-screen.props';
+import { find, isEmpty, propEq } from 'ramda';
 
 export const PaymentInformationList = ({
   onAddPayment,
@@ -39,16 +40,25 @@ export const PaymentInformationList = ({
   const [cardToDelete, setCardToDelete] = useState('');
 
   useEffect(() => {
-    if (cards.length === 0) {
+    if (isEmpty(cards)) {
       setLoading(true);
       getCards(user as FirebaseAuthTypes.User);
-      setSelectedCard(defaultPaymentMethod);
       setLoading(false);
-    } else {
-      setSelectedCard(defaultPaymentMethod);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // when a user deletes a card, we can't be sure if what is on selectedCard is correct
+  // because user might have deleted the previous default card
+  useEffect(() => {
+    if (selectedCard) {
+      const selectedCardExists = find(propEq('id', selectedCard))(cards);
+
+      if (!selectedCardExists) {
+        setSelectedCard('');
+      }
+    }
+  }, [selectedCard, cards]);
 
   return (
     <>
@@ -66,7 +76,9 @@ export const PaymentInformationList = ({
           contentContainerStyle={[s.ph3]}
           renderItem={({ item }) => {
             const cardInfo = item as Card;
-            const isSelected = cardInfo.id === selectedCard;
+            const isSelected = selectedCard
+              ? cardInfo.id === selectedCard
+              : cardInfo.id === defaultPaymentMethod;
             return (
               <SelectableRow
                 rowStyle={[s.aic, s.pv0, s.mb3]}

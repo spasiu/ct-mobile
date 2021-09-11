@@ -20,7 +20,7 @@ import { getFieldStatus } from '../../utils/form-field';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   useInsertUserAddressMutation,
-  LoggedUserDocument,
+  UserAddressesDocument,
 } from '../../services/api/requests';
 import { getPredictions, PredictionType } from '../../services/places-api';
 
@@ -48,7 +48,7 @@ export const AddAddress = ({
       onCompleted: onAddressAdded,
       refetchQueries: [
         {
-          query: LoggedUserDocument,
+          query: UserAddressesDocument,
           variables: {
             id: authUser?.uid,
           },

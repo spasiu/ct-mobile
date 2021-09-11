@@ -32,11 +32,7 @@ subscription LiveStream($eventId: uuid, $userId: String) {
         id
       }
     }
-    Breaks(
-      where: {
-        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
-      }
-    ) {
+    Breaks(where: { status: { _neq: DRAFT } }) {
       id
       break_type
       description

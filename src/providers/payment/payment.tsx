@@ -107,6 +107,10 @@ export const PaymentProvider = ({
           );
           return await createOrderHandler(cartId, defaultCard.paymentToken);
         },
+        cleanPaymentInfo: () => {
+          setCards([]);
+          setDefaultPaymentMethod('');
+        },
       }}>
       {children}
     </PaymentContext.Provider>

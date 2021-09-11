@@ -32,6 +32,7 @@ export * from './navigation-bar';
 export * from './over-screen-modal';
 export * from './pagination';
 export * from './payment-row-link';
+export * from './product-row-link';
 export * from './question-page';
 export * from './read-more';
 export * from './row-link';

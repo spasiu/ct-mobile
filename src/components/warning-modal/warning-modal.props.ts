@@ -1,3 +1,4 @@
+import React from 'react';
 import { ImageSourcePropType, TextStyle } from 'react-native';
 
 export interface WarningModalProps {
@@ -11,4 +12,6 @@ export interface WarningModalProps {
   loadingPrimaryAction?: boolean;
   imageSrc?: ImageSourcePropType;
   titleStyle?: TextStyle[];
+  children?: React.ReactNode;
+  loading?: boolean;
 }

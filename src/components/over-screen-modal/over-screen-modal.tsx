@@ -17,6 +17,7 @@ import {
   closeIcon,
 } from './over-screen-modal.presets';
 import { OverScreenModalProps } from './over-screen-modal.props';
+import { ActionButtonTypes } from '../action-button';
 
 export const OverScreenModal = ({
   ratio = 1,
@@ -29,6 +30,7 @@ export const OverScreenModal = ({
   showBack = false,
   actionLoading = false,
   actionStyle = [],
+  actionEnabled = true,
   bottomComponent,
   ...modalProps
 }: OverScreenModalProps): JSX.Element => {
@@ -52,6 +54,11 @@ export const OverScreenModal = ({
           {children}
           {action ? (
             <ActionFooter
+              buttonType={
+                actionEnabled
+                  ? ActionButtonTypes.primary
+                  : ActionButtonTypes.disabled
+              }
               isLoading={actionLoading}
               containerStyle={actionStyle}
               buttonText={action}

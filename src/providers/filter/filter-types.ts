@@ -11,6 +11,7 @@ export type FilterContextType = {
   setBreakTypeFilter: (breakType: BreakTypeFilterOptions) => void;
   sportTypeFilter: SportTypeFilterOptions;
   setSportTypeFilter: (sportType: SportTypeFilterOptions) => void;
+  cleanFilters: () => void;
 };
 
 export type BreakTypeFilterOptions = BreakType | typeof ALL_FILTER_OPTION;

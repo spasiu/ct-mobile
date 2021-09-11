@@ -1,4 +1,5 @@
 import { filter, head, pathOr } from 'ramda';
+import { t } from '../../i18n/i18n';
 
 import {
   BreakProductItems_Aggregate,
@@ -50,3 +51,13 @@ export const breakProductExternalProductId = (
 export const breakProductExternalVariantId = (
   product: BreakProductItems,
 ): string => pathOr('', ['bc_variant_id'], product);
+
+export const breakProductTitleSelector = (product: BreakProductItems): string =>
+  pathOr('', ['title'], product);
+
+export const breakProductPriceSelector = (
+  product: BreakProductItems,
+): string => {
+  const price = pathOr('', ['price'], product);
+  return price ? `${t('payment.paymentCurrencySign')}${price}` : '';
+};

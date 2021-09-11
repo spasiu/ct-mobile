@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
-import { styles as s } from 'react-native-style-tachyons';
+import { sizes, styles as s } from 'react-native-style-tachyons';
 
 import {
   Container,
@@ -30,6 +30,7 @@ import {
   FilterContextType,
   SportTypeFilterOptions,
 } from '../../providers/filter';
+import { WINDOW_WIDTH } from '../../theme/sizes';
 
 export const ScheduleScreen = (): JSX.Element => {
   const [eventsView, setEventsView] = useState(false);
@@ -83,7 +84,14 @@ export const ScheduleScreen = (): JSX.Element => {
         />
       </View>
       {eventsView ? <EventsView /> : <BreaksView />}
-      <View style={[s.absolute, s.bottom_0, s.h3, s.w_100, s.jcc, s.aic]}>
+      <View
+        style={[
+          s.absolute,
+          s.bottom_0,
+          s.h3,
+          s.jcc,
+          { right: WINDOW_WIDTH / 2 - sizes.w2 },
+        ]}>
         <BorderlessButton
           onPress={() => setOpenModal(true)}
           style={[s.bg_black, s.pa2, s.jcc, s.br4, s.aic, s.flx_row]}>

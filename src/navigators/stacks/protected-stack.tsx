@@ -6,12 +6,13 @@ import Intercom from '@intercom/intercom-react-native';
 
 import { LiveScreen } from '../../scenes/live/live-screen';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-
+import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import { ROUTES_IDS } from '../routes/identifiers';
 import { TabNavigator } from '../tab-navigator';
 
 import { OnboardingStack } from './onboarding-stack';
 import { Platform } from 'react-native';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export type ProtectedStackParamList = {
   [ROUTES_IDS.ONBOARDING_STACK]: undefined;
@@ -27,6 +28,7 @@ export const ProtectedStack = (): JSX.Element => {
   const { onboardingComplete, user } = useContext(
     AuthContext,
   ) as AuthContextType;
+  const { getCards } = useContext(PaymentContext) as PaymentContextType;
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -60,15 +62,18 @@ export const ProtectedStack = (): JSX.Element => {
     messaging()
       .getToken()
       .then(token => {
-        console.log('FCM TOKEN', token);
         Intercom.sendTokenToIntercom(token);
       });
 
     const unsubscribe = messaging().onTokenRefresh(token => {
-      console.log('FCM TOKEN REFRESHED', token);
       Intercom.sendTokenToIntercom(token);
     });
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    getCards(user as FirebaseAuthTypes.User);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -11,8 +11,11 @@ import {
   descriptionStyle,
   secondaryActionStyle,
   secondaryActionWrapperStyle,
+  loadingWrapper,
+  loadingContainer,
 } from './warning-modal.presets';
 import { WarningModalProps } from './warning-modal.props';
+import { Loading } from '../loading';
 
 export const WarningModal = ({
   visible = false,
@@ -25,27 +28,38 @@ export const WarningModal = ({
   onSecondaryActionPressed = () => undefined,
   loadingPrimaryAction = false,
   titleStyle = [],
+  children,
+  loading = false,
 }: WarningModalProps): JSX.Element => (
   <Modal isVisible={visible}>
-    <View style={containerWrapper}>
-      {imageSrc ? <Image source={imageSrc} /> : null}
-      {title ? (
-        <Text style={[...titleDefaultStyle, ...titleStyle]}>{title}</Text>
-      ) : null}
-      {description ? <Text style={descriptionStyle}>{description}</Text> : null}
-      <ActionFooter
-        isLoading={loadingPrimaryAction}
-        buttonText={primaryActionText}
-        onPress={onPrimaryActionPressed}>
-        {secondaryActionText ? (
-          <TextLink
-            textStyle={secondaryActionStyle}
-            style={secondaryActionWrapperStyle}
-            text={secondaryActionText}
-            onPress={onSecondaryActionPressed}
-          />
+    {loading ? (
+      <View style={loadingWrapper}>
+        <Loading containerStyle={loadingContainer} />
+      </View>
+    ) : (
+      <View style={containerWrapper}>
+        {imageSrc ? <Image source={imageSrc} /> : null}
+        {title ? (
+          <Text style={[...titleDefaultStyle, ...titleStyle]}>{title}</Text>
         ) : null}
-      </ActionFooter>
-    </View>
+        {description ? (
+          <Text style={descriptionStyle}>{description}</Text>
+        ) : null}
+        {children}
+        <ActionFooter
+          isLoading={loadingPrimaryAction}
+          buttonText={primaryActionText}
+          onPress={onPrimaryActionPressed}>
+          {secondaryActionText ? (
+            <TextLink
+              textStyle={secondaryActionStyle}
+              style={secondaryActionWrapperStyle}
+              text={secondaryActionText}
+              onPress={onSecondaryActionPressed}
+            />
+          ) : null}
+        </ActionFooter>
+      </View>
+    )}
   </Modal>
 );

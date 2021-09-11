@@ -29,6 +29,10 @@ export const FilterProvider = ({
         setBreakTypeFilter,
         sportTypeFilter,
         setSportTypeFilter,
+        cleanFilters: () => {
+          setBreakTypeFilter(ALL_FILTER_OPTION);
+          setSportTypeFilter(ALL_FILTER_OPTION);
+        },
       }}>
       {children}
     </FilterContext.Provider>

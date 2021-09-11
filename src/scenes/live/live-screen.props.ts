@@ -54,7 +54,7 @@ type LiveScreenRouteProp = RouteProp<
   typeof ROUTES_IDS.LIVE_MODAL
 >;
 
-type LiveScreenNavigationProp = NativeStackNavigationProp<
+export type LiveScreenNavigationProp = NativeStackNavigationProp<
   ProtectedStackParamList,
   typeof ROUTES_IDS.LIVE_MODAL
 >;

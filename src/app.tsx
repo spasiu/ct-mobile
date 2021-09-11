@@ -37,8 +37,7 @@ const App = (): JSX.Element | null => {
       dsn: Config.SENTRY_DSN_URL,
     });
 
-    initLibraries();
-    setLoaded(true);
+    initLibraries(setLoaded);
     return () => {
       RNLocalize.removeEventListener('change', setI18nConfig);
     };

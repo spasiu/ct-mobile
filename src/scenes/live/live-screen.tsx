@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import Video from 'react-native-video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
@@ -39,6 +40,7 @@ import { useContext } from 'react';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   eventBreakerSelector,
+  eventBreaksSelector,
   eventFollowedByUserSelector,
   eventLiveBreakSelector,
   eventSelector,
@@ -46,7 +48,7 @@ import {
   eventUpcomingBreaksSelector,
   eventViewCountSelector,
 } from '../../common/event';
-import { ICON_SIZE } from '../../theme/sizes';
+import { ICON_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../theme/sizes';
 import {
   userImageSelector,
   userNameSelector,
@@ -70,12 +72,14 @@ import {
   diamondIcon,
   shareIcon,
   shopIcon,
+  logoIcon,
 } from './live-screen.presets';
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
 import { indexedMap } from '../../utils/ramda';
-import { UpcomingBreaks } from './upcoming-breaks';
+import { UpcomingBreaksModal } from './upcoming-breaks-modal';
 import { SeeAllTeamsModal } from './see-all-teams-modal';
+import { LineupModal } from './lineup-modal';
 
 import { LiveScreenProps } from './live-screen.props';
 
@@ -92,6 +96,8 @@ export const LiveScreen = ({
   const [breakId, setBreakId] = useState('');
   const [showUpcomingBreaks, setShowUpcomingBreaks] = useState(false);
   const [showTeams, setShowTeams] = useState(false);
+  const [streamReady, setStreamReady] = useState(false);
+  const [showLineup, setShowLineup] = useState(false);
 
   const [currentLiveBreak, setCurrentLiveBreak] = useState<Partial<Breaks>>();
 
@@ -169,19 +175,28 @@ export const LiveScreen = ({
   }, [liveBreak]);
 
   return (
-    <View style={[s.flx_i]}>
+    <View style={[s.flx_i, s.bg_black]}>
       {streamUrl ? (
         <Video
-          repeat
           source={{
             uri: streamUrl,
           }}
           resizeMode="cover"
           style={[s.absolute_fill]}
+          onLoad={() => setStreamReady(true)}
         />
       ) : (
         <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
           <Loading containerStyle={[s.flx_i, s.jcc, s.aic]} />
+        </View>
+      )}
+      {streamReady ? null : (
+        <View
+          style={[
+            s.absolute,
+            { top: WINDOW_HEIGHT / 3, right: WINDOW_WIDTH / 3 },
+          ]}>
+          <Image source={logoIcon} />
         </View>
       )}
       <LinearGradient
@@ -205,13 +220,15 @@ export const LiveScreen = ({
               </Text>
             </View>
             <View style={[s.flx_ratio(0.2), s.jcc, s.aife]}>
-              <IconButton onPress={() => navigation.goBack()}>
+              <TouchableOpacity
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                onPress={() => navigation.goBack()}>
                 <Image
                   style={[s.icon_xs]}
                   source={closeIcon}
                   resizeMode={'contain'}
                 />
-              </IconButton>
+              </TouchableOpacity>
             </View>
           </NavigationBar>
           <View style={[s.flx_i, s.mh3, s.aife]}>
@@ -299,13 +316,13 @@ export const LiveScreen = ({
                 <IconButton>
                   <Image source={shareIcon} />
                 </IconButton>
-                <IconButton onPress={() => setBreakId(upcomingBreak.id)}>
+                <IconButton onPress={() => setShowLineup(true)}>
                   <Image source={shopIcon} />
                 </IconButton>
               </View>
             </View>
           </KeyboardAvoidingView>
-          <UpcomingBreaks
+          <UpcomingBreaksModal
             isVisible={!isEmpty(event) && showUpcomingBreaks}
             onPressClose={() => setShowUpcomingBreaks(false)}
             breaks={eventUpcomingBreaksSelector(event)}
@@ -323,6 +340,13 @@ export const LiveScreen = ({
             userId={authUser?.uid as string}
             result={liveBreakResult}
             breakType={breakTypeSelector(liveBreak)}
+          />
+          <LineupModal
+            isVisible={!isEmpty(event) && showLineup}
+            onPressClose={() => setShowLineup(false)}
+            breaks={eventBreaksSelector(event)}
+            breaker={breaker}
+            event={event}
           />
         </SafeAreaView>
       </LinearGradient>

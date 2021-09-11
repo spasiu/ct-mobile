@@ -1,7 +1,13 @@
-import { isEmpty } from 'ramda';
 import React, { useContext, useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { breaksSelector } from '../../common/break';
+import { useNavigation } from '@react-navigation/native';
+import { isEmpty } from 'ramda';
+
+import {
+  breakIdSelector,
+  breaksSelector,
+  handleBreakPress,
+} from '../../common/break';
 import { BreakCard, EmptyState } from '../../components';
 import { t } from '../../i18n/i18n';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -22,8 +28,10 @@ import { indexedMap } from '../../utils/ramda';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
 import { breakScheduleSelector } from './user-profile-screen.utils';
+import { LiveScreenNavigationProp } from '../live/live-screen.props';
 
 export const UserUpcomingBreaks = (): JSX.Element => {
+  const navigation = useNavigation<LiveScreenNavigationProp>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [breakId, setBreakId] = useState('');
 
@@ -67,8 +75,8 @@ export const UserUpcomingBreaks = (): JSX.Element => {
         const breakerBreakDetail = breakScheduleSelector(breakItem);
         return (
           <BreakCard
-            onPressBuy={() => setBreakId(breakItem.id)}
-            onPress={() => setBreakId(breakItem.id)}
+            onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
+            onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}
             {...breakerBreakDetail}
             onPressFollow={() => {

@@ -1,35 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { showMessage } from 'react-native-flash-message';
-import { NetworkStatus } from '@apollo/client';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { isEmpty } from 'ramda';
 
 import { t } from '../../i18n/i18n';
-import { OverScreenModal, Loading, WarningModal } from '../../components';
+import { OverScreenModal, Loading } from '../../components';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  BreakDetailQuery,
   BreakProductItems,
   useBreakDetailQuery,
 } from '../../services/api/requests';
-import { userSelector } from '../../common/user-profile';
-import { breakSelector } from '../../common/break';
-import { breakProductsFirstItemSelector } from '../../common/break-products';
+import {
+  userDefaultAddressSelector,
+  userSelector,
+} from '../../common/user-profile';
+import { breakCompletedSelector, breakSelector } from '../../common/break';
 import { breakSoldOutSelector } from '../../common/break';
 import { ROUTES_IDS } from '../../navigators';
-import { PaymentContext, PaymentContextType } from '../../providers/payment';
 
 import { AddPaymentInformation } from '../add-payment-information/add-payment-information';
 import { AddressesList } from '../addresses-list/addresses-list';
 import { AddAddress } from '../add-address/add-address';
 import { EditAddress } from '../edit-address/edit-address';
 import { PaymentInformationList } from '../payment-information-list/payment-information-list';
+import { PaymentContext, PaymentContextType } from '../../providers/payment';
 
 import { BreakDetail } from './break-detail';
 import {
-  getCheckoutCartInfo,
-  getCheckoutParams,
-  createCheckout,
   isBreakDetailView,
   isAddressList,
   getRootModalProps,
@@ -37,17 +36,10 @@ import {
   isEditAddress,
   isPaymentList,
   isAddPayment,
-  updateCartAddress,
 } from './break-detail-modal.utils';
-import {
-  BreakDetailModalProps,
-  CheckoutResponse,
-  CheckoutCart,
-  ModalRoute,
-} from './break-detail-modal.props';
-
-const successImage = require('../../assets/check-with-border.png');
-const failedImage = require('../../assets/failed-emoji.png');
+import { BreakDetailModalProps, ModalRoute } from './break-detail-modal.props';
+import { PurchaseModal } from './purchase-modal';
+import { addressCleanSelector } from '../../common/address/address-selectors';
 
 export const BreakDetailModal = ({
   breakId,
@@ -56,54 +48,22 @@ export const BreakDetailModal = ({
   ...modalProps
 }: BreakDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { createOrder, getDefaultPaymentCard } = useContext(
+  const { cards, getCards, getDefaultPaymentCard } = useContext(
     PaymentContext,
   ) as PaymentContextType;
 
-  const [loading, setLoading] = useState(true);
-  const [checkoutCart, setCheckoutCart] = useState<CheckoutCart>();
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
     route: ROUTES_IDS.BREAK_DETAIL_MODAL,
   });
 
-  const [purchasing, setPurchasing] = useState(false);
-  const [refetching, setRefetching] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showFailedModal, setShowFailedModal] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<BreakProductItems[]>([]);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
-  const {
-    data,
-    loading: firstLoading,
-    refetch,
-    networkStatus,
-  } = useBreakDetailQuery({
+  const { data, loading, refetch } = useBreakDetailQuery({
     fetchPolicy: 'network-only',
     variables: {
       breakId,
       userId: authUser?.uid,
-    },
-    onCompleted: (queryData: BreakDetailQuery) => {
-      const eventBreak = breakSelector(queryData);
-      const firstBreakProduct = breakProductsFirstItemSelector(
-        eventBreak,
-      ) as BreakProductItems;
-
-      if (firstBreakProduct) {
-        const user = userSelector(queryData);
-        const checkoutParams = getCheckoutParams(user, [firstBreakProduct]);
-        createCheckout(checkoutParams)
-          .then((response: CheckoutResponse) => {
-            const cart = getCheckoutCartInfo(response);
-            setCheckoutCart(cart);
-            setLoading(false);
-          })
-          .catch(() => {
-            showMessage({
-              message: t('errors.generic'),
-              type: 'danger',
-            });
-          });
-      }
     },
     onError: () => {
       if (isVisible) {
@@ -115,38 +75,36 @@ export const BreakDetailModal = ({
     },
   });
 
+  useEffect(() => {
+    if (isEmpty(cards)) {
+      getCards(authUser as FirebaseAuthTypes.User);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const breakData = breakSelector(data);
   const userData = userSelector(data);
 
   const isBreakSoldOut = breakSoldOutSelector(breakData);
-  const showLoading = !checkoutCart || loading || firstLoading || refetching;
+  const isBreakCompleted = breakCompletedSelector(breakData);
 
-  if (refetching && networkStatus !== NetworkStatus.refetch) {
-    updateCartAddress(
-      userData,
-      checkoutCart as CheckoutCart,
-      setCheckoutCart,
-      setRefetching,
-      setVisibleRoute,
-    );
-  }
-
+  const userAddress = userDefaultAddressSelector(userData);
+  const userPaymentData = getDefaultPaymentCard();
+  const shouldAllowToContinueToCheckout =
+    !isEmpty(selectedItems) && userAddress && Boolean(userPaymentData);
   return (
     <OverScreenModal
       {...modalProps}
-      {...getRootModalProps(
-        loading,
-        checkoutCart,
-        visibleRoute,
-        isBreakSoldOut,
-      )}
+      {...getRootModalProps(loading, visibleRoute, isBreakSoldOut)}
       onPressClose={onPressClose}
       onPressBack={() => {
         if (isAddAddress(visibleRoute) || isEditAddress(visibleRoute)) {
           setVisibleRoute({ route: ROUTES_IDS.ADDRESSES_LIST_SCREEN });
         } else if (isAddressList(visibleRoute)) {
-          setRefetching(true);
           refetch();
+          setVisibleRoute({
+            route: ROUTES_IDS.BREAK_DETAIL_MODAL,
+          });
         } else if (isPaymentList(visibleRoute)) {
           setVisibleRoute({
             route: ROUTES_IDS.BREAK_DETAIL_MODAL,
@@ -157,28 +115,9 @@ export const BreakDetailModal = ({
           });
         }
       }}
-      actionLoading={purchasing}
-      onPressAction={async () => {
-        setPurchasing(true);
-        const card = getDefaultPaymentCard();
-        if (card && checkoutCart) {
-          const created = await createOrder(
-            checkoutCart.cartId,
-            card.paymentToken,
-          );
-
-          setPurchasing(false);
-          if (created) {
-            setShowSuccessModal(true);
-          } else {
-            setShowFailedModal(true);
-          }
-        } else {
-          setPurchasing(false);
-          setShowFailedModal(true);
-        }
-      }}
+      onPressAction={() => setShowPurchaseModal(true)}
       isVisible={isVisible}
+      actionEnabled={shouldAllowToContinueToCheckout}
       actionStyle={[s.ph3, s.pb3]}
       bottomComponent={
         isBreakDetailView(visibleRoute) ? (
@@ -187,19 +126,20 @@ export const BreakDetailModal = ({
           </Text>
         ) : null
       }>
-      {showLoading ? (
+      {loading ? (
         <Loading containerStyle={[s.jcc, s.aic]} />
       ) : (
         <View style={[s.flx_i, s.mv4, s.ph3]}>
           {isBreakDetailView(visibleRoute) ? (
             <BreakDetail
               breakData={breakData}
-              userData={userData}
-              checkoutCart={checkoutCart as CheckoutCart}
-              setCheckoutCart={setCheckoutCart}
-              setLoading={setLoading}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
               setVisibleRoute={setVisibleRoute}
               isBreakSoldOut={isBreakSoldOut}
+              isBreakCompleted={isBreakCompleted}
+              userAddress={userAddress}
+              paymentData={userPaymentData}
             />
           ) : null}
           {isAddressList(visibleRoute) ? (
@@ -254,21 +194,13 @@ export const BreakDetailModal = ({
           ) : null}
         </View>
       )}
-      <WarningModal
-        imageSrc={successImage}
-        visible={showSuccessModal}
-        title={t('payment.purchaseSuccessfullMessage')}
-        primaryActionText={t('buttons.letsGo')}
-        titleStyle={[s.f4, s.mt3, s.mb4, s.tc, s.mh3]}
-        onPrimaryActionPressed={() => onPressClose()}
-      />
-      <WarningModal
-        imageSrc={failedImage}
-        visible={showFailedModal}
-        title={t('payment.purchaseFailedMessage')}
-        primaryActionText={t('buttons.backToPaymentDetails')}
-        titleStyle={[s.f4, s.mt3, s.mb4, s.tc, s.mh3]}
-        onPrimaryActionPressed={() => setShowFailedModal(false)}
+      <PurchaseModal
+        visible={showPurchaseModal}
+        userAddress={addressCleanSelector(userAddress)}
+        userPaymentData={userPaymentData}
+        cartItems={selectedItems}
+        onSuccess={() => onPressClose()}
+        onCancel={() => setShowPurchaseModal(false)}
       />
     </OverScreenModal>
   );

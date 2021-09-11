@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         },
         resetPassword: resetPasswordHandler,
         logout: async () => {
+          setOnboardingComplete(false);
           await logoutHandler(client);
         },
         uploadPhoto: async (photo: ImagePickerResponse) =>

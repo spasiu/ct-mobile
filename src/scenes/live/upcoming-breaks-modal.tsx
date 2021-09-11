@@ -24,7 +24,7 @@ import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
-export const UpcomingBreaks = ({
+export const UpcomingBreaksModal = ({
   event,
   isVisible,
   breaks,

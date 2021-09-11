@@ -13,9 +13,8 @@ import {
 } from '../../services/api/requests';
 
 import {
-  addressLineOneSelector,
-  addressCitySelector,
-  addressStateSelector,
+  addressCleanSelector,
+  addressSingleLineSelector,
 } from '../address/address-selectors';
 
 export const usersSelector = (
@@ -70,10 +69,7 @@ export const userDefaultAddressSelector = (user: Users): Addresses => {
 
 export const userDefaultAddressCleanSelector = (user: Users): Addresses => {
   const defaultAddress = userDefaultAddressSelector(user);
-  return omit(
-    ['first_name', 'last_name', 'is_default', '__typename', 'id'],
-    defaultAddress,
-  ) as Addresses;
+  return addressCleanSelector(defaultAddress);
 };
 
 export const userBreakPreferencesSelector = (
@@ -86,11 +82,7 @@ export const userNotificationsSelector = (
 
 export const userDefaultAddressSingleLineSelector = (user: Users): string => {
   const defaultAddress = userDefaultAddressSelector(user);
-  return defaultAddress
-    ? `${addressLineOneSelector(defaultAddress)}, ${addressCitySelector(
-        defaultAddress,
-      )}, ${addressStateSelector(defaultAddress)}`
-    : '';
+  return addressSingleLineSelector(defaultAddress);
 };
 
 export const userStreamUrlSelector = (user: Partial<Users>): string =>
