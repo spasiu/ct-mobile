@@ -39,8 +39,8 @@ export const SearchBreaksView = ({
       <FlatList
         ListEmptyComponent={() => (
           <EmptyState
-            title={t('search.noResultTitle')}
-            description={t('search.noResultDescription')}
+            title={t('emptyResults.noSearchResultTitle')}
+            description={t('emptyResults.noSearchResultDescription')}
           />
         )}
         style={[s.h_100, s.ph3]}

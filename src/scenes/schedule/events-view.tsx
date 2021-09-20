@@ -90,8 +90,8 @@ export const EventsView = (): JSX.Element => {
   if (hasNoEvents) {
     return (
       <EmptyState
-        title={t('search.noResultTitle')}
-        description={t('search.noResultDescription')}
+        title={t('emptyResults.noEventsTitle')}
+        description={t('emptyResults.noEventsDescription')}
       />
     );
   }

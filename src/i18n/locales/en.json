@@ -169,14 +169,21 @@
       "hits": "Hits"
     },
     "action": "Search",
-    "emptyState": "Search for Breaks, Events, Breakers or Hits",
-    "noResultTitle": "No hits is no fun at all!",
-    "noResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!",
+    "emptyState": "Search for Breaks, Events, Breakers or Hits"
+  },
+  "emptyResults": {
+    "noHitsTitle": "No hits is no fun at all!",
+    "noEventsTitle": "No events is no fun at all!",
+    "noBreaksTitle": "No breaks is no fun at all!",
+    "noHitsDescription": "Why not participate in one of our breaks and try to get your first hit?",
+    "noEventsDescription": "Why not follow some of our events and look into a few of their breaks to start?",
+    "noBreaksDescription": "Why not follow some of our breakers and look into a few of their breaks to start?",
+    "noSearchResultTitle": "No results is no fun at all!",
+    "noSearchResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!",
+    "noBreakersTitle": "No breakers is no fun at all!",
+    "noBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?",
     "noFollowedBreakersTitle": "No breakers is no fun at all!",
-    "noFollowedBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?",
-    "noHits": "No hits is no fun at all!",
-    "noEvents": "No events is no fun at all!",
-    "noBreaks": "No breaks is no fun at all!"
+    "noFollowedBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?"
   },
   "status": {
     "live": "Live",

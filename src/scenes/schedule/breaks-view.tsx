@@ -75,8 +75,8 @@ export const BreaksView = (): JSX.Element => {
       <FlatList
         ListEmptyComponent={() => (
           <EmptyState
-            title={t('search.noResultTitle')}
-            description={t('search.noResultDescription')}
+            title={t('emptyResults.noBreaksTitle')}
+            description={t('emptyResults.noBreaksDescription')}
           />
         )}
         style={[s.h_100, s.ph3]}

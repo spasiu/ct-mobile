@@ -35,8 +35,8 @@ export const UserUpcomingHits = (): JSX.Element => {
   if (isEmpty(hits)) {
     return (
       <EmptyState
-        title={t('search.noBreaks')}
-        description={t('search.noResultDescription')}
+        title={t('emptyResults.noHitsTitle')}
+        description={t('emptyResults.noHitsDescription')}
       />
     );
   }

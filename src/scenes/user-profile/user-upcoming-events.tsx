@@ -62,8 +62,8 @@ export const UserUpcomingEvents = (): JSX.Element => {
   if (isEmpty(events)) {
     return (
       <EmptyState
-        title={t('search.noEvents')}
-        description={t('search.noResultDescription')}
+        title={t('emptyResults.noEventsTitle')}
+        description={t('emptyResults.noEventsDescription')}
       />
     );
   }

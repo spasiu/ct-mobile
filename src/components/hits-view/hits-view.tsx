@@ -32,8 +32,8 @@ export const HitsView = ({ hits }: HitsViewProps): JSX.Element => {
       <FlatList
         ListEmptyComponent={() => (
           <EmptyState
-            title={t('search.noResultTitle')}
-            description={t('search.noResultDescription')}
+            title={t('emptyResults.noHitsTitle')}
+            description={t('emptyResults.noHitsDescription')}
           />
         )}
         style={gridStyle}

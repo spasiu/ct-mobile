@@ -166,8 +166,8 @@ export const BreakersScreen = ({
           refreshing={networkStatus === NetworkStatus.refetch}
           ListEmptyComponent={() => (
             <EmptyState
-              title={t('search.noFollowedBreakersTitle')}
-              description={t('search.noFollowedBreakersDescription')}
+              title={t('emptyResults.noFollowedBreakersTitle')}
+              description={t('emptyResults.noFollowedBreakersDescription')}
             />
           )}
           keyExtractor={item => item.id}

@@ -33,8 +33,8 @@ export const SearchBreakersView = ({
     <FlatList
       ListEmptyComponent={() => (
         <EmptyState
-          title={t('search.noFollowedBreakersTitle')}
-          description={t('search.noFollowedBreakersDescription')}
+          title={t('emptyResults.noBreakersTitle')}
+          description={t('emptyResults.noBreakersDescription')}
         />
       )}
       keyExtractor={item => item.id}
