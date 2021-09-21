@@ -63,3 +63,13 @@ export interface LiveScreenProps {
   navigation: LiveScreenNavigationProp;
   route: LiveScreenRouteProp;
 }
+export interface SeeTeamsAnimationProps extends OverScreenModalProps{
+  userId: string;
+  result: BreakResult[];
+  breakType: Break_Type_Enum;
+}
+
+export interface BreakResultSummaryProps {
+  teamCount: number;
+  userCount: number;
+}

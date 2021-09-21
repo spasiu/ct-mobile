@@ -1,5 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import {
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
 
@@ -66,12 +72,15 @@ import { FilterContext, FilterContextType } from '../../providers/filter';
 import { eventsSelector, eventStatusSelector } from '../../common/event';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import { Break_Type_Enum } from '../../services/api/requests';
+import { SeeTeamsAnimation } from '../live/see-teams-animation';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { setSportTypeFilter } = useContext(FilterContext) as FilterContextType;
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
+  const [showTeams, setShowTeams] = useState(false);
 
   const {
     data: featuredEvents,
@@ -131,6 +140,9 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       containerType={ContainerTypes.fixed}
       safeAreaEdges={['top', 'left', 'right']}>
       <View style={[s.flx_i]}>
+        <TouchableOpacity onPress={() => setShowTeams(true)}>
+          <Text>animation</Text>
+        </TouchableOpacity>
         <NavigationBar>
           <View style={[s.flx_i]}>
             <SearchInput
@@ -257,6 +269,27 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
           onPressClose={() => setHitDetail({})}
           {...hitDetailForModalSelector(hitDetail)}
         />
+        {showTeams && (
+          <SeeTeamsAnimation
+            onPressClose={() => setShowTeams(false)}
+            userId={authUser?.uid as string}
+            result={[
+              {
+                items: ['NFC', 'ABC', 'DEF'],
+                image: 'test',
+                username: 'username',
+                user_id: 'user_id',
+              },
+              {
+                items: ['UID', 'JCB', 'GHI'],
+                image: 'test',
+                username: 'username',
+                user_id: 'user_id',
+              },
+            ]}
+            breakType={Break_Type_Enum.RandomTeam}
+          />
+        )}
         {!isEmpty(event) ? (
           <EventDetailModal
             isVisible={!isEmpty(event)}
