@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { BreakResultSummaryProps } from '../live-screen.props';
 import { styles as s } from 'react-native-style-tachyons';
 import { Image, Text, View } from 'react-native';
+import Sound from 'react-native-sound';
+
 import Animated, {
   Easing,
   interpolate,
@@ -11,6 +13,60 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
+
+function entry() {
+  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play((success) => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
+function cardEntry() {
+  let cardEntryMusic = new Sound('card_entry.wav', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    cardEntryMusic.play((success) => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
+function digitsFlash() {
+  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    digitsFlashMusic.play((success) => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
 
 export const BreakResultSummary = ({
   userCount,
@@ -44,6 +100,7 @@ export const BreakResultSummary = ({
 
   useEffect(() => {
     if (animationStage === 0) {
+      entry()
       imageIn.value = withTiming(
         1,
         { duration: 300, easing: Easing.ease },
@@ -54,6 +111,7 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 1) {
+      cardEntry()
       imageOut.value = withTiming(1, { duration: 300, easing: Easing.ease });
       summaryBox.value = withTiming(
         1,
@@ -75,6 +133,10 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 3) {
+      digitsFlash()
+      setTimeout(() => {
+        digitsFlash()
+      }, 100);
       digitsInAnim.value = withTiming(
         1,
         { duration: 200, easing: Easing.ease },

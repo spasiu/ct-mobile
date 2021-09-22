@@ -11,6 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		338EDCA626FB5F6200A9AFCD /* card_entry.wav in Resources */ = {isa = PBXBuildFile; fileRef = 338EDCA426FB5F6200A9AFCD /* card_entry.wav */; };
+		338EDCA726FB5F6200A9AFCD /* entry.wav in Resources */ = {isa = PBXBuildFile; fileRef = 338EDCA526FB5F6200A9AFCD /* entry.wav */; };
+		338EDCAB26FB5FDB00A9AFCD /* digits.wav in Resources */ = {isa = PBXBuildFile; fileRef = 338EDCAA26FB5FDB00A9AFCD /* digits.wav */; };
 		33BC3EA87F0F214C7F54A702 /* libPods-CardsAndTreasure-CardsAndTreasureTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6900664E0AC032C7DAADE76 /* libPods-CardsAndTreasure-CardsAndTreasureTests.a */; };
 		61BA85C7516449F896C4F984 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65AA4B49972A4D96904D0C66 /* DMSans-Bold.ttf */; };
 		7EB8E3AF02454D63B7F55FDC /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 822AFCFF87AF43BB81799A7D /* Inter-Medium.ttf */; };
@@ -49,6 +52,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CardsAndTreasure/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CardsAndTreasure/main.m; sourceTree = "<group>"; };
 		1CEBD2785653FD28D5E71B54 /* Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig"; path = "Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig"; sourceTree = "<group>"; };
+		338EDCA426FB5F6200A9AFCD /* card_entry.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = card_entry.wav; sourceTree = "<group>"; };
+		338EDCA526FB5F6200A9AFCD /* entry.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = entry.wav; sourceTree = "<group>"; };
+		338EDCAA26FB5FDB00A9AFCD /* digits.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = digits.wav; sourceTree = "<group>"; };
 		59241F44EB05486D9212DB57 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		65AA4B49972A4D96904D0C66 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		679D1732D3FA48A9ADC7E0B7 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -155,6 +161,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				338EDCAA26FB5FDB00A9AFCD /* digits.wav */,
+				338EDCA426FB5F6200A9AFCD /* card_entry.wav */,
+				338EDCA526FB5F6200A9AFCD /* entry.wav */,
 				8B024A50260B035A00E15470 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* CardsAndTreasure */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -290,11 +299,14 @@
 				8BA9EF4B2696EB3D00DE22CC /* Web.bundle in Resources */,
 				8B024A51260B035A00E15470 /* GoogleService-Info.plist in Resources */,
 				61BA85C7516449F896C4F984 /* DMSans-Bold.ttf in Resources */,
+				338EDCA626FB5F6200A9AFCD /* card_entry.wav in Resources */,
 				928522FF7BC24B2D9466D4E8 /* DMSans-Medium.ttf in Resources */,
+				338EDCA726FB5F6200A9AFCD /* entry.wav in Resources */,
 				81D1FE0C87B7472FBDD45FB8 /* DMSans-Regular.ttf in Resources */,
 				CD12F91C110A4559B571D7BF /* Inter-Bold.ttf in Resources */,
 				7EB8E3AF02454D63B7F55FDC /* Inter-Medium.ttf in Resources */,
 				8DEA0B1F0BBB4E08BC6D2B50 /* Inter-Regular.ttf in Resources */,
+				338EDCAB26FB5FDB00A9AFCD /* digits.wav in Resources */,
 				E4A9DB7AAE3A428B8041F0A9 /* Inter-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
