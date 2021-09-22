@@ -17,15 +17,21 @@ export const BreakResultSummary = ({
   teamCount,
 }: BreakResultSummaryProps): JSX.Element => {
   const [animationStage, setAnimationStage] = React.useState(0);
-  const imageWidth = 160;
-  const imageHeight = 85;
+  const imageWidth = WINDOW_WIDTH * 0.65;
+  const imageHeight = imageWidth * 0.53;
 
-  const modalHeight = 200;
-  const modalWidth = 170;
+  const modalWidth = WINDOW_WIDTH * 0.61;
+  const modalHeight = modalWidth * 1.3;
 
   const imageIn = useSharedValue(0);
   const imageOut = useSharedValue(0);
   const summaryBox = useSharedValue(0);
+
+  const imageX = WINDOW_WIDTH * 0.5 - imageWidth / 2;
+  const imageY = WINDOW_HEIGHT * 0.5 - imageHeight / 2;
+
+  const modalX = WINDOW_WIDTH * 0.5 - modalWidth / 2;
+  const modalY = WINDOW_HEIGHT * 0.5 - modalHeight / 2;
 
   function nextStage(stage: number) {
     setTimeout(() => {
@@ -53,42 +59,50 @@ export const BreakResultSummary = ({
   const inAnimationValues = {
     imageX: [
       0,
-      -80,
-      -130,
-      -130,
-      -150,
-      -160,
-      -165,
-      -155,
-      -145,
-      -165,
-      -165
+      -modalHeight / 20,  // 0.1
+      -modalHeight / 10,  // 0.2
+      -modalHeight / 4,   // 0.3
+      -modalHeight / 2.7, // 0.4
+      -modalHeight / 2.7 - 10, // 0.5
+      -modalHeight / 2.7 - 15, // 0.6
+      -modalHeight / 2.7 - 10, // 0.7
+      -modalHeight / 2.7, // 0.8
+      -modalHeight / 2.7 - 5, // 0.9
+      -modalHeight / 2.7 - 10, // 1
     ],
     imageScale: [
       1,
-      0.9,
-      0.8,
-      0.8,
-      0.6,
-      0.6,
-      0.6,
-      0.6,
-      0.6,
-      0.6,
-      0.6
+      0.8,  // 0.1
+      0.72, // 0.2
+      0.6,  // 0.3
+      0.5,  // 0.4
+      0.5,  // 0.5
+      0.5,  // 0.6
+      0.5,  // 0.7
+      0.5,  // 0.8
+      0.5,  // 0.9
+      0.5   // 1
     ],
-    modalX: [
+    modalY: [
       -(WINDOW_HEIGHT / 2) - modalHeight,
-      -(WINDOW_HEIGHT / 2) - (modalHeight/7),
-      -230,
-      -90,
-      -100,
-      -110,
-      -110,
-      -110,
-      -110,
-      -110,
-      -110
+      -(WINDOW_HEIGHT / 2) - (modalHeight/6),                 // 0.1
+      -(WINDOW_HEIGHT / 2) + (modalHeight/2),                 // 0.2
+      -(WINDOW_HEIGHT / 2) + (modalHeight) + 10, // push down // 0.3
+      -(WINDOW_HEIGHT / 2) + (modalHeight), // push up        // 0.4
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.5
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.6
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.7
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.8
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.9
+      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 1
+      // -90,
+      // -100,
+      // -110,
+      // -110,
+      // -110,
+      // -110,
+      // -110,
+      // -110
     ]
   }
 
@@ -99,8 +113,8 @@ export const BreakResultSummary = ({
           // image in
           scale: interpolate(
             imageIn.value,
-            [0, 0.2, 0.4, 0.6, 0.8, 1],
-            [0, 1.3, 0.6, 1.03, 0.97, 1],
+            [0, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            [0, 1.2, 1.1, 1, 1.1, 1.2, 1.1, 1.1],
           ),
         },
         {
@@ -129,7 +143,7 @@ export const BreakResultSummary = ({
           translateY: interpolate(
             summaryBox.value,
             [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-            inAnimationValues.modalX,
+            inAnimationValues.modalY,
           ),
         },
       ],
@@ -140,8 +154,8 @@ export const BreakResultSummary = ({
       <Animated.View
         style={[
           {
-            top: WINDOW_HEIGHT * 0.5 - imageHeight / 2,
-            left: WINDOW_WIDTH * 0.5 - imageWidth / 2,
+            top: imageY,
+            left: imageX,
             position: 'absolute',
             width: imageWidth,
             height: imageHeight,
@@ -157,18 +171,19 @@ export const BreakResultSummary = ({
       <Animated.View
         style={[
           {
-            top: WINDOW_HEIGHT * 0.5 - modalHeight / 2,
-            left: WINDOW_WIDTH * 0.5 - modalWidth / 2,
+            top: modalY,
+            left: modalX,
             position: 'absolute',
             width: modalWidth,
             height: modalHeight,
-            borderWidth: 1,
+            borderWidth: 2,
             borderColor: '#fff',
             borderRadius: 10,
             backgroundColor: 'rgba(6, 4, 2, 0.7)',
           },
           summaryBoxStyle,
-        ]}></Animated.View>
+        ]}>
+        </Animated.View>
     </>
   );
 };
