@@ -20,7 +20,7 @@ export const BreakResultSummary = ({
   const imageWidth = WINDOW_WIDTH * 0.65;
   const imageHeight = imageWidth * 0.53;
 
-  const modalWidth = WINDOW_WIDTH * 0.61;
+  const modalWidth = Math.min(280, WINDOW_WIDTH * 0.61);
   const modalHeight = modalWidth * 1.3;
 
   const imageIn = useSharedValue(0);
@@ -95,14 +95,6 @@ export const BreakResultSummary = ({
       -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.8
       -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.9
       -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 1
-      // -90,
-      // -100,
-      // -110,
-      // -110,
-      // -110,
-      // -110,
-      // -110,
-      // -110
     ]
   }
 

@@ -21,7 +21,7 @@ export const SeeTeamsAnimation = ({
   return (
     <View style={teamsAnimationContainerStyle}>
       <BreakResultSummary teamCount={teams.length} userCount={result.length} />
-      <View style={[s.absolute, s.w_100, s.bottom_2, s.mt3, s.mb5]}>
+      <View style={[s.absolute, s.w_100, s.mt3, s.mb5, { bottom: 100 }]}>
         <View style={[s.flx_i, s.aic, { opacity: 0.5 }]}>
           <IconButton onPress={onPressClose}>
             <View style={[s.bg_black_5, s.circle_m, s.jcc, s.aic]}>
