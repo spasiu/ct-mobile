@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BreakResultSummaryProps } from '../live-screen.props';
 import { styles as s } from 'react-native-style-tachyons';
-import { Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Animated, {
   Easing,
   interpolate,
@@ -25,7 +25,10 @@ export const BreakResultSummary = ({
 
   const imageIn = useSharedValue(0);
   const imageOut = useSharedValue(0);
+
   const summaryBox = useSharedValue(0);
+  const textInAnim = useSharedValue(0);
+  const digitsInAnim = useSharedValue(0);
 
   const imageX = WINDOW_WIDTH * 0.5 - imageWidth / 2;
   const imageY = WINDOW_HEIGHT * 0.5 - imageHeight / 2;
@@ -33,10 +36,10 @@ export const BreakResultSummary = ({
   const modalX = WINDOW_WIDTH * 0.5 - modalWidth / 2;
   const modalY = WINDOW_HEIGHT * 0.5 - modalHeight / 2;
 
-  function nextStage(stage: number) {
+  function nextStage(stage: number, duration: number) {
     setTimeout(() => {
       setAnimationStage(stage);
-    }, 1000);
+    }, duration);
   }
 
   useEffect(() => {
@@ -45,23 +48,49 @@ export const BreakResultSummary = ({
         1,
         { duration: 300, easing: Easing.ease },
         () => {
-          runOnJS(nextStage)(1);
+          runOnJS(nextStage)(1, 1000);
         },
       );
     }
 
     if (animationStage === 1) {
       imageOut.value = withTiming(1, { duration: 300, easing: Easing.ease });
-      summaryBox.value = withTiming(1, { duration: 300, easing: Easing.ease });
+      summaryBox.value = withTiming(
+        1,
+        { duration: 300, easing: Easing.ease },
+        () => {
+          runOnJS(nextStage)(2, 500);
+        },
+      );
+    }
+
+    if (animationStage === 2) {
+      textInAnim.value = withTiming(
+        1,
+        { duration: 200, easing: Easing.ease },
+        () => {
+          runOnJS(nextStage)(3, 0);
+        },
+      );
+    }
+
+    if (animationStage === 3) {
+      digitsInAnim.value = withTiming(
+        1,
+        { duration: 200, easing: Easing.ease },
+        () => {
+          // runOnJS(nextStage)(2, 0);
+        },
+      );
     }
   }, [animationStage]);
 
   const inAnimationValues = {
     imageX: [
       0,
-      -modalHeight / 20,  // 0.1
-      -modalHeight / 10,  // 0.2
-      -modalHeight / 4,   // 0.3
+      -modalHeight / 20, // 0.1
+      -modalHeight / 10, // 0.2
+      -modalHeight / 4, // 0.3
       -modalHeight / 2.7, // 0.4
       -modalHeight / 2.7 - 10, // 0.5
       -modalHeight / 2.7 - 15, // 0.6
@@ -72,31 +101,31 @@ export const BreakResultSummary = ({
     ],
     imageScale: [
       1,
-      0.8,  // 0.1
+      0.8, // 0.1
       0.72, // 0.2
-      0.6,  // 0.3
-      0.5,  // 0.4
-      0.5,  // 0.5
-      0.5,  // 0.6
-      0.5,  // 0.7
-      0.5,  // 0.8
-      0.5,  // 0.9
-      0.5   // 1
+      0.6, // 0.3
+      0.5, // 0.4
+      0.5, // 0.5
+      0.5, // 0.6
+      0.5, // 0.7
+      0.5, // 0.8
+      0.5, // 0.9
+      0.5, // 1
     ],
     modalY: [
       -(WINDOW_HEIGHT / 2) - modalHeight,
-      -(WINDOW_HEIGHT / 2) - (modalHeight/6),                 // 0.1
-      -(WINDOW_HEIGHT / 2) + (modalHeight/2),                 // 0.2
-      -(WINDOW_HEIGHT / 2) + (modalHeight) + 10, // push down // 0.3
-      -(WINDOW_HEIGHT / 2) + (modalHeight), // push up        // 0.4
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.5
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.6
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.7
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.8
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 0.9
-      -(WINDOW_HEIGHT / 2) + (modalHeight) - 10,              // 1
-    ]
-  }
+      -(WINDOW_HEIGHT / 2) - modalHeight / 6, // 0.1
+      -(WINDOW_HEIGHT / 2) + modalHeight / 2, // 0.2
+      -(WINDOW_HEIGHT / 2) + modalHeight + 10, // 0.3
+      -(WINDOW_HEIGHT / 2) + modalHeight, // 0.4
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.5
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.6
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.7
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.8
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.9
+      -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 1
+    ],
+  };
 
   const imageStyle = useAnimatedStyle(() => {
     return {
@@ -121,7 +150,7 @@ export const BreakResultSummary = ({
           scale: interpolate(
             imageOut.value,
             [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-            inAnimationValues.imageScale
+            inAnimationValues.imageScale,
           ),
         },
       ],
@@ -141,6 +170,7 @@ export const BreakResultSummary = ({
       ],
     };
   }, []);
+
   return (
     <>
       <Animated.View
@@ -171,11 +201,99 @@ export const BreakResultSummary = ({
             borderWidth: 2,
             borderColor: '#fff',
             borderRadius: 10,
+            overflow: 'hidden',
             backgroundColor: 'rgba(6, 4, 2, 0.7)',
           },
           summaryBoxStyle,
         ]}>
-        </Animated.View>
+        <View style={[s.flx_i, s.ph3]}>
+          <View style={[s.flx_i]} />
+          <View style={[s.flx_i, s.flx_row]}>
+            <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
+              <Animated.View
+                style={[
+                  s.tc,
+                  useAnimatedStyle(() => {
+                    return {
+                      transform: [
+                        {
+                          scale: interpolate(
+                            textInAnim.value,
+                            [0, 0.2, 0.4, 1],
+                            [0, 1.3, 0.6, 1],
+                          ),
+                        },
+                      ],
+                    };
+                  }),
+                ]}>
+                <Text style={[s.ff_alt_b, s.f4, s.white]}>PLAYERS</Text>
+              </Animated.View>
+              <Animated.View
+                style={[
+                  useAnimatedStyle(() => {
+                    return {
+                      transform: [
+                        {
+                          scale: interpolate(
+                            digitsInAnim.value,
+                            [0, 0.2, 0.4, 1],
+                            [0, 1.3, 0.6, 1],
+                          ),
+                        },
+                      ],
+                    };
+                  }),
+                ]}>
+                <Text style={[s.white, s.ff_b, s.f1, s.mt3]}>
+                  {userCount < 10 ? '0' + userCount : userCount}
+                </Text>
+              </Animated.View>
+            </View>
+            <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
+              <Animated.View
+                style={[
+                  s.tc,
+                  useAnimatedStyle(() => {
+                    return {
+                      transform: [
+                        {
+                          scale: interpolate(
+                            textInAnim.value,
+                            [0, 0.2, 0.4, 1],
+                            [0, 1.3, 0.6, 1],
+                          ),
+                        },
+                      ],
+                    };
+                  }),
+                ]}>
+                <Text style={[s.ff_alt_b, s.f4, s.white]}>TEAMS</Text>
+              </Animated.View>
+              <Animated.View
+                style={[
+                  useAnimatedStyle(() => {
+                    return {
+                      transform: [
+                        {
+                          scale: interpolate(
+                            digitsInAnim.value,
+                            [0, 0.2, 0.4, 1],
+                            [0, 1.3, 0.6, 1],
+                          ),
+                        },
+                      ],
+                    };
+                  }),
+                ]}>
+                <Text style={[s.white, s.ff_b, s.f1, s.mt3]}>
+                  {teamCount < 10 ? '0' + teamCount : teamCount}
+                </Text>
+              </Animated.View>
+            </View>
+          </View>
+        </View>
+      </Animated.View>
     </>
   );
 };
