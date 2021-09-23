@@ -15,14 +15,14 @@ import Animated, {
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
 
 function entry() {
-  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, (error) => {
+  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
       console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
-    entryMusic.play((success) => {
+    entryMusic.play(success => {
       if (success) {
         console.log('successfully finished playing');
       } else {
@@ -33,14 +33,14 @@ function entry() {
 }
 
 function cardEntry() {
-  let cardEntryMusic = new Sound('card_entry.wav', Sound.MAIN_BUNDLE, (error) => {
+  let cardEntryMusic = new Sound('card_entry.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
       console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
-    cardEntryMusic.play((success) => {
+    cardEntryMusic.play(success => {
       if (success) {
         console.log('successfully finished playing');
       } else {
@@ -51,14 +51,14 @@ function cardEntry() {
 }
 
 function digitsFlash() {
-  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, (error) => {
+  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
       console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
-    digitsFlashMusic.play((success) => {
+    digitsFlashMusic.play(success => {
       if (success) {
         console.log('successfully finished playing');
       } else {
@@ -76,7 +76,8 @@ export const BreakResultSummary = ({
   const imageWidth = WINDOW_WIDTH * 0.65;
   const imageHeight = imageWidth * 0.53;
 
-  const modalWidth = Math.min(280, WINDOW_WIDTH * 0.61);
+  // TODO: finalize using scale to have correct width for all devices
+  const modalWidth = WINDOW_WIDTH <= 375 ? WINDOW_WIDTH * 0.61 : 280;
   const modalHeight = modalWidth * 1.3;
 
   const imageIn = useSharedValue(0);
@@ -100,7 +101,7 @@ export const BreakResultSummary = ({
 
   useEffect(() => {
     if (animationStage === 0) {
-      entry()
+      entry();
       imageIn.value = withTiming(
         1,
         { duration: 300, easing: Easing.ease },
@@ -111,7 +112,7 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 1) {
-      cardEntry()
+      cardEntry();
       imageOut.value = withTiming(1, { duration: 300, easing: Easing.ease });
       summaryBox.value = withTiming(
         1,
@@ -133,15 +134,26 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 3) {
-      digitsFlash()
+      digitsFlash();
       setTimeout(() => {
-        digitsFlash()
+        digitsFlash();
       }, 100);
       digitsInAnim.value = withTiming(
         1,
         { duration: 200, easing: Easing.ease },
         () => {
-          // runOnJS(nextStage)(2, 0);
+          runOnJS(nextStage)(4, 1000);
+        },
+      );
+    }
+
+    if (animationStage === 4) {
+      imageOut.value = withTiming(2, { duration: 150, easing: Easing.ease });
+      summaryBox.value = withTiming(
+        2,
+        { duration: 150, easing: Easing.ease },
+        () => {
+          console.log('done');
         },
       );
     }
@@ -160,6 +172,7 @@ export const BreakResultSummary = ({
       -modalHeight / 2.7, // 0.8
       -modalHeight / 2.7 - 5, // 0.9
       -modalHeight / 2.7 - 10, // 1
+      -WINDOW_HEIGHT / 2 - modalHeight,
     ],
     imageScale: [
       1,
@@ -186,6 +199,7 @@ export const BreakResultSummary = ({
       -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.8
       -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 0.9
       -(WINDOW_HEIGHT / 2) + modalHeight - 10, // 1
+      -WINDOW_HEIGHT / 2 - modalHeight, // 2
     ],
   };
 
@@ -204,7 +218,7 @@ export const BreakResultSummary = ({
           // image out
           translateY: interpolate(
             imageOut.value,
-            [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2],
             inAnimationValues.imageX,
           ),
         },
@@ -225,7 +239,7 @@ export const BreakResultSummary = ({
         {
           translateY: interpolate(
             summaryBox.value,
-            [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2],
             inAnimationValues.modalY,
           ),
         },
