@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BreakResultSummaryProps } from '../live-screen.props';
+import { digitsStyle, digitsBackgroundStyle } from '../live-screen.presets';
 import { styles as s } from 'react-native-style-tachyons';
 import { Image, Text, View } from 'react-native';
 import Sound from 'react-native-sound';
@@ -139,16 +140,23 @@ export const BreakResultSummary = ({
       setTimeout(() => {
         digitsFlash();
       }, 100);
+
       digitsInAnim.value = withTiming(
         1,
         { duration: 200, easing: Easing.ease },
         () => {
-          runOnJS(nextStage)(4, 1000);
+          runOnJS(nextStage)(4, 20);
         },
       );
     }
 
     if (animationStage === 4) {
+      setTimeout(() => {
+        setAnimationStage(5)
+      }, 4000)
+    }
+
+    if (animationStage === 5) {
       imageOut.value = withTiming(2, { duration: 150, easing: Easing.ease });
       summaryBox.value = withTiming(
         2,
@@ -322,9 +330,16 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text style={[s.white, s.ff_b, s.f1, s.mt3]}>
-                  {userCount < 10 ? '0' + userCount : userCount}
+                <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsBackgroundStyle]}>
+                  {'88'}
                 </Text>
+                {
+                  animationStage == 4 && (
+                    <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
+                      {userCount < 10 ? '0' + userCount : userCount}
+                    </Text>
+                  )
+                }
               </Animated.View>
             </View>
             <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
@@ -363,9 +378,16 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text style={[s.white, s.ff_b, s.f1, s.mt3]}>
-                  {teamCount < 10 ? '0' + teamCount : teamCount}
+                <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsBackgroundStyle]}>
+                  {'88'}
                 </Text>
+                {
+                  animationStage == 4 && (
+                    <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
+                      {teamCount < 10 ? '0' + teamCount : teamCount}
+                    </Text>
+                  )
+                }
               </Animated.View>
             </View>
           </View>

@@ -31,4 +31,6 @@ export const COLORS = {
   negative: '#EC1C24',
   blue: '#4285F4',
   dark_blue: '#0E4C7D',
+  light_yellow: '#FFD422',
+  dark_grey: '#3E3E3E',
 } as const;
