@@ -16,13 +16,13 @@ export const teamsAnimationContainerStyle: ViewStyle = {
   zIndex: 2,
 }
 
-export const digitsBackgroundStyle: ViewStyle = {
-  fontSize: 90,
+export const digitsBackgroundStyle = {
+  fontSize: 80,
   color: COLORS.dark_grey
 }
 
-export const digitsStyle: ViewStyle = {
-  fontSize: 90,
+export const digitsStyle = {
+  fontSize: 80,
   color: COLORS.light_yellow,
   position: 'absolute'
 }
