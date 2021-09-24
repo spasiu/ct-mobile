@@ -72,4 +72,5 @@ export interface SeeTeamsAnimationProps extends OverScreenModalProps{
 export interface BreakResultSummaryProps {
   teamCount: number;
   userCount: number;
+  onEnd: () => void;
 }

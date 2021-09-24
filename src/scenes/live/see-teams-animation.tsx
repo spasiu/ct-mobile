@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { View, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Text } from 'react-native';
 import { flatten } from 'ramda';
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -16,11 +16,25 @@ export const SeeTeamsAnimation = ({
   result,
   onPressClose = () => undefined
 }: SeeTeamsAnimationProps): JSX.Element => {
+  const [summaryAnimationEnded, setSummaryAnimationEnded] = useState(false)
   const teams = flatten(indexedMap((breakResultUser) => (breakResultUser as BreakResult).items, result));
 
   return (
     <View style={teamsAnimationContainerStyle}>
-      <BreakResultSummary teamCount={teams.length} userCount={result.length} />
+      {!summaryAnimationEnded && <BreakResultSummary
+        teamCount={teams.length}
+        userCount={result.length}
+        onEnd={() => setSummaryAnimationEnded(true)}
+      />}
+      {
+        summaryAnimationEnded && (
+          <View>
+            <Text style={[s.white]}>
+              Team animation will come here
+            </Text>
+          </View>
+        )
+      }
       <View style={[s.absolute, s.w_100, s.mt3, s.mb5, { bottom: 100 }]}>
         <View style={[s.flx_i, s.aic, { opacity: 0.5 }]}>
           <IconButton onPress={onPressClose}>

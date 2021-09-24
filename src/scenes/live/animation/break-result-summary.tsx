@@ -71,6 +71,7 @@ function digitsFlash() {
 export const BreakResultSummary = ({
   userCount,
   teamCount,
+  onEnd = () => undefined
 }: BreakResultSummaryProps): JSX.Element => {
   const [animationStage, setAnimationStage] = React.useState(0);
   const imageWidth = WINDOW_WIDTH * 0.65;
@@ -153,7 +154,7 @@ export const BreakResultSummary = ({
         2,
         { duration: 150, easing: Easing.ease },
         () => {
-          console.log('done');
+          runOnJS(onEnd)()
         },
       );
     }
