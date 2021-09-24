@@ -15,4 +15,7 @@ export const INTER_MEDIUM_EXTRA = {
   fontWeight: '600',
 };
 export const INTER_BOLD = { fontFamily: 'Inter-Bold', fontWeight: '700' };
-export const TECHNOLOGY_BOLD = { fontFamily: 'Technology-Bold', fontWeight: '700' };
+export const TECHNOLOGY_BOLD = {
+  fontFamily: 'Technology-Bold',
+  fontWeight: '700',
+};

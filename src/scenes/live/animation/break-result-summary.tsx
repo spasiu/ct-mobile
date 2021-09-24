@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
 
+// TODO find a way to preload sounds before this view
 function entry() {
   let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
@@ -72,7 +73,7 @@ function digitsFlash() {
 export const BreakResultSummary = ({
   userCount,
   teamCount,
-  onEnd = () => undefined
+  onEnd = () => undefined,
 }: BreakResultSummaryProps): JSX.Element => {
   const [animationStage, setAnimationStage] = React.useState(0);
   const imageWidth = WINDOW_WIDTH * 0.65;
@@ -152,8 +153,8 @@ export const BreakResultSummary = ({
 
     if (animationStage === 4) {
       setTimeout(() => {
-        setAnimationStage(5)
-      }, 4000)
+        setAnimationStage(5);
+      }, 2000);
     }
 
     if (animationStage === 5) {
@@ -162,7 +163,7 @@ export const BreakResultSummary = ({
         2,
         { duration: 150, easing: Easing.ease },
         () => {
-          runOnJS(onEnd)()
+          runOnJS(onEnd)();
         },
       );
     }
@@ -330,16 +331,22 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsBackgroundStyle]}>
+                <Text
+                  style={[
+                    s.white,
+                    s.ff_tech_b,
+                    s.f1,
+                    s.mt3,
+                    digitsBackgroundStyle,
+                  ]}>
                   {'88'}
                 </Text>
-                {
-                  animationStage == 4 && (
-                    <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
-                      {userCount < 10 ? '0' + userCount : userCount}
-                    </Text>
-                  )
-                }
+                {animationStage == 4 && (
+                  <Text
+                    style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
+                    {userCount < 10 ? '0' + userCount : userCount}
+                  </Text>
+                )}
               </Animated.View>
             </View>
             <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
@@ -378,16 +385,22 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsBackgroundStyle]}>
+                <Text
+                  style={[
+                    s.white,
+                    s.ff_tech_b,
+                    s.f1,
+                    s.mt3,
+                    digitsBackgroundStyle,
+                  ]}>
                   {'88'}
                 </Text>
-                {
-                  animationStage == 4 && (
-                    <Text style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
-                      {teamCount < 10 ? '0' + teamCount : teamCount}
-                    </Text>
-                  )
-                }
+                {animationStage == 4 && (
+                  <Text
+                    style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
+                    {teamCount < 10 ? '0' + teamCount : teamCount}
+                  </Text>
+                )}
               </Animated.View>
             </View>
           </View>
