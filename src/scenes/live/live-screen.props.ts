@@ -63,14 +63,26 @@ export interface LiveScreenProps {
   navigation: LiveScreenNavigationProp;
   route: LiveScreenRouteProp;
 }
-export interface SeeTeamsAnimationProps extends OverScreenModalProps{
+export interface SeeTeamsAnimationProps {
   userId: string;
   result: BreakResult[];
   breakType: Break_Type_Enum;
+  onPressClose?: () => void;
 }
 
 export interface BreakResultSummaryProps {
   teamCount: number;
   userCount: number;
-  onEnd: () => void;
+  onEnd?: () => void;
+}
+
+export interface RandomTeamUserRowsProps {
+  userId: string;
+  users: any; //BreakResult[]; modify it at the time of integration
+  onEnd?: () => void;
+}
+
+export interface RandomTeamUserRowProps {
+  currentUserId: string;
+  users: any; // BreakResult[]; modify it at the time of integration
 }

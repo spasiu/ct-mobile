@@ -121,6 +121,7 @@ NativeTachyons.build(
       o_0: { opacity: 0 },
       flx_0: { flex: 0 },
       ba2: { borderWidth: 2 },
+      b_white: { borderWidth: 1, borderColor: '#FFFFFF' },
       flx_wrap: { flexWrap: 'wrap' },
     },
   },

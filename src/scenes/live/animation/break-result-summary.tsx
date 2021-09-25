@@ -157,6 +157,7 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 5) {
+      cardEntry();
       imageOut.value = withTiming(2, { duration: 150, easing: Easing.ease });
       summaryBox.value = withTiming(
         2,
