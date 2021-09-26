@@ -63,3 +63,8 @@ export interface LiveScreenProps {
   navigation: LiveScreenNavigationProp;
   route: LiveScreenRouteProp;
 }
+
+export interface TermsOfUseModalProps extends OverScreenModalProps {
+  onPressCancel: () => void;
+  onPressConfirm: () => void;
+}

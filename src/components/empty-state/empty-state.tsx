@@ -18,8 +18,10 @@ export const EmptyState = ({
   return (
     <View style={containerStyle}>
       <Text style={emojiStyle}>{Emoji.get(emojiCode)}</Text>
-      <Text style={emptyStateTitleTextStyle}>{title}</Text>
-      <Text style={emptyStateDescriptionTextStyle}>{description}</Text>
+      <Text style={emptyStateTitleTextStyle}>{Emoji.emojify(title)}</Text>
+      <Text style={emptyStateDescriptionTextStyle}>
+        {Emoji.emojify(description)}
+      </Text>
     </View>
   );
 };

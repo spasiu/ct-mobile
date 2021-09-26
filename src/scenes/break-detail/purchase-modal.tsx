@@ -32,6 +32,7 @@ export const PurchaseModal = ({
   cartItems,
   onSuccess,
   onCancel,
+  onError,
   ...modalProps
 }: PurchaseModalProps): JSX.Element => {
   const { createOrder } = useContext(PaymentContext) as PaymentContextType;
@@ -70,6 +71,7 @@ export const PurchaseModal = ({
     onSuccess,
     onCancel,
     setPurchasing,
+    onError,
   );
   return (
     <WarningModal

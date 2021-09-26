@@ -7,4 +7,5 @@ export interface AvatarUploadProps {
   onNewImageSelected?: (response: ImagePickerResponse) => void;
   image?: string | null;
   isLoading?: boolean;
+  errorMessage?: string;
 }
