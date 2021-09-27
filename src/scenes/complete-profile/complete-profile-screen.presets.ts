@@ -13,7 +13,9 @@ const MIN_CHAR_COUNT = 4;
 const MAX_CHAR_COUNT = 14;
 
 export const COMPLETE_PROFILE_SCHEMA = Yup.object().shape({
-  [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: Yup.string(),
+  [COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]: Yup.string().required(
+    t('forms.requiredImage'),
+  ),
   [COMPLETE_PROFILE_FORM_FIELDS.USERNAME]: Yup.string()
     .required(t('forms.requiredField'))
     .min(MIN_CHAR_COUNT, t('forms.fieldTooShort', { number: MIN_CHAR_COUNT }))

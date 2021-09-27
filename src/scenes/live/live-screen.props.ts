@@ -63,6 +63,12 @@ export interface LiveScreenProps {
   navigation: LiveScreenNavigationProp;
   route: LiveScreenRouteProp;
 }
+
+export interface TermsOfUseModalProps extends OverScreenModalProps {
+  onPressCancel: () => void;
+  onPressConfirm: () => void;
+}
+
 export interface SeeTeamsAnimationProps extends OverScreenModalProps{
   userId: string;
   result: BreakResult[];

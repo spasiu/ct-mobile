@@ -63,8 +63,8 @@ export const UserUpcomingBreaks = (): JSX.Element => {
   if (isEmpty(breaks)) {
     return (
       <EmptyState
-        title={t('emptyResults.noBreaksTitle')}
-        description={t('emptyResults.noBreaksDescription')}
+        title={t('emptyResults.noBreaksFollowedByUserTitle')}
+        description={t('emptyResults.noBreaksFollowedByUserDescription')}
       />
     );
   }

@@ -42,3 +42,5 @@ export const ACTION_SHEET_OPTIONS = [
   t('buttons.imageLibrary'),
   t('buttons.cancel'),
 ];
+
+export const errorTextPreset = [s.ff_alt_r, s.f7, s.black, s.mt3, s.h1];

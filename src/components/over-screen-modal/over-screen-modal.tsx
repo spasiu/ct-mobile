@@ -27,29 +27,36 @@ export const OverScreenModal = ({
   onPressClose = () => undefined,
   onPressAction = () => undefined,
   onPressBack = () => undefined,
+  showClose = true,
   showBack = false,
   actionLoading = false,
   actionStyle = [],
   actionEnabled = true,
   bottomComponent,
+  containerStyle = [],
+  titleStyle = [],
   ...modalProps
 }: OverScreenModalProps): JSX.Element => {
   return (
     <Modal style={overScreenModalStyle} {...modalProps}>
       <View style={modalContainerStyle}>
-        <View style={getModalWrapperStyle(ratio)}>
+        <View style={[...getModalWrapperStyle(ratio), ...containerStyle]}>
           <View style={titleBarStyle}>
             <View style={buttonWrapperStyle}>
               {showBack ? <BackButton onPress={onPressBack} /> : null}
             </View>
-            <Text style={titleTextStyle}>{title}</Text>
-            <IconButton style={buttonWrapperStyle} onPress={onPressClose}>
-              <Image
-                style={closeButtonStyle}
-                source={closeIcon}
-                resizeMode={'contain'}
-              />
-            </IconButton>
+            <Text style={[...titleTextStyle, ...titleStyle]}>{title}</Text>
+            <View style={buttonWrapperStyle}>
+              {showClose ? (
+                <IconButton onPress={onPressClose}>
+                  <Image
+                    style={closeButtonStyle}
+                    source={closeIcon}
+                    resizeMode={'contain'}
+                  />
+                </IconButton>
+              ) : null}
+            </View>
           </View>
           {children}
           {action ? (

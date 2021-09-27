@@ -4,6 +4,7 @@ import Video from 'react-native-video';
 import { styles as s } from 'react-native-style-tachyons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import { useIsFocused } from '@react-navigation/native';
 
 import { TextLink, SoundButton, ActionFooter } from '../../components';
 import { t } from '../../i18n/i18n';
@@ -17,15 +18,18 @@ export const LandingScreen = ({
   navigation,
 }: LandingScreenProps): JSX.Element => {
   const [muted, setMuted] = useState<boolean>(false);
+  const isFocused = useIsFocused();
   return (
     <View style={[s.flx_i]}>
-      <Video
-        repeat
-        source={introVideo}
-        resizeMode="cover"
-        style={[s.absolute_fill]}
-        muted={muted}
-      />
+      {isFocused ? (
+        <Video
+          repeat
+          source={introVideo}
+          resizeMode="cover"
+          style={[s.absolute_fill]}
+          muted={muted}
+        />
+      ) : null}
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.7 }}

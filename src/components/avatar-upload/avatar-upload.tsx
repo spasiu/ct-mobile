@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ActionSheet from 'react-native-actionsheet';
@@ -18,6 +18,7 @@ import {
   CAMERA_CONFIG,
   ACTION_SHEET_OPTIONS,
   AVATAR_DIMENSIONS,
+  errorTextPreset,
 } from './avatar-upload.presets';
 
 export const AvatarUpload = ({
@@ -26,6 +27,7 @@ export const AvatarUpload = ({
   onNewImageSelected = () => undefined,
   image,
   isLoading = false,
+  errorMessage = '',
 }: AvatarUploadProps): JSX.Element => {
   const actionSheetRef = useRef() as React.MutableRefObject<ActionSheet>;
 
@@ -77,6 +79,9 @@ export const AvatarUpload = ({
           }
         }}
       />
+      {errorMessage ? (
+        <Text style={errorTextPreset}>{errorMessage}</Text>
+      ) : null}
     </View>
   );
 };

@@ -48,8 +48,8 @@ export const SearchEventsView = ({
   if (hasNoEvents) {
     return (
       <EmptyState
-        title={t('emptyResults.noSearchResultTitle')}
-        description={t('emptyResults.noSearchResultDescription')}
+        title={t('emptyResults.noEventSearchResultTitle')}
+        description={t('emptyResults.noEventSearchResultDescription')}
       />
     );
   }

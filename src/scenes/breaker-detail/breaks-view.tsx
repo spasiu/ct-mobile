@@ -68,8 +68,8 @@ export const BreaksView = ({
   if (isEmpty(breaks)) {
     return (
       <EmptyState
-        title={t('emptyResults.noBreaksTitle')}
-        description={t('emptyResults.noBreaksDescription')}
+        title={t('emptyResults.noBreakScheduledForBreakerTitle')}
+        description={t('emptyResults.noBreakScheduledForBreakerDescription')}
       />
     );
   }

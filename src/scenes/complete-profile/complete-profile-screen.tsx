@@ -108,6 +108,7 @@ export const CompleteProfileScreen = ({
                 wrapperStyle={[s.w_100]}
               />
               <AvatarUpload
+                errorMessage={errors[COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]}
                 isLoading={uploadingPhoto}
                 image={values[COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]}
                 containerStyle={[s.mv4]}
