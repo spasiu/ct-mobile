@@ -38,7 +38,7 @@ export const SeeTeamsAnimation = ({
         <RandomTeamUserRows
           users={[
             {
-              user_id: 'a',
+              user_id: 'rtNyx1gl9Pc4LNJbUN0Bg6cUt502',
               username: 'a',
               image:
                 '/users/lnS91fGlcnWX2rK3aQIHxShr5SD2/34978FDE-A470-464F-B70F-B6E297B366B8.jpg',

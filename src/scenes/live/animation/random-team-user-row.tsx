@@ -17,6 +17,7 @@ import { ServerImage } from '../../../components/server-image/server-image';
 export const TeamUserRow = ({
   currentUserId,
   users,
+  visibleTeamsInRow,
 }: RandomTeamUserRowProps): JSX.Element => {
   const boxWidth = users.length < 6 ? 84 : 70;
   const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
@@ -25,7 +26,7 @@ export const TeamUserRow = ({
 
   const userBoxAnim = useSharedValue(0);
   const avatarAnim = useSharedValue(0);
-
+  console.log('reder row')
   useEffect(() => {
     userBoxAnim.value = withDelay(
       0,
@@ -64,32 +65,49 @@ export const TeamUserRow = ({
                   };
                 }),
               ]}>
-              <View style={[s.b_white, s.no_overflow, { borderRadius: 10 }]}>
+              <View
+                style={[
+                  s.ba2,
+                  s.b__white,
+                  s.no_overflow,
+                  { borderRadius: 10 },
+                ]}>
                 <View
                   style={[
                     s.pa2,
                     s.flx_row,
                     s.jcc,
-                    { height: headerHeight, backgroundColor: 'red' },
-                  ]}></View>
+                    {
+                      height: headerHeight,
+                    },
+                    user.user_id === currentUserId
+                      ? s.bg_secondary
+                      : s.bg_primary,
+                  ]}
+                />
                 <View style={[s.ba, s.flx_row, s.jcc]}>
                   {
                     // replace with actual component
                     user.items!.map((item: any, index: number) => {
-                      const styleFirst = index == 0 ? s.ml2 : {};
-
                       return (
-                        <View
-                          key={index.toString()}
-                          style={[
-                            { width: boxSize, height: boxSize },
-                            s.ba,
-                            s.b_white,
-                            s.mr2,
-                            s.mv2,
-                            styleFirst,
-                          ]}>
-                          <Text style={[s.white]}>{item.shorthand}</Text>
+                        <View key={index.toString()} style={[s.pa1]}>
+                          {visibleTeamsInRow < index ? (
+                            <View
+                              style={[
+                                { width: boxSize, height: boxSize },
+                              ]}></View>
+                          ) : (
+                            <View
+                              style={[
+                                { width: boxSize, height: boxSize },
+                                s.ba,
+                                s.b__white,
+                                s.aic,
+                                s.jcc,
+                              ]}>
+                              <Text style={[s.white]}>{item.shorthand}</Text>
+                            </View>
+                          )}
                         </View>
                       );
                     })
@@ -140,5 +158,5 @@ export const TeamUserRow = ({
 };
 
 export const RandomTeamUserRow = memo(TeamUserRow, (prevProps, nextProps) => {
-  return true;
+  return prevProps.visibleTeamsInRow === nextProps.visibleTeamsInRow;
 });

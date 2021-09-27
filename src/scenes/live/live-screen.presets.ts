@@ -62,3 +62,50 @@ export const digitsStyle = {
   color: COLORS.light_yellow,
   position: 'absolute'
 }
+
+export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
+  if (usersCount <= 10) {
+    return Math.ceil(usersCount / (6 / teamsPerUser));
+  }
+  if (usersCount >= 18 && usersCount <= 25 && teamsPerUser === 1) {
+    return Math.ceil(usersCount / 5);
+  }
+
+  return Math.ceil(usersCount / 6);
+};
+
+export const getUsersPerRowCount = (usersCount: number, teamsPerUser: number) => {
+  if (usersCount >= 18 && usersCount <= 25 && teamsPerUser === 1) {
+    return 5;
+  }
+
+  return 6 / teamsPerUser;
+};
+
+export const getNextColumn = (
+  currentCol: number,
+  isLastRow: boolean,
+  isLastColumn: boolean,
+) => {
+  if (isLastRow && isLastColumn) {
+    return -1;
+  }
+
+  return isLastRow ? currentCol + 1 : currentCol;
+};
+
+export const getNextRow = (
+  currentRow: number,
+  isLastRow: boolean,
+  isLastColumn: boolean,
+) => {
+  if (isLastRow && isLastColumn) {
+    return -1;
+  }
+
+  if (isLastRow) {
+    return 0;
+  }
+
+  return currentRow + 1;
+};

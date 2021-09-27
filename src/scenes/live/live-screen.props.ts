@@ -92,4 +92,5 @@ export interface RandomTeamUserRowsProps {
 export interface RandomTeamUserRowProps {
   currentUserId: string;
   users: BreakResultUser[];
+  visibleTeamsInRow: number;
 }
