@@ -1988,6 +1988,7 @@ export type Hits = {
   Break: Breaks;
   /** An object relationship */
   User: Users;
+  archived: Scalars['Boolean'];
   autograph?: Maybe<Scalars['Boolean']>;
   brand: Scalars['String'];
   break_id: Scalars['uuid'];
@@ -2081,6 +2082,7 @@ export type Hits_Bool_Exp = {
   _and?: Maybe<Array<Hits_Bool_Exp>>;
   _not?: Maybe<Hits_Bool_Exp>;
   _or?: Maybe<Array<Hits_Bool_Exp>>;
+  archived?: Maybe<Boolean_Comparison_Exp>;
   autograph?: Maybe<Boolean_Comparison_Exp>;
   brand?: Maybe<String_Comparison_Exp>;
   break_id?: Maybe<Uuid_Comparison_Exp>;
@@ -2119,6 +2121,7 @@ export type Hits_Inc_Input = {
 export type Hits_Insert_Input = {
   Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  archived?: Maybe<Scalars['Boolean']>;
   autograph?: Maybe<Scalars['Boolean']>;
   brand?: Maybe<Scalars['String']>;
   break_id?: Maybe<Scalars['uuid']>;
@@ -2256,6 +2259,7 @@ export type Hits_On_Conflict = {
 export type Hits_Order_By = {
   Break?: Maybe<Breaks_Order_By>;
   User?: Maybe<Users_Order_By>;
+  archived?: Maybe<Order_By>;
   autograph?: Maybe<Order_By>;
   brand?: Maybe<Order_By>;
   break_id?: Maybe<Order_By>;
@@ -2286,6 +2290,8 @@ export type Hits_Pk_Columns_Input = {
 
 /** select columns of table "Hits" */
 export enum Hits_Select_Column {
+  /** column name */
+  Archived = 'archived',
   /** column name */
   Autograph = 'autograph',
   /** column name */
@@ -2332,6 +2338,7 @@ export enum Hits_Select_Column {
 
 /** input type for updating data in table "Hits" */
 export type Hits_Set_Input = {
+  archived?: Maybe<Scalars['Boolean']>;
   autograph?: Maybe<Scalars['Boolean']>;
   brand?: Maybe<Scalars['String']>;
   break_id?: Maybe<Scalars['uuid']>;
@@ -2401,6 +2408,8 @@ export type Hits_Sum_Order_By = {
 
 /** update columns of table "Hits" */
 export enum Hits_Update_Column {
+  /** column name */
+  Archived = 'archived',
   /** column name */
   Autograph = 'autograph',
   /** column name */
@@ -2839,6 +2848,182 @@ export type Inventory_Variance_Fields = {
 export type Inventory_Variance_Order_By = {
   cost_basis?: Maybe<Order_By>;
 };
+
+/** columns and relationships of "NotificationSettings" */
+export type NotificationSettings = {
+  __typename?: 'NotificationSettings';
+  /** An object relationship */
+  User: Users;
+  breakers: Scalars['Boolean'];
+  breaks: Scalars['Boolean'];
+  created_at: Scalars['timestamptz'];
+  events: Scalars['Boolean'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "NotificationSettings" */
+export type NotificationSettings_Aggregate = {
+  __typename?: 'NotificationSettings_aggregate';
+  aggregate?: Maybe<NotificationSettings_Aggregate_Fields>;
+  nodes: Array<NotificationSettings>;
+};
+
+/** aggregate fields of "NotificationSettings" */
+export type NotificationSettings_Aggregate_Fields = {
+  __typename?: 'NotificationSettings_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<NotificationSettings_Max_Fields>;
+  min?: Maybe<NotificationSettings_Min_Fields>;
+};
+
+
+/** aggregate fields of "NotificationSettings" */
+export type NotificationSettings_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<NotificationSettings_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "NotificationSettings". All fields are combined with a logical 'AND'. */
+export type NotificationSettings_Bool_Exp = {
+  User?: Maybe<Users_Bool_Exp>;
+  _and?: Maybe<Array<NotificationSettings_Bool_Exp>>;
+  _not?: Maybe<NotificationSettings_Bool_Exp>;
+  _or?: Maybe<Array<NotificationSettings_Bool_Exp>>;
+  breakers?: Maybe<Boolean_Comparison_Exp>;
+  breaks?: Maybe<Boolean_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  events?: Maybe<Boolean_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "NotificationSettings" */
+export enum NotificationSettings_Constraint {
+  /** unique or primary key constraint */
+  NotificationSettingsPkey = 'NotificationSettings_pkey',
+  /** unique or primary key constraint */
+  NotificationSettingsUserIdUniqueKey = 'NotificationSettings_user_id_unique_key'
+}
+
+/** input type for inserting data into table "NotificationSettings" */
+export type NotificationSettings_Insert_Input = {
+  User?: Maybe<Users_Obj_Rel_Insert_Input>;
+  breakers?: Maybe<Scalars['Boolean']>;
+  breaks?: Maybe<Scalars['Boolean']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  events?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type NotificationSettings_Max_Fields = {
+  __typename?: 'NotificationSettings_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type NotificationSettings_Min_Fields = {
+  __typename?: 'NotificationSettings_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "NotificationSettings" */
+export type NotificationSettings_Mutation_Response = {
+  __typename?: 'NotificationSettings_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<NotificationSettings>;
+};
+
+/** input type for inserting object relation for remote table "NotificationSettings" */
+export type NotificationSettings_Obj_Rel_Insert_Input = {
+  data: NotificationSettings_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<NotificationSettings_On_Conflict>;
+};
+
+/** on conflict condition type for table "NotificationSettings" */
+export type NotificationSettings_On_Conflict = {
+  constraint: NotificationSettings_Constraint;
+  update_columns?: Array<NotificationSettings_Update_Column>;
+  where?: Maybe<NotificationSettings_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "NotificationSettings". */
+export type NotificationSettings_Order_By = {
+  User?: Maybe<Users_Order_By>;
+  breakers?: Maybe<Order_By>;
+  breaks?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  events?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: NotificationSettings */
+export type NotificationSettings_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "NotificationSettings" */
+export enum NotificationSettings_Select_Column {
+  /** column name */
+  Breakers = 'breakers',
+  /** column name */
+  Breaks = 'breaks',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Events = 'events',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "NotificationSettings" */
+export type NotificationSettings_Set_Input = {
+  breakers?: Maybe<Scalars['Boolean']>;
+  breaks?: Maybe<Scalars['Boolean']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  events?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "NotificationSettings" */
+export enum NotificationSettings_Update_Column {
+  /** column name */
+  Breakers = 'breakers',
+  /** column name */
+  Breaks = 'breaks',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Events = 'events',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** columns and relationships of "Notifications" */
 export type Notifications = {
@@ -5104,6 +5289,8 @@ export type Users = {
   Hits_aggregate: Hits_Aggregate;
   /** An object relationship */
   Notification?: Maybe<Notifications>;
+  /** An object relationship */
+  NotificationSettings?: Maybe<NotificationSettings>;
   /** fetch data from the table: "Orders" */
   Orders: Array<Orders>;
   /** An aggregate relationship */
@@ -5342,6 +5529,7 @@ export type Users_Bool_Exp = {
   Followers?: Maybe<SaveBreaker_Bool_Exp>;
   Hits?: Maybe<Hits_Bool_Exp>;
   Notification?: Maybe<Notifications_Bool_Exp>;
+  NotificationSettings?: Maybe<NotificationSettings_Bool_Exp>;
   Orders?: Maybe<Orders_Bool_Exp>;
   SavedBreakers?: Maybe<SaveBreaker_Bool_Exp>;
   SavedBreaks?: Maybe<SaveBreak_Bool_Exp>;
@@ -5380,6 +5568,7 @@ export type Users_Insert_Input = {
   Followers?: Maybe<SaveBreaker_Arr_Rel_Insert_Input>;
   Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Notification?: Maybe<Notifications_Obj_Rel_Insert_Input>;
+  NotificationSettings?: Maybe<NotificationSettings_Obj_Rel_Insert_Input>;
   Orders?: Maybe<Orders_Arr_Rel_Insert_Input>;
   SavedBreakers?: Maybe<SaveBreaker_Arr_Rel_Insert_Input>;
   SavedBreaks?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
@@ -5480,6 +5669,7 @@ export type Users_Order_By = {
   Followers_aggregate?: Maybe<SaveBreaker_Aggregate_Order_By>;
   Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Notification?: Maybe<Notifications_Order_By>;
+  NotificationSettings?: Maybe<NotificationSettings_Order_By>;
   Orders_aggregate?: Maybe<Orders_Aggregate_Order_By>;
   SavedBreakers_aggregate?: Maybe<SaveBreaker_Aggregate_Order_By>;
   SavedBreaks_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
@@ -6098,6 +6288,10 @@ export type Mutation_Root = {
   delete_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** delete single row from the table: "Inventory" */
   delete_Inventory_by_pk?: Maybe<Inventory>;
+  /** delete data from the table: "NotificationSettings" */
+  delete_NotificationSettings?: Maybe<NotificationSettings_Mutation_Response>;
+  /** delete single row from the table: "NotificationSettings" */
+  delete_NotificationSettings_by_pk?: Maybe<NotificationSettings>;
   /** delete data from the table: "Notifications" */
   delete_Notifications?: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "Notifications" */
@@ -6186,6 +6380,10 @@ export type Mutation_Root = {
   insert_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** insert a single row into the table: "Inventory" */
   insert_Inventory_one?: Maybe<Inventory>;
+  /** insert data into the table: "NotificationSettings" */
+  insert_NotificationSettings?: Maybe<NotificationSettings_Mutation_Response>;
+  /** insert a single row into the table: "NotificationSettings" */
+  insert_NotificationSettings_one?: Maybe<NotificationSettings>;
   /** insert data into the table: "Notifications" */
   insert_Notifications?: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "Notifications" */
@@ -6274,6 +6472,10 @@ export type Mutation_Root = {
   update_Inventory?: Maybe<Inventory_Mutation_Response>;
   /** update single row of the table: "Inventory" */
   update_Inventory_by_pk?: Maybe<Inventory>;
+  /** update data of the table: "NotificationSettings" */
+  update_NotificationSettings?: Maybe<NotificationSettings_Mutation_Response>;
+  /** update single row of the table: "NotificationSettings" */
+  update_NotificationSettings_by_pk?: Maybe<NotificationSettings>;
   /** update data of the table: "Notifications" */
   update_Notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "Notifications" */
@@ -6426,6 +6628,18 @@ export type Mutation_RootDelete_InventoryArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Inventory_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_NotificationSettingsArgs = {
+  where: NotificationSettings_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_NotificationSettings_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6707,6 +6921,20 @@ export type Mutation_RootInsert_InventoryArgs = {
 export type Mutation_RootInsert_Inventory_OneArgs = {
   object: Inventory_Insert_Input;
   on_conflict?: Maybe<Inventory_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_NotificationSettingsArgs = {
+  objects: Array<NotificationSettings_Insert_Input>;
+  on_conflict?: Maybe<NotificationSettings_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_NotificationSettings_OneArgs = {
+  object: NotificationSettings_Insert_Input;
+  on_conflict?: Maybe<NotificationSettings_On_Conflict>;
 };
 
 
@@ -7037,6 +7265,20 @@ export type Mutation_RootUpdate_Inventory_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_NotificationSettingsArgs = {
+  _set?: Maybe<NotificationSettings_Set_Input>;
+  where: NotificationSettings_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_NotificationSettings_By_PkArgs = {
+  _set?: Maybe<NotificationSettings_Set_Input>;
+  pk_columns: NotificationSettings_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_NotificationsArgs = {
   _set?: Maybe<Notifications_Set_Input>;
   where: Notifications_Bool_Exp;
@@ -7315,6 +7557,12 @@ export type Query_Root = {
   Inventory_aggregate: Inventory_Aggregate;
   /** fetch data from the table: "Inventory" using primary key columns */
   Inventory_by_pk?: Maybe<Inventory>;
+  /** fetch data from the table: "NotificationSettings" */
+  NotificationSettings: Array<NotificationSettings>;
+  /** fetch aggregated fields from the table: "NotificationSettings" */
+  NotificationSettings_aggregate: NotificationSettings_Aggregate;
+  /** fetch data from the table: "NotificationSettings" using primary key columns */
+  NotificationSettings_by_pk?: Maybe<NotificationSettings>;
   /** fetch data from the table: "Notifications" */
   Notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "Notifications" */
@@ -7583,6 +7831,29 @@ export type Query_RootInventory_AggregateArgs = {
 
 
 export type Query_RootInventory_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootNotificationSettingsArgs = {
+  distinct_on?: Maybe<Array<NotificationSettings_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<NotificationSettings_Order_By>>;
+  where?: Maybe<NotificationSettings_Bool_Exp>;
+};
+
+
+export type Query_RootNotificationSettings_AggregateArgs = {
+  distinct_on?: Maybe<Array<NotificationSettings_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<NotificationSettings_Order_By>>;
+  where?: Maybe<NotificationSettings_Bool_Exp>;
+};
+
+
+export type Query_RootNotificationSettings_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -7958,6 +8229,12 @@ export type Subscription_Root = {
   Inventory_aggregate: Inventory_Aggregate;
   /** fetch data from the table: "Inventory" using primary key columns */
   Inventory_by_pk?: Maybe<Inventory>;
+  /** fetch data from the table: "NotificationSettings" */
+  NotificationSettings: Array<NotificationSettings>;
+  /** fetch aggregated fields from the table: "NotificationSettings" */
+  NotificationSettings_aggregate: NotificationSettings_Aggregate;
+  /** fetch data from the table: "NotificationSettings" using primary key columns */
+  NotificationSettings_by_pk?: Maybe<NotificationSettings>;
   /** fetch data from the table: "Notifications" */
   Notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "Notifications" */
@@ -8226,6 +8503,29 @@ export type Subscription_RootInventory_AggregateArgs = {
 
 
 export type Subscription_RootInventory_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootNotificationSettingsArgs = {
+  distinct_on?: Maybe<Array<NotificationSettings_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<NotificationSettings_Order_By>>;
+  where?: Maybe<NotificationSettings_Bool_Exp>;
+};
+
+
+export type Subscription_RootNotificationSettings_AggregateArgs = {
+  distinct_on?: Maybe<Array<NotificationSettings_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<NotificationSettings_Order_By>>;
+  where?: Maybe<NotificationSettings_Bool_Exp>;
+};
+
+
+export type Subscription_RootNotificationSettings_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -9995,7 +10295,7 @@ export type UserMinimalInformationQuery = (
   { __typename?: 'query_root' }
   & { Users: Array<(
     { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'image' | 'username'>
+    & Pick<Users, 'id' | 'image' | 'username' | 'first_name' | 'last_name'>
   )> }
 );
 
@@ -12260,6 +12560,8 @@ export const UserMinimalInformationDocument = gql`
     id
     image
     username
+    first_name
+    last_name
   }
 }
     `;

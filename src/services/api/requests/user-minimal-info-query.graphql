@@ -3,5 +3,7 @@ query UserMinimalInformation($id: String) {
     id
     image
     username
+    first_name
+    last_name
   }
 }

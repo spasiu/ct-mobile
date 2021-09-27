@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 export interface OverScreenModalProps {
   isVisible?: boolean;
@@ -12,7 +12,10 @@ export interface OverScreenModalProps {
   onPressAction?: () => void;
   onPressBack?: () => void;
   showBack?: boolean;
+  showClose?: boolean;
   actionStyle?: ViewStyle[];
   children?: React.ReactNode;
   bottomComponent?: React.ReactNode;
+  containerStyle?: ViewStyle[];
+  titleStyle?: TextStyle[];
 }

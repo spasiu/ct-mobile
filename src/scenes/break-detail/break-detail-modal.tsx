@@ -91,12 +91,22 @@ export const BreakDetailModal = ({
   const userAddress = userDefaultAddressSelector(userData);
   const userPaymentData = getDefaultPaymentCard();
   const shouldAllowToContinueToCheckout =
-    !isEmpty(selectedItems) && userAddress && Boolean(userPaymentData);
+    !isEmpty(selectedItems) && Boolean(userAddress) && Boolean(userPaymentData);
+
+  const cleanModalOnClose = () => {
+    setSelectedItems([]);
+    setShowPurchaseModal(false);
+    setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL });
+  };
+
   return (
     <OverScreenModal
       {...modalProps}
       {...getRootModalProps(loading, visibleRoute, isBreakSoldOut)}
-      onPressClose={onPressClose}
+      onPressClose={() => {
+        cleanModalOnClose();
+        onPressClose();
+      }}
       onPressBack={() => {
         if (isAddAddress(visibleRoute) || isEditAddress(visibleRoute)) {
           setVisibleRoute({ route: ROUTES_IDS.ADDRESSES_LIST_SCREEN });
@@ -199,8 +209,15 @@ export const BreakDetailModal = ({
         userAddress={addressCleanSelector(userAddress)}
         userPaymentData={userPaymentData}
         cartItems={selectedItems}
-        onSuccess={() => onPressClose()}
+        onSuccess={() => {
+          cleanModalOnClose();
+          onPressClose();
+        }}
         onCancel={() => setShowPurchaseModal(false)}
+        onError={() => {
+          cleanModalOnClose();
+          refetch();
+        }}
       />
     </OverScreenModal>
   );

@@ -119,7 +119,7 @@ export const BreakDetail = ({
                   const selected = itemIndex !== -1;
                   return (
                     <BorderlessButton
-                      style={[s.flx_row, s.jcsb, s.mv3]}
+                      style={[s.flx_row, s.jcsb, s.pv3]}
                       onPress={() => {
                         const newSelectedItems = selected
                           ? remove(itemIndex, 1, selectedItems)

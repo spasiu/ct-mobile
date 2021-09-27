@@ -66,8 +66,8 @@ export const EventsView = ({
   if (isEmpty(events)) {
     return (
       <EmptyState
-        title={t('emptyResults.noEventsTitle')}
-        description={t('emptyResults.noEventsDescription')}
+        title={t('emptyResults.noEventScheduledForBreakerTitle')}
+        description={t('emptyResults.noEventScheduledForBreakerDescription')}
       />
     );
   }

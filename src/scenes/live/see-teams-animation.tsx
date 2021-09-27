@@ -22,14 +22,14 @@ export const SeeTeamsAnimation = ({
 
   return (
     <View style={teamsAnimationContainerStyle}>
-      {false && <BreakResultSummary
+      {!summaryAnimationEnded && <BreakResultSummary
         teamCount={teams.length}
         userCount={result.length}
         onEnd={() => setSummaryAnimationEnded(true)}
       />}
 
       {
-        <RandomTeamUserRows
+        summaryAnimationEnded && <RandomTeamUserRows
           users={[{
             user_id: 'a',
             image: '/users/lnS91fGlcnWX2rK3aQIHxShr5SD2/34978FDE-A470-464F-B70F-B6E297B366B8.jpg',

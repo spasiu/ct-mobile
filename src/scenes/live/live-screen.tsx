@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import {
   View,
   Text,
@@ -45,7 +45,6 @@ import {
   eventLiveBreakSelector,
   eventSelector,
   eventUpcomingBreakSelector,
-  eventUpcomingBreaksSelector,
   eventViewCountSelector,
 } from '../../common/event';
 import { ICON_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../theme/sizes';
@@ -77,9 +76,9 @@ import {
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
 import { indexedMap } from '../../utils/ramda';
-import { UpcomingBreaksModal } from './upcoming-breaks-modal';
 import { SeeAllTeamsModal } from './see-all-teams-modal';
 import { LineupModal } from './lineup-modal';
+import { TermsOfUseModal } from './terms-of-use-modal';
 
 import { LiveScreenProps } from './live-screen.props';
 
@@ -94,10 +93,10 @@ export const LiveScreen = ({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const [breakId, setBreakId] = useState('');
-  const [showUpcomingBreaks, setShowUpcomingBreaks] = useState(false);
   const [showTeams, setShowTeams] = useState(false);
   const [streamReady, setStreamReady] = useState(false);
   const [showLineup, setShowLineup] = useState(false);
+  const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
   const [currentLiveBreak, setCurrentLiveBreak] = useState<Partial<Breaks>>();
 
@@ -144,6 +143,10 @@ export const LiveScreen = ({
 
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useLayoutEffect(() => {
+    setTermsOfUseVisible(true);
   }, []);
 
   const event = eventSelector(data);
@@ -260,7 +263,7 @@ export const LiveScreen = ({
                 breakTitle={breakTitleSelector(upcomingBreak)}
                 spotsLeft={breakSpotsSelector(upcomingBreak)}
                 price={breakPriceSelector(upcomingBreak)}
-                onPressBox={() => setShowUpcomingBreaks(true)}
+                onPressBox={() => setBreakId(upcomingBreak.id)}
                 onPressAction={() => setBreakId(upcomingBreak.id)}
               />
             )}
@@ -322,13 +325,6 @@ export const LiveScreen = ({
               </View>
             </View>
           </KeyboardAvoidingView>
-          <UpcomingBreaksModal
-            isVisible={!isEmpty(event) && showUpcomingBreaks}
-            onPressClose={() => setShowUpcomingBreaks(false)}
-            breaks={eventUpcomingBreaksSelector(event)}
-            breaker={breaker}
-            event={event}
-          />
           <BreakDetailModal
             breakId={breakId}
             isVisible={Boolean(breakId)}
@@ -347,6 +343,11 @@ export const LiveScreen = ({
             breaks={eventBreaksSelector(event)}
             breaker={breaker}
             event={event}
+          />
+          <TermsOfUseModal
+            isVisible={termsOfUseVisible}
+            onPressCancel={() => navigation.goBack()}
+            onPressConfirm={() => setTermsOfUseVisible(false)}
           />
         </SafeAreaView>
       </LinearGradient>

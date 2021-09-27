@@ -9,6 +9,7 @@ subscription NewHits(
         { player: { _ilike: $searchInput } }
         { description: { _ilike: $searchInput } }
       ]
+      _and: [{ archived: { _eq: false } }]
     }
   ) {
     id

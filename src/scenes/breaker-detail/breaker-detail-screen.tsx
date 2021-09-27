@@ -225,7 +225,7 @@ export const BreakerDetailScreen = ({
         )}
         <SectionHeader
           containerStyle={[s.mh3, s.h3, s.mb2]}
-          title={t('sections.break')}
+          title={eventsView ? t('sections.event') : t('sections.break')}
           actionComponent={
             <ScheduleToggle
               isOn={eventsView}

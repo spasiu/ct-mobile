@@ -18,7 +18,7 @@
     "seeMore": "See More",
     "seeLess": "See Less",
     "myHits": "My Hits",
-    "showFollowing": "Show Following",
+    "showFollowing": "My Follows",
     "logout": "Logout",
     "save": "Save",
     "edit": "Edit",
@@ -43,7 +43,9 @@
     "upNext": "Up Next",
     "comments": "Comments",
     "done": "Done",
-    "continueToCheckout": "Continue to Checkout"
+    "continueToCheckout": "Continue to Checkout",
+    "proceedToLiveStream": "Great, let’s get ripping!",
+    "takeMeBack": "I disagree, take me back"
   },
   "tabBar": {
     "homeTab": "Home",
@@ -67,7 +69,7 @@
     "addressLine1Label": "Address Line 1",
     "addressLine2Label": "Address Line 2",
     "cityLabel": "City",
-    "stateLabel": "State",
+    "stateLabel": "State/Province",
     "postalCodeLabel": "Zip/Postal",
     "countryLabel": "Country",
     "firstNameLabel": "First Name",
@@ -79,7 +81,8 @@
     "numberField": "Must only contain numbers",
     "cvvField": "CVV",
     "fieldInvalidRegion": "State/Province code is not valid",
-    "chatInputPlaceholder": "Comment"
+    "chatInputPlaceholder": "Comment",
+    "requiredImage": "Image is required"
   },
   "calendar": {
     "today": "Today"
@@ -87,7 +90,6 @@
   "account": {
     "haveAccountInstructions": "Already have an account?",
     "dontHaveAccountInstructions": "Don't have an account?",
-    "dontHaveAccountAction": "",
     "welcomeText": "Welcome to",
     "welcomeAdvisory": "You must be 18+ years old to register",
     "separatorText": "or",
@@ -144,7 +146,7 @@
       "randomDivision": "Random Division",
       "hitDraft": "Hit Draft",
       "packWars": "Pack Wars",
-      "personal": "Personal"
+      "personal": "Personals"
     },
     "allowNotifications": {
       "title": "Never miss a break!",
@@ -155,7 +157,7 @@
   },
   "sections": {
     "leagues": "Leagues",
-    "featuredBreaks": "Featured Breaks",
+    "featuredBreaks": "Featured Events",
     "recentHits": "Recent Hits",
     "meetTheBreakers": "Meet the Breakers",
     "break": "Break Schedule",
@@ -172,18 +174,32 @@
     "emptyState": "Search for Breaks, Events, Breakers or Hits"
   },
   "emptyResults": {
-    "noHitsTitle": "No hits is no fun at all!",
-    "noEventsTitle": "No events is no fun at all!",
-    "noBreaksTitle": "No breaks is no fun at all!",
-    "noHitsDescription": "Why not participate in one of our breaks and try to get your first hit?",
-    "noEventsDescription": "Why not follow some of our events and look into a few of their breaks to start?",
-    "noBreaksDescription": "Why not follow some of our breakers and look into a few of their breaks to start?",
-    "noSearchResultTitle": "No results is no fun at all!",
-    "noSearchResultDescription": "We're just getting started and haven't started breaking all sports just yet, so we thank you for your patience and support. Now what are you waiting for, go pull some heat!",
-    "noBreakersTitle": "No breakers is no fun at all!",
-    "noBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?",
+    "noHitsTitle": "Uh oh, no hits yet!",
+    "noEventsTitle": "No events matching your criteria are planned right now!",
+    "noBreaksTitle": "No breaks matching your criteria are currently scheduled!",
+    "noHitsDescription": "Looks like your vault is empty :slightly_frowning_face:. Let’s change that; you’re only a few taps away from joining a break and pulling some :fire:!",
+    "noEventsDescription": "Check back soon; new Events are consistently going live. Or, adjust your search filters to see more.",
+    "noBreaksDescription": "Check back soon; new Breaks are added frequently. Or, adjust your search filters to see more.",
+    "noEventSearchResultTitle": "Hmm… no Events match your keywords.",
+    "noEventSearchResultDescription": "Try some other search terms or select another category above if you aren’t looking for an Event. Or try browsing the Schedule page directly.",
+    "noBreakSearchResultTitle": "Hmm… no Breaks match your keywords.",
+    "noBreakSearchResultDescription": "Try some other search terms or select another category above if you aren’t looking for a Break. Or try browsing the Schedule page directly.",
+    "noHitSearchResultTitle": "Hmm… no Hits match your keywords.",
+    "noHitSearchResultDescription": "Try some other search terms or select another category above if you aren’t looking for one of our awesome Breakers. You can also visit the Hits page and browse our collection of Hits directly.",
+    "noBreakersTitle": "Hmm… no Breakers match your keywords.",
+    "noBreakersDescription": "Try some other search terms or select another category above if you aren’t looking for one of our awesome Breakers. You can also simply visit the Breakers page and browse from there.",
     "noFollowedBreakersTitle": "No breakers is no fun at all!",
-    "noFollowedBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?"
+    "noFollowedBreakersDescription": "Why not follow some of our breakers and look into a few of their events to start?",
+    "noEventScheduledForBreakerTitle": "No events are currently planned :slightly_frowning_face:",
+    "noEventScheduledForBreakerDescription": "Looks like the Breaker is taking a breather. Check back soon; new Events are consistently going live!",
+    "noBreakScheduledForBreakerTitle": "No breaks are currently scheduled :slightly_frowning_face:",
+    "noBreakScheduledForBreakerDescription": "Looks like the Breaker is taking a breather. Check back soon; new Breaks are added frequently!",
+    "noBreaksFollowedByUserTitle": "You’re fresh out of breaks!",
+    "noBreaksFollowedByUserDescription": "Don’t worry, you’re just a few taps away from getting in on your next one. Check out the Schedule tab for what’s coming up! Also remember that any Breaks you follow will show up here.",
+    "noEventsFollowedByUserTitle": "Your calendar is empty!",
+    "noEventsFollowedByUserDescription": "The bad news: you don’t have any Events at the moment. The good news: you can easily change that by going to the Schedule page and following the Events you are interested in.",
+    "noHitsFollowedByUserTitle": "No hits yet!?!",
+    "noHitsFollowedByUserDescription": "It’s time to chase your favourite cards and start building up your collection. Join a break today and watch the hits flow in. :)"
   },
   "status": {
     "live": "Live",
@@ -209,7 +225,7 @@
     "cvvInstructions": "CVV is a three-digit code printed on the back of your credit card. For American Express cards you will find a four-digit code on the front of the card.",
     "deleteCardInstructions": "This action will permanently remove this payment method from the app.",
     "noShippingAddressSavedTitle": "No delivery address stored!",
-    "noShippingAddressSavedDescription": "Add a delivery address for a quick and easy way to buy your breaks.",
+    "noShippingAddressSavedDescription": "Add a delivery address to make checkout a breeze.",
     "purchaseSuccessfullMessage": "Purchase successful",
     "purchaseFailedMessage": "Transaction failed, review payment information",
     "selectItemMessage": "Choose a Spot",
@@ -232,7 +248,7 @@
       "randomTeam": "Random T",
       "randomDivision": "Random D",
       "hitDraft": "Hit Draft",
-      "personal": "Personal"
+      "personal": "Personals"
     }
   },
   "filter": {
@@ -291,13 +307,12 @@
       "followedEvents": "Events I follow",
       "followedBreaks": "Breaks I follow",
       "newPersonalHits": "New hits for me",
-      "supportMessages": "Chat support messages",
+      "supportMessages": "Chat messages",
       "announcements": "Announcements"
     }
   },
   "addresses": {
     "deliveryAddress": "Delivery Address",
-    "billingAddress": "BillingAddress",
     "deleteAddressInstruction": "This action will permanently remove this address information from the app."
   },
   "errors": {
@@ -314,5 +329,13 @@
   },
   "warningModal": {
     "title": "Are you sure?"
+  },
+  "liveTermsAndConditionsModal": {
+    "title": "Let's rip wax and have some fun!",
+    "respectCheck": "Be respectful in the chat. Rude, offensive or discriminatory comments will have you banned from the app.",
+    "rulesOfPlayCheck": "Check out our {{link}} if you have any questions about how we break.",
+    "termsOfServiceCheck": "All purchases are final and subject to our {{link}}.",
+    "termsOfServiceLink": "Terms of Service",
+    "rulesOfPlayLink": "Rules of Play"
   }
 }

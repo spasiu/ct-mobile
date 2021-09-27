@@ -8,11 +8,14 @@ import {
 } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
+import Intercom from '@intercom/intercom-react-native';
 
 import {
   userImageSelector,
+  userNameSelector,
   userSelector,
   usersSelector,
+  userUsernameSelector,
 } from '../../common/user-profile';
 import {
   Container,
@@ -104,6 +107,15 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,
+    },
+    onCompleted: queryData => {
+      const user = userSelector(queryData);
+      Intercom.updateUser({
+        name: userNameSelector(user),
+        customAttributes: {
+          username: userUsernameSelector(user),
+        },
+      });
     },
   });
 

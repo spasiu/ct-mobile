@@ -1,4 +1,4 @@
-import { pathOr, map, pluck, findIndex, propEq } from 'ramda';
+import { pathOr, path, map, pluck, findIndex, propEq } from 'ramda';
 import functions from '@react-native-firebase/functions';
 
 import { t } from '../../i18n/i18n';
@@ -134,29 +134,43 @@ export const getRootModalProps = (
 export const checkoutCartSubtotalSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const subtotal = pathOr('', ['subtotal'], checkoutCart);
-  return subtotal ? `${t('payment.paymentCurrencySign')}${subtotal}` : '';
+  const subtotal = path(['subtotal'], checkoutCart);
+  // since 0 evaluates to false in js
+  // we need to explicitly check for undefined
+  return subtotal !== undefined
+    ? `${t('payment.paymentCurrencySign')}${subtotal}`
+    : '';
 };
 
 export const checkoutCartTaxSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const tax = pathOr('', ['tax'], checkoutCart);
-  return tax ? `${t('payment.paymentCurrencySign')}${tax}` : '';
+  const tax = path(['tax'], checkoutCart);
+  // since 0 evaluates to false in js
+  // we need to explicitly check for undefined
+  return tax !== undefined ? `${t('payment.paymentCurrencySign')}${tax}` : '';
 };
 
 export const checkoutCartShippingSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const shipping = pathOr('', ['shipping'], checkoutCart);
-  return shipping ? `${t('payment.paymentCurrencySign')}${shipping}` : '';
+  const shipping = path(['shipping'], checkoutCart);
+  // since 0 evaluates to false in js
+  // we need to explicitly check for undefined
+  return shipping !== undefined
+    ? `${t('payment.paymentCurrencySign')}${shipping}`
+    : '';
 };
 
 export const checkoutCartTotalSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const total = pathOr('', ['total'], checkoutCart);
-  return total ? `${t('payment.paymentCurrencySign')}${total}` : '';
+  const total = path(['total'], checkoutCart);
+  // since 0 evaluates to false in js
+  // we need to explicitly check for undefined
+  return total !== undefined
+    ? `${t('payment.paymentCurrencySign')}${total}`
+    : '';
 };
 
 export const processPayment = async (
@@ -192,6 +206,7 @@ export const getWarningModalProps = (
   onSuccess: () => void,
   onCancel: () => void,
   setPurchasing: (purchasing: boolean) => void,
+  onError: () => void,
 ): {
   title: string;
   primaryActionText: string;
@@ -231,7 +246,7 @@ export const getWarningModalProps = (
       imageSrc: failedImage,
       title: t('payment.purchaseFailedMessage'),
       primaryActionText: t('buttons.backToPaymentDetails'),
-      onPrimaryActionPressed: onCancel,
+      onPrimaryActionPressed: onError,
     };
   }
 };

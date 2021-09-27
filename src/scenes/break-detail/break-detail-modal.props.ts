@@ -78,4 +78,5 @@ export interface PurchaseModalProps extends WarningModalProps {
   cartItems: BreakProductItems[];
   onSuccess: () => void;
   onCancel: () => void;
+  onError: () => void;
 }
