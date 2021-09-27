@@ -8,3 +8,18 @@ export type BreakResult = {
   username: string;
   items?: string[];
 };
+
+export type BreakResultItem = {
+  title: string,
+  shorthand: string,
+  primaryColor: string,
+  secondaryColor: string
+}
+
+export type BreakResultUser = {
+  image: string;
+  user_id: string;
+  username: string;
+  items?: BreakResultItem[]
+}
+

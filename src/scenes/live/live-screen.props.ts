@@ -5,6 +5,7 @@ import { BreakResult } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 import { OverScreenModalProps, SlidingBoxProps } from '../../components';
 import { ProtectedStackParamList, ROUTES_IDS } from '../../navigators';
+import { BreakResultUser } from '../../common/break/break';
 import {
   Breaks,
   Break_Type_Enum,
@@ -71,7 +72,7 @@ export interface TermsOfUseModalProps extends OverScreenModalProps {
 
 export interface SeeTeamsAnimationProps {
   userId: string;
-  result: BreakResult[];
+  result: BreakResultUser[];
   breakType: Break_Type_Enum;
   onPressClose?: () => void;
 }
@@ -84,11 +85,11 @@ export interface BreakResultSummaryProps {
 
 export interface RandomTeamUserRowsProps {
   userId: string;
-  users: any; //BreakResult[]; modify it at the time of integration
+  users: BreakResultUser[];
   onEnd?: () => void;
 }
 
 export interface RandomTeamUserRowProps {
   currentUserId: string;
-  users: any; // BreakResult[]; modify it at the time of integration
+  users: BreakResultUser[];
 }

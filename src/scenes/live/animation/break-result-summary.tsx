@@ -19,16 +19,16 @@ import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
 function entry() {
   let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
-      console.log('failed to load the sound', error);
+      // console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
     entryMusic.play(success => {
       if (success) {
-        console.log('successfully finished playing');
+        // console.log('successfully finished playing');
       } else {
-        console.log('playback failed due to audio decoding errors');
+        // console.log('playback failed due to audio decoding errors');
       }
     });
   });
@@ -37,16 +37,16 @@ function entry() {
 function cardEntry() {
   let cardEntryMusic = new Sound('card_entry.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
-      console.log('failed to load the sound', error);
+      // console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
     cardEntryMusic.play(success => {
       if (success) {
-        console.log('successfully finished playing');
+        // console.log('successfully finished playing');
       } else {
-        console.log('playback failed due to audio decoding errors');
+        // console.log('playback failed due to audio decoding errors');
       }
     });
   });
@@ -55,16 +55,16 @@ function cardEntry() {
 function digitsFlash() {
   let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, error => {
     if (error) {
-      console.log('failed to load the sound', error);
+      // console.log('failed to load the sound', error);
       return;
     }
 
     // Play the sound with an onEnd callback
     digitsFlashMusic.play(success => {
       if (success) {
-        console.log('successfully finished playing');
+        // console.log('successfully finished playing');
       } else {
-        console.log('playback failed due to audio decoding errors');
+        // console.log('playback failed due to audio decoding errors');
       }
     });
   });
