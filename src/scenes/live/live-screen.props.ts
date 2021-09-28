@@ -94,6 +94,7 @@ export interface RandomTeamUserRowProps {
   users: BreakResultUser[];
   visibleTeamsInRow: number;
   allTeams: BreakResultItem[];
+  injectElementsAtColumnIndex: number;
 }
 
 export interface TeamRandomizerProps {
@@ -102,4 +103,5 @@ export interface TeamRandomizerProps {
   boxSize: number;
   teamIndex: number;
   boxMargin: number;
+  currentAnimatingIndex: number;
 }

@@ -3,7 +3,12 @@ import { flatten, head, length, repeat } from 'ramda';
 // import { styles as s } from 'react-native-style-tachyons';
 import { RandomTeamUserRowsProps } from '../live-screen.props';
 import { RandomTeamUserRow } from './random-team-user-row';
-import { getNextColumn, getNextRow, getUserRowsCount, getUsersPerRowCount } from '../live-screen.presets';
+import {
+  getNextColumn,
+  getNextRow,
+  getUserRowsCount,
+  getUsersPerRowCount,
+} from '../live-screen.presets';
 import { indexedMap } from '../../../utils/ramda';
 import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
 
@@ -12,10 +17,15 @@ export const TeamUserRows = ({
   users,
 }: RandomTeamUserRowsProps): JSX.Element => {
   const [visibleRows, setVisibleRows] = useState(0);
+  const [injectRowIndex, setInjectRowIndex] = useState(-1);
+
   const firstUser = head(users);
   const teamsPerUser = length(firstUser?.items || []);
-  const teams = indexedMap((breakResultUser) => (breakResultUser as BreakResultUser).items, users);
-  const allTeams = flatten(teams as BreakResultItem[])
+  const teams = indexedMap(
+    breakResultUser => (breakResultUser as BreakResultUser).items,
+    users,
+  );
+  const allTeams = flatten(teams as BreakResultItem[]);
 
   // number of users that can fit in single row
   const usersPerRow = getUsersPerRowCount(users.length, teamsPerUser);
@@ -55,6 +65,10 @@ export const TeamUserRows = ({
     const isLastRow = currentAnimatingIndex.row === totalRowsCount - 1;
     const isLastColumn = currentAnimatingIndex.col === teamsPerUser - 1;
 
+    if (currentAnimatingIndex.row === 0) {
+      setInjectRowIndex(currentAnimatingIndex.col);
+    }
+
     const timer = setTimeout(
       () => {
         const nextObj = {
@@ -76,7 +90,9 @@ export const TeamUserRows = ({
 
         setCurrentAnimatingIndex(nextObj);
       },
-      currentAnimatingIndex.row === 0 ? 3000 : 300, // undo this number
+      currentAnimatingIndex.row === 0 && currentAnimatingIndex.col >= 0
+        ? 8000
+        : 700, // undo this number
     );
 
     return () => clearTimeout(timer);
@@ -106,13 +122,21 @@ export const TeamUserRows = ({
   return (
     <>
       {rows.map((r, index) => {
+        console.log(
+          index,
+          'ininjectElementsAtColumnIndex',
+          visibleRows,
+          totalRowsCount,
+        );
         return (
           <RandomTeamUserRow
             users={getUsersForRow(index)}
             currentUserId={userId}
             key={index.toString()}
             visibleTeamsInRow={currentAnimatingIndex.visibleTeamsInRow[index]}
+            rowIndex={index}
             allTeams={allTeams}
+            injectElementsAtColumnIndex={injectRowIndex}
           />
         );
       })}

@@ -19,10 +19,12 @@ export const TeamUserRow = ({
   currentUserId,
   users,
   visibleTeamsInRow,
-  allTeams
+  allTeams,
+  injectElementsAtColumnIndex,
+  rowIndex,
 }: RandomTeamUserRowProps): JSX.Element => {
   const boxWidth = users.length < 6 ? 84 : 70;
-  const boxMargin = (7 * WINDOW_WIDTH / 750);
+  const boxMargin = (7 * WINDOW_WIDTH) / 750;
   const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;
   const avatarSize = (80 * WINDOW_WIDTH) / 750;
@@ -82,7 +84,7 @@ export const TeamUserRow = ({
                     s.jcc,
                     {
                       height: headerHeight,
-                      zIndex: 2
+                      zIndex: 2,
                     },
                     user.user_id === currentUserId
                       ? s.bg_secondary
@@ -94,31 +96,25 @@ export const TeamUserRow = ({
                     s.flx_row,
                     s.jcc,
                     {
-                      marginHorizontal: boxMargin
-                    }
-                  ]}
-                >
+                      marginHorizontal: boxMargin,
+                    },
+                  ]}>
                   {
                     // replace with actual component
                     user.items!.map((item: any, index: number) => {
                       return (
                         <View key={index.toString()}>
-                          {visibleTeamsInRow < index ? (
-                            <View
-                              key={index.toString()}
-                              style={[
-                                { width: boxSize, height: boxSize, margin: boxMargin},
-                              ]}></View>
-                          ) : (
-                            <TeamRandomizer
-                              key={index.toString()}
-                              result={item}
-                              teamIndex={index}
-                              boxSize={boxSize}
-                              boxMargin={boxMargin}
-                              allTeams={allTeams.slice(0,6)}
-                            />
-                          )}
+                          <TeamRandomizer
+                            key={index.toString()}
+                            result={item}
+                            rowIndex={rowIndex}
+                            display={injectElementsAtColumnIndex === index}
+                            currentAnimatingIndex={visibleTeamsInRow}
+                            teamIndex={index}
+                            boxSize={boxSize}
+                            boxMargin={boxMargin}
+                            allTeams={allTeams.slice(0, 6)}
+                          />
                         </View>
                       );
                     })
@@ -169,5 +165,10 @@ export const TeamUserRow = ({
 };
 
 export const RandomTeamUserRow = memo(TeamUserRow, (prevProps, nextProps) => {
+  if (
+    prevProps.injectElementsAtColumnIndex !==
+    nextProps.injectElementsAtColumnIndex
+  )
+    return false;
   return prevProps.visibleTeamsInRow === nextProps.visibleTeamsInRow;
 });
