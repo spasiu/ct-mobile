@@ -5,7 +5,7 @@ import { BreakResult } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 import { OverScreenModalProps, SlidingBoxProps } from '../../components';
 import { ProtectedStackParamList, ROUTES_IDS } from '../../navigators';
-import { BreakResultUser } from '../../common/break/break';
+import { BreakResultUser, BreakResultItem } from '../../common/break/break';
 import {
   Breaks,
   Break_Type_Enum,
@@ -93,4 +93,13 @@ export interface RandomTeamUserRowProps {
   currentUserId: string;
   users: BreakResultUser[];
   visibleTeamsInRow: number;
+  allTeams: BreakResultItem[];
+}
+
+export interface TeamRandomizerProps {
+  allTeams: BreakResultItem[];
+  result: BreakResultItem;
+  boxSize: number;
+  teamIndex: number;
+  boxMargin: number;
 }

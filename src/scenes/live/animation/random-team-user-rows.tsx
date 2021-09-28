@@ -1,9 +1,11 @@
 import React, { memo, useState, useEffect } from 'react';
-import { head, length, repeat } from 'ramda';
+import { flatten, head, length, repeat } from 'ramda';
 // import { styles as s } from 'react-native-style-tachyons';
 import { RandomTeamUserRowsProps } from '../live-screen.props';
 import { RandomTeamUserRow } from './random-team-user-row';
 import { getNextColumn, getNextRow, getUserRowsCount, getUsersPerRowCount } from '../live-screen.presets';
+import { indexedMap } from '../../../utils/ramda';
+import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
 
 export const TeamUserRows = ({
   userId,
@@ -12,6 +14,8 @@ export const TeamUserRows = ({
   const [visibleRows, setVisibleRows] = useState(0);
   const firstUser = head(users);
   const teamsPerUser = length(firstUser?.items || []);
+  const teams = indexedMap((breakResultUser) => (breakResultUser as BreakResultUser).items, users);
+  const allTeams = flatten(teams as BreakResultItem[])
 
   // number of users that can fit in single row
   const usersPerRow = getUsersPerRowCount(users.length, teamsPerUser);
@@ -60,6 +64,7 @@ export const TeamUserRows = ({
             isLastRow,
             isLastColumn,
           ),
+
           visibleTeamsInRow: [
             ...repeat(currentAnimatingIndex.col, currentAnimatingIndex.row + 1),
             ...repeat(
@@ -71,7 +76,7 @@ export const TeamUserRows = ({
 
         setCurrentAnimatingIndex(nextObj);
       },
-      currentAnimatingIndex.row === 0 ? 3000 : 100,
+      currentAnimatingIndex.row === 0 ? 3000 : 300, // undo this number
     );
 
     return () => clearTimeout(timer);
@@ -107,6 +112,7 @@ export const TeamUserRows = ({
             currentUserId={userId}
             key={index.toString()}
             visibleTeamsInRow={currentAnimatingIndex.visibleTeamsInRow[index]}
+            allTeams={allTeams}
           />
         );
       })}

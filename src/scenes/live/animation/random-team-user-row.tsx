@@ -13,20 +13,23 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { ServerImage } from '../../../components/server-image/server-image';
+import { TeamRandomizer } from './team-randomizer';
 
 export const TeamUserRow = ({
   currentUserId,
   users,
   visibleTeamsInRow,
+  allTeams
 }: RandomTeamUserRowProps): JSX.Element => {
   const boxWidth = users.length < 6 ? 84 : 70;
+  const boxMargin = (7 * WINDOW_WIDTH / 750);
   const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;
   const avatarSize = (80 * WINDOW_WIDTH) / 750;
 
   const userBoxAnim = useSharedValue(0);
   const avatarAnim = useSharedValue(0);
-  console.log('reder row')
+
   useEffect(() => {
     userBoxAnim.value = withDelay(
       0,
@@ -79,34 +82,42 @@ export const TeamUserRow = ({
                     s.jcc,
                     {
                       height: headerHeight,
+                      zIndex: 2
                     },
                     user.user_id === currentUserId
                       ? s.bg_secondary
                       : s.bg_primary,
                   ]}
                 />
-                <View style={[s.ba, s.flx_row, s.jcc]}>
+                <View
+                  style={[
+                    s.flx_row,
+                    s.jcc,
+                    {
+                      marginHorizontal: boxMargin
+                    }
+                  ]}
+                >
                   {
                     // replace with actual component
                     user.items!.map((item: any, index: number) => {
                       return (
-                        <View key={index.toString()} style={[s.pa1]}>
+                        <View key={index.toString()}>
                           {visibleTeamsInRow < index ? (
                             <View
+                              key={index.toString()}
                               style={[
-                                { width: boxSize, height: boxSize },
+                                { width: boxSize, height: boxSize, margin: boxMargin},
                               ]}></View>
                           ) : (
-                            <View
-                              style={[
-                                { width: boxSize, height: boxSize },
-                                s.ba,
-                                s.b__white,
-                                s.aic,
-                                s.jcc,
-                              ]}>
-                              <Text style={[s.white]}>{item.shorthand}</Text>
-                            </View>
+                            <TeamRandomizer
+                              key={index.toString()}
+                              result={item}
+                              teamIndex={index}
+                              boxSize={boxSize}
+                              boxMargin={boxMargin}
+                              allTeams={allTeams.slice(0,6)}
+                            />
                           )}
                         </View>
                       );
