@@ -63,7 +63,7 @@ export const getCheckoutCartInfo = (
     cartId,
     tax: paymentData.tax_total,
     subtotal: paymentData.subtotal_ex_tax,
-    shipping: paymentData.shipping_cost_total_inc_tax,
+    shipping: paymentData.shipping_cost_total_ex_tax,
     total: paymentData.grand_total,
   };
 };

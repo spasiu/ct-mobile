@@ -1589,7 +1589,7 @@ export type Events = {
   event_status: Event_Status;
   id: Scalars['uuid'];
   image: Scalars['String'];
-  start_time: Scalars['timestamptz'];
+  start_time?: Maybe<Scalars['timestamptz']>;
   status: Event_Status_Enum;
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -10813,7 +10813,9 @@ export type NewBreakerEventsSubscriptionHookResult = ReturnType<typeof useNewBre
 export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerEventsSubscription>;
 export const BreakerHitsDocument = gql`
     query BreakerHits($breakerId: String) {
-  Hits(where: {Break: {Event: {user_id: {_eq: $breakerId}}}}) {
+  Hits(
+    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+  ) {
     id
     image_front
     description
@@ -10851,7 +10853,9 @@ export type BreakerHitsLazyQueryHookResult = ReturnType<typeof useBreakerHitsLaz
 export type BreakerHitsQueryResult = Apollo.QueryResult<BreakerHitsQuery, BreakerHitsQueryVariables>;
 export const NewBreakerHitsDocument = gql`
     subscription NewBreakerHits($breakerId: String) {
-  Hits(where: {Break: {Event: {user_id: {_eq: $breakerId}}}}) {
+  Hits(
+    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+  ) {
     id
     image_front
     description
@@ -11503,7 +11507,7 @@ export type FollowEventMutationOptions = Apollo.BaseMutationOptions<FollowEventM
 export const HitsDocument = gql`
     query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
-    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}
+    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}]}
   ) {
     id
     image_front
@@ -11544,7 +11548,7 @@ export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
 export const NewHitsDocument = gql`
     subscription NewHits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
-    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}
+    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}]}
   ) {
     id
     image_front
