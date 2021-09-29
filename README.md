@@ -12,12 +12,29 @@
 ## Local Setup
 
 1. Using _nvm_ or _n_ make sure your node version is v14+.
-2. Clone the repo and run `yarn install` in the project directory.
-3. Install Watchman `brew install watchman`.
-4. Copy the _.env.example_ file to a new _.env_ file and fill in the missing environment variables.
-5. Make sure Xcode and Android Sturdio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
-6. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
-7. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour.
+1. Clone the repo and run `yarn install` in the project directory.
+1. Install Watchman `brew install watchman`.
+1. Install CocoaPods `sudo gem install cocoapods -v 1.10.1`.
+1. Install/Update Java `https://java.com/en/download/`.
+1. Copy the _.env.example_ file to a new _.env_ file and fill in the missing environment variables.
+1. Make sure Xcode and Android Studio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
+1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
+1. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour. :P
+
+### Troubleshooting
+
+#### Problem 1: `yarn ios` fails
+
+If `yarn ios` fails, it might have to do with your global node/nvm versions ([reference](https://stackoverflow.com/questions/66627590/phasescriptexecution-error-in-react-native-app?rq=1)). Try this:
+
+1. Go to your `bash_profile/zshrc` and comment the three nvm initialization lines (`export NVM_DIR="$HOME/.nvm" [...]`)
+1. Open a new terminal and do `node -v`, if it still finds something it means that you have a global version somewhere.
+1. Do `brew uses --installed node`. _This will show you what is still using node._
+1. Do `brew uninstall --force yarn` _it was `yarn` that was still using a version of node, in my case._ This automatically uninstalls its node/npm dependency.
+1. Uncomment the nvm initialization lines
+1. Reinstall yarn using nvm's npm with `npm i -g yarn`.
+
+_If you have different packages that come up, replace `yarn` with the packages that you need to reinstall._
 
 ## Project Structure
 
