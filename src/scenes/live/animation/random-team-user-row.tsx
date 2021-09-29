@@ -50,10 +50,10 @@ export const TeamUserRow = ({
   return (
     <>
       <View style={[s.flx_row, s.jcsa, s.mt4, s.ph2]}>
-        {users.map((user: any, index: number) => {
+        {users.map((user: any, columnIndex: number) => {
           return (
             <Animated.View
-              key={index.toString()}
+              key={columnIndex.toString()}
               style={[
                 useAnimatedStyle(() => {
                   return {
@@ -111,6 +111,7 @@ export const TeamUserRow = ({
                             display={injectElementsAtColumnIndex === index}
                             currentAnimatingIndex={visibleTeamsInRow}
                             teamIndex={index}
+                            columnIndex={columnIndex}
                             boxSize={boxSize}
                             boxMargin={boxMargin}
                             allTeams={allTeams.slice(0, 6)}

@@ -84,7 +84,8 @@ const Randomizer = ({
   boxSize,
   boxMargin,
   rowIndex,
-  teamIndex
+  teamIndex,
+  columnIndex
 }: TeamRandomizerProps): JSX.Element => {
   const scrollPosition = useSharedValue(
     allTeams.length * (boxSize + boxMargin * 2) * -1,
@@ -114,13 +115,13 @@ const Randomizer = ({
           success => {
             innerOpacity.value = 0;
 
-            if (teamIndex === 0) {
+            if (columnIndex == 0 && teamIndex === 0) {
               runOnJS(playDrop1)()
             }
-            if (teamIndex === 1) {
+            if (columnIndex == 0 && teamIndex === 1) {
               runOnJS(playDrop2)()
             }
-            if (teamIndex === 2) {
+            if (columnIndex == 0 && teamIndex === 2) {
               runOnJS(playDrop3)()
             }
 
