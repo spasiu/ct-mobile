@@ -1,5 +1,6 @@
 import React, { memo, useState, useEffect } from 'react';
 import { flatten, head, length, repeat } from 'ramda';
+import Sound from 'react-native-sound';
 // import { styles as s } from 'react-native-style-tachyons';
 import { RandomTeamUserRowsProps } from '../live-screen.props';
 import { RandomTeamUserRow } from './random-team-user-row';
@@ -11,6 +12,25 @@ import {
 } from '../live-screen.presets';
 import { indexedMap } from '../../../utils/ramda';
 import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
+
+function playSpin() {
+  let entryMusic = new Sound('spin.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
 
 export const TeamUserRows = ({
   userId,
@@ -50,6 +70,7 @@ export const TeamUserRows = ({
 
   const startAnimation = () => {
     setTimeout(() => {
+      // playSpin()
       setCurrentAnimatingIndex({
         row: 0,
         col: 0,
@@ -65,6 +86,9 @@ export const TeamUserRows = ({
     const isLastRow = currentAnimatingIndex.row === totalRowsCount - 1;
     const isLastColumn = currentAnimatingIndex.col === teamsPerUser - 1;
 
+    if (currentAnimatingIndex.row === 0) {
+      playSpin()
+    }
     if (currentAnimatingIndex.row === 0) {
       setInjectRowIndex(currentAnimatingIndex.col);
     }
@@ -92,7 +116,7 @@ export const TeamUserRows = ({
       },
       currentAnimatingIndex.row === 0 && currentAnimatingIndex.col >= 0
         ? 8000
-        : 700, // undo this number
+        : 600, // undo this number
     );
 
     return () => clearTimeout(timer);

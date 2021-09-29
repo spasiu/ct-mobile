@@ -26,7 +26,7 @@ export const SeeTeamsAnimation = ({
 
   return (
     <View style={teamsAnimationContainerStyle}>
-      {false && (
+      {!summaryAnimationEnded && (
         <BreakResultSummary
           teamCount={teams.length}
           userCount={result.length}
@@ -34,7 +34,7 @@ export const SeeTeamsAnimation = ({
         />
       )}
 
-      {true && (
+      {summaryAnimationEnded && (
         <RandomTeamUserRows
           users={[
             {

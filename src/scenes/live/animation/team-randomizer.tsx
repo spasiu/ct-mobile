@@ -9,7 +9,9 @@ import Animated, {
   useSharedValue,
   withDelay,
   withTiming,
+  runOnJS
 } from 'react-native-reanimated';
+import Sound from 'react-native-sound';
 
 import { TeamRandomizerProps } from '../live-screen.props';
 import Svg, {
@@ -23,6 +25,58 @@ import Svg, {
 // import { ServerImage } from '../../../components/server-image/server-image';
 // import { BreakResultItem } from '../../../common/break/break';
 
+function playDrop1() {
+  let entryMusic = new Sound('drop_1.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+function playDrop2() {
+  let entryMusic = new Sound('drop_2.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+function playDrop3() {
+  let entryMusic = new Sound('drop_3.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
 const Randomizer = ({
   allTeams,
   result,
@@ -30,6 +84,7 @@ const Randomizer = ({
   boxSize,
   boxMargin,
   rowIndex,
+  teamIndex
 }: TeamRandomizerProps): JSX.Element => {
   const scrollPosition = useSharedValue(
     allTeams.length * (boxSize + boxMargin * 2) * -1,
@@ -51,13 +106,24 @@ const Randomizer = ({
         rowIndex * 300,
         withRepeat(
           withTiming(0, {
-            duration: 1500,
+            duration: 1000,
             easing: Easing.linear,
           }),
           5,
           false,
           success => {
             innerOpacity.value = 0;
+
+            if (teamIndex === 0) {
+              runOnJS(playDrop1)()
+            }
+            if (teamIndex === 1) {
+              runOnJS(playDrop2)()
+            }
+            if (teamIndex === 2) {
+              runOnJS(playDrop3)()
+            }
+
             resultScale.value = withTiming(0.7, {
               duration: 200,
               easing: Easing.ease,
