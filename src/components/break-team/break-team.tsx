@@ -26,10 +26,10 @@ export const BreakTeam = ({
             y1="0%"
             x2="0%"
             y2="100%">
-            <Stop offset="0%" stopColor="#fff" stopOpacity="1" />
+            <Stop offset="0%" stopColor={secondaryColor} stopOpacity="1" />
             <Stop
               offset="100%"
-              stopColor="#ff0"
+              stopColor={secondaryColor}
               stopOpacity="1"
             />
           </LinearGradient>
@@ -41,10 +41,10 @@ export const BreakTeam = ({
             y1="0%"
             x2="0%"
             y2="100%">
-            <Stop offset="0%" stopColor="red" stopOpacity="1" />
+            <Stop offset="0%" stopColor={primaryColor} stopOpacity="1" />
             <Stop
               offset="100%"
-              stopColor="#ff0"
+              stopColor={primaryColor}
               stopOpacity="1"
             />
           </LinearGradient>
@@ -67,16 +67,25 @@ export const BreakTeam = ({
             y2="0%">
             <Stop
               offset="0%"
-              stopColor="white"
-              stopOpacity="0.5"
+              stopColor={secondaryColor}
+              stopOpacity="1"
             />
-            <Stop offset="100%" stopColor="red" stopOpacity="1" />
+            <Stop offset="100%" stopColor={secondaryColor} stopOpacity="1" />
           </LinearGradient>
         </Defs>
+        <Rect
+          fill="#fff"
+          x="0"
+          y={10}
+          width={boxSize - 3}
+          height={22}
+          rx="3"
+          ry="3"
+        />
         <Text
           stroke="url(#text-stroke-grad)"
           strokeWidth="2"
-          fill="none"
+          fill={primaryColor}
           fontSize="16"
           fontWeight="bold"
           x={boxSize / 2 - 2}
