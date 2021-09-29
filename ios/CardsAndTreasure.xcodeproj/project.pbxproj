@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		337BFE8B27043F1A00ECE182 /* spin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 337BFE8727043F1A00ECE182 /* spin.wav */; };
+		3369199D27046003008907A6 /* spin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3369199C27046003008907A6 /* spin.wav */; };
 		337BFE8C27043F1A00ECE182 /* drop_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 337BFE8827043F1A00ECE182 /* drop_3.wav */; };
 		337BFE8D27043F1A00ECE182 /* drop_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 337BFE8927043F1A00ECE182 /* drop_2.wav */; };
 		337BFE8E27043F1A00ECE182 /* drop_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 337BFE8A27043F1A00ECE182 /* drop_1.wav */; };
@@ -57,7 +57,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CardsAndTreasure/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CardsAndTreasure/main.m; sourceTree = "<group>"; };
 		1CEBD2785653FD28D5E71B54 /* Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig"; path = "Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests.release.xcconfig"; sourceTree = "<group>"; };
-		337BFE8727043F1A00ECE182 /* spin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = spin.wav; path = ../../../../Documents/SFX/spin.wav; sourceTree = "<group>"; };
+		3369199C27046003008907A6 /* spin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spin.wav; sourceTree = "<group>"; };
 		337BFE8827043F1A00ECE182 /* drop_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop_3.wav; sourceTree = "<group>"; };
 		337BFE8927043F1A00ECE182 /* drop_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop_2.wav; sourceTree = "<group>"; };
 		337BFE8A27043F1A00ECE182 /* drop_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop_1.wav; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 			children = (
 				337BFE8A27043F1A00ECE182 /* drop_1.wav */,
 				337BFE8927043F1A00ECE182 /* drop_2.wav */,
+				3369199C27046003008907A6 /* spin.wav */,
 				337BFE8827043F1A00ECE182 /* drop_3.wav */,
-				337BFE8727043F1A00ECE182 /* spin.wav */,
 				338EDCAA26FB5FDB00A9AFCD /* digits.wav */,
 				338EDCA426FB5F6200A9AFCD /* card_entry.wav */,
 				338EDCA526FB5F6200A9AFCD /* entry.wav */,
@@ -325,7 +325,7 @@
 				8DEA0B1F0BBB4E08BC6D2B50 /* Inter-Regular.ttf in Resources */,
 				338EDCAB26FB5FDB00A9AFCD /* digits.wav in Resources */,
 				E4A9DB7AAE3A428B8041F0A9 /* Inter-SemiBold.ttf in Resources */,
-				337BFE8B27043F1A00ECE182 /* spin.wav in Resources */,
+				3369199D27046003008907A6 /* spin.wav in Resources */,
 				337BFE8C27043F1A00ECE182 /* drop_3.wav in Resources */,
 				AF08E77054914DA5AC9978EC /* Technology-Bold.ttf in Resources */,
 			);
