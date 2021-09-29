@@ -11,7 +11,7 @@
 
 ## Local Setup
 
-1. Using _nvm_ or _n_ make sure your node version is v14+.
+1. Using _nvm_ or _n_ make sure your node version is v14.16.
 1. Clone the repo and run `yarn install` in the project directory.
 1. Install Watchman `brew install watchman`.
 1. Install CocoaPods `sudo gem install cocoapods -v 1.10.1`.
