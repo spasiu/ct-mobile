@@ -48,7 +48,7 @@ export const teamsAnimationContainerStyle: ViewStyle = {
   width: WINDOW_WIDTH,
   height: WINDOW_HEIGHT,
   backgroundColor:
-  COLORS.alpha_black_8,
+  COLORS.alpha_black_6,
   zIndex: 2,
 }
 

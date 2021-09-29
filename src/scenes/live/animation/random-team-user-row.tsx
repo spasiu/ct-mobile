@@ -3,7 +3,7 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import { RandomTeamUserRowProps } from '../live-screen.props';
 import { WINDOW_WIDTH } from '../../../theme/sizes';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   interpolate,
@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ServerImage } from '../../../components/server-image/server-image';
 import { TeamRandomizer } from './team-randomizer';
+import { AnimatedTeamShadow } from './team-shadow';
 
 export const TeamUserRow = ({
   currentUserId,
@@ -28,7 +29,6 @@ export const TeamUserRow = ({
   const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;
   const avatarSize = (80 * WINDOW_WIDTH) / 750;
-
   const userBoxAnim = useSharedValue(0);
   const avatarAnim = useSharedValue(0);
 
@@ -96,7 +96,8 @@ export const TeamUserRow = ({
                     s.flx_row,
                     s.jcc,
                     {
-                      marginHorizontal: boxMargin,
+                      paddingHorizontal: boxMargin,
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     },
                   ]}>
                   {
@@ -108,7 +109,7 @@ export const TeamUserRow = ({
                             key={index.toString()}
                             result={item}
                             rowIndex={rowIndex}
-                            display={injectElementsAtColumnIndex === index}
+                            isReady={injectElementsAtColumnIndex === index}
                             currentAnimatingIndex={visibleTeamsInRow}
                             teamIndex={index}
                             columnIndex={columnIndex}
@@ -116,6 +117,11 @@ export const TeamUserRow = ({
                             boxMargin={boxMargin}
                             allTeams={allTeams.slice(0, 6)}
                           />
+                          {index == injectElementsAtColumnIndex && <AnimatedTeamShadow
+                            boxMargin={boxMargin}
+                            boxSize={boxSize}
+                            rowIndex={rowIndex}
+                          />}
                         </View>
                       );
                     })

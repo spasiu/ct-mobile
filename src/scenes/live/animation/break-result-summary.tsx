@@ -288,7 +288,7 @@ export const BreakResultSummary = ({
             borderColor: '#fff',
             borderRadius: 10,
             overflow: 'hidden',
-            backgroundColor: 'rgba(6, 4, 2, 0.7)',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
           },
           summaryBoxStyle,
         ]}>

@@ -6,6 +6,7 @@ import { ChatMessage } from '../../common/chat';
 import { OverScreenModalProps, SlidingBoxProps } from '../../components';
 import { ProtectedStackParamList, ROUTES_IDS } from '../../navigators';
 import { BreakResultUser, BreakResultItem } from '../../common/break/break';
+import { TeamShadow } from './animation/team-shadow';
 import {
   Breaks,
   Break_Type_Enum,
@@ -95,6 +96,7 @@ export interface RandomTeamUserRowProps {
   visibleTeamsInRow: number;
   allTeams: BreakResultItem[];
   injectElementsAtColumnIndex: number;
+  rowIndex: number;
 }
 
 export interface TeamRandomizerProps {
@@ -104,4 +106,13 @@ export interface TeamRandomizerProps {
   teamIndex: number;
   boxMargin: number;
   currentAnimatingIndex: number;
+  isReady: boolean;
+  columnIndex: number;
+  rowIndex: number;
+}
+
+export interface TeamShadowProps {
+  boxMargin: number,
+  boxSize: number,
+  rowIndex: number
 }

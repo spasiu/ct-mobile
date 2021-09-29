@@ -31,7 +31,6 @@ function playSpin() {
   });
 }
 
-
 export const TeamUserRows = ({
   userId,
   users,
@@ -81,15 +80,15 @@ export const TeamUserRows = ({
 
   // animate individual columns in a row
   useEffect(() => {
-    if (currentAnimatingIndex.row < 0 && currentAnimatingIndex.col < 0) return;
+    if (currentAnimatingIndex.row < 0 && currentAnimatingIndex.col < 0) {
+      return;
+    }
 
     const isLastRow = currentAnimatingIndex.row === totalRowsCount - 1;
     const isLastColumn = currentAnimatingIndex.col === teamsPerUser - 1;
 
     if (currentAnimatingIndex.row === 0) {
-      playSpin()
-    }
-    if (currentAnimatingIndex.row === 0) {
+      playSpin();
       setInjectRowIndex(currentAnimatingIndex.col);
     }
 

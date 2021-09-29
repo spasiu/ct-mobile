@@ -9,21 +9,12 @@ import Animated, {
   useSharedValue,
   withDelay,
   withTiming,
-  runOnJS
+  runOnJS,
 } from 'react-native-reanimated';
 import Sound from 'react-native-sound';
 
 import { TeamRandomizerProps } from '../live-screen.props';
-import Svg, {
-  Text,
-  Defs,
-  LinearGradient,
-  Rect,
-  Stop,
-  TSpan,
-} from 'react-native-svg';
-// import { ServerImage } from '../../../components/server-image/server-image';
-// import { BreakResultItem } from '../../../common/break/break';
+import { BreakTeam } from '../../../components/break-team';
 
 function playDrop1() {
   let entryMusic = new Sound('drop_1.wav', Sound.MAIN_BUNDLE, error => {
@@ -80,12 +71,12 @@ function playDrop3() {
 const Randomizer = ({
   allTeams,
   result,
-  display,
+  isReady,
   boxSize,
   boxMargin,
   rowIndex,
   teamIndex,
-  columnIndex
+  columnIndex,
 }: TeamRandomizerProps): JSX.Element => {
   const scrollPosition = useSharedValue(
     allTeams.length * (boxSize + boxMargin * 2) * -1,
@@ -95,14 +86,7 @@ const Randomizer = ({
   const resultScale = useSharedValue(0);
 
   useEffect(() => {
-    // scrollPosition.value = withRepeat(withTiming(allTeams.length * boxSize * -1, {
-    //   duration: allTeams.length * 130,
-    //   easing: Easing.linear,
-    // }, () => {
-    //   // console.log('loop finished')
-    // }), 10, false, () => {})
-
-    if (display) {
+    if (isReady) {
       scrollPosition.value = withDelay(
         rowIndex * 300,
         withRepeat(
@@ -116,13 +100,13 @@ const Randomizer = ({
             innerOpacity.value = 0;
 
             if (columnIndex == 0 && teamIndex === 0) {
-              runOnJS(playDrop1)()
+              runOnJS(playDrop1)();
             }
             if (columnIndex == 0 && teamIndex === 1) {
-              runOnJS(playDrop2)()
+              runOnJS(playDrop2)();
             }
             if (columnIndex == 0 && teamIndex === 2) {
-              runOnJS(playDrop3)()
+              runOnJS(playDrop3)();
             }
 
             resultScale.value = withTiming(0.7, {
@@ -137,7 +121,7 @@ const Randomizer = ({
         withTiming(1, { duration: 0 }),
       );
     }
-  }, [display]);
+  }, [isReady]);
 
   const animationStyle = useAnimatedStyle(() => {
     return {
@@ -176,14 +160,14 @@ const Randomizer = ({
         style={[
           {
             width: boxSize + boxMargin * 2,
-            height: boxSize + boxMargin * 2,
+            height: boxSize + boxMargin * 4,
             zIndex: 1,
             overflow: 'hidden',
           },
           containerStyle,
         ]}>
-        {display && (
-          <View style={{ position: 'absolute', left: boxMargin }}>
+        {isReady && (
+          <View style={{ position: 'absolute', left: boxMargin, alignSelf: 'center' }}>
             <Animated.View
               style={[
                 s.jcse,
@@ -199,190 +183,31 @@ const Randomizer = ({
                 return (
                   <View
                     style={[
-                      // s.ba,
-                      // s.b__white,
                       {
                         height: boxSize,
-                        width: boxSize - 1,
+                        width: boxSize,
                         marginVertical: boxMargin,
                       },
                     ]}
                     key={index.toString()}>
-                    <Svg height={boxSize} width={boxSize}>
-                      <Defs>
-                        <LinearGradient
-                          id="defaultUnits"
-                          x1="0%"
-                          y1="0%"
-                          x2="0%"
-                          y2="100%">
-                          <Stop offset="0%" stopColor="#fff" stopOpacity="1" />
-                          <Stop
-                            offset="100%"
-                            stopColor="#ff0"
-                            stopOpacity="1"
-                          />
-                        </LinearGradient>
-                      </Defs>
-                      <Defs>
-                        <LinearGradient
-                          id="defaultUnitsDark"
-                          x1="0%"
-                          y1="0%"
-                          x2="0%"
-                          y2="100%">
-                          <Stop offset="0%" stopColor="red" stopOpacity="1" />
-                          <Stop
-                            offset="100%"
-                            stopColor="#ff0"
-                            stopOpacity="1"
-                          />
-                        </LinearGradient>
-                      </Defs>
-                      <Rect
-                        fill="url(#defaultUnits)"
-                        x="0"
-                        y="0"
-                        width={boxSize - 3}
-                        height={6}
-                        rx="3"
-                        ry="3"
-                      />
-                      <Defs>
-                        <LinearGradient
-                          id="text-stroke-grad"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="0%">
-                          <Stop
-                            offset="0%"
-                            stopColor="white"
-                            stopOpacity="0.5"
-                          />
-                          <Stop offset="100%" stopColor="red" stopOpacity="1" />
-                        </LinearGradient>
-                      </Defs>
-                      <Text
-                        stroke="url(#text-stroke-grad)"
-                        strokeWidth="2"
-                        fill="none"
-                        fontSize="16"
-                        fontWeight="bold"
-                        x={boxSize / 2 - 2}
-                        y={boxSize / 2 + 6}>
-                        <TSpan textAnchor="middle">{[team.shorthand]}</TSpan>
-                      </Text>
-                      <Rect
-                        fill="url(#defaultUnitsDark)"
-                        x="0"
-                        y={boxSize - 6}
-                        width={boxSize - 3}
-                        height={6}
-                        rx="3"
-                        ry="3"
-                      />
-                    </Svg>
+                    <BreakTeam {...team} boxSize={boxSize} />
                   </View>
                 );
               })}
             </Animated.View>
 
-            <Animated.View
+            {<Animated.View
               style={[
-                s.jcse,
-                s.aic,
-                s.flex_col,
                 {
                   position: 'absolute',
-                  height: boxSize + 2 * boxMargin,
+                  height: boxSize,
+                  width: boxSize,
+                  marginTop: boxMargin * 2
                 },
                 resultAnimationStyle,
               ]}>
-              <View
-                style={[
-                  // s.ba,
-                  // s.b__white,
-                  {
-                    height: boxSize,
-                    width: boxSize - 1,
-                    marginVertical: boxMargin,
-                  },
-                ]}>
-                <Svg height={boxSize} width={boxSize}>
-                  <Defs>
-                    <LinearGradient
-                      id="defaultUnits"
-                      x1="0%"
-                      y1="0%"
-                      x2="0%"
-                      y2="100%">
-                      <Stop offset="0%" stopColor="#fff" stopOpacity="1" />
-                      <Stop offset="100%" stopColor="#ff0" stopOpacity="1" />
-                    </LinearGradient>
-                  </Defs>
-                  <Defs>
-                    <LinearGradient
-                      id="defaultUnitsDark"
-                      x1="0%"
-                      y1="0%"
-                      x2="0%"
-                      y2="100%">
-                      <Stop offset="0%" stopColor="red" stopOpacity="1" />
-                      <Stop offset="100%" stopColor="#ff0" stopOpacity="1" />
-                    </LinearGradient>
-                  </Defs>
-                  <Rect
-                    fill="url(#defaultUnits)"
-                    x="0"
-                    y="0"
-                    width={boxSize - 3}
-                    height={6}
-                    rx="3"
-                    ry="3"
-                  />
-                  <Defs>
-                    <LinearGradient
-                      id="text-stroke-grad"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="0%">
-                      <Stop offset="0%" stopColor={result.secondaryColor} stopOpacity="0.5" />
-                      <Stop offset="100%" stopColor={result.primaryColor} stopOpacity="1" />
-                    </LinearGradient>
-                  </Defs>
-                  <Rect
-                    fill="#fff"
-                    x="0"
-                    y={10}
-                    width={boxSize - 3}
-                    height={22}
-                    rx="3"
-                    ry="3"
-                  />
-                  <Text
-                    stroke="url(#text-stroke-grad)"
-                    strokeWidth="2"
-                    fill={result.primaryColor}
-                    fontSize="16"
-                    fontWeight="bold"
-                    x={boxSize / 2 - 2}
-                    y={boxSize / 2 + 6}>
-                    <TSpan textAnchor="middle">{[result.shorthand]}</TSpan>
-                  </Text>
-                  <Rect
-                    fill="url(#defaultUnitsDark)"
-                    x="0"
-                    y={boxSize - 6}
-                    width={boxSize - 3}
-                    height={6}
-                    rx="3"
-                    ry="3"
-                  />
-                </Svg>
-              </View>
-            </Animated.View>
+                <BreakTeam {...result} boxSize={boxSize} />
+            </Animated.View>}
           </View>
         )}
       </Animated.View>
@@ -391,6 +216,6 @@ const Randomizer = ({
 };
 
 export const TeamRandomizer = memo(Randomizer, (prevProps, nextProps) => {
-  if (prevProps.display === false && nextProps.display === true) return false;
+  if (prevProps.isReady === false && nextProps.isReady === true) return false;
   return true;
 });
