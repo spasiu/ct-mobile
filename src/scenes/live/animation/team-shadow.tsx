@@ -17,14 +17,14 @@ const TeamShadow = ({
   const opacity = useSharedValue(0);
 
   useEffect(() => {
-    opacity.value = 0.7;
+    opacity.value = 0.5;
   }, []);
 
   return (
     <>
       <Animated.View
           style={[{
-            borderWidth: 6,
+            borderWidth: 5,
             right: boxMargin/2 - 3,
             left: -boxMargin/2 - 3,
             shadowColor: 'white',
@@ -39,8 +39,8 @@ const TeamShadow = ({
             opacity: 0
           },
           useAnimatedStyle(() => ({
-            opacity: withDelay(300 * rowIndex, withRepeat(withTiming(opacity.value, {
-              duration: 300,
+            opacity: withDelay(350 * rowIndex, withRepeat(withTiming(opacity.value, {
+              duration: 250,
               easing: Easing.linear,
             }), 30, true))
           }))

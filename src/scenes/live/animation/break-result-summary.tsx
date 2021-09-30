@@ -106,7 +106,7 @@ export const BreakResultSummary = ({
       entry();
       imageIn.value = withTiming(
         1,
-        { duration: 300, easing: Easing.ease },
+        { duration: 350, easing: Easing.ease },
         () => {
           runOnJS(nextStage)(1, 1000);
         },

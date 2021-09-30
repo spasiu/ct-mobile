@@ -88,7 +88,7 @@ const Randomizer = ({
   useEffect(() => {
     if (isReady) {
       scrollPosition.value = withDelay(
-        rowIndex * 300,
+        rowIndex * 350,
         withRepeat(
           withTiming(0, {
             duration: 1000,
@@ -117,7 +117,7 @@ const Randomizer = ({
         ),
       );
       outerOpacity.value = withDelay(
-        rowIndex * 300,
+        rowIndex * 350,
         withTiming(1, { duration: 0 }),
       );
     }

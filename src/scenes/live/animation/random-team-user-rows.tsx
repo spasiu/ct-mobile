@@ -1,7 +1,8 @@
 import React, { memo, useState, useEffect } from 'react';
 import { flatten, head, length, repeat } from 'ramda';
 import Sound from 'react-native-sound';
-// import { styles as s } from 'react-native-style-tachyons';
+import { View, Image } from 'react-native';
+import { styles as s } from 'react-native-style-tachyons';
 import { RandomTeamUserRowsProps } from '../live-screen.props';
 import { RandomTeamUserRow } from './random-team-user-row';
 import {
@@ -10,8 +11,17 @@ import {
   getUserRowsCount,
   getUsersPerRowCount,
 } from '../live-screen.presets';
+import Animated, {
+  Easing,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 import { indexedMap } from '../../../utils/ramda';
 import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
 
 function playSpin() {
   let entryMusic = new Sound('spin.wav', Sound.MAIN_BUNDLE, error => {
@@ -31,9 +41,64 @@ function playSpin() {
   });
 }
 
+function playPop() {
+  let popMusic = new Sound('pop.mp3', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    popMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
+function entry() {
+  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    entryMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
+function digitsFlash() {
+  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      // console.log('failed to load the sound', error);
+      return;
+    }
+
+    // Play the sound with an onEnd callback
+    digitsFlashMusic.play(success => {
+      if (success) {
+        // console.log('successfully finished playing');
+      } else {
+        // console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+}
+
 export const TeamUserRows = ({
   userId,
   users,
+  onEnd
 }: RandomTeamUserRowsProps): JSX.Element => {
   const [visibleRows, setVisibleRows] = useState(0);
   const [injectRowIndex, setInjectRowIndex] = useState(-1);
@@ -67,14 +132,23 @@ export const TeamUserRows = ({
     visibleTeamsInRow: repeat(-1, totalRowsCount),
   });
 
+  const imageAnim = useSharedValue(0);
+  const imageWidth = WINDOW_WIDTH * 0.65;
+  const imageHeight = imageWidth * 0.53;
+  const imageX = WINDOW_WIDTH * 0.5 - imageWidth / 2;
+  const imageY = 2 * imageHeight;
+
   const startAnimation = () => {
     setTimeout(() => {
-      // playSpin()
       setCurrentAnimatingIndex({
         row: 0,
         col: 0,
         visibleTeamsInRow: repeat(-1, totalRowsCount),
       });
+      imageAnim.value = withDelay(500, withTiming(
+        0,
+        { duration: 500, easing: Easing.ease }
+      ));
     }, 2000);
   };
 
@@ -90,6 +164,13 @@ export const TeamUserRows = ({
     if (currentAnimatingIndex.row === 0) {
       playSpin();
       setInjectRowIndex(currentAnimatingIndex.col);
+    }
+
+    if (isLastColumn && isLastRow) {
+      setTimeout(() => {
+        onEnd()
+        digitsFlash()
+      }, 2000)
     }
 
     const timer = setTimeout(
@@ -123,6 +204,16 @@ export const TeamUserRows = ({
 
   // render rows
   useEffect(() => {
+    playPop()
+
+    if (visibleRows === Math.ceil(totalRowsCount / 2)) {
+      entry()
+      imageAnim.value = withTiming(
+        1,
+        { duration: 350, easing: Easing.ease }
+      );
+    }
+
     if (visibleRows >= totalRowsCount - 1) {
       if (visibleRows == totalRowsCount - 1) {
         startAnimation();
@@ -142,27 +233,55 @@ export const TeamUserRows = ({
     return () => clearTimeout(timer);
   }, [visibleRows, setVisibleRows]);
 
+  const imageStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          // image in
+          scale: interpolate(
+            imageAnim.value,
+            [0, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            [0, 1.2, 1.1, 1, 1.1, 1.2, 1.1, 1.1],
+          ),
+        }
+      ],
+    };
+  }, []);
+
   return (
     <>
-      {rows.map((r, index) => {
-        console.log(
-          index,
-          'ininjectElementsAtColumnIndex',
-          visibleRows,
-          totalRowsCount,
-        );
-        return (
-          <RandomTeamUserRow
-            users={getUsersForRow(index)}
-            currentUserId={userId}
-            key={index.toString()}
-            visibleTeamsInRow={currentAnimatingIndex.visibleTeamsInRow[index]}
-            rowIndex={index}
-            allTeams={allTeams}
-            injectElementsAtColumnIndex={injectRowIndex}
-          />
-        );
-      })}
+      <View style={[s.mt4]}>
+        {rows.map((r, index) => {
+          return (
+            <RandomTeamUserRow
+              users={getUsersForRow(index)}
+              currentUserId={userId}
+              key={index.toString()}
+              visibleTeamsInRow={currentAnimatingIndex.visibleTeamsInRow[index]}
+              rowIndex={index}
+              allTeams={allTeams}
+              injectElementsAtColumnIndex={injectRowIndex}
+            />
+          );
+        })}
+      </View>
+      <Animated.View
+        style={[
+          {
+            top: imageY,
+            left: imageX,
+            position: 'absolute',
+            width: imageWidth,
+            height: imageHeight,
+            zIndex: 2,
+          },
+          imageStyle,
+        ]}>
+        <Image
+          source={require('../../../assets/lets-go.png')}
+          style={{ width: imageWidth, height: imageHeight, zIndex: 2 }}
+        />
+      </Animated.View>
     </>
   );
 };

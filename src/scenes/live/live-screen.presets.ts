@@ -71,7 +71,7 @@ export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
     return Math.ceil(usersCount / 5);
   }
 
-  return Math.ceil(usersCount / 6);
+  return Math.ceil(usersCount / (6 / teamsPerUser));
 };
 
 export const getUsersPerRowCount = (usersCount: number, teamsPerUser: number) => {
