@@ -49,6 +49,10 @@ import {
 import { UserSaves } from './user-saves';
 import { FilterContext, FilterContextType } from '../../providers/filter';
 import { isEmpty } from 'ramda';
+import {
+  NotificationContext,
+  NotificationContextType,
+} from '../../providers/notification';
 
 export const UserProfileScreen = ({
   navigation,
@@ -63,6 +67,9 @@ export const UserProfileScreen = ({
     cleanPaymentInfo,
   } = useContext(PaymentContext) as PaymentContextType;
   const { cleanFilters } = useContext(FilterContext) as FilterContextType;
+  const { cleanNotificationData } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
@@ -218,6 +225,7 @@ export const UserProfileScreen = ({
                 onPress={() => {
                   cleanPaymentInfo();
                   cleanFilters();
+                  cleanNotificationData();
                   logout();
                 }}
               />

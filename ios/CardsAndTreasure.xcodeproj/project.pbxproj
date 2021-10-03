@@ -201,7 +201,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				B4CE68E4F95E8994B3B15401 /* [CP] Copy Pods Resources */,
-				F8E51B1B40F722750611812D /* [CP] Embed Pods Frameworks */,
+				3E4ACCDACC9710B313C915E4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -225,8 +225,8 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				78A474B0249381307F6866AA /* [CP] Copy Pods Resources */,
 				2C3835D5FB321A9EA2AEF9EC /* [CP-User] [RNFB] Core Configuration */,
-				B0EF2C429126B5908898642E /* [CP] Embed Pods Frameworks */,
 				3463717774F840D89FCF1BD6 /* Upload Debug Symbols to Sentry */,
+				84B4C70D5D6614A766AF9BBE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -340,6 +340,23 @@
 			shellPath = /bin/sh;
 			shellScript = "# First set the path to sentry.properties\nexport SENTRY_PROPERTIES=sentry.properties\n\n# Setup nvm and set node\n[ -z \"$NVM_DIR\" ] && export NVM_DIR=\"$HOME/.nvm\"\n\nif [[ -s \"$HOME/.nvm/nvm.sh\" ]]; then\n. \"$HOME/.nvm/nvm.sh\"\nelif [[ -x \"$(command -v brew)\" && -s \"$(brew --prefix nvm)/nvm.sh\" ]]; then\n. \"$(brew --prefix nvm)/nvm.sh\"\nfi\n\n# Set up the nodenv node version manager if present\nif [[ -x \"$HOME/.nodenv/bin/nodenv\" ]]; then\neval \"$(\"$HOME/.nodenv/bin/nodenv\" init -)\"\nfi\n\n# Set up the fnm node version manager if present\nif [[ -s \"$HOME/.fnm/fnm\" ]]; then\n  eval \"`$HOME/.fnm/fnm env --multi`\"\nfi\n\n# Trying notion\nif [ -z \"$NODE_BINARY\" ]; then\nif [[ -s \"$HOME/.notion/bin/node\" ]]; then\nexport NODE_BINARY=\"$HOME/.notion/bin/node\"\nfi\nfi\n\n[ -z \"$NODE_BINARY\" ] && export NODE_BINARY=\"node\"\n\n# Run sentry cli script to upload debug symbols\n$NODE_BINARY ../node_modules/@sentry/cli/bin/sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\"\n";
 		};
+		3E4ACCDACC9710B313C915E4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5FE80FF63825F78E682F4459 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,7 +396,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure/Pods-CardsAndTreasure-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0EF2C429126B5908898642E /* [CP] Embed Pods Frameworks */ = {
+		84B4C70D5D6614A766AF9BBE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -433,23 +450,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F8E51B1B40F722750611812D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardsAndTreasure-CardsAndTreasureTests/Pods-CardsAndTreasure-CardsAndTreasureTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

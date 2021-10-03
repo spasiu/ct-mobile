@@ -3,15 +3,10 @@ import firestore from '@react-native-firebase/firestore';
 
 export const checkOnboardingStatusOnFirestore = async (
   user: FirebaseAuthTypes.User | null,
-  onboardingComplete: boolean,
 ): Promise<boolean> => {
   try {
     if (!user) {
       return false;
-    }
-
-    if (onboardingComplete) {
-      return true;
     }
 
     const userDocument = await firestore()

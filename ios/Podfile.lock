@@ -246,9 +246,6 @@ PODS:
   - Firebase/Functions (7.8.1):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 7.8.0)
-  - Firebase/Messaging (7.8.1):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 7.8.0)
   - Firebase/Storage (7.8.1):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 7.8.0)
@@ -281,23 +278,6 @@ PODS:
   - FirebaseFunctions (7.8.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - FirebaseInstallations (7.11.0):
-    - FirebaseCore (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
-    - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (7.11.0):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseMessaging (7.8.0):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstanceID (~> 7.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Reachability (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
   - FirebaseStorage (7.8.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
@@ -324,8 +304,6 @@ PODS:
     - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.3.1)"
   - GoogleUtilities/Reachability (7.3.1):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.3.1):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -360,7 +338,7 @@ PODS:
   - GTMSessionFetcher/Full (1.5.0):
     - GTMSessionFetcher/Core (= 1.5.0)
   - Intercom (10.0.3)
-  - intercom-react-native (1.0.3):
+  - intercom-react-native (1.0.4):
     - Intercom (~> 10.0)
     - React-Core
   - leveldb-library (1.22.1)
@@ -571,6 +549,8 @@ PODS:
     - React-Core
   - react-native-image-picker (3.3.2):
     - React-Core
+  - react-native-notifications (4.1.2):
+    - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-splash-screen (3.2.0):
@@ -669,10 +649,6 @@ PODS:
     - Firebase/Functions (= 7.8.1)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (11.1.2):
-    - Firebase/Messaging (= 7.8.1)
-    - React-Core
-    - RNFBApp
   - RNFBStorage (11.1.2):
     - Firebase/Storage (= 7.8.1)
     - React-Core
@@ -750,6 +726,7 @@ DEPENDENCIES:
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
@@ -774,7 +751,6 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
-  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -798,9 +774,6 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
     - FirebaseFunctions
-    - FirebaseInstallations
-    - FirebaseInstanceID
-    - FirebaseMessaging
     - FirebaseStorage
     - GoogleDataTransport
     - GoogleSignIn
@@ -856,6 +829,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-notifications:
+    :path: "../node_modules/react-native-notifications"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -904,8 +879,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBFunctions:
     :path: "../node_modules/@react-native-firebase/functions"
-  RNFBMessaging:
-    :path: "../node_modules/@react-native-firebase/messaging"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
@@ -942,9 +915,6 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
   FirebaseFirestore: f1ededef972dea136e88a7bae9732f52afe64221
   FirebaseFunctions: 60ffca9955121b73ff3b826766c25cca2cfade8e
-  FirebaseInstallations: a58d4f72ec5861840b84df489f2668d970df558a
-  FirebaseInstanceID: ad5135045a498d7775903efd39762d2cdfa1be27
-  FirebaseMessaging: 1d5cac3728c042d3d4700ecb56bbac893660a963
   FirebaseStorage: 84d1eb7bfe8c3cbfe6beeeb02ce712f65dcb8b83
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleDataTransport: b006084b73915a42c28a3466961a4edda3065da6
@@ -955,7 +925,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   Intercom: 7a58cfdfaa67a2f98f7256cd5d09c87fbc29cb7d
-  intercom-react-native: 3443830303af1c345486a93609f75a59a0eebf96
+  intercom-react-native: ae990d5de77ab73c114b512b51910e45017747f2
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
@@ -973,6 +943,7 @@ SPEC CHECKSUMS:
   react-native-blurhash: ec98d751a9cb9075cef0b9e3188244c517d6ab22
   react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
   react-native-image-picker: b42940647478bf106ad3c491d6f5d9d40916d865
+  react-native-notifications: 97c14bf84c64bd6a6eb7bdcdb916036d93d33428
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
@@ -997,7 +968,6 @@ SPEC CHECKSUMS:
   RNFBAuth: d011f1b1a066a8bceba63c42369de9c5ce68de5e
   RNFBFirestore: 53c0bbc1903f039e791300bb821c55a0cf37bfb1
   RNFBFunctions: 998b7b6568ecef2c8501168bd762a56e88d74194
-  RNFBMessaging: ec695fc0b561e06afa33a731d86f7fa3ae49f4c1
   RNFBStorage: 301038338b021e19080338cfc89662c7e8ac117d
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: 111fd4792913208f338fe3178005f7a22e490ff9

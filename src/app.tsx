@@ -67,7 +67,6 @@ const App = (): JSX.Element | null => {
 
           const onboardingStatus = await checkOnboardingStatusOnFirestore(
             authUser,
-            onboardingComplete,
           );
 
           setOnboardingComplete(onboardingStatus);

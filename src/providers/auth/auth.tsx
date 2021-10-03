@@ -45,10 +45,7 @@ export const AuthProvider = ({
           setOnboardingComplete(true);
         },
         checkOnboardingStatus: async () => {
-          const onboardingStatus = await checkOnboardingStatusOnFirestore(
-            user,
-            onboardingComplete,
-          );
+          const onboardingStatus = await checkOnboardingStatusOnFirestore(user);
           setOnboardingComplete(onboardingStatus);
         },
         resetPassword: resetPasswordHandler,

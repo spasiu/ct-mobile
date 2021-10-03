@@ -3,5 +3,10 @@ export interface NotifictionProviderProps {
 }
 
 export type NotificationContextType = {
-  requestNotificationPermission: () => Promise<boolean>;
+  notificationToken: string;
+  notificationsEnabled: boolean;
+  setNotificationsEnabled: (enabled: boolean) => void;
+  setRegisteredInIntercom: (registed: boolean) => void;
+  requestNotificationPermission: () => void;
+  cleanNotificationData: () => void;
 };
