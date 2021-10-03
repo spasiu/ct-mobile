@@ -25,7 +25,7 @@ export type ProtectedStackParamList = {
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();
 
 export const ProtectedStack = (): JSX.Element => {
-  const { onboardingComplete, user } = useContext(
+  const { onboardingComplete, user, getAuthToken } = useContext(
     AuthContext,
   ) as AuthContextType;
   const { getCards } = useContext(PaymentContext) as PaymentContextType;
@@ -42,6 +42,8 @@ export const ProtectedStack = (): JSX.Element => {
             email: user?.email as string,
             userId: user?.uid,
           });
+
+          getAuthToken();
           unsubscribe();
         }
 
@@ -51,11 +53,14 @@ export const ProtectedStack = (): JSX.Element => {
             email: user?.email as string,
             userId: user?.uid,
           });
+
+          getAuthToken();
           unsubscribe();
         }
       });
 
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {

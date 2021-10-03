@@ -11,6 +11,7 @@ subscription NewHits(
       ]
       _and: [{ archived: { _eq: false } }]
     }
+    order_by: { created_at: desc }
   ) {
     id
     image_front

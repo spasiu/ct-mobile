@@ -9,15 +9,19 @@ import { ApolloProvider } from '@apollo/client';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from 'react-native-config';
 import * as Sentry from '@sentry/react-native';
+import SplashScreen from 'react-native-splash-screen';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 import './theme/tachyons';
 import { RootNavigator } from './navigators/root-navigator';
 import { setI18nConfig } from './i18n/i18n';
-import { client } from './services/api/api';
+import { getClient } from './services/api/api';
 import { AuthProvider } from './providers/auth';
 import { NotificationProvider } from './providers/notification';
 import { PaymentProvider } from './providers/payment';
 import { FilterProvider } from './providers/filter';
+import { hasHasuraClaim } from './utils/hasura';
+import { checkOnboardingStatusOnFirestore } from './services/firestore/onboarding';
 
 import { initLibraries } from './initializer';
 
@@ -27,6 +31,11 @@ enableScreens();
 
 const App = (): JSX.Element | null => {
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [initializing, setInitializing] = useState(true);
+
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const [token, setToken] = useState('');
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   // concentrates all init functions
   useEffect(() => {
@@ -43,14 +52,52 @@ const App = (): JSX.Element | null => {
     };
   }, []);
 
-  if (!loaded) {
+  // user auth handling
+  useEffect(() => {
+    if (loaded) {
+      const authSubscriber = auth().onAuthStateChanged(
+        async (authUser: FirebaseAuthTypes.User | null) => {
+          if (authUser) {
+            const authToken = await authUser.getIdToken();
+            const idTokenResult = await authUser.getIdTokenResult();
+            if (hasHasuraClaim(idTokenResult)) {
+              setToken(authToken);
+            }
+          }
+
+          const onboardingStatus = await checkOnboardingStatusOnFirestore(
+            authUser,
+            onboardingComplete,
+          );
+
+          setOnboardingComplete(onboardingStatus);
+          setUser(authUser);
+
+          if (initializing) {
+            SplashScreen.hide();
+            setInitializing(false);
+          }
+        },
+      );
+      return authSubscriber;
+    } else {
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded]);
+
+  if (!loaded || initializing) {
     return null;
   }
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={getClient(token)}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <AuthProvider>
+        <AuthProvider
+          user={user}
+          setToken={setToken}
+          onboardingComplete={onboardingComplete}
+          setOnboardingComplete={setOnboardingComplete}>
           <FilterProvider>
             <NotificationProvider>
               <PaymentProvider>

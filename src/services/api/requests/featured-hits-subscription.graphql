@@ -1,5 +1,5 @@
 subscription NewFeaturedHits {
-  Hits(limit: 6) {
+  Hits(limit: 6, order_by: { created_at: desc }) {
     id
     image_front
     description

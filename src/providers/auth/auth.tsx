@@ -1,50 +1,59 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { useApolloClient } from '@apollo/client';
+import { ImagePickerResponse } from 'react-native-image-picker';
+
+import {
+  checkOnboardingStatusOnFirestore,
+  setOnboardingCompleteOnFirestore,
+} from '../../services/firestore/onboarding';
 
 import {
   emailSignUpHandler,
   emailSignInHandler,
   googleSignInHandler,
   appleSignInHandler,
-  checkOnboardingStatusHandler,
   resetPasswordHandler,
-  setOnboardingCompleteHandler,
   logoutHandler,
   uploadPhotoHandler,
+  getAuthTokenHandler,
 } from './auth-handlers';
 
-import { AuthProviderProps, AuthUser } from './auth.types';
-import { ImagePickerResponse } from 'react-native-image-picker';
+import { AuthProviderProps } from './auth.types';
 
 export const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
-  const [user, setUser] = useState<AuthUser>(null);
-  const [onboardingComplete, setOnboardingComplete] = useState(false);
+export const AuthProvider = ({
+  children,
+  user,
+  setToken,
+  onboardingComplete,
+  setOnboardingComplete,
+}: AuthProviderProps): JSX.Element => {
   const client = useApolloClient();
   return (
     <AuthContext.Provider
       value={{
         user,
-        setUser,
         onboardingComplete,
+        getAuthToken: async () => await getAuthTokenHandler(user, setToken),
         signUpWithEmail: emailSignUpHandler,
         signInWithEmail: emailSignInHandler,
         signInWithGoogle: googleSignInHandler,
         signInWithApple: appleSignInHandler,
         setOnboardingStatusComplete: async () => {
-          await setOnboardingCompleteHandler(user);
+          await setOnboardingCompleteOnFirestore(user);
           setOnboardingComplete(true);
         },
-        checkOnboardingStatus: async (authUser: AuthUser) => {
-          const onboardingStatus = await checkOnboardingStatusHandler(
-            authUser,
+        checkOnboardingStatus: async () => {
+          const onboardingStatus = await checkOnboardingStatusOnFirestore(
+            user,
             onboardingComplete,
           );
           setOnboardingComplete(onboardingStatus);
         },
         resetPassword: resetPasswordHandler,
         logout: async () => {
+          setToken('');
           setOnboardingComplete(false);
           await logoutHandler(client);
         },

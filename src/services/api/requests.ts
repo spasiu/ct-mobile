@@ -11320,7 +11320,7 @@ export type NewFeaturedEventsSubscriptionHookResult = ReturnType<typeof useNewFe
 export type NewFeaturedEventsSubscriptionResult = Apollo.SubscriptionResult<NewFeaturedEventsSubscription>;
 export const FeaturedHitsDocument = gql`
     query FeaturedHits {
-  Hits(limit: 6) {
+  Hits(limit: 6, order_by: {created_at: desc}) {
     id
     image_front
     description
@@ -11357,7 +11357,7 @@ export type FeaturedHitsLazyQueryHookResult = ReturnType<typeof useFeaturedHitsL
 export type FeaturedHitsQueryResult = Apollo.QueryResult<FeaturedHitsQuery, FeaturedHitsQueryVariables>;
 export const NewFeaturedHitsDocument = gql`
     subscription NewFeaturedHits {
-  Hits(limit: 6) {
+  Hits(limit: 6, order_by: {created_at: desc}) {
     id
     image_front
     description
@@ -11508,6 +11508,7 @@ export const HitsDocument = gql`
     query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}]}
+    order_by: {created_at: desc}
   ) {
     id
     image_front
@@ -11549,6 +11550,7 @@ export const NewHitsDocument = gql`
     subscription NewHits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}]}
+    order_by: {created_at: desc}
   ) {
     id
     image_front
