@@ -17,6 +17,7 @@ export const SeeTeamsAnimation = ({
   onPressClose = () => undefined,
 }: SeeTeamsAnimationProps): JSX.Element => {
   const [summaryAnimationEnded, setSummaryAnimationEnded] = useState(false);
+  const [teamAnimationEnded, setTeamAnimationEnded] = useState(false);
   const teams = flatten(
     indexedMap(
       breakResultUser => (breakResultUser as BreakResult).items,
@@ -30,7 +31,11 @@ export const SeeTeamsAnimation = ({
         <BreakResultSummary
           teamCount={teams.length}
           userCount={result.length}
-          onEnd={() => setSummaryAnimationEnded(true)}
+          onEnd={() => {
+            setTimeout(() => {
+              setSummaryAnimationEnded(true)
+            }, 300)
+          }}
         />
       )}
 
@@ -300,23 +305,25 @@ export const SeeTeamsAnimation = ({
           ]}
           userId={userId}
           onEnd={() => {
-            console.warn('animation ended');
+            setTeamAnimationEnded(true)
           }}
         />
       )}
 
       <View style={[s.absolute, s.w_100, s.mt3, s.mb5, { bottom: 100 }]}>
-        <View style={[s.flx_i, s.aic, { opacity: 0.5 }]}>
-          <IconButton onPress={onPressClose}>
-            <View style={[s.bg_black_5, s.circle_m, s.jcc, s.aic]}>
-              <Image
-                source={closeIcon}
-                style={[s.icon_xs, s.tint_black]}
-                resizeMode={'contain'}
-              />
-            </View>
-          </IconButton>
-        </View>
+        {
+          teamAnimationEnded && <View style={[s.flx_i, s.aic, { opacity: 0.5 }]}>
+            <IconButton onPress={onPressClose}>
+              <View style={[s.bg_black_5, s.circle_m, s.jcc, s.aic]}>
+                <Image
+                  source={closeIcon}
+                  style={[s.icon_xs, s.tint_black]}
+                  resizeMode={'contain'}
+                />
+              </View>
+            </IconButton>
+          </View>
+        }
       </View>
     </View>
   );
