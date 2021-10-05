@@ -130,7 +130,7 @@ export const TeamUserRows = ({
         setCurrentAnimatingIndex(nextObj);
       },
       currentAnimatingIndex.row === 0 && currentAnimatingIndex.col >= 0
-        ? 8000
+        ? 8000 // ~ time it takes to play spinning sound
         : 600, // undo this number
     );
 
@@ -197,6 +197,7 @@ export const TeamUserRows = ({
               rowIndex={index}
               allTeams={allTeams}
               injectElementsAtColumnIndex={injectRowIndex}
+              usersPerRow={usersPerRow}
             />
           );
         })}

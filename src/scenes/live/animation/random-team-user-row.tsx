@@ -23,8 +23,9 @@ export const TeamUserRow = ({
   allTeams,
   injectElementsAtColumnIndex,
   rowIndex,
+  usersPerRow
 }: RandomTeamUserRowProps): JSX.Element => {
-  const boxWidth = users.length < 6 ? 84 : 70;
+  const boxWidth = usersPerRow < 6 ? 84 : 70;
   const boxMargin = (7 * WINDOW_WIDTH) / 750;
   const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;

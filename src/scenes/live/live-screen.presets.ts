@@ -79,7 +79,7 @@ export const getUsersPerRowCount = (usersCount: number, teamsPerUser: number) =>
     return 5;
   }
 
-  if (usersCount > 30 && teamsPerUser == 1) {
+  if (usersCount > 25 && teamsPerUser == 1) {
     return 6;
   }
 

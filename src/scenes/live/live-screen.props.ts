@@ -97,6 +97,7 @@ export interface RandomTeamUserRowProps {
   allTeams: BreakResultItem[];
   injectElementsAtColumnIndex: number;
   rowIndex: number;
+  usersPerRow: number;
 }
 
 export interface TeamRandomizerProps {
