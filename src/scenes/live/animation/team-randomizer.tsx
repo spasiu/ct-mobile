@@ -11,11 +11,11 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
-import Sound from 'react-native-sound';
 
 import { TeamRandomizerProps } from '../live-screen.props';
 import { BreakTeam } from '../../../components/break-team';
 import { playSound } from '../../../utils/sound';
+import { COLORS } from '../../../theme/colors';
 
 const Randomizer = ({
   allTeams,
@@ -111,8 +111,10 @@ const Randomizer = ({
             width: boxSize + boxMargin * 2,
             height: boxSize + boxMargin * 4,
             zIndex: 1,
-            overflow: 'hidden',
+            borderColor: COLORS.transparent
           },
+          s.ba,
+          s.no_overflow,
           containerStyle,
         ]}>
         {isReady && (

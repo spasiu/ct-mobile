@@ -75,7 +75,7 @@ export const TeamUserRow = ({
                   s.ba2,
                   s.b__white,
                   s.no_overflow,
-                  { borderRadius: 10 },
+                  { borderRadius: 12 },
                 ]}>
                 <View
                   style={[
@@ -137,7 +137,9 @@ export const TeamUserRow = ({
                   s.jcc,
                   s.aic,
                   s.asc,
-                  s.circle_m2, s.ba2, s.b__white,
+                  s.circle_m2,
+                  s.ba2,
+                  s.b__white,
                   {
                     top: (avatarSize / 2) * -1,
                     height: avatarSize,
