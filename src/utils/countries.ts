@@ -41,6 +41,8 @@ export const isRegionCodeValid = (
   return false;
 };
 
+export const PREFERRED_COUNTRIES = ['US', 'CA'];
+
 export const SUPPORTED_COUNTRIES = [
   'AF',
   'AX',

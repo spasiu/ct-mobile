@@ -5,7 +5,10 @@ import RNCountryPicker, {
 } from 'react-native-country-picker-modal';
 import Modal from 'react-native-modal';
 
-import { SUPPORTED_COUNTRIES } from '../../utils/countries';
+import {
+  SUPPORTED_COUNTRIES,
+  PREFERRED_COUNTRIES,
+} from '../../utils/countries';
 
 import { CountryPickerProps } from './country-picker.props';
 import {
@@ -19,7 +22,6 @@ export const CountryPicker = ({
   onClose,
   onSelect,
   countryCode,
-  preferredCountries,
 }: CountryPickerProps): JSX.Element => {
   return (
     <Modal
@@ -36,7 +38,7 @@ export const CountryPicker = ({
           withCloseButton={false}
           withFilter
           onSelect={onSelect}
-          preferredCountries={preferredCountries}
+          preferredCountries={PREFERRED_COUNTRIES as CountryCode[]}
         />
       </View>
     </Modal>
