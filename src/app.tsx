@@ -19,6 +19,7 @@ import { NotificationProvider } from './providers/notification';
 import { PaymentProvider } from './providers/payment';
 import { FilterProvider } from './providers/filter';
 
+import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
 
 // for performance optimizations and native feel
@@ -38,6 +39,8 @@ const App = (): JSX.Element | null => {
     });
 
     initLibraries(setLoaded);
+    loadSounds();
+
     return () => {
       RNLocalize.removeEventListener('change', setI18nConfig);
     };

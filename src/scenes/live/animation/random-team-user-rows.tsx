@@ -22,78 +22,7 @@ import Animated, {
 import { indexedMap } from '../../../utils/ramda';
 import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
-
-function playSpin() {
-  let entryMusic = new Sound('spin.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-
-function playPop() {
-  let popMusic = new Sound('pop.mp3', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    popMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-
-function entry() {
-  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-
-function digitsFlash() {
-  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    digitsFlashMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
+import { playSound } from '../../../utils/sound';
 
 export const TeamUserRows = ({
   userId,
@@ -162,14 +91,14 @@ export const TeamUserRows = ({
     const isLastColumn = currentAnimatingIndex.col === teamsPerUser - 1;
 
     if (currentAnimatingIndex.row === 0) {
-      playSpin();
+      playSound('spin');
       setInjectRowIndex(currentAnimatingIndex.col);
     }
 
     if (isLastColumn && isLastRow) {
       setTimeout(() => {
         onEnd()
-        digitsFlash()
+        playSound('players');
       }, 2000)
     }
 
@@ -204,10 +133,10 @@ export const TeamUserRows = ({
 
   // render rows
   useEffect(() => {
-    playPop()
+    playSound('pop');
 
     if (visibleRows === Math.ceil(totalRowsCount / 2)) {
-      entry()
+      playSound('entry');
       imageAnim.value = withTiming(
         1,
         { duration: 350, easing: Easing.ease }

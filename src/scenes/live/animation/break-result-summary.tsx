@@ -4,6 +4,7 @@ import { digitsStyle, digitsBackgroundStyle } from '../live-screen.presets';
 import { styles as s } from 'react-native-style-tachyons';
 import { Image, Text, View } from 'react-native';
 import Sound from 'react-native-sound';
+import { playSound } from '../../../utils/sound';
 
 import Animated, {
   Easing,
@@ -14,61 +15,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
-
-// TODO find a way to preload sounds before this view
-function entry() {
-  let entryMusic = new Sound('entry.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-
-function cardEntry() {
-  let cardEntryMusic = new Sound('card_entry.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    cardEntryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-
-function digitsFlash() {
-  let digitsFlashMusic = new Sound('digits.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    digitsFlashMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
 
 export const BreakResultSummary = ({
   userCount,
@@ -103,7 +49,7 @@ export const BreakResultSummary = ({
 
   useEffect(() => {
     if (animationStage === 0) {
-      entry();
+      playSound('entry')
       imageIn.value = withTiming(
         1,
         { duration: 350, easing: Easing.ease },
@@ -114,7 +60,7 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 1) {
-      cardEntry();
+      playSound('cardEntry');
       imageOut.value = withTiming(1, { duration: 300, easing: Easing.ease });
       summaryBox.value = withTiming(
         1,
@@ -136,9 +82,9 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 3) {
-      digitsFlash();
+      playSound('players');
       setTimeout(() => {
-        digitsFlash();
+        playSound('teams');
       }, 100);
 
       digitsInAnim.value = withTiming(
@@ -157,7 +103,7 @@ export const BreakResultSummary = ({
     }
 
     if (animationStage === 5) {
-      cardEntry();
+      playSound('cardEntry');
       imageOut.value = withTiming(2, { duration: 150, easing: Easing.ease });
       summaryBox.value = withTiming(
         2,
