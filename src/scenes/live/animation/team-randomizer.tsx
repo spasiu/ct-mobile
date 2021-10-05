@@ -15,58 +15,7 @@ import Sound from 'react-native-sound';
 
 import { TeamRandomizerProps } from '../live-screen.props';
 import { BreakTeam } from '../../../components/break-team';
-
-function playDrop1() {
-  let entryMusic = new Sound('drop_1.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-function playDrop2() {
-  let entryMusic = new Sound('drop_2.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
-function playDrop3() {
-  let entryMusic = new Sound('drop_3.wav', Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      // console.log('failed to load the sound', error);
-      return;
-    }
-
-    // Play the sound with an onEnd callback
-    entryMusic.play(success => {
-      if (success) {
-        // console.log('successfully finished playing');
-      } else {
-        // console.log('playback failed due to audio decoding errors');
-      }
-    });
-  });
-}
+import { playSound } from '../../../utils/sound';
 
 const Randomizer = ({
   allTeams,
@@ -88,7 +37,7 @@ const Randomizer = ({
   useEffect(() => {
     if (isReady) {
       scrollPosition.value = withDelay(
-        rowIndex * 350,
+        rowIndex * 550,
         withRepeat(
           withTiming(0, {
             duration: 1000,
@@ -100,13 +49,13 @@ const Randomizer = ({
             innerOpacity.value = 0;
 
             if (columnIndex == 0 && teamIndex === 0) {
-              runOnJS(playDrop1)();
+              runOnJS(playSound)('drop1');
             }
             if (columnIndex == 0 && teamIndex === 1) {
-              runOnJS(playDrop2)();
+              runOnJS(playSound)('drop2');
             }
             if (columnIndex == 0 && teamIndex === 2) {
-              runOnJS(playDrop3)();
+              runOnJS(playSound)('drop3');
             }
 
             resultScale.value = withTiming(0.7, {
@@ -117,7 +66,7 @@ const Randomizer = ({
         ),
       );
       outerOpacity.value = withDelay(
-        rowIndex * 350,
+        rowIndex * 550,
         withTiming(1, { duration: 0 }),
       );
     }

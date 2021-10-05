@@ -35,7 +35,7 @@ const TeamShadow = ({
             opacity: 0
           },
           useAnimatedStyle(() => ({
-            opacity: withDelay(350 * rowIndex, withRepeat(withTiming(opacity.value, {
+            opacity: withDelay(550 * rowIndex, withRepeat(withTiming(opacity.value, {
               duration: 250,
               easing: Easing.linear,
             }), 30, true))

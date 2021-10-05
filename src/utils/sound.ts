@@ -20,6 +20,9 @@ export const sounds = {
   teams: null,
   spin: null,
   pop: null,
+  drop1: null,
+  drop2: null,
+  drop3: null
 };
 
 const errorCallback = (error) => {}
@@ -31,4 +34,7 @@ export const loadSounds = () => {
   sounds.teams = new Sound('digits.wav', Sound.MAIN_BUNDLE, errorCallback);
   sounds.spin = new Sound('spin.wav', Sound.MAIN_BUNDLE, errorCallback);
   sounds.pop = new Sound('pop.mp3', Sound.MAIN_BUNDLE, errorCallback);
+  sounds.drop1 = new Sound('drop_1.wav', Sound.MAIN_BUNDLE, errorCallback);
+  sounds.drop2 = new Sound('drop_2.wav', Sound.MAIN_BUNDLE, errorCallback);
+  sounds.drop3 = new Sound('drop_3.wav', Sound.MAIN_BUNDLE, errorCallback);
 }

@@ -67,7 +67,7 @@ export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
   if (usersCount <= 10) {
     return Math.ceil(usersCount / (6 / teamsPerUser));
   }
-  if (usersCount >= 18 && usersCount <= 25 && teamsPerUser === 1) {
+  if (usersCount >= 16 && usersCount <= 25 && teamsPerUser === 1) {
     return Math.ceil(usersCount / 5);
   }
 
@@ -75,7 +75,7 @@ export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
 };
 
 export const getUsersPerRowCount = (usersCount: number, teamsPerUser: number) => {
-  if (usersCount >= 18 && usersCount <= 25 && teamsPerUser === 1) {
+  if (usersCount >= 16 && usersCount <= 25 && teamsPerUser === 1) {
     return 5;
   }
 
