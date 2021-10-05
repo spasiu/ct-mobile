@@ -31,6 +31,7 @@ export const TeamUserRows = ({
 }: RandomTeamUserRowsProps): JSX.Element => {
   const [visibleRows, setVisibleRows] = useState(0);
   const [injectRowIndex, setInjectRowIndex] = useState(-1);
+  const [ended, setEnded] = useState(false);
 
   const firstUser = head(users);
   const teamsPerUser = length(firstUser?.items || []);
@@ -83,6 +84,8 @@ export const TeamUserRows = ({
 
   // animate individual columns in a row
   useEffect(() => {
+    if (ended) return;
+
     if (currentAnimatingIndex.row < 0 && currentAnimatingIndex.col < 0) {
       return;
     }
@@ -90,6 +93,8 @@ export const TeamUserRows = ({
     const isLastRow = currentAnimatingIndex.row === totalRowsCount - 1;
     const isLastColumn = currentAnimatingIndex.col === teamsPerUser - 1;
 
+    // Start playing the sound and prepare the teams
+    // for each column which is going to be animated next.
     if (currentAnimatingIndex.row === 0) {
       playSound('spin');
       setInjectRowIndex(currentAnimatingIndex.col);
@@ -97,6 +102,7 @@ export const TeamUserRows = ({
 
     if (isLastColumn && isLastRow) {
       setTimeout(() => {
+        setEnded(true);
         onEnd()
         playSound('players');
       }, 2000)
@@ -133,6 +139,7 @@ export const TeamUserRows = ({
 
   // render rows
   useEffect(() => {
+    if (ended) return;
     playSound('pop');
 
     if (visibleRows === Math.ceil(totalRowsCount / 2)) {

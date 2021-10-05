@@ -24,7 +24,7 @@ const TeamShadow = ({
     <>
       <Animated.View
           style={[{
-            borderWidth: 5,
+            borderWidth: boxMargin,
             right: boxMargin/2 - 3,
             left: -boxMargin/2 - 3,
             shadowColor: 'white',
