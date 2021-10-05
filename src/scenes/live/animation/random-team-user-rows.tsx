@@ -163,7 +163,7 @@ export const TeamUserRows = ({
         // figure out a way to improve animation
         // when number of users per row > 3
       },
-      usersPerRow >= 4 ? 600 : 300,
+      300,
     );
 
     return () => clearTimeout(timer);

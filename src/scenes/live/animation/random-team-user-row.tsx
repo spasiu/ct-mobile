@@ -137,8 +137,11 @@ export const TeamUserRow = ({
                   s.jcc,
                   s.aic,
                   s.asc,
+                  s.circle_m2, s.ba2, s.b__white,
                   {
-                    top: (avatarSize / 1.7) * -1,
+                    top: (avatarSize / 2) * -1,
+                    height: avatarSize,
+                    width: avatarSize
                   },
                   useAnimatedStyle(() => {
                     return {
@@ -160,7 +163,6 @@ export const TeamUserRow = ({
                   src={user.image}
                   width={avatarSize}
                   height={avatarSize}
-                  style={[s.circle_m2, s.ba2, s.b__white]}
                 />
               </Animated.View>
             </Animated.View>
