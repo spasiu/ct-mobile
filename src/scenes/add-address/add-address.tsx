@@ -204,6 +204,12 @@ export const AddAddress = ({
                     addressState,
                   );
 
+                  const addressPostalCode =
+                    suggestion[ADDRESS_FORM_FIELDS.POSTAL_CODE];
+                  handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
+                    addressPostalCode,
+                  );
+
                   setAddressPredictions([]);
                 }}
               />

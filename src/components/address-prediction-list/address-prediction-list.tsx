@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { ADDRESS_FORM_FIELDS } from '../../common/address/address-form';
-import { PredictionType } from '../../services/places-api';
+import { getPostalCode, PredictionType } from '../../services/places-api';
 import { indexedMap } from '../../utils/ramda';
 import { split, trim } from 'ramda';
 
@@ -27,8 +27,9 @@ export const AddressPredictionList = ({
           <View key={prediction.place_id}>
             <TouchableOpacity
               style={isFirstItem ? firstRowSpacing : defaultRowSpacing}
-              onPress={() => {
+              onPress={async () => {
                 const address = prediction.description;
+
                 const addressDivided = split(',', address);
 
                 const addressFirstLine =
@@ -40,12 +41,17 @@ export const AddressPredictionList = ({
                 const addressState =
                   (addressDivided[2] && trim(addressDivided[2])) || '';
 
+                const postalCode = await getPostalCode(
+                  prediction.place_id,
+                  addressState,
+                );
+
                 const addressSuggestion = {
                   [ADDRESS_FORM_FIELDS.FIRST_LINE]: addressFirstLine,
                   [ADDRESS_FORM_FIELDS.CITY]: addressCity,
                   [ADDRESS_FORM_FIELDS.STATE_PROVINCE_REGION]: addressState,
+                  [ADDRESS_FORM_FIELDS.POSTAL_CODE]: postalCode,
                 };
-
                 onItemPressed(addressSuggestion);
               }}>
               <Text>{prediction.description}</Text>
