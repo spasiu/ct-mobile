@@ -3,7 +3,6 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { ADDRESS_FORM_FIELDS } from '../../common/address/address-form';
 import { getPostalCode, PredictionType } from '../../services/places-api';
 import { indexedMap } from '../../utils/ramda';
-import { split } from 'ramda';
 
 import {
   containerStyle,
@@ -19,7 +18,7 @@ export const AddressPredictionList = ({
 }: AddressPredictionListProps): JSX.Element => {
   const handleOnPress = async (prediction: PredictionType) => {
     const address = prediction.description;
-    const addressDivided = split(',', address);
+    const addressDivided = address.split(',');
     const addressFirstLine = addressDivided[0]?.trim() || '';
     const addressCity = addressDivided[1]?.trim() || '';
     const addressState = addressDivided[2]?.trim() || '';
