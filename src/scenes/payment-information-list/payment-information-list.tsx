@@ -34,16 +34,15 @@ export const PaymentInformationList = ({
     saveDefaultPaymentMethod,
   } = useContext(PaymentContext) as PaymentContextType;
   const { user } = useContext(AuthContext) as AuthContextType;
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [status, setStatus] = useState('idle');
   const [selectedCard, setSelectedCard] = useState('');
   const [cardToDelete, setCardToDelete] = useState('');
 
   useEffect(() => {
     if (isEmpty(cards)) {
-      setLoading(true);
+      setStatus('loading');
       getCards(user as FirebaseAuthTypes.User);
-      setLoading(false);
+      setStatus('idle');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -54,15 +53,28 @@ export const PaymentInformationList = ({
     if (selectedCard) {
       const selectedCardExists = find(propEq('id', selectedCard))(cards);
 
-      if (!selectedCardExists) {
-        setSelectedCard('');
-      }
+      if (!selectedCardExists) setSelectedCard('');
     }
   }, [selectedCard, cards]);
 
+  const handleSelectCard = async (cardInfoId: string) => {
+    if (cardInfoId === selectedCard) return;
+
+    setSelectedCard(cardInfoId);
+    setStatus(cardInfoId === defaultPaymentMethod ? 'idle' : 'modified');
+  };
+
+  const handleDeleteCard = () => {
+    setCardToDelete('');
+    setStatus('loading');
+    deleteCard(user as FirebaseAuthTypes.User, cardToDelete).then(() => {
+      setStatus('idle');
+    });
+  };
+
   return (
     <>
-      {loading ? (
+      {status === 'loading' ? (
         <Loading />
       ) : (
         <FlatList
@@ -87,7 +99,7 @@ export const PaymentInformationList = ({
                     ? SelectableRowTypes.selected
                     : SelectableRowTypes.default
                 }
-                onPress={() => setSelectedCard(cardInfo.id)}
+                onPress={() => handleSelectCard(cardInfo.id)}
                 onActionPressed={() => {
                   setCardToDelete(cardInfo.id);
                 }}
@@ -104,17 +116,17 @@ export const PaymentInformationList = ({
       )}
       <View style={[s.mh3]}>
         <ActionFooter
-          isLoading={saving}
+          isLoading={status === 'saving'}
           onPress={async () => {
-            setSaving(true);
+            setStatus('saving');
             await saveDefaultPaymentMethod(
               user as FirebaseAuthTypes.User,
               selectedCard,
             );
-            setSaving(false);
+            setStatus('idle');
           }}
           buttonType={
-            cards.length === 0
+            cards.length === 0 || status !== 'modified'
               ? ActionButtonTypes.disabled
               : ActionButtonTypes.primary
           }
@@ -134,13 +146,7 @@ export const PaymentInformationList = ({
         description={t('payment.deleteCardInstructions')}
         visible={Boolean(cardToDelete)}
         primaryActionText={t('buttons.remove')}
-        onPrimaryActionPressed={() => {
-          setCardToDelete('');
-          setLoading(true);
-          deleteCard(user as FirebaseAuthTypes.User, cardToDelete).then(() => {
-            setLoading(false);
-          });
-        }}
+        onPrimaryActionPressed={handleDeleteCard}
         secondaryActionText={t('buttons.cancel')}
         onSecondaryActionPressed={() => setCardToDelete('')}
       />
