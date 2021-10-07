@@ -3,7 +3,7 @@ import { styles as s } from 'react-native-style-tachyons';
 
 import { RandomTeamUserRowProps } from '../live-screen.props';
 import { WINDOW_WIDTH } from '../../../theme/sizes';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import Animated, {
   Easing,
   interpolate,
@@ -12,9 +12,9 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { ServerImage } from '../../../components/server-image/server-image';
 import { TeamRandomizer } from './team-randomizer';
 import { AnimatedTeamShadow } from './team-shadow';
+import { getImgixUrlWithQueryParams } from '../../../services/imgix';
 
 export const TeamUserRow = ({
   currentUserId,
@@ -47,6 +47,19 @@ export const TeamUserRow = ({
       }),
     );
   }, []);
+
+  const imgixQueryParamsConfig = {
+    auto: 'compress',
+    q: 100,
+    w: avatarSize,
+    h: avatarSize,
+    fill: 'blur',
+    fit: 'facearea',
+  };
+
+  const getFullImageUrl = (src) => {
+    return getImgixUrlWithQueryParams(src, imgixQueryParamsConfig);
+  }
 
   return (
     <>
@@ -160,12 +173,15 @@ export const TeamUserRow = ({
                       ],
                     };
                   }),
-                ]}>
-                <ServerImage
-                  fit={'facearea'}
-                  src={user.image}
-                  width={avatarSize}
-                  height={avatarSize}
+                ]}
+              >
+                <Image
+                  source={{uri: getFullImageUrl(user.image) }}
+                  style={{
+                    width: avatarSize,
+                    height: avatarSize
+                  }}
+                  resizeMode="contain"
                 />
               </Animated.View>
             </Animated.View>

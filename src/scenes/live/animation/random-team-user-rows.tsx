@@ -186,7 +186,7 @@ export const TeamUserRows = ({
 
   return (
     <>
-      <View style={[s.mt4]}>
+      <View style={[s.mt5]}>
         {rows.map((r, index) => {
           return (
             <RandomTeamUserRow
