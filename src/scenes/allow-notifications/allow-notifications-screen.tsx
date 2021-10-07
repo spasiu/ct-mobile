@@ -42,7 +42,7 @@ export const AllowNotificationsScreen = (): JSX.Element => {
       <ActionFooter
         buttonText={t('buttons.notifyMe')}
         onPress={async () => {
-          await requestNotificationPermission();
+          requestNotificationPermission();
           await setOnboardingStatusComplete();
         }}>
         <TextLink
@@ -57,7 +57,7 @@ export const AllowNotificationsScreen = (): JSX.Element => {
         description={t('onboarding.allowNotifications.warningMessage')}
         primaryActionText={t('buttons.enableNotifications')}
         onPrimaryActionPressed={async () => {
-          await requestNotificationPermission();
+          requestNotificationPermission();
           await setOnboardingStatusComplete();
         }}
         secondaryActionText={t('onboarding.allowNotifications.continueToHome')}

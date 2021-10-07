@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
+import { Platform, AppState } from 'react-native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import firestore from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
 import Intercom from '@intercom/intercom-react-native';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 import { LiveScreen } from '../../scenes/live/live-screen';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -11,8 +12,11 @@ import { ROUTES_IDS } from '../routes/identifiers';
 import { TabNavigator } from '../tab-navigator';
 
 import { OnboardingStack } from './onboarding-stack';
-import { Platform } from 'react-native';
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
+import {
+  NotificationContext,
+  NotificationContextType,
+} from '../../providers/notification';
 
 export type ProtectedStackParamList = {
   [ROUTES_IDS.ONBOARDING_STACK]: undefined;
@@ -25,55 +29,57 @@ export type ProtectedStackParamList = {
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();
 
 export const ProtectedStack = (): JSX.Element => {
-  const { onboardingComplete, user } = useContext(
+  const { onboardingComplete, user, getAuthToken } = useContext(
     AuthContext,
   ) as AuthContextType;
+  const { setRegisteredInIntercom } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
   const { getCards } = useContext(PaymentContext) as PaymentContextType;
 
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('Users')
       .doc(user?.uid)
-      .onSnapshot(documentSnapshot => {
+      .onSnapshot(async documentSnapshot => {
         const data = documentSnapshot.data();
         if (Platform.OS === 'ios' && data?.intercomIOS) {
-          Intercom.setUserHash(data.intercomIOS);
-          Intercom.registerIdentifiedUser({
-            email: user?.email as string,
-            userId: user?.uid,
-          });
-          unsubscribe();
+          await Intercom.setUserHash(data.intercomIOS);
         }
 
         if (Platform.OS === 'android' && data?.intercomAndroid) {
-          Intercom.setUserHash(data.intercomAndroid);
-          Intercom.registerIdentifiedUser({
-            email: user?.email as string,
-            userId: user?.uid,
-          });
-          unsubscribe();
+          await Intercom.setUserHash(data.intercomAndroid);
         }
+
+        await Intercom.registerIdentifiedUser({
+          email: user?.email as string,
+          userId: user?.uid,
+        });
+
+        setRegisteredInIntercom(true);
+        getAuthToken();
+        unsubscribe();
       });
 
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
-  useEffect(() => {
-    messaging()
-      .getToken()
-      .then(token => {
-        Intercom.sendTokenToIntercom(token);
-      });
-
-    const unsubscribe = messaging().onTokenRefresh(token => {
-      Intercom.sendTokenToIntercom(token);
-    });
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     getCards(user as FirebaseAuthTypes.User);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    AppState.addEventListener(
+      'change',
+      nextAppState =>
+        nextAppState === 'active' &&
+        Intercom.handlePushMessage().then(res => {
+          // TODO: add logic to handle intercom pushes
+        }),
+    );
+    return () => AppState.removeEventListener('change', () => true);
   }, []);
 
   return (

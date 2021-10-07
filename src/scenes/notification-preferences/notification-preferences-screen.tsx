@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ScrollView, Switch, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -9,9 +9,22 @@ import {
   RowLink,
 } from '../../components';
 import { t } from '../../i18n/i18n';
+import {
+  NotificationContext,
+  NotificationContextType,
+} from '../../providers/notification';
 
-export const NotificationPreferencesScreen = ({ navigation, route }) => {
+import { NotificationPreferencesScreenProps } from './notification-preferences-screen.props';
+
+export const NotificationPreferencesScreen = ({
+  navigation,
+  route,
+}: NotificationPreferencesScreenProps): JSX.Element => {
   const { notificationPreferences } = route.params;
+  const { notificationsEnabled, setNotificationsEnabled } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
+
   return (
     <Container
       style={[s.mh0]}
@@ -25,10 +38,20 @@ export const NotificationPreferencesScreen = ({ navigation, route }) => {
         <RowLink
           text={t('notificationPreferences.enableNotifications')}
           showArrow={false}
-          enabled={false}
           containerStyle={[s.mb4]}
           rightElementContainerStyle={[s.aic]}
-          rightElement={<Switch />}
+          rightElement={
+            <Switch
+              value={notificationsEnabled}
+              onValueChange={() => {
+                if (notificationsEnabled) {
+                  setNotificationsEnabled(false);
+                } else {
+                  setNotificationsEnabled(true);
+                }
+              }}
+            />
+          }
         />
         <Text style={[s.ff_alt_sb, s.f5, s.mt3, s.mb4]}>
           {t('notificationPreferences.notifictionTypesSection')}

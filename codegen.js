@@ -1,7 +1,11 @@
 module.exports = {
   schema: [
     {
-      [process.env.API_URL]: {},
+      [process.env.API_URL]: {
+        headers: {
+          'x-hasura-admin-secret': process.env.CODEGEN_ADMIN_SECRET,
+        },
+      },
     },
   ],
   documents: ['./src/services/api/requests/*.graphql'],

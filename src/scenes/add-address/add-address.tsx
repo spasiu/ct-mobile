@@ -204,6 +204,12 @@ export const AddAddress = ({
                     addressState,
                   );
 
+                  const addressPostalCode =
+                    suggestion[ADDRESS_FORM_FIELDS.POSTAL_CODE];
+                  handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
+                    addressPostalCode,
+                  );
+
                   setAddressPredictions([]);
                 }}
               />
@@ -225,35 +231,6 @@ export const AddAddress = ({
               value={values[ADDRESS_FORM_FIELDS.SECOND_LINE]}
               errorMessage={errors[ADDRESS_FORM_FIELDS.SECOND_LINE]}
               placeholder={t('forms.addressLine2Label')}
-              returnKeyType="next"
-              onSubmitEditing={() => {
-                if (city.current) {
-                  city.current.focus();
-                }
-              }}
-            />
-            <FormInput
-              ref={postalCode}
-              containerStyle={[s.mr2]}
-              onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.POSTAL_CODE)}
-              status={getFieldStatus(
-                ADDRESS_FORM_FIELDS.POSTAL_CODE,
-                activeField,
-                errors,
-                touched,
-              )}
-              onChangeText={text =>
-                handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
-                  text.replace(/[^a-z0-9]/gi, '').toUpperCase(),
-                )
-              }
-              onBlur={event => {
-                handleBlur(ADDRESS_FORM_FIELDS.POSTAL_CODE)(event);
-                setActiveField('');
-              }}
-              value={values[ADDRESS_FORM_FIELDS.POSTAL_CODE]}
-              errorMessage={errors[ADDRESS_FORM_FIELDS.POSTAL_CODE]}
-              placeholder={t('forms.postalCodeLabel')}
               returnKeyType="next"
               onSubmitEditing={() => {
                 if (city.current) {
@@ -319,6 +296,35 @@ export const AddAddress = ({
                 }}
               />
             </View>
+            <FormInput
+              ref={postalCode}
+              containerStyle={[s.mr2]}
+              onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.POSTAL_CODE)}
+              status={getFieldStatus(
+                ADDRESS_FORM_FIELDS.POSTAL_CODE,
+                activeField,
+                errors,
+                touched,
+              )}
+              onChangeText={text =>
+                handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
+                  text.replace(/[^a-z0-9]/gi, '').toUpperCase(),
+                )
+              }
+              onBlur={event => {
+                handleBlur(ADDRESS_FORM_FIELDS.POSTAL_CODE)(event);
+                setActiveField('');
+              }}
+              value={values[ADDRESS_FORM_FIELDS.POSTAL_CODE]}
+              errorMessage={errors[ADDRESS_FORM_FIELDS.POSTAL_CODE]}
+              placeholder={t('forms.postalCodeLabel')}
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                if (city.current) {
+                  city.current.focus();
+                }
+              }}
+            />
           </KeyboardAwareScrollView>
           <View style={[s.mh3]}>
             <ActionFooter

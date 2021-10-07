@@ -12,7 +12,7 @@ import { FormInput } from '../form-input';
 import { CountryPicker } from '../country-picker';
 
 import { t } from '../../i18n/i18n';
-import { getUserCountry } from '../../utils/countries';
+import { getUserCountry, PREFERRED_COUNTRIES } from '../../utils/countries';
 
 import { CountryInputProps } from './country-input.props';
 
@@ -29,6 +29,10 @@ export const CountryInput = ({
     name: '',
     flag: '',
   });
+  const preferredCountries = [
+    country.cca2,
+    ...PREFERRED_COUNTRIES.filter(countryCode => countryCode !== country.cca2),
+  ];
 
   useEffect(() => {
     const userCountry = value || getUserCountry();
@@ -56,7 +60,7 @@ export const CountryInput = ({
           onSelected(selectedCountry.cca2);
           onBlur();
         }}
-        preferredCountries={[country.cca2 as CountryCode]}
+        preferredCountries={preferredCountries as CountryCode[]}
       />
       <FormInput
         status={status}

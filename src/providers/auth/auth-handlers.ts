@@ -1,5 +1,4 @@
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { showMessage } from 'react-native-flash-message';
@@ -9,6 +8,7 @@ import storage from '@react-native-firebase/storage';
 import Intercom from '@intercom/intercom-react-native';
 
 import { t } from '../../i18n/i18n';
+import { hasHasuraClaim } from '../../utils/hasura';
 
 import { AuthUser } from './auth.types';
 
@@ -125,52 +125,6 @@ export const logoutHandler = async (
   }
 };
 
-export const checkOnboardingStatusHandler = async (
-  user: AuthUser,
-  onboardingComplete: boolean,
-): Promise<boolean> => {
-  try {
-    if (!user) {
-      return false;
-    }
-
-    if (onboardingComplete) {
-      return true;
-    }
-
-    const userDocument = await firestore()
-      .collection('Users')
-      .doc(user.uid)
-      .get();
-
-    if (userDocument.exists) {
-      const userData = userDocument.data() as { onboardingComplete: boolean };
-      return userData.onboardingComplete;
-    }
-
-    return false;
-  } catch (e) {
-    return false;
-  }
-};
-
-export const setOnboardingCompleteHandler = async (
-  user: AuthUser,
-): Promise<void> => {
-  try {
-    if (user) {
-      await firestore().collection('Users').doc(user.uid).set(
-        {
-          onboardingComplete: true,
-        },
-        { merge: true },
-      );
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const uploadPhotoHandler = async (
   photo: ImagePickerResponse,
   userId: string,
@@ -194,5 +148,19 @@ export const uploadPhotoHandler = async (
       type: 'danger',
     });
     return '';
+  }
+};
+
+export const getAuthTokenHandler = async (
+  user: AuthUser,
+  setToken: (token: string) => void,
+): Promise<void> => {
+  if (user) {
+    const authToken = await user.getIdToken(true);
+    const idTokenResult = await user.getIdTokenResult();
+
+    if (hasHasuraClaim(idTokenResult)) {
+      setToken(authToken);
+    }
   }
 };

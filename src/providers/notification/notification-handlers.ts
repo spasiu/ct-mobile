@@ -1,14 +1,12 @@
-import messaging from '@react-native-firebase/messaging';
+import { Notifications } from 'react-native-notifications';
 
-export const requestNotificationPermissionHandler = async (): Promise<boolean> => {
-  try {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+export const requestNotificationPermissionHandler = (): void => {
+  Notifications.registerRemoteNotifications();
+};
 
-    return enabled;
-  } catch (e) {
-    return false;
-  }
+export const checkPermissionsHandler = async (
+  setPermission: (hasPermission: boolean) => void,
+): Promise<void> => {
+  const hasPermission = await Notifications.isRegisteredForRemoteNotifications();
+  setPermission(hasPermission);
 };

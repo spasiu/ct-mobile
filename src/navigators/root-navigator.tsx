@@ -1,8 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-import SplashScreen from 'react-native-splash-screen';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import FlashMessage from 'react-native-flash-message';
 
 import { AuthContext, AuthContextType } from '../providers/auth';
@@ -19,27 +17,14 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = (): JSX.Element => {
-  const { user, setUser, checkOnboardingStatus } = useContext(
+  const { user, checkOnboardingStatus } = useContext(
     AuthContext,
   ) as AuthContextType;
-  const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
-    const authSubscriber = auth().onAuthStateChanged(
-      async (authUser: FirebaseAuthTypes.User | null) => {
-        await checkOnboardingStatus(authUser);
-        setUser(authUser);
-
-        if (initializing) {
-          SplashScreen.hide();
-          setInitializing(false);
-        }
-      },
-    );
-    return authSubscriber;
+    checkOnboardingStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [user]);
   return (
     <NavigationContainer>
       <Stack.Navigator>

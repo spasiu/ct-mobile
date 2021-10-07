@@ -12,6 +12,11 @@ import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
 import { hitDetailForModalSelector } from '../../scenes/hit-detail/hit-detail-modal.utils';
 import { HitDetailModal } from '../../scenes/hit-detail/hit-detail-modal';
 
+import {
+  triggerAnalyticsEvent,
+  AnalyticsEventTypes,
+} from '../../utils/analytics-events';
+
 import { completeHits } from './hits-view.utils';
 import {
   NUMBER_OF_COLUMNS,
@@ -71,7 +76,15 @@ export const HitsView = ({ hits }: HitsViewProps): JSX.Element => {
       />
       <HitDetailModal
         isVisible={!isEmpty(hitDetail)}
-        onPressClose={() => setHitDetail({})}
+        onPressClose={() => {
+          triggerAnalyticsEvent({
+            event: AnalyticsEventTypes.viewed_hit,
+            customProperties: {
+              player: hitPlayerSelector(hitDetail),
+            },
+          });
+          setHitDetail({});
+        }}
         {...hitDetailForModalSelector(hitDetail)}
       />
     </>

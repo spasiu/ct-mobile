@@ -18,7 +18,7 @@ export type CheckoutData = {
   cart: CheckoutCartData;
   tax_total: string;
   subtotal_ex_tax: string;
-  shipping_cost_total_inc_tax: string;
+  shipping_cost_total_ex_tax: string;
   grand_total: string;
 };
 
