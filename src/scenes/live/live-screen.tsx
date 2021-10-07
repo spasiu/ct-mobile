@@ -69,7 +69,7 @@ import { ChatMessage } from '../../common/chat';
 import {
   closeIcon,
   diamondIcon,
-  shareIcon,
+  // shareIcon,
   shopIcon,
   logoIcon,
 } from './live-screen.presets';
@@ -132,7 +132,8 @@ export const LiveScreen = ({
       .onSnapshot(documentSnapshot => {
         const listenerUpdates = documentSnapshot.docs;
         const newMessages: ChatMessage[] = indexedMap(listenerUpdate => {
-          const updateData = listenerUpdate as FirebaseFirestoreTypes.DocumentData;
+          const updateData =
+            listenerUpdate as FirebaseFirestoreTypes.DocumentData;
           return {
             id: updateData.id,
             ...updateData.data(),
@@ -305,20 +306,20 @@ export const LiveScreen = ({
                   s.ff_alt_r,
                   s.f5,
                   s.white,
-                  s.flx_ratio(0.55),
+                  s.flx_ratio(0.75),
                   s.ba,
                   s.b__white,
                   s.br5,
                   { height: sizes.h2 + sizes.h1 / 2 },
                 ]}
               />
-              <View style={[s.flx_ratio(0.4), s.flx_row, s.jcsb, s.ml3]}>
+              <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
                 <IconButton>
                   <Image source={diamondIcon} />
                 </IconButton>
-                <IconButton>
+                {/* <IconButton>
                   <Image source={shareIcon} />
-                </IconButton>
+                </IconButton> */}
                 <IconButton onPress={() => setShowLineup(true)}>
                   <Image source={shopIcon} />
                 </IconButton>
