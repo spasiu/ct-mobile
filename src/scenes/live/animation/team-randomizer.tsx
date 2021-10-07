@@ -45,7 +45,7 @@ const Randomizer = ({
           }),
           5,
           false,
-          success => {
+          () => {
             innerOpacity.value = 0;
 
             if (columnIndex == 0 && teamIndex === 0) {
@@ -111,14 +111,19 @@ const Randomizer = ({
             width: boxSize + boxMargin * 2,
             height: boxSize + boxMargin * 4,
             zIndex: 1,
-            borderColor: COLORS.transparent
+            borderColor: COLORS.transparent,
           },
           s.ba,
           s.no_overflow,
           containerStyle,
         ]}>
         {isReady && (
-          <View style={{ position: 'absolute', left: boxMargin, alignSelf: 'center' }}>
+          <View
+            style={{
+              position: 'absolute',
+              left: boxMargin,
+              alignSelf: 'center',
+            }}>
             <Animated.View
               style={[
                 s.jcse,
@@ -147,18 +152,20 @@ const Randomizer = ({
               })}
             </Animated.View>
 
-            {<Animated.View
-              style={[
-                {
-                  position: 'absolute',
-                  height: boxSize,
-                  width: boxSize,
-                  marginTop: boxMargin * 2
-                },
-                resultAnimationStyle,
-              ]}>
+            {
+              <Animated.View
+                style={[
+                  {
+                    position: 'absolute',
+                    height: boxSize,
+                    width: boxSize,
+                    marginTop: boxMargin * 2,
+                  },
+                  resultAnimationStyle,
+                ]}>
                 <BreakTeam {...result} boxSize={boxSize} />
-            </Animated.View>}
+              </Animated.View>
+            }
           </View>
         )}
       </Animated.View>

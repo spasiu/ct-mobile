@@ -1,6 +1,7 @@
 import Intercom from '@intercom/intercom-react-native';
 import Config from 'react-native-config';
 import { t } from '../../i18n/i18n';
+import { getRootRem } from '../../theme/utils';
 
 export const closeIcon = require('../../assets/close-icon.png');
 export const diamondIcon = require('../../assets/diamond-icon.png');
@@ -47,21 +48,20 @@ export const teamsAnimationContainerStyle: ViewStyle = {
   position: 'absolute',
   width: WINDOW_WIDTH,
   height: WINDOW_HEIGHT,
-  backgroundColor:
-  COLORS.alpha_black_6,
+  backgroundColor: COLORS.alpha_black_6,
   zIndex: 2,
-}
+};
 
 export const digitsBackgroundStyle = {
-  fontSize: 80,
-  color: COLORS.dark_grey
-}
+  fontSize: getRootRem() * 5.5,
+  color: COLORS.dark_grey,
+};
 
 export const digitsStyle = {
-  fontSize: 80,
+  fontSize: getRootRem() * 5.5,
   color: COLORS.light_yellow,
-  position: 'absolute'
-}
+  position: 'absolute',
+};
 
 export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
   if (usersCount <= 10) {
@@ -74,7 +74,10 @@ export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
   return Math.ceil(usersCount / (6 / teamsPerUser));
 };
 
-export const getUsersPerRowCount = (usersCount: number, teamsPerUser: number) => {
+export const getUsersPerRowCount = (
+  usersCount: number,
+  teamsPerUser: number,
+) => {
   if (usersCount >= 16 && usersCount <= 25 && teamsPerUser === 1) {
     return 5;
   }

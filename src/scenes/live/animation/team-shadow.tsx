@@ -7,49 +7,55 @@ import Animated, {
   withDelay,
   withRepeat,
   withTiming,
-  interpolate
 } from 'react-native-reanimated';
 import { TeamShadowProps } from '../live-screen.props';
 
 const TeamShadow = ({
   boxMargin,
   boxSize,
-  rowIndex
+  rowIndex,
 }: TeamShadowProps): JSX.Element => {
   const opacity = useSharedValue(0);
 
   useEffect(() => {
-    opacity.value = withDelay(550 * rowIndex, withRepeat(withTiming(1, {
-      duration: 250,
-      easing: Easing.ease,
-    }), 30, true));
+    opacity.value = withDelay(
+      550 * rowIndex,
+      withRepeat(
+        withTiming(1, {
+          duration: 250,
+          easing: Easing.ease,
+        }),
+        30,
+        true,
+      ),
+    );
   }, []);
 
   const shadowStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value
-  }))
+    opacity: opacity.value,
+  }));
 
   return (
     <>
       <Animated.View
-          style={[{
+        style={[
+          {
             right: -boxMargin * 2,
             left: -boxMargin * 2,
             bottom: 0,
             top: 0,
             position: 'absolute',
-            opacity: 0
+            opacity: 0,
           },
-          shadowStyle
-        ]}
-      >
+          shadowStyle,
+        ]}>
         <Image
           source={require('../../../assets/glow.png')}
           style={{ width: '100%', height: '100%', zIndex: 0 }}
         />
       </Animated.View>
     </>
-  )
-}
+  );
+};
 
-export const AnimatedTeamShadow = memo(TeamShadow, () => true)
+export const AnimatedTeamShadow = memo(TeamShadow, () => true);

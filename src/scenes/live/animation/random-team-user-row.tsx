@@ -23,7 +23,7 @@ export const TeamUserRow = ({
   allTeams,
   injectElementsAtColumnIndex,
   rowIndex,
-  usersPerRow
+  usersPerRow,
 }: RandomTeamUserRowProps): JSX.Element => {
   const boxWidth = usersPerRow < 6 ? 84 : 70;
   const boxMargin = (7 * WINDOW_WIDTH) / 750;
@@ -57,9 +57,9 @@ export const TeamUserRow = ({
     fit: 'facearea',
   };
 
-  const getFullImageUrl = (src) => {
+  const getFullImageUrl = src => {
     return getImgixUrlWithQueryParams(src, imgixQueryParamsConfig);
-  }
+  };
 
   return (
     <>
@@ -131,11 +131,13 @@ export const TeamUserRow = ({
                             boxMargin={boxMargin}
                             allTeams={allTeams.slice(0, 6)}
                           />
-                          {index == injectElementsAtColumnIndex && <AnimatedTeamShadow
-                            boxMargin={boxMargin}
-                            boxSize={boxSize}
-                            rowIndex={rowIndex}
-                          />}
+                          {index == injectElementsAtColumnIndex && (
+                            <AnimatedTeamShadow
+                              boxMargin={boxMargin}
+                              boxSize={boxSize}
+                              rowIndex={rowIndex}
+                            />
+                          )}
                         </View>
                       );
                     })
@@ -157,7 +159,7 @@ export const TeamUserRow = ({
                   {
                     top: (avatarSize / 2) * -1,
                     height: avatarSize,
-                    width: avatarSize
+                    width: avatarSize,
                   },
                   useAnimatedStyle(() => {
                     return {
@@ -173,13 +175,12 @@ export const TeamUserRow = ({
                       ],
                     };
                   }),
-                ]}
-              >
+                ]}>
                 <Image
-                  source={{uri: getFullImageUrl(user.image) }}
+                  source={{ uri: getFullImageUrl(user.image) }}
                   style={{
                     width: avatarSize,
-                    height: avatarSize
+                    height: avatarSize,
                   }}
                   resizeMode="contain"
                 />

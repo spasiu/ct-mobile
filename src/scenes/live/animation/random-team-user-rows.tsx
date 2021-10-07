@@ -1,6 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
 import { flatten, head, length, repeat } from 'ramda';
-import Sound from 'react-native-sound';
 import { View, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { RandomTeamUserRowsProps } from '../live-screen.props';
@@ -21,13 +20,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import { indexedMap } from '../../../utils/ramda';
 import { BreakResultUser, BreakResultItem } from '../../../common/break/break';
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
+import { WINDOW_WIDTH } from '../../../theme/sizes';
 import { playSound } from '../../../utils/sound';
 
 export const TeamUserRows = ({
   userId,
   users,
-  onEnd
+  onEnd,
 }: RandomTeamUserRowsProps): JSX.Element => {
   const [visibleRows, setVisibleRows] = useState(0);
   const [injectRowIndex, setInjectRowIndex] = useState(-1);
@@ -75,10 +74,10 @@ export const TeamUserRows = ({
         col: 0,
         visibleTeamsInRow: repeat(-1, totalRowsCount),
       });
-      imageAnim.value = withDelay(500, withTiming(
-        0,
-        { duration: 500, easing: Easing.ease }
-      ));
+      imageAnim.value = withDelay(
+        500,
+        withTiming(0, { duration: 500, easing: Easing.ease }),
+      );
     }, 2000);
   };
 
@@ -103,9 +102,9 @@ export const TeamUserRows = ({
     if (isLastColumn && isLastRow) {
       setTimeout(() => {
         setEnded(true);
-        onEnd()
+        onEnd();
         playSound('players');
-      }, 2000)
+      }, 2000);
     }
 
     const timer = setTimeout(
@@ -144,10 +143,7 @@ export const TeamUserRows = ({
 
     if (visibleRows === Math.ceil(totalRowsCount / 2)) {
       playSound('entry');
-      imageAnim.value = withTiming(
-        1,
-        { duration: 350, easing: Easing.ease }
-      );
+      imageAnim.value = withTiming(1, { duration: 350, easing: Easing.ease });
     }
 
     if (visibleRows >= totalRowsCount - 1) {
@@ -157,14 +153,9 @@ export const TeamUserRows = ({
       return;
     }
 
-    const timer = setTimeout(
-      () => {
-        setVisibleRows(visibleRows + 1);
-        // figure out a way to improve animation
-        // when number of users per row > 3
-      },
-      300,
-    );
+    const timer = setTimeout(() => {
+      setVisibleRows(visibleRows + 1);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, [visibleRows, setVisibleRows]);
@@ -179,7 +170,7 @@ export const TeamUserRows = ({
             [0, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
             [0, 1.2, 1.1, 1, 1.1, 1.2, 1.1, 1.1],
           ),
-        }
+        },
       ],
     };
   }, []);
@@ -223,6 +214,6 @@ export const TeamUserRows = ({
   );
 };
 
-export const RandomTeamUserRows = memo(TeamUserRows, (prevProps, nextProps) => {
+export const RandomTeamUserRows = memo(TeamUserRows, () => {
   return true;
 });

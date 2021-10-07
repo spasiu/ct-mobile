@@ -3,7 +3,6 @@ import { BreakResultSummaryProps } from '../live-screen.props';
 import { digitsStyle, digitsBackgroundStyle } from '../live-screen.presets';
 import { styles as s } from 'react-native-style-tachyons';
 import { Image, Text, View } from 'react-native';
-import Sound from 'react-native-sound';
 import { playSound } from '../../../utils/sound';
 
 import Animated, {
@@ -49,7 +48,7 @@ export const BreakResultSummary = ({
 
   useEffect(() => {
     if (animationStage === 0) {
-      playSound('entry')
+      playSound('entry');
       imageIn.value = withTiming(
         1,
         { duration: 350, easing: Easing.ease },
@@ -121,13 +120,13 @@ export const BreakResultSummary = ({
       -modalHeight / 20, // 0.1
       -modalHeight / 10, // 0.2
       -modalHeight / 4, // 0.3
-      -modalHeight / 2 + (imageHeight / 2) + 10, // 0.4
-      -modalHeight / 2 + (imageHeight / 2), // 0.5
-      -modalHeight / 2 + (imageHeight / 2) - 5, // 0.6
-      -modalHeight / 2 + (imageHeight / 2), // 0.7
-      -modalHeight / 2 + (imageHeight / 2) + 10, // 0.8
-      -modalHeight / 2 + (imageHeight / 2) + 5, // 0.9
-      -modalHeight / 2 + (imageHeight / 2), // 1
+      -modalHeight / 2 + imageHeight / 2 + 10, // 0.4
+      -modalHeight / 2 + imageHeight / 2, // 0.5
+      -modalHeight / 2 + imageHeight / 2 - 5, // 0.6
+      -modalHeight / 2 + imageHeight / 2, // 0.7
+      -modalHeight / 2 + imageHeight / 2 + 10, // 0.8
+      -modalHeight / 2 + imageHeight / 2 + 5, // 0.9
+      -modalHeight / 2 + imageHeight / 2, // 1
       -WINDOW_HEIGHT / 2 - modalHeight,
     ],
     imageScale: [
@@ -277,22 +276,62 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text
-                  style={[
-                    s.white,
-                    s.ff_tech_b,
-                    s.f1,
-                    s.mt3,
-                    digitsBackgroundStyle,
-                  ]}>
-                  {'88'}
-                </Text>
-                {animationStage == 4 && (
-                  <Text
-                    style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
-                    {userCount < 10 ? '0' + userCount : userCount}
-                  </Text>
-                )}
+                <View style={[s.flx_row]}>
+                  <View>
+                    <Text
+                      style={[
+                        s.white,
+                        s.ff_tech_b,
+                        s.f1,
+                        s.mt3,
+                        digitsBackgroundStyle,
+                      ]}>
+                      {'8'}
+                    </Text>
+                    {animationStage >= 3 && (
+                      <Text
+                        style={[
+                          s.white,
+                          s.ff_tech_b,
+                          s.f1,
+                          s.mt3,
+                          s.tr,
+                          s.w_100,
+                          digitsStyle,
+                        ]}>
+                        {userCount < 10 ? '0' : (userCount + '').charAt(0)}
+                      </Text>
+                    )}
+                  </View>
+                  <View>
+                    <Text
+                      style={[
+                        s.white,
+                        s.ff_tech_b,
+                        s.f1,
+                        s.mt3,
+                        digitsBackgroundStyle,
+                      ]}>
+                      {'8'}
+                    </Text>
+                    {animationStage >= 3 && (
+                      <Text
+                        style={[
+                          s.white,
+                          s.ff_tech_b,
+                          s.f1,
+                          s.mt3,
+                          s.tr,
+                          s.w_100,
+                          digitsStyle,
+                        ]}>
+                        {userCount < 10
+                          ? userCount
+                          : (userCount + '').charAt(1)}
+                      </Text>
+                    )}
+                  </View>
+                </View>
               </Animated.View>
             </View>
             <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
@@ -331,22 +370,62 @@ export const BreakResultSummary = ({
                     };
                   }),
                 ]}>
-                <Text
-                  style={[
-                    s.white,
-                    s.ff_tech_b,
-                    s.f1,
-                    s.mt3,
-                    digitsBackgroundStyle,
-                  ]}>
-                  {'88'}
-                </Text>
-                {animationStage == 4 && (
-                  <Text
-                    style={[s.white, s.ff_tech_b, s.f1, s.mt3, digitsStyle]}>
-                    {teamCount < 10 ? '0' + teamCount : teamCount}
-                  </Text>
-                )}
+                <View style={[s.flx_row]}>
+                  <View>
+                    <Text
+                      style={[
+                        s.white,
+                        s.ff_tech_b,
+                        s.f1,
+                        s.mt3,
+                        digitsBackgroundStyle,
+                      ]}>
+                      {'8'}
+                    </Text>
+                    {animationStage >= 3 && (
+                      <Text
+                        style={[
+                          s.white,
+                          s.ff_tech_b,
+                          s.f1,
+                          s.mt3,
+                          s.tr,
+                          s.w_100,
+                          digitsStyle,
+                        ]}>
+                        {teamCount < 10 ? '0' : (teamCount + '').charAt(0)}
+                      </Text>
+                    )}
+                  </View>
+                  <View>
+                    <Text
+                      style={[
+                        s.white,
+                        s.ff_tech_b,
+                        s.f1,
+                        s.mt3,
+                        digitsBackgroundStyle,
+                      ]}>
+                      {'8'}
+                    </Text>
+                    {animationStage >= 3 && (
+                      <Text
+                        style={[
+                          s.white,
+                          s.ff_tech_b,
+                          s.f1,
+                          s.mt3,
+                          s.tr,
+                          s.w_100,
+                          digitsStyle,
+                        ]}>
+                        {teamCount < 10
+                          ? teamCount
+                          : (teamCount + '').charAt(1)}
+                      </Text>
+                    )}
+                  </View>
+                </View>
               </Animated.View>
             </View>
           </View>
