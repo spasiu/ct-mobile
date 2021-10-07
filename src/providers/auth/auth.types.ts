@@ -16,6 +16,8 @@ export type AuthContextType = {
   resetPassword: (email: string) => Promise<boolean>;
   logout: () => Promise<void>;
   uploadPhoto: (photo: ImagePickerResponse) => Promise<string>;
+  liveTermsAccepted: boolean;
+  setLiveTermsAccepted: (liveTermsAccepted: boolean) => void;
 };
 
 export interface AuthProviderProps {

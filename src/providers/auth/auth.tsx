@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { ImagePickerResponse } from 'react-native-image-picker';
 
@@ -29,33 +29,52 @@ export const AuthProvider = ({
   onboardingComplete,
   setOnboardingComplete,
 }: AuthProviderProps): JSX.Element => {
+  // temp flag to limit views of terms on live screen
+  const [liveTermsAccepted, setLiveTermsAccepted] = useState(false);
+
   const client = useApolloClient();
+
+  const getAuthToken = async () => {
+    await getAuthTokenHandler(user, setToken);
+  };
+
+  const setOnboardingStatusComplete = async () => {
+    await setOnboardingCompleteOnFirestore(user);
+    setOnboardingComplete(true);
+  };
+
+  const checkOnboardingStatus = async () => {
+    const onboardingStatus = await checkOnboardingStatusOnFirestore(user);
+    setOnboardingComplete(onboardingStatus);
+  };
+
+  const logout = async () => {
+    setToken('');
+    setOnboardingComplete(false);
+    await logoutHandler(client);
+  };
+
+  const uploadPhoto = async (photo: ImagePickerResponse) => {
+    await uploadPhotoHandler(photo, user?.uid as string);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         onboardingComplete,
-        getAuthToken: async () => await getAuthTokenHandler(user, setToken),
+        getAuthToken,
         signUpWithEmail: emailSignUpHandler,
         signInWithEmail: emailSignInHandler,
         signInWithGoogle: googleSignInHandler,
         signInWithApple: appleSignInHandler,
-        setOnboardingStatusComplete: async () => {
-          await setOnboardingCompleteOnFirestore(user);
-          setOnboardingComplete(true);
-        },
-        checkOnboardingStatus: async () => {
-          const onboardingStatus = await checkOnboardingStatusOnFirestore(user);
-          setOnboardingComplete(onboardingStatus);
-        },
+        setOnboardingStatusComplete,
+        checkOnboardingStatus,
         resetPassword: resetPasswordHandler,
-        logout: async () => {
-          setToken('');
-          setOnboardingComplete(false);
-          await logoutHandler(client);
-        },
-        uploadPhoto: async (photo: ImagePickerResponse) =>
-          await uploadPhotoHandler(photo, user?.uid as string),
+        logout,
+        uploadPhoto,
+        liveTermsAccepted,
+        setLiveTermsAccepted,
       }}>
       {children}
     </AuthContext.Provider>

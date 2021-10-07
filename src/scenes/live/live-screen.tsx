@@ -87,7 +87,11 @@ export const LiveScreen = ({
   route,
 }: LiveScreenProps): JSX.Element => {
   const { eventId } = route.params;
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const {
+    user: authUser,
+    liveTermsAccepted,
+    setLiveTermsAccepted,
+  } = useContext(AuthContext) as AuthContextType;
 
   const inputRef = useRef<TextInput>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -147,7 +151,7 @@ export const LiveScreen = ({
   }, []);
 
   useLayoutEffect(() => {
-    setTermsOfUseVisible(true);
+    if (!liveTermsAccepted) setTermsOfUseVisible(true);
   }, []);
 
   const event = eventSelector(data);
@@ -177,6 +181,11 @@ export const LiveScreen = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveBreak]);
+
+  const handleConfirmTermsOfUse = () => {
+    setTermsOfUseVisible(false);
+    setLiveTermsAccepted(true);
+  };
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
@@ -348,7 +357,7 @@ export const LiveScreen = ({
           <TermsOfUseModal
             isVisible={termsOfUseVisible}
             onPressCancel={() => navigation.goBack()}
-            onPressConfirm={() => setTermsOfUseVisible(false)}
+            onPressConfirm={handleConfirmTermsOfUse}
           />
         </SafeAreaView>
       </LinearGradient>
