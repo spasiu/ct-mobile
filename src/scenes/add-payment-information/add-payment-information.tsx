@@ -19,20 +19,23 @@ const sourceUri =
 export const AddPaymentInformation = ({
   onPaymentAdded,
 }: AddPaymentInformationProps): JSX.Element => {
-  const [loaded, setLoaded] = useState(false);
-  const [processing, setProcessing] = useState(false);
+  const [status, setStatus] = useState('loading');
 
   const { createCard } = useContext(PaymentContext) as PaymentContextType;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   return (
     <>
-      {processing ? (
+      {status === 'processing' ? (
         <Loading />
       ) : (
         <WebView
-          style={loaded ? [s.bg_transparent] : [s.flx_0, s.h_custom(0), s.o_0]}
+          style={
+            status === 'idle'
+              ? [s.bg_transparent]
+              : [s.flx_0, s.h_custom(0), s.o_0]
+          }
           startInLoadingState
-          onLoadEnd={() => setLoaded(true)}
+          onLoadEnd={() => setStatus('idle')}
           renderLoading={() => <Loading />}
           allowFileAccess={true}
           javaScriptEnabled={true}
@@ -46,15 +49,15 @@ export const AddPaymentInformation = ({
                 type: 'danger',
               });
             } else {
-              setProcessing(true);
+              setStatus('processing');
               if (eventData.token) {
                 createCard(authUser as FirebaseAuthTypes.User, {
                   singleUseToken: eventData.token,
                 })
                   .then(() => onPaymentAdded())
-                  .catch(() => setProcessing(false));
+                  .catch(() => setStatus('idle'));
               } else {
-                setProcessing(false);
+                setStatus('idle');
                 showMessage({
                   message: eventData.error.detailedMessage,
                   type: 'danger',
