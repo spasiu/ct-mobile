@@ -110,6 +110,7 @@ export interface TeamRandomizerProps {
   isReady: boolean;
   columnIndex: number;
   rowIndex: number;
+  preloadTeams: boolean;
 }
 
 export interface TeamShadowProps {

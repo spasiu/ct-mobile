@@ -18,18 +18,12 @@ export const SeeTeamsAnimation = ({
 }: SeeTeamsAnimationProps): JSX.Element => {
   const [summaryAnimationEnded, setSummaryAnimationEnded] = useState(false);
   const [teamAnimationEnded, setTeamAnimationEnded] = useState(false);
-  const teams = flatten(
-    indexedMap(
-      breakResultUser => (breakResultUser as BreakResult).items,
-      result,
-    ),
-  );
 
   return (
     <View style={teamsAnimationContainerStyle}>
       {!summaryAnimationEnded && (
         <BreakResultSummary
-          teamCount={teams.length}
+          teamCount={result[0]?.items?.length}
           userCount={result.length}
           onEnd={() => {
             setTimeout(() => {

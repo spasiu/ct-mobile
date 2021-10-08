@@ -123,6 +123,7 @@ export const TeamUserRow = ({
                             key={index.toString()}
                             result={item}
                             rowIndex={rowIndex}
+                            preloadTeams={usersPerRow >= 5} // to prevent rendering delays
                             isReady={injectElementsAtColumnIndex === index}
                             currentAnimatingIndex={visibleTeamsInRow}
                             teamIndex={index}

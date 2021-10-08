@@ -26,6 +26,7 @@ const Randomizer = ({
   rowIndex,
   teamIndex,
   columnIndex,
+  preloadTeams
 }: TeamRandomizerProps): JSX.Element => {
   const scrollPosition = useSharedValue(
     allTeams.length * (boxSize + boxMargin * 2) * -1,
@@ -117,7 +118,7 @@ const Randomizer = ({
           s.no_overflow,
           containerStyle,
         ]}>
-        {isReady && (
+        {(isReady || preloadTeams) && (
           <View
             style={{
               position: 'absolute',

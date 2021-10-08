@@ -95,8 +95,8 @@ export const TeamUserRows = ({
     // Start playing the sound and prepare the teams
     // for each column which is going to be animated next.
     if (currentAnimatingIndex.row === 0) {
-      playSound('spin');
       setInjectRowIndex(currentAnimatingIndex.col);
+      playSound('spin');
     }
 
     if (isLastColumn && isLastRow) {
