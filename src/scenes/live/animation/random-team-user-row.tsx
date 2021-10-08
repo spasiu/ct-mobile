@@ -40,7 +40,7 @@ export const TeamUserRow = ({
     );
 
     avatarAnim.value = withDelay(
-      300,
+      400,
       withTiming(0.7, {
         duration: 250,
         easing: Easing.ease,
