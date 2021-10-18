@@ -3,7 +3,7 @@ module.exports = {
     {
       [process.env.API_URL]: {
         headers: {
-          'x-hasura-admin-secret': process.env.CODEGEN_ADMIN_SECRET,
+          'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET,
         },
       },
     },
