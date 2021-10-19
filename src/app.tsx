@@ -90,7 +90,7 @@ const App = (): JSX.Element | null => {
   }
 
   return (
-    <ApolloProvider client={getClient(token)}>
+    <ApolloProvider client={getClient(token, user)}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <AuthProvider
           user={user}

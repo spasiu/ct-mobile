@@ -5,48 +5,141 @@ import {
   HttpLink,
   NormalizedCacheObject,
   HttpOptions,
+  ApolloLink,
+  fromPromise,
 } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { getMainDefinition, Observable } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { onError } from "@apollo/client/link/error";
+import { setContext } from "@apollo/client/link/context";
 import Config from 'react-native-config';
+import { AuthUser } from '../../providers/auth';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 
-const getHttpLink = (headers: HttpOptions['headers']) =>
+//const navigation = useNavigation();
+
+let jwt:string = '';
+
+const getHttpLink = () =>
   new HttpLink({
-    uri: Config.API_URL,
-    headers,
+    uri: Config.API_URL
   });
 
-const getWsLink = (headers: HttpOptions['headers']) =>
-  new WebSocketLink({
-    uri: Config.API_URL,
-    options: {
-      reconnect: true,
-      connectionParams: {
-        headers,
-      },
-    },
-  });
+const getHeaders = () : HttpOptions['headers'] => {
+  return {headers: jwt ? { Authorization: `Bearer ${jwt}` } : {}}
+}
+
+let wsClient: SubscriptionClient;
+
+const getWsLink = () => {
+  wsClient = new SubscriptionClient(Config.API_URL, {
+    reconnect: true,
+    connectionParams: () => {
+      return getHeaders()
+    }
+  })
+  return new WebSocketLink(wsClient);
+}
+
+const authLink = setContext(() => {
+  return getHeaders()
+})
+
+const getErrorLink = (authUser?: AuthUser): ApolloLink => {
+
+  let isRefreshing = false;
+  let pendingRequests: Array<() => void> = [];
+
+  const resolvePendingRequests = () => {
+    pendingRequests.map(callback => callback());
+    pendingRequests = [];
+  };
+
+  return onError(
+    ({ graphQLErrors, networkError, operation, forward }) => {
+      if (graphQLErrors) {
+        for (let err of graphQLErrors) {
+          console.log(`CODE: ${err.extensions?.code}`)
+          switch (err.extensions?.code) {
+            case 'invalid-jwt':
+              let forward$: Observable<string | void>;
+
+              if (authUser === null || authUser === undefined) {
+                console.log("[Authentication error]: no user auth token");
+               // navigation.navigate(ROUTES_IDS.LOGIN_SCREEN)
+              } else {
+                if (!isRefreshing) {
+                  isRefreshing = true;
+                  forward$ = fromPromise(
+                    authUser.getIdToken(true)
+                      .then((accessToken) => {
+                        resolvePendingRequests();
+                        jwt = accessToken;
+                        wsClient.close(true); // will lose all subscriptions 
+                        return accessToken;
+                      })
+                      .catch(error => {
+                        console.log(`[Authentication error]: ${error}`)
+                        pendingRequests = [];
+                        return '';
+                      })
+                      .finally(() => {
+                        isRefreshing = false;
+                      })
+                  ).filter(value => Boolean(value));
+                } else {
+                  forward$ = fromPromise(
+                    new Promise<void>(resolve => {
+                      pendingRequests.push(() => resolve());
+                    })
+                  );
+                }
+                return forward$.flatMap(() => forward(operation));
+              }
+            default:
+              console.log(
+                `[GraphQL error]: Message: ${err.message}, Location: ${err.locations}, Path: ${err.path}`
+              );
+          }
+          if (networkError) {
+            console.log(`[Network error]: ${networkError}`);
+          //  navigation.navigate(ROUTES_IDS.LOGIN_SCREEN)
+          }
+        }
+      }
+    }
+  )
+}
+
 
 // splits operations to use websocket or http
-const getSplitLink = (headers: HttpOptions['headers']) =>
-  split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      );
-    },
-    getWsLink(headers),
-    getHttpLink(headers),
-  );
+const getLink = (authUser?: AuthUser) => {
+  return ApolloLink.from([
+    getErrorLink(authUser),
+    authLink,
+    split(
+      ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === 'OperationDefinition' &&
+          definition.operation === 'subscription'
+        );
+      },
+      getWsLink(),
+      getHttpLink(),
+    )
+  ]);
+}
 
 export const getClient = (
   token: string,
+  authUser?: AuthUser
 ): ApolloClient<NormalizedCacheObject> => {
-  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  jwt = token;
   return new ApolloClient({
-    link: getSplitLink(headers),
+    link: getLink(authUser),
     cache: new InMemoryCache(),
   });
 };
