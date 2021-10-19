@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { ImagePickerResponse } from 'react-native-image-picker';
 
@@ -29,9 +29,6 @@ export const AuthProvider = ({
   onboardingComplete,
   setOnboardingComplete,
 }: AuthProviderProps): JSX.Element => {
-  // temp flag to limit views of terms on live screen
-  const [liveTermsAccepted, setLiveTermsAccepted] = useState(false);
-
   const client = useApolloClient();
 
   const getAuthToken = async () => {
@@ -73,8 +70,6 @@ export const AuthProvider = ({
         resetPassword: resetPasswordHandler,
         logout,
         uploadPhoto,
-        liveTermsAccepted,
-        setLiveTermsAccepted,
       }}>
       {children}
     </AuthContext.Provider>

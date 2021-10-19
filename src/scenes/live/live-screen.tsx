@@ -19,13 +19,12 @@ import firestore, {
 import {
   NavigationBar,
   IconButton,
-  FollowButton,
   LiveCountBadge,
   StatusBadge,
   StatusBadgeTypes,
   ServerImage,
-  FollowButtonTypes,
   Loading,
+  FollowButtonBreaker,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
@@ -41,7 +40,6 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   eventBreakerSelector,
   eventBreaksSelector,
-  eventFollowedByUserSelector,
   eventLiveBreakSelector,
   eventSelector,
   eventUpcomingBreakSelector,
@@ -81,17 +79,18 @@ import { LineupModal } from './lineup-modal';
 import { TermsOfUseModal } from './terms-of-use-modal';
 
 import { LiveScreenProps } from './live-screen.props';
+import { UserContext } from '../../providers/user/user';
+import { UserContextType } from '../../providers/user/user.types';
 
 export const LiveScreen = ({
   navigation,
   route,
 }: LiveScreenProps): JSX.Element => {
   const { eventId } = route.params;
-  const {
-    user: authUser,
-    liveTermsAccepted,
-    setLiveTermsAccepted,
-  } = useContext(AuthContext) as AuthContextType;
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const { liveTermsAccepted, setLiveTermsAccepted } = useContext(
+    UserContext,
+  ) as UserContextType;
 
   const inputRef = useRef<TextInput>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -246,13 +245,7 @@ export const LiveScreen = ({
           </NavigationBar>
           <View style={[s.flx_i, s.mh3, s.aife]}>
             <View style={[s.flx_row, s.w_100, s.mb3]}>
-              <FollowButton
-                type={
-                  eventFollowedByUserSelector(event)
-                    ? FollowButtonTypes.selected
-                    : FollowButtonTypes.default
-                }
-              />
+              <FollowButtonBreaker breakerId={breaker.id as string} />
               <View style={[s.flx_i, s.flx_row, s.jcfe]}>
                 <StatusBadge status={StatusBadgeTypes.live} />
                 <LiveCountBadge

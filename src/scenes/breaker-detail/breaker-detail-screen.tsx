@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,7 +17,7 @@ import {
   Container,
   ContainerTypes,
   NavigationBar,
-  FollowButton,
+  FollowButtonBreaker,
   HitCard,
   SectionHeader,
   ScheduleToggle,
@@ -26,7 +26,6 @@ import {
   ReadMore,
   ServerImage,
   ImageCardSizeTypes,
-  FollowButtonTypes,
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
@@ -37,13 +36,10 @@ import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   Hits,
   NewBreakerHitsDocument,
   useBreakerHitsQuery,
-  useFollowBreakerMutation,
-  useUnfollowBreakerMutation,
 } from '../../services/api/requests';
 import {
   hitImageFrontSelector,
@@ -56,28 +52,12 @@ export const BreakerDetailScreen = ({
   route,
   navigation,
 }: BreakerDetailScreenProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { breaker, startOnEventsView = false } = route.params;
   const [eventsView, setEventsView] = useState(startOnEventsView);
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
-  const [followBreaker] = useFollowBreakerMutation({
-    onError: () => setUserFollowsBreaker(false),
-  });
-  const [unfollowBreaker] = useUnfollowBreakerMutation({
-    onError: () => setUserFollowsBreaker(true),
-  });
-
-  const {
-    id,
-    name,
-    image,
-    social,
-    description,
-    video,
-    userFollows,
-  } = breakerDetailScreenSelector(breaker);
-  const [userFollowsBreaker, setUserFollowsBreaker] = useState(userFollows);
+  const { id, name, image, social, description, video } =
+    breakerDetailScreenSelector(breaker);
 
   const { data: hitsRequestData, subscribeToMore } = useBreakerHitsQuery({
     fetchPolicy: 'cache-and-network',
@@ -130,33 +110,7 @@ export const BreakerDetailScreen = ({
               />
               <Text style={[s.ff_b, s.f5]}>{name}</Text>
             </View>
-            <FollowButton
-              onPress={() => {
-                const followData = {
-                  user_id: authUser?.uid,
-                  breaker_id: id,
-                };
-
-                if (userFollowsBreaker) {
-                  setUserFollowsBreaker(false);
-                  unfollowBreaker({
-                    variables: followData,
-                  });
-                } else {
-                  setUserFollowsBreaker(true);
-                  followBreaker({
-                    variables: {
-                      follow: followData,
-                    },
-                  });
-                }
-              }}
-              type={
-                userFollowsBreaker
-                  ? FollowButtonTypes.selected
-                  : FollowButtonTypes.default
-              }
-            />
+            <FollowButtonBreaker breakerId={id} />
           </View>
           <FlatList
             horizontal

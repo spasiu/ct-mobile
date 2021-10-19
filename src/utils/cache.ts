@@ -64,28 +64,6 @@ export const optimisticUnfollowBreakResponse = (
   },
 });
 
-export const optimisticUnfollowBreakerResponse = (
-  breaker: Users,
-  userId: string,
-): Partial<UnfollowBreakerMutation> => ({
-  delete_SaveBreaker: {
-    __typename: 'SaveBreaker_mutation_response',
-    returning: [
-      {
-        id: breakerFollowedByUser(breaker),
-        Breaker: {
-          id: breaker.id,
-          __typename: 'Users',
-        },
-        User: {
-          id: userId,
-          __typename: 'Users',
-        },
-      },
-    ],
-  },
-});
-
 export const updateUnfollowEventCache = (
   cache: ApolloCache<UnfollowEventMutation>,
   event: Events,
@@ -177,24 +155,6 @@ export const optimisticFollowBreakResponse = (
     Break: {
       id: eventBreak.id,
       __typename: 'Breaks',
-    },
-    User: {
-      id: userId,
-      __typename: 'Users',
-    },
-  },
-});
-
-export const optimisticFollowBreakerResponse = (
-  breaker: Users,
-  userId: string,
-): Partial<FollowBreakerMutation> => ({
-  insert_SaveBreaker_one: {
-    id: `temp-id-${dayjs().valueOf()}`,
-    __typename: 'SaveBreaker',
-    Breaker: {
-      id: breaker.id,
-      __typename: 'Users',
     },
     User: {
       id: userId,
