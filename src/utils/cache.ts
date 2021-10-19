@@ -2,10 +2,7 @@ import { ApolloCache, FetchResult, Reference } from '@apollo/client';
 import dayjs from 'dayjs';
 import { append, filter, path } from 'ramda';
 import { breakFollowedByUserIdSelector } from '../common/break';
-import {
-  breakerFollowedByUser,
-  breakerFollowedByUserIdSelector,
-} from '../common/breaker';
+import { breakerFollowedByUserIdSelector } from '../common/breaker';
 
 import { eventFollowedByUserIdSelector } from '../common/event';
 import {
