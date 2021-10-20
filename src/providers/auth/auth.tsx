@@ -30,32 +30,44 @@ export const AuthProvider = ({
   setOnboardingComplete,
 }: AuthProviderProps): JSX.Element => {
   const client = useApolloClient();
+
+  const getAuthToken = async () => {
+    await getAuthTokenHandler(user, setToken);
+  };
+
+  const setOnboardingStatusComplete = async () => {
+    await setOnboardingCompleteOnFirestore(user);
+    setOnboardingComplete(true);
+  };
+
+  const checkOnboardingStatus = async () => {
+    const onboardingStatus = await checkOnboardingStatusOnFirestore(user);
+    setOnboardingComplete(onboardingStatus);
+  };
+
+  const logout = async () => {
+    setToken('');
+    setOnboardingComplete(false);
+    await logoutHandler(client);
+  };
+
+  const uploadPhoto = async (photo: ImagePickerResponse) => await uploadPhotoHandler(photo, user?.uid as string);
+
   return (
     <AuthContext.Provider
       value={{
         user,
         onboardingComplete,
-        getAuthToken: async () => await getAuthTokenHandler(user, setToken),
+        getAuthToken,
         signUpWithEmail: emailSignUpHandler,
         signInWithEmail: emailSignInHandler,
         signInWithGoogle: googleSignInHandler,
         signInWithApple: appleSignInHandler,
-        setOnboardingStatusComplete: async () => {
-          await setOnboardingCompleteOnFirestore(user);
-          setOnboardingComplete(true);
-        },
-        checkOnboardingStatus: async () => {
-          const onboardingStatus = await checkOnboardingStatusOnFirestore(user);
-          setOnboardingComplete(onboardingStatus);
-        },
+        setOnboardingStatusComplete,
+        checkOnboardingStatus,
         resetPassword: resetPasswordHandler,
-        logout: async () => {
-          setToken('');
-          setOnboardingComplete(false);
-          await logoutHandler(client);
-        },
-        uploadPhoto: async (photo: ImagePickerResponse) =>
-          await uploadPhotoHandler(photo, user?.uid as string),
+        logout,
+        uploadPhoto,
       }}>
       {children}
     </AuthContext.Provider>

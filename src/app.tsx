@@ -25,6 +25,7 @@ import { checkOnboardingStatusOnFirestore } from './services/firestore/onboardin
 
 import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
+import { UserProvider } from './providers/user';
 
 // for performance optimizations and native feel
 // https://reactnavigation.org/docs/react-native-screens
@@ -100,13 +101,15 @@ const App = (): JSX.Element | null => {
           setToken={setToken}
           onboardingComplete={onboardingComplete}
           setOnboardingComplete={setOnboardingComplete}>
-          <FilterProvider>
-            <NotificationProvider>
-              <PaymentProvider>
-                <RootNavigator />
-              </PaymentProvider>
-            </NotificationProvider>
-          </FilterProvider>
+          <UserProvider>
+            <FilterProvider>
+              <NotificationProvider>
+                <PaymentProvider>
+                  <RootNavigator />
+                </PaymentProvider>
+              </NotificationProvider>
+            </FilterProvider>
+          </UserProvider>
         </AuthProvider>
       </SafeAreaProvider>
     </ApolloProvider>

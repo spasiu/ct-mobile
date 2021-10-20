@@ -2,10 +2,7 @@ import { ApolloCache, FetchResult, Reference } from '@apollo/client';
 import dayjs from 'dayjs';
 import { append, filter, path } from 'ramda';
 import { breakFollowedByUserIdSelector } from '../common/break';
-import {
-  breakerFollowedByUser,
-  breakerFollowedByUserIdSelector,
-} from '../common/breaker';
+import { breakerFollowedByUserIdSelector } from '../common/breaker';
 
 import { eventFollowedByUserIdSelector } from '../common/event';
 import {
@@ -54,28 +51,6 @@ export const optimisticUnfollowBreakResponse = (
         Break: {
           id: eventBreak.id,
           __typename: 'Breaks',
-        },
-        User: {
-          id: userId,
-          __typename: 'Users',
-        },
-      },
-    ],
-  },
-});
-
-export const optimisticUnfollowBreakerResponse = (
-  breaker: Users,
-  userId: string,
-): Partial<UnfollowBreakerMutation> => ({
-  delete_SaveBreaker: {
-    __typename: 'SaveBreaker_mutation_response',
-    returning: [
-      {
-        id: breakerFollowedByUser(breaker),
-        Breaker: {
-          id: breaker.id,
-          __typename: 'Users',
         },
         User: {
           id: userId,
@@ -177,24 +152,6 @@ export const optimisticFollowBreakResponse = (
     Break: {
       id: eventBreak.id,
       __typename: 'Breaks',
-    },
-    User: {
-      id: userId,
-      __typename: 'Users',
-    },
-  },
-});
-
-export const optimisticFollowBreakerResponse = (
-  breaker: Users,
-  userId: string,
-): Partial<FollowBreakerMutation> => ({
-  insert_SaveBreaker_one: {
-    id: `temp-id-${dayjs().valueOf()}`,
-    __typename: 'SaveBreaker',
-    Breaker: {
-      id: breaker.id,
-      __typename: 'Users',
     },
     User: {
       id: userId,

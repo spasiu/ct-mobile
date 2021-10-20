@@ -19,13 +19,12 @@ import firestore, {
 import {
   NavigationBar,
   IconButton,
-  FollowButton,
   LiveCountBadge,
   StatusBadge,
   StatusBadgeTypes,
   ServerImage,
-  FollowButtonTypes,
   Loading,
+  FollowButtonBreaker,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
@@ -41,7 +40,6 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   eventBreakerSelector,
   eventBreaksSelector,
-  eventFollowedByUserSelector,
   eventLiveBreakSelector,
   eventSelector,
   eventUpcomingBreakSelector,
@@ -69,7 +67,7 @@ import { ChatMessage } from '../../common/chat';
 import {
   closeIcon,
   diamondIcon,
-  shareIcon,
+  // shareIcon,
   shopIcon,
   logoIcon,
 } from './live-screen.presets';
@@ -82,6 +80,8 @@ import { TermsOfUseModal } from './terms-of-use-modal';
 
 import { LiveScreenProps } from './live-screen.props';
 import { SeeTeamsAnimation } from './see-teams-animation';
+import { UserContext } from '../../providers/user/user';
+import { UserContextType } from '../../providers/user/user.types';
 
 export const LiveScreen = ({
   navigation,
@@ -89,6 +89,9 @@ export const LiveScreen = ({
 }: LiveScreenProps): JSX.Element => {
   const { eventId } = route.params;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const { liveTermsAccepted, setLiveTermsAccepted } = useContext(
+    UserContext,
+  ) as UserContextType;
 
   const inputRef = useRef<TextInput>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -134,7 +137,8 @@ export const LiveScreen = ({
       .onSnapshot(documentSnapshot => {
         const listenerUpdates = documentSnapshot.docs;
         const newMessages: ChatMessage[] = indexedMap(listenerUpdate => {
-          const updateData = listenerUpdate as FirebaseFirestoreTypes.DocumentData;
+          const updateData =
+            listenerUpdate as FirebaseFirestoreTypes.DocumentData;
           return {
             id: updateData.id,
             ...updateData.data(),
@@ -148,7 +152,7 @@ export const LiveScreen = ({
   }, []);
 
   useLayoutEffect(() => {
-    setTermsOfUseVisible(true);
+    if (!liveTermsAccepted) setTermsOfUseVisible(true);
   }, []);
 
   const event = eventSelector(data);
@@ -178,6 +182,11 @@ export const LiveScreen = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveBreak]);
+
+  const handleConfirmTermsOfUse = () => {
+    setTermsOfUseVisible(false);
+    setLiveTermsAccepted(true);
+  };
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
@@ -238,13 +247,7 @@ export const LiveScreen = ({
           </NavigationBar>
           <View style={[s.flx_i, s.mh3, s.aife]}>
             <View style={[s.flx_row, s.w_100, s.mb3]}>
-              <FollowButton
-                type={
-                  eventFollowedByUserSelector(event)
-                    ? FollowButtonTypes.selected
-                    : FollowButtonTypes.default
-                }
-              />
+              <FollowButtonBreaker breakerId={breaker.id as string} />
               <View style={[s.flx_i, s.flx_row, s.jcfe]}>
                 <StatusBadge status={StatusBadgeTypes.live} />
                 <LiveCountBadge
@@ -307,20 +310,20 @@ export const LiveScreen = ({
                   s.ff_alt_r,
                   s.f5,
                   s.white,
-                  s.flx_ratio(0.55),
+                  s.flx_ratio(0.75),
                   s.ba,
                   s.b__white,
                   s.br5,
                   { height: sizes.h2 + sizes.h1 / 2 },
                 ]}
               />
-              <View style={[s.flx_ratio(0.4), s.flx_row, s.jcsb, s.ml3]}>
+              <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
                 <IconButton>
                   <Image source={diamondIcon} />
                 </IconButton>
-                <IconButton>
+                {/* <IconButton>
                   <Image source={shareIcon} />
-                </IconButton>
+                </IconButton> */}
                 <IconButton onPress={() => setShowLineup(true)}>
                   <Image source={shopIcon} />
                 </IconButton>
@@ -617,7 +620,7 @@ export const LiveScreen = ({
           <TermsOfUseModal
             isVisible={termsOfUseVisible}
             onPressCancel={() => navigation.goBack()}
-            onPressConfirm={() => setTermsOfUseVisible(false)}
+            onPressConfirm={handleConfirmTermsOfUse}
           />
         </SafeAreaView>
       </LinearGradient>
