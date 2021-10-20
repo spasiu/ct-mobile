@@ -51,9 +51,7 @@ export const AuthProvider = ({
     await logoutHandler(client);
   };
 
-  const uploadPhoto = async (photo: ImagePickerResponse) => {
-    await uploadPhotoHandler(photo, user?.uid as string);
-  };
+  const uploadPhoto = async (photo: ImagePickerResponse) => await uploadPhotoHandler(photo, user?.uid as string);
 
   return (
     <AuthContext.Provider
