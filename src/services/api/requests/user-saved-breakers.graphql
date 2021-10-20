@@ -1,8 +1,0 @@
-query UserSavedBreakers($userId: String) {
-  Users(where: { id: { _eq: $userId } }) {
-    id
-    SavedBreakers {
-      breaker_id
-    }
-  }
-}

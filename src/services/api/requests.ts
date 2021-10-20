@@ -11070,23 +11070,6 @@ export type UserPreferencesQuery = (
   )> }
 );
 
-export type UserSavedBreakersQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type UserSavedBreakersQuery = (
-  { __typename?: 'query_root' }
-  & { Users: Array<(
-    { __typename?: 'Users' }
-    & Pick<Users, 'id'>
-    & { SavedBreakers: Array<(
-      { __typename?: 'SaveBreaker' }
-      & Pick<SaveBreaker, 'breaker_id'>
-    )> }
-  )> }
-);
-
 export type NewUserUpcomingBreaksSubscriptionVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
 }>;
@@ -13414,44 +13397,6 @@ export function useUserPreferencesLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type UserPreferencesQueryHookResult = ReturnType<typeof useUserPreferencesQuery>;
 export type UserPreferencesLazyQueryHookResult = ReturnType<typeof useUserPreferencesLazyQuery>;
 export type UserPreferencesQueryResult = Apollo.QueryResult<UserPreferencesQuery, UserPreferencesQueryVariables>;
-export const UserSavedBreakersDocument = gql`
-    query UserSavedBreakers($userId: String) {
-  Users(where: {id: {_eq: $userId}}) {
-    id
-    SavedBreakers {
-      breaker_id
-    }
-  }
-}
-    `;
-
-/**
- * __useUserSavedBreakersQuery__
- *
- * To run a query within a React component, call `useUserSavedBreakersQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserSavedBreakersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserSavedBreakersQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useUserSavedBreakersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserSavedBreakersQuery, UserSavedBreakersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<UserSavedBreakersQuery, UserSavedBreakersQueryVariables>(UserSavedBreakersDocument, options);
-      }
-export function useUserSavedBreakersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserSavedBreakersQuery, UserSavedBreakersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<UserSavedBreakersQuery, UserSavedBreakersQueryVariables>(UserSavedBreakersDocument, options);
-        }
-export type UserSavedBreakersQueryHookResult = ReturnType<typeof useUserSavedBreakersQuery>;
-export type UserSavedBreakersLazyQueryHookResult = ReturnType<typeof useUserSavedBreakersLazyQuery>;
-export type UserSavedBreakersQueryResult = Apollo.QueryResult<UserSavedBreakersQuery, UserSavedBreakersQueryVariables>;
 export const NewUserUpcomingBreaksDocument = gql`
     subscription NewUserUpcomingBreaks($userId: String) {
   Breaks(

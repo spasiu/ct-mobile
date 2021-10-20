@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useUserSavedBreakersQuery } from '../../services/api/requests';
+import { useUserMinimalInformationQuery } from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../auth';
 
 import { UserProviderProps } from './user.types';
@@ -23,17 +23,16 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       : setBreakersFollowed([...breakersFollowed, breakerId]);
   };
 
-  const { data: breakersFollowedData } = useUserSavedBreakersQuery({
+  const { data: userData } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-only',
-    variables: { userId: authUser?.uid },
+    variables: { id: authUser?.uid },
   });
+  const savedBreakers = userData?.Users[0].SavedBreakers;
 
   useEffect(() => {
-    const data = breakersFollowedData?.Users[0].SavedBreakers.map(
-      obj => obj.breaker_id,
-    );
+    const data = savedBreakers?.map(obj => obj.breaker_id);
     data && setBreakersFollowed(data);
-  }, [breakersFollowedData]);
+  }, [userData]);
 
   return (
     <UserContext.Provider
