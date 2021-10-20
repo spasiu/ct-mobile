@@ -23,6 +23,7 @@ import { FilterProvider } from './providers/filter';
 import { hasHasuraClaim } from './utils/hasura';
 import { checkOnboardingStatusOnFirestore } from './services/firestore/onboarding';
 
+import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
 import { UserProvider } from './providers/user';
 
@@ -48,6 +49,8 @@ const App = (): JSX.Element | null => {
     });
 
     initLibraries(setLoaded);
+    loadSounds();
+
     return () => {
       RNLocalize.removeEventListener('change', setI18nConfig);
     };

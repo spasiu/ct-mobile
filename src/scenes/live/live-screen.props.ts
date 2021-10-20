@@ -5,6 +5,8 @@ import { BreakResult } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 import { OverScreenModalProps, SlidingBoxProps } from '../../components';
 import { ProtectedStackParamList, ROUTES_IDS } from '../../navigators';
+import { BreakResultUser, BreakResultItem } from '../../common/break/break';
+import { TeamShadow } from './animation/team-shadow';
 import {
   Breaks,
   Break_Type_Enum,
@@ -67,4 +69,52 @@ export interface LiveScreenProps {
 export interface TermsOfUseModalProps extends OverScreenModalProps {
   onPressCancel: () => void;
   onPressConfirm: () => void;
+}
+
+export interface SeeTeamsAnimationProps {
+  userId: string;
+  result: BreakResultUser[];
+  breakType: Break_Type_Enum;
+  onPressClose?: () => void;
+}
+
+export interface BreakResultSummaryProps {
+  teamCount: number;
+  userCount: number;
+  onEnd?: () => void;
+}
+
+export interface RandomTeamUserRowsProps {
+  userId: string;
+  users: BreakResultUser[];
+  onEnd?: () => void;
+}
+
+export interface RandomTeamUserRowProps {
+  currentUserId: string;
+  users: BreakResultUser[];
+  visibleTeamsInRow: number;
+  allTeams: BreakResultItem[];
+  injectElementsAtColumnIndex: number;
+  rowIndex: number;
+  usersPerRow: number;
+}
+
+export interface TeamRandomizerProps {
+  allTeams: BreakResultItem[];
+  result: BreakResultItem;
+  boxSize: number;
+  teamIndex: number;
+  boxMargin: number;
+  currentAnimatingIndex: number;
+  isReady: boolean;
+  columnIndex: number;
+  rowIndex: number;
+  preloadTeams: boolean;
+}
+
+export interface TeamShadowProps {
+  boxMargin: number,
+  boxSize: number,
+  rowIndex: number
 }

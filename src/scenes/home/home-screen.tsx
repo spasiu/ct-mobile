@@ -1,5 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import {
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
 import Intercom from '@intercom/intercom-react-native';

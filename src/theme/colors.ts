@@ -1,6 +1,7 @@
 export const COLORS = {
   transparent: 'rgba(0, 0, 0, 0)',
   alpha_black: 'rgba(0, 0, 0, 1)',
+  alpha_black_6: 'rgba(0, 0, 0, 0.6)',
   alpha_primary: 'rgba(250, 175, 64, 0.75)',
   alpha_secondary: 'rgba(236, 28, 36, 0.75)',
   alpha_primary_5: 'rgba(249, 249, 249, 0.95)',
@@ -30,4 +31,6 @@ export const COLORS = {
   negative: '#EC1C24',
   blue: '#4285F4',
   dark_blue: '#0E4C7D',
+  light_yellow: '#FFD422',
+  dark_grey: '#3E3E3E',
 } as const;

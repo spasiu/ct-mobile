@@ -12,6 +12,7 @@ import {
   INTER_MEDIUM,
   INTER_MEDIUM_EXTRA,
   INTER_BOLD,
+  TECHNOLOGY_BOLD,
 } from './fonts';
 
 const rootRem = getRootRem();
@@ -39,6 +40,7 @@ NativeTachyons.build(
       ff_alt_m: INTER_MEDIUM,
       ff_alt_sb: INTER_MEDIUM_EXTRA,
       ff_alt_b: INTER_BOLD,
+      ff_tech_b: TECHNOLOGY_BOLD,
       lh_high: { lineHeight: 24 },
       lh_sub: { lineHeight: 20 },
       lh_medium: { lineHeight: 17 },
@@ -119,6 +121,7 @@ NativeTachyons.build(
       o_0: { opacity: 0 },
       flx_0: { flex: 0 },
       ba2: { borderWidth: 2 },
+      b_white: { borderWidth: 1, borderColor: '#FFFFFF' },
       flx_wrap: { flexWrap: 'wrap' },
     },
   },
