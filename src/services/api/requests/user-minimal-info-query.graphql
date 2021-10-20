@@ -5,5 +5,8 @@ query UserMinimalInformation($id: String) {
     username
     first_name
     last_name
+    SavedBreakers {
+      breaker_id
+    }
   }
 }

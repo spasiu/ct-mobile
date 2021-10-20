@@ -26,18 +26,9 @@ import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  BreakersDocument,
   useBreakersLazyQuery,
-  useFollowBreakerMutation,
-  useUnfollowBreakerMutation,
   useUserMinimalInformationQuery,
 } from '../../services/api/requests';
-import {
-  optimisticFollowBreakerResponse,
-  optimisticUnfollowBreakerResponse,
-  updateFollowBreakerCache,
-  updateUnfollowBreakerCache,
-} from '../../utils/cache';
 
 import { breakerCardSelector, getBreakerFilter } from './breakers-screen-utils';
 import { BreakersScreenProps } from './breakers-screen.props';
@@ -46,62 +37,28 @@ export const BreakersScreen = ({
   navigation,
 }: BreakersScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [userBreakersFilterActive, setUserBreakersFilterActive] = useState(
-    false,
-  );
+  const [userBreakersFilterActive, setUserBreakersFilterActive] =
+    useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [
-    getBreakers,
-    { loading, data, refetch, networkStatus },
-  ] = useBreakersLazyQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      userId: authUser?.uid as string,
-      breakerFilter: getBreakerFilter(
-        userBreakersFilterActive,
-        authUser?.uid as string,
-        searchTerm,
-      ),
-    },
-  });
+  const [getBreakers, { loading, data, refetch, networkStatus }] =
+    useBreakersLazyQuery({
+      fetchPolicy: 'cache-and-network',
+      variables: {
+        userId: authUser?.uid as string,
+        breakerFilter: getBreakerFilter(
+          userBreakersFilterActive,
+          authUser?.uid as string,
+          searchTerm,
+        ),
+      },
+    });
 
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       id: authUser?.uid,
     },
-  });
-
-  const [followBreaker] = useFollowBreakerMutation({
-    refetchQueries: [
-      {
-        query: BreakersDocument,
-        variables: {
-          userId: authUser?.uid as string,
-          breakerFilter: getBreakerFilter(
-            userBreakersFilterActive,
-            authUser?.uid as string,
-            searchTerm,
-          ),
-        },
-      },
-    ],
-  });
-  const [unfollowBreaker] = useUnfollowBreakerMutation({
-    refetchQueries: [
-      {
-        query: BreakersDocument,
-        variables: {
-          userId: authUser?.uid as string,
-          breakerFilter: getBreakerFilter(
-            userBreakersFilterActive,
-            authUser?.uid as string,
-            searchTerm,
-          ),
-        },
-      },
-    ],
   });
 
   useEffect(() => {
@@ -187,38 +144,7 @@ export const BreakersScreen = ({
                   cardWidth={cardWidth}
                   containerStyle={[s.flx_i, { width: cardWidth }]}
                   cardSize="large"
-                  onPressFollow={() => {
-                    const followData = {
-                      user_id: authUser?.uid,
-                      breaker_id: item.id,
-                    };
-
-                    breakerCard.userFollows
-                      ? unfollowBreaker({
-                          optimisticResponse: optimisticUnfollowBreakerResponse(
-                            item,
-                            authUser?.uid as string,
-                          ),
-                          update: cache =>
-                            updateUnfollowBreakerCache(cache, item),
-                          variables: followData,
-                        })
-                      : followBreaker({
-                          optimisticResponse: optimisticFollowBreakerResponse(
-                            item,
-                            authUser?.uid as string,
-                          ),
-                          update: (cache, followResponse) =>
-                            updateFollowBreakerCache(
-                              cache,
-                              followResponse,
-                              item,
-                            ),
-                          variables: {
-                            follow: followData,
-                          },
-                        });
-                  }}
+                  breakerId={item.id}
                 />
               </View>
             );

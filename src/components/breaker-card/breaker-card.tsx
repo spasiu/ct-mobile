@@ -3,11 +3,7 @@ import { View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { ImageCard } from '../image-card';
-import {
-  FollowButton,
-  FollowButtonTypes,
-  FollowButtonSizeTypes,
-} from '../follow-button';
+import { FollowButtonBreaker } from '../follow-button';
 
 import { BreakerCardProps } from './breaker-card.props';
 import {
@@ -16,10 +12,10 @@ import {
   titleStylePreset,
   descriptionStylePreset,
   buttonAbsoluteWrapper,
-  followButtonStyle,
 } from './breaker-card.presets';
 
 export const BreakerCard = ({
+  breakerId = '',
   title = '',
   description = '',
   titleTextStyle = [],
@@ -27,8 +23,6 @@ export const BreakerCard = ({
   contentContainerStyle = [],
   cardSize = 'medium',
   showFollow = true,
-  userFollows = false,
-  onPressFollow = () => undefined,
   ...imageCardProps
 }: BreakerCardProps): JSX.Element => (
   <>
@@ -53,15 +47,7 @@ export const BreakerCard = ({
     </ImageCard>
     {showFollow ? (
       <View style={buttonAbsoluteWrapper}>
-        <FollowButton
-          defaultContainerStyle={followButtonStyle.container}
-          defaultImageStyle={followButtonStyle.image}
-          size={FollowButtonSizeTypes.full}
-          onPress={onPressFollow}
-          type={
-            userFollows ? FollowButtonTypes.selected : FollowButtonTypes.default
-          }
-        />
+        <FollowButtonBreaker breakerId={breakerId} />
       </View>
     ) : null}
   </>
