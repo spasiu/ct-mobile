@@ -4,30 +4,25 @@ import {
   split,
   HttpLink,
   NormalizedCacheObject,
-  HttpOptions,
   ApolloLink,
-  fromPromise,
 } from '@apollo/client';
-import { getMainDefinition, Observable } from '@apollo/client/utilities';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
-import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import Config from 'react-native-config';
 import { AuthUser } from '../../providers/auth';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
+import { firebase } from '@react-native-firebase/auth';
 
-//const navigation = useNavigation();
-
-let jwt:string = '';
+let authUser:AuthUser = null;
 
 const getHttpLink = () =>
   new HttpLink({
     uri: Config.API_URL
   });
 
-const getHeaders = () : HttpOptions['headers'] => {
+const getHeaders = async () => {
+  const jwt = await authUser?.getIdToken();
   return {headers: jwt ? { Authorization: `Bearer ${jwt}` } : {}}
 }
 
@@ -43,81 +38,19 @@ const getWsLink = () => {
   return new WebSocketLink(wsClient);
 }
 
+// on token update, close existing websocket client to force renewal with new token
+firebase.auth().onIdTokenChanged(() => {
+  console.log("Received a new JWT; restarting websocket for Apollo")
+  wsClient?.close();
+})
+
 const authLink = setContext(() => {
   return getHeaders()
 })
 
-const getErrorLink = (authUser?: AuthUser): ApolloLink => {
 
-  let isRefreshing = false;
-  let pendingRequests: Array<() => void> = [];
-
-  const resolvePendingRequests = () => {
-    pendingRequests.map(callback => callback());
-    pendingRequests = [];
-  };
-
-  return onError(
-    ({ graphQLErrors, networkError, operation, forward }) => {
-      if (graphQLErrors) {
-        for (let err of graphQLErrors) {
-          console.log(`CODE: ${err.extensions?.code}`)
-          switch (err.extensions?.code) {
-            case 'invalid-jwt':
-              let forward$: Observable<string | void>;
-
-              if (authUser === null || authUser === undefined) {
-                console.log("[Authentication error]: no user auth token");
-               // navigation.navigate(ROUTES_IDS.LOGIN_SCREEN)
-              } else {
-                if (!isRefreshing) {
-                  isRefreshing = true;
-                  forward$ = fromPromise(
-                    authUser.getIdToken(true)
-                      .then((accessToken) => {
-                        resolvePendingRequests();
-                        jwt = accessToken;
-                        wsClient.close(true); // will lose all subscriptions 
-                        return accessToken;
-                      })
-                      .catch(error => {
-                        console.log(`[Authentication error]: ${error}`)
-                        pendingRequests = [];
-                        return '';
-                      })
-                      .finally(() => {
-                        isRefreshing = false;
-                      })
-                  ).filter(value => Boolean(value));
-                } else {
-                  forward$ = fromPromise(
-                    new Promise<void>(resolve => {
-                      pendingRequests.push(() => resolve());
-                    })
-                  );
-                }
-                return forward$.flatMap(() => forward(operation));
-              }
-            default:
-              console.log(
-                `[GraphQL error]: Message: ${err.message}, Location: ${err.locations}, Path: ${err.path}`
-              );
-          }
-          if (networkError) {
-            console.log(`[Network error]: ${networkError}`);
-          //  navigation.navigate(ROUTES_IDS.LOGIN_SCREEN)
-          }
-        }
-      }
-    }
-  )
-}
-
-
-// splits operations to use websocket or http
 const getLink = (authUser?: AuthUser) => {
   return ApolloLink.from([
-    getErrorLink(authUser),
     authLink,
     split(
       ({ query }) => {
@@ -134,10 +67,9 @@ const getLink = (authUser?: AuthUser) => {
 }
 
 export const getClient = (
-  token: string,
-  authUser?: AuthUser
+  user: AuthUser
 ): ApolloClient<NormalizedCacheObject> => {
-  jwt = token;
+  authUser = user;
   return new ApolloClient({
     link: getLink(authUser),
     cache: new InMemoryCache(),
