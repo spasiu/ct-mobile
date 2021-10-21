@@ -4,49 +4,74 @@ import {
   split,
   HttpLink,
   NormalizedCacheObject,
-  HttpOptions,
+  ApolloLink,
 } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { setContext } from "@apollo/client/link/context";
 import Config from 'react-native-config';
+import { AuthUser } from '../../providers/auth';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { firebase } from '@react-native-firebase/auth';
 
-const getHttpLink = (headers: HttpOptions['headers']) =>
+let authUser:AuthUser = null;
+
+const getHttpLink = () =>
   new HttpLink({
-    uri: Config.API_URL,
-    headers,
+    uri: Config.API_URL
   });
 
-const getWsLink = (headers: HttpOptions['headers']) =>
-  new WebSocketLink({
-    uri: Config.API_URL,
-    options: {
-      reconnect: true,
-      connectionParams: {
-        headers,
+const getHeaders = async () => {
+  const jwt = await authUser?.getIdToken();
+  return {headers: jwt ? { Authorization: `Bearer ${jwt}` } : {}}
+}
+
+let wsClient: SubscriptionClient;
+
+const getWsLink = () => {
+  wsClient = new SubscriptionClient(Config.API_URL, {
+    reconnect: true,
+    connectionParams: () => {
+      return getHeaders()
+    }
+  })
+  return new WebSocketLink(wsClient);
+}
+
+// on token update, close existing websocket client to force renewal with new token
+firebase.auth().onIdTokenChanged(() => {
+  console.log("Received a new JWT; restarting websocket for Apollo")
+  wsClient?.close();
+})
+
+const authLink = setContext(() => {
+  return getHeaders()
+})
+
+
+const getLink = (authUser?: AuthUser) => {
+  return ApolloLink.from([
+    authLink,
+    split(
+      ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === 'OperationDefinition' &&
+          definition.operation === 'subscription'
+        );
       },
-    },
-  });
-
-// splits operations to use websocket or http
-const getSplitLink = (headers: HttpOptions['headers']) =>
-  split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      );
-    },
-    getWsLink(headers),
-    getHttpLink(headers),
-  );
+      getWsLink(),
+      getHttpLink(),
+    )
+  ]);
+}
 
 export const getClient = (
-  token: string,
+  user: AuthUser
 ): ApolloClient<NormalizedCacheObject> => {
-  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  authUser = user;
   return new ApolloClient({
-    link: getSplitLink(headers),
+    link: getLink(authUser),
     cache: new InMemoryCache(),
   });
 };
