@@ -21,6 +21,22 @@
 1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
 1. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour. :P
 
+## Running the app on your iPhone from local dev
+
+It happens sometimes that you want to do something like tests push notifications or see how the app performs on a real device. Now you have to build and run the app from your local dev environment onto an actual iPhone.
+
+Basically you need to build the project using react native and then open it in Xcode to build on your iPhone. You'll need to be signed in as a developer in Xcode, and your device will need to be registered. Detailed instructions below:
+
+1. Plug your iPhone into your MacBook.
+1. If you're not already part of the Apple dev team, ask someone to go to `appstoreconnect.apple.com/access/users` and add you as a developer.
+1. You'll need the UDID for your phone in the next step. In _finder_ locate your iPhone and click on the device description E.g., _iPhone 6 Plus - 11.91GB..._. This will reveal the UDID.
+1. Login to your developer account and add your phone to the device list here `developer.apple.com/account/resources/devices/list`.
+1. Now download the certificate for **Cartes et Tresor Inc** from `developer.apple.com/account/resources/certificates/list`.
+1. After building the iOS code (using `yarn clean:ios` or some other weirdly names command) open the _.xcworkspace_ file from the _ios_ folder in xcode.
+1. In the menu go to _**Xcode**_ -> _**Preferences**_ -> _**Accounts**_ and add your apple developer account.
+1. Back in the menu go to _**Product**_ -> _**Destination**_ -> _**iOS Device**_ and select your iPhone.
+1. Now when you click _run_ in Xcode the app will build on your phone (keep an eye on your device for prompts during the build process).
+
 ### Troubleshooting
 
 #### Problem 1: `yarn ios` fails
