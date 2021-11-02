@@ -83,6 +83,7 @@ export const BreaksView = ({
         );
         return (
           <BreakCard
+            breakStatus={breakItem.status}
             onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}

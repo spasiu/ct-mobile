@@ -27,6 +27,7 @@ import { BreakCardProps } from './break-card.props';
 import { ICON_SIZE } from '../../theme/sizes';
 
 export const BreakCard = ({
+  breakStatus,
   title = '',
   status,
   league,
@@ -41,6 +42,11 @@ export const BreakCard = ({
   containerStyle = [],
   ...borderlessButtonProps
 }: BreakCardProps): JSX.Element => {
+  const buyDisabled =
+    breakStatus === 'COMPLETED' ||
+    breakStatus === 'LIVE' ||
+    breakStatus === 'SOLDOUT';
+
   return (
     <BorderlessButton
       style={[...cardContainerStyle, ...containerStyle]}
@@ -65,7 +71,7 @@ export const BreakCard = ({
       </Text>
       <View style={breakDetailsWrapper}>
         <Text style={priceTextStyle}>{price}</Text>
-        <Text style={spotsLeftStyle}>{`${spotsLeft} ${t(
+        <Text style={spotsLeftStyle}>{`${buyDisabled ? '0' : spotsLeft} ${t(
           'break.spotsLeft',
         )}`}</Text>
       </View>
@@ -78,7 +84,7 @@ export const BreakCard = ({
           }
         />
         <BuyButton
-          disabled={parseInt(spotsLeft, 10) === 0}
+          disabled={buyDisabled}
           containerStyle={buyButtonStyle}
           onPress={onPressBuy}
         />

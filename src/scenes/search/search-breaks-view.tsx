@@ -51,6 +51,7 @@ export const SearchBreaksView = ({
           const breakSchedule = breakScheduleSelector(eventBreak);
           return (
             <BreakCard
+              breakStatus={eventBreak.status}
               {...breakSchedule}
               onPressBuy={() => setBreakId(breakIdSelector(eventBreak))}
               onPress={() =>

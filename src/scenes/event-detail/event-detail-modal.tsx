@@ -119,6 +119,7 @@ export const EventDetailModal = ({
             const breakCardDetails = breakCardSelector(item, breaker);
             return (
               <BreakCard
+                breakStatus={item.status}
                 {...breakCardDetails}
                 eventDate={eventDate}
                 onPressBuy={() => setBreakId(item.id)}
