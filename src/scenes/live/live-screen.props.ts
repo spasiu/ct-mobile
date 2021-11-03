@@ -74,7 +74,7 @@ export interface TermsOfUseModalProps extends OverScreenModalProps {
 export interface SeeTeamsAnimationProps {
   userId: string;
   result: BreakResultUser[];
-  breakType: Break_Type_Enum;
+  breakType?: Break_Type_Enum;
   onPressClose?: () => void;
 }
 
@@ -114,7 +114,7 @@ export interface TeamRandomizerProps {
 }
 
 export interface TeamShadowProps {
-  boxMargin: number,
-  boxSize: number,
-  rowIndex: number
+  boxMargin: number;
+  boxSize: number;
+  rowIndex: number;
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import { ServerImage } from '../../../components';
+import { BreakTeam } from '../../../components/break-team';
 import { ICON_SIZE } from '../../../theme/sizes';
-import { indexedMap } from '../../../utils/ramda';
 
 import { BreakResultBoxProps } from '../live-screen.props';
 
@@ -12,18 +12,14 @@ export const BreakResultBox = ({
   userTeam,
   loggedUserId,
   boxWidth,
-  boxHeight,
 }: BreakResultBoxProps): JSX.Element => {
-  const matchItems = userTeam.items as string[];
+  const matchItems = userTeam.items;
   const isLoggedUserBox = userTeam.user_id === loggedUserId;
   return (
     <View>
       <View
         style={[
-          {
-            width: boxWidth,
-            height: boxHeight,
-          },
+          { width: boxWidth },
           s.mb4,
           s.br3,
           s.no_overflow,
@@ -39,18 +35,10 @@ export const BreakResultBox = ({
               s.w_100,
             ]}
           />
-          <View style={[s.flx_i, s.pa2, s.flx_row, s.jcsb, s.aic]}>
-            {indexedMap((teamData, internalBoxesIndex) => {
-              return (
-                <View
-                  key={`ib-${teamData}-${internalBoxesIndex}`}
-                  style={[s.icon_m2, s.br2, s.bg_secondary]}>
-                  <Text style={[s.f7, s.ff_alt_r, s.tc, s.white]}>
-                    {teamData as string}
-                  </Text>
-                </View>
-              );
-            }, matchItems)}
+          <View style={[s.flx_i, s.flx_wrap, s.pa2, s.flx_row, s.jcsb, s.aic]}>
+            {matchItems?.map((teamData, idx) => {
+              return <BreakTeam key={`bt-${idx}`} {...teamData} />;
+            })}
           </View>
         </View>
       </View>

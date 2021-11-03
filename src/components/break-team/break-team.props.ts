@@ -1,7 +1,6 @@
-
 export interface BreakTeamProps {
-  shorthand: string;
-  primaryColor: string;
-  secondaryColor: string;
-  boxSize: number;
+  short_code: string;
+  color: string;
+  color_secondary: string;
+  boxSize?: number;
 }
