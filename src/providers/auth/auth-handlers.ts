@@ -18,10 +18,6 @@ export const emailSignUpHandler = async (
 ): Promise<void> => {
   try {
     await auth().createUserWithEmailAndPassword(email, password);
-    const currentUser = auth().currentUser;
-    if (currentUser) {
-      await currentUser.sendEmailVerification();
-    }
   } catch (e) {
     if (e.code === 'auth/email-already-in-use') {
       showMessage({
@@ -43,14 +39,6 @@ export const emailSignInHandler = async (
 ): Promise<void> => {
   try {
     await auth().signInWithEmailAndPassword(email, password);
-    const currentUser = auth().currentUser;
-    if (currentUser && !currentUser.emailVerified) {
-      showMessage({
-        message: t('errors.validateEmail'),
-        type: 'warning',
-      });
-      await currentUser.sendEmailVerification();
-    }
   } catch (e) {
     showMessage({
       message: t('errors.generic'),
