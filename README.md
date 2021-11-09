@@ -37,9 +37,23 @@ Basically you need to build the project using react native and then open it in X
 1. Back in the menu go to _**Product**_ -> _**Destination**_ -> _**iOS Device**_ and select your iPhone.
 1. Now when you click _run_ in Xcode the app will build on your phone (keep an eye on your device for prompts during the build process).
 
-### Troubleshooting
+## Deploying a new build to TestFlight for internal testing
 
-#### Problem 1: `yarn ios` fails
+1. Download or generate a **distribution** certificate for **Cartes et Tresor Inc** from `developer.apple.com/account/resources/certificates/list`.
+1. Run `yarn ios:clean` to build the React-Native project for ios.
+1. Open _ios/CardsAndTreasure.xcworkspace_ in Xcode.
+1. Go to _Xcode_ > _Preferences_ > _Accounts_ then select the "Cards and Treasure" profile and click _Manage Certificates_ and make sure that you have a distribution certificate, then close this menu.
+1. On the project screen in Xcode, under the _General_ tab, increment the build string OR version fields.
+1. In the run menu (where you would normally select the iOS device for the simulator) choose "Any iOS Device (arm64, armv7)" with a hammer icon beside it (don't build yet).
+1. From the menu bar click _Product_ > _Archive_ and wait for the app to build.
+1. When the archiving completes select "Distribute App" >  "App Store Connect" > "Upload" > etc etc defaults and follow the upload process. Once the upload completes and Apple processes the new build, as long as it's a newer version or build of the current version, testers will be prompted to use the new version.
+1. Log in to [appstoreconnect.apple.com](https://appstoreconnect.apple.com).
+1. Click through to "My Apps" > "Cards and Treasure" > "TestFlight". Once the new release finishes processing you will need to fill out a form about encryption and US government export controls.
+1. Click on the build number for the new version in the testflight menu and fill out and save the release description.
+
+## Troubleshooting
+
+### Problem 1: `yarn ios` fails
 
 If `yarn ios` fails, it might have to do with your global node/nvm versions ([reference](https://stackoverflow.com/questions/66627590/phasescriptexecution-error-in-react-native-app?rq=1)). Try this:
 
