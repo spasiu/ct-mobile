@@ -1,11 +1,9 @@
-import { showMessage } from 'react-native-flash-message';
 import firestore from '@react-native-firebase/firestore';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { find, propEq } from 'ramda';
-
+import { handleError } from '../../lib/errors';
 import { CardInput, Card } from '../../common/payment';
-import { t } from '../../i18n/i18n';
 
 export const createBigCommerceUser = functions().httpsCallable(
   'createBigCommerceUser',
@@ -20,14 +18,9 @@ export const createCardHandler = async (
 ): Promise<Card | undefined> => {
   try {
     const response = await addCard(cardDetails);
-    const card = response.data as Card;
-    return card;
+    return response.data as Card;
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
-    return undefined;
+    handleError(error as Error);
   }
 };
 
@@ -36,10 +29,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+    handleError(error as Error);
     return false;
   }
 };
@@ -49,10 +39,7 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+    handleError(error as Error);
     return false;
   }
 };
@@ -89,11 +76,8 @@ export const saveDefaultPaymentMethodHandler = async (
       { merge: true },
     );
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(error as Error);
     return false;
   }
 };
@@ -120,11 +104,8 @@ export const createUserOnPaymentPlatformHandler = async (
       last_name: lastName,
     });
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(error as Error);
     return false;
   }
 };
@@ -140,11 +121,8 @@ export const removeDefaultPaymentHandler = async (
       { merge: true },
     );
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(error as Error);
     return false;
   }
 };
@@ -157,7 +135,7 @@ export const createOrderHandler = async (
     await createOrder({ cartId, paymentToken });
     return true;
   } catch (error) {
-    console.log('ERROR ON PURCHASE', error);
+    handleError(error as Error);
     return false;
   }
 };
