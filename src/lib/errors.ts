@@ -1,6 +1,4 @@
 import { MessageType, showMessage } from 'react-native-flash-message';
-import { MessageTypes } from 'subscriptions-transport-ws';
-import { string } from 'yup/lib/locale';
 import { t } from '../i18n/i18n';
 
 const classifyError = (
@@ -35,5 +33,5 @@ export const handleError = (
   message = message || details?.message;
   type = type || details?.type;
   displayError(message, type);
-  console.error(error);
+  console.error(error, JSON.stringify(Object.keys(error), null, 4));
 };
