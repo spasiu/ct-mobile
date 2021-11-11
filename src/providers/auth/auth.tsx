@@ -15,7 +15,7 @@ import {
   resetPasswordHandler,
   logoutHandler,
   uploadPhotoHandler,
-  getAuthTokenHandler,
+  getValidAuthTokenHandler,
 } from './auth-handlers';
 
 import { AuthProviderProps } from './auth.types';
@@ -25,14 +25,13 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({
   children,
   user,
-  setToken,
   onboardingComplete,
   setOnboardingComplete,
 }: AuthProviderProps): JSX.Element => {
   const client = useApolloClient();
 
-  const getAuthToken = async () => {
-    await getAuthTokenHandler(user, setToken);
+  const getValidAuthToken = async () => {
+    await getValidAuthTokenHandler(user);
   };
 
   const setOnboardingStatusComplete = async () => {
@@ -46,7 +45,6 @@ export const AuthProvider = ({
   };
 
   const logout = async () => {
-    setToken('');
     setOnboardingComplete(false);
     await logoutHandler(client);
   };
@@ -58,7 +56,7 @@ export const AuthProvider = ({
       value={{
         user,
         onboardingComplete,
-        getAuthToken,
+        getValidAuthToken: getValidAuthToken,
         signUpWithEmail: emailSignUpHandler,
         signInWithEmail: emailSignInHandler,
         signInWithGoogle: googleSignInHandler,
