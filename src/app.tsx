@@ -20,7 +20,6 @@ import { AuthProvider } from './providers/auth';
 import { NotificationProvider } from './providers/notification';
 import { PaymentProvider } from './providers/payment';
 import { FilterProvider } from './providers/filter';
-import { hasHasuraClaim } from './utils/hasura';
 import { checkOnboardingStatusOnFirestore } from './services/firestore/onboarding';
 
 import { loadSounds } from './utils/sound';
@@ -36,7 +35,6 @@ const App = (): JSX.Element | null => {
   const [initializing, setInitializing] = useState(true);
 
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-  const [token, setToken] = useState('');
   const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   // concentrates all init functions
@@ -59,21 +57,11 @@ const App = (): JSX.Element | null => {
   // user auth handling
   useEffect(() => {
     if (loaded) {
-      const authSubscriber = auth().onAuthStateChanged(
+      const authSubscriber = auth().onIdTokenChanged(
         async (authUser: FirebaseAuthTypes.User | null) => {
-          if (authUser) {
-            const authToken = await authUser.getIdToken();
-            const idTokenResult = await authUser.getIdTokenResult();
-            if (hasHasuraClaim(idTokenResult)) {
-              setToken(authToken);
-            }
-          }
-
-          const onboardingStatus = await checkOnboardingStatusOnFirestore(
-            authUser,
-          );
-
+          const onboardingStatus = await checkOnboardingStatusOnFirestore(authUser);
           setOnboardingComplete(onboardingStatus);
+          
           setUser(authUser);
 
           if (initializing) {
@@ -89,6 +77,8 @@ const App = (): JSX.Element | null => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
+  
+
   if (!loaded || initializing) {
     return null;
   }
@@ -98,7 +88,6 @@ const App = (): JSX.Element | null => {
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <AuthProvider
           user={user}
-          setToken={setToken}
           onboardingComplete={onboardingComplete}
           setOnboardingComplete={setOnboardingComplete}>
           <UserProvider>

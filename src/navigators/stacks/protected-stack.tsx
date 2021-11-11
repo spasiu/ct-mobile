@@ -29,7 +29,7 @@ export type ProtectedStackParamList = {
 const Stack = createNativeStackNavigator<ProtectedStackParamList>();
 
 export const ProtectedStack = (): JSX.Element => {
-  const { onboardingComplete, user, getAuthToken } = useContext(
+  const { onboardingComplete, user, getValidAuthToken } = useContext(
     AuthContext,
   ) as AuthContextType;
   const { setRegisteredInIntercom } = useContext(
@@ -57,17 +57,16 @@ export const ProtectedStack = (): JSX.Element => {
         });
 
         setRegisteredInIntercom(true);
-        getAuthToken();
         unsubscribe();
       });
 
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
-    getCards(user as FirebaseAuthTypes.User);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getValidAuthToken(user)
+      .then(() => getCards(user as FirebaseAuthTypes.User))
+      .catch(e => {}) // TODO use new error handling  
   }, []);
 
   useEffect(() => {

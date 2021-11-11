@@ -139,16 +139,21 @@ export const uploadPhotoHandler = async (
   }
 };
 
-export const getAuthTokenHandler = async (
-  user: AuthUser,
-  setToken: (token: string) => void,
-): Promise<void> => {
+const MAX_RETRIES = 5;
+const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+export const getValidAuthTokenHandler = async (user: AuthUser, retry = 0): Promise<void> => {
   if (user) {
-    const authToken = await user.getIdToken(true);
-    const idTokenResult = await user.getIdTokenResult();
-
-    if (hasHasuraClaim(idTokenResult)) {
-      setToken(authToken);
+    try {
+      user.getIdToken(true);
+      const result = await user.getIdTokenResult();
+      if (!hasHasuraClaim(result)) throw new Error('Hasura claims not defined');
+      return;
+    } catch (e) {
+      if (retry > MAX_RETRIES) {
+        throw e;
+      }
+      await wait(2 ** retry * 100);
+      return getValidAuthTokenHandler(user, retry + 1);
     }
   }
-};
+}
