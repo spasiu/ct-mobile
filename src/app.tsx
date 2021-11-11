@@ -57,7 +57,7 @@ const App = (): JSX.Element | null => {
   // user auth handling
   useEffect(() => {
     if (loaded) {
-      const authSubscriber = auth().onIdTokenChanged(
+      const authSubscriber = auth().onAuthStateChanged(
         async (authUser: FirebaseAuthTypes.User | null) => {
           const onboardingStatus = await checkOnboardingStatusOnFirestore(authUser);
           setOnboardingComplete(onboardingStatus);

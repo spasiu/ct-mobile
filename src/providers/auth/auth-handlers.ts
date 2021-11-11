@@ -8,8 +8,6 @@ import storage from '@react-native-firebase/storage';
 import Intercom from '@intercom/intercom-react-native';
 
 import { t } from '../../i18n/i18n';
-import { hasHasuraClaim } from '../../utils/hasura';
-
 import { AuthUser } from './auth.types';
 
 export const emailSignUpHandler = async (
@@ -146,12 +144,12 @@ export const getValidAuthTokenHandler = async (user: AuthUser, retry = 0): Promi
     try {
       user.getIdToken(true);
       const result = await user.getIdTokenResult();
-      if (!hasHasuraClaim(result)) throw new Error('Hasura claims not defined');
+      if (!Boolean(result.claims['https://hasura.io/jwt/claims']))
+        throw new Error('Hasura claims not defined');
       return;
     } catch (e) {
-      if (retry > MAX_RETRIES) {
-        throw e;
-      }
+      if (retry > MAX_RETRIES) throw e;
+
       await wait(2 ** retry * 100);
       return getValidAuthTokenHandler(user, retry + 1);
     }
