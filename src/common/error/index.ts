@@ -4,23 +4,26 @@ import { t } from '../../i18n/i18n';
 const classifyError = (
   error: unknown,
 ): { message: string; type: MessageType } => {
-  const ctErrorCode =
-    'details' in (error as any)
-      ? (error as any).details.ct_error_code
-      : undefined;
+  let ctErrorCode: string | undefined;
 
-  if (ctErrorCode === 'purchase_no_longer_available') {
-    return {
-      message: t('errors.purchase_no_longer_available'),
-      type: 'danger' as MessageType,
-    };
+  // check for a details object containing a ct_error_code from Firebase Cloud Functions
+  if (error && 'details' in (error as any)) {
+    ctErrorCode = (error as any).details.ct_error_code;
   }
 
-  // default
-  return {
-    message: t('errors.generic') || 'An error occured.',
-    type: 'danger' as MessageType,
-  };
+  switch (ctErrorCode) {
+    // additional error cases go here
+    case 'purchase_no_longer_available':
+      return {
+        message: t('errors.purchase_no_longer_available'),
+        type: 'danger' as MessageType,
+      };
+    default:
+      return {
+        message: t('errors.generic') || 'An error occured.',
+        type: 'danger' as MessageType,
+      };
+  }
 };
 
 const displayError = (message: string, type: MessageType) => {
@@ -48,7 +51,7 @@ export const handleError = (
 };
 
 export const handleErrorNoDisplay = (
-  error: Error,
+  error: unknown,
   message = undefined,
   type = undefined,
 ): string => handleError(error, message, type, false);

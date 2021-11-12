@@ -178,7 +178,7 @@ export const processPayment = async (
   checkoutCart: CheckoutCart,
   userPaymentData: Card,
   createOrder: (cardId: string, paymentToken: string) => Promise<OrderState>,
-  setOrderCreated: (status: boolean) => void,
+  setOrderCreated: (state: OrderState) => void,
   setPurchasing: (purchasing: boolean) => void,
 ): Promise<void> => {
   if (checkoutCart && userPaymentData) {
@@ -188,11 +188,7 @@ export const processPayment = async (
       userPaymentData.paymentToken,
     );
 
-    if (orderState.created) {
-      setOrderCreated(true);
-    } else {
-      setOrderCreated(false);
-    }
+    setOrderCreated(orderState);
 
     setPurchasing(false);
   }
@@ -203,7 +199,7 @@ export const getWarningModalProps = (
   checkoutCart: CheckoutCart,
   userPaymentData: Card,
   createOrder: (cardId: string, paymentToken: string) => Promise<OrderState>,
-  setOrderCreated: (status: boolean) => void,
+  setOrderCreated: (state: OrderState) => void,
   onSuccess: () => void,
   onCancel: () => void,
   setPurchasing: (purchasing: boolean) => void,

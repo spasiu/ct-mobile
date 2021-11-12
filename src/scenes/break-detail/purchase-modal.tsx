@@ -39,7 +39,7 @@ export const PurchaseModal = ({
   const { createOrder } = useContext(PaymentContext) as PaymentContextType;
 
   const [checkoutCart, setCheckoutCart] = useState<CheckoutCart>();
-  const [orderCreated, setOrderCreated] = useState<boolean | undefined>();
+  const [orderCreated, setOrderCreated] = useState<OrderState | undefined>();
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
 

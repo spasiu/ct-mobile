@@ -23,6 +23,8 @@ export const createCardHandler = async (
   } catch (error) {
     handleErrorNoDisplay(error);
   }
+
+  return undefined;
 };
 
 export const getCardsHandler = async (): Promise<Card[] | false> => {
