@@ -21,7 +21,7 @@ export const createCardHandler = async (
     const response = await addCard(cardDetails);
     return response.data as Card;
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
   }
 
   return undefined;
@@ -32,7 +32,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
     return false;
   }
 };
@@ -42,7 +42,7 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
     return false;
   }
 };
@@ -60,11 +60,10 @@ export const getDefaultPaymentMethodHandler = async (
       const paymentData = userDocument.data() as { defaultPaymentId: string };
       return paymentData.defaultPaymentId || '';
     }
-
-    return '';
-  } catch (e) {
-    return '';
+  } catch (error) {
+    handleErrorNoDisplay(error);
   }
+  return '';
 };
 
 export const saveDefaultPaymentMethodHandler = async (
@@ -80,7 +79,7 @@ export const saveDefaultPaymentMethodHandler = async (
     );
     return true;
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
     return false;
   }
 };
@@ -108,7 +107,7 @@ export const createUserOnPaymentPlatformHandler = async (
     });
     return true;
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
     return false;
   }
 };
@@ -125,7 +124,7 @@ export const removeDefaultPaymentHandler = async (
     );
     return true;
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(error);
     return false;
   }
 };
