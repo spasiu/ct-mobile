@@ -62,5 +62,6 @@ buck-out/
 android/app/google-services.json
 ios/GoogleService-Info.plist
 
-# App config
+# Env config
 .env
+.vscode

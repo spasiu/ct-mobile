@@ -1,5 +1,3 @@
-require('./common/error/global'); // initialize global error handling
-
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 
