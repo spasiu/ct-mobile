@@ -42,9 +42,9 @@ export const handleError = (
   type: MessageType | undefined = undefined,
   showError = true,
 ): string => {
-  const details = classifyError(error);
-  message = message || details?.message;
-  type = type || details?.type;
+  const data = classifyError(error);
+  message = message || data?.message;
+  type = type || data?.type;
   console.error(error, (error as Error).stack); // log
   if (showError) displayError(message, type); // display to user
   return message;
