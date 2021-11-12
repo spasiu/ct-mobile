@@ -24,6 +24,7 @@ import {
 import { addressSingleLineSelector } from '../../common/address/address-selectors';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import { Card } from '../../common/payment';
+import { OrderState } from '../../providers/payment/payment-types';
 
 export const PurchaseModal = ({
   visible,
@@ -73,8 +74,6 @@ export const PurchaseModal = ({
     setPurchasing,
     onError,
   );
-
-  console.log('>>>', orderCreated);
 
   return (
     <WarningModal

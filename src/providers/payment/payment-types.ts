@@ -1,6 +1,6 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-
-import { Card, CardInput } from '../../common/payment';
+import { OrderState } from '../../providers/payment/payment-types';
+import { Card, CardInput, } from '../../common/payment';
 export interface PaymentProviderProps {
   children: React.ReactNode;
 }
@@ -34,6 +34,6 @@ export type PaymentContextType = {
     firstName: string,
     lastName: string,
   ) => Promise<boolean>;
-  createOrder: (cartId: string, paymentToken: string) => Promise<boolean>;
+  createOrder: (cartId: string, paymentToken: string) => Promise<OrderState>;
   cleanPaymentInfo: () => void;
 };
