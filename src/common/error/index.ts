@@ -1,9 +1,6 @@
 import { MessageType, showMessage } from 'react-native-flash-message';
 import { t } from '../../i18n/i18n';
 
-export * from './error-selectors';
-export * from './error';
-
 const classifyError = (
   error: unknown,
 ): { message: string; type: MessageType } => {
@@ -55,3 +52,6 @@ export const handleErrorNoDisplay = (
   message = undefined,
   type = undefined,
 ): string => handleError(error, message, type, false);
+
+export * from './error-selectors';
+export * from './error';

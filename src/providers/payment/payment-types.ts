@@ -1,6 +1,5 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { OrderState } from '../../providers/payment/payment-types';
-import { Card, CardInput, } from '../../common/payment';
+import { Card, CardInput } from '../../common/payment';
 export interface PaymentProviderProps {
   children: React.ReactNode;
 }
