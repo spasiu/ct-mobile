@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { find, propEq } from 'ramda';
-import { handleErrorNoDisplay } from '../../common/error';
+import { handleErrorNoDisplay, handleError } from '../../common/error';
 import { CardInput, Card } from '../../common/payment';
 import { OrderState } from './payment-types';
 
