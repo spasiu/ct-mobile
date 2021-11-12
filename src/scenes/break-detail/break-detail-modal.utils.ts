@@ -1,5 +1,6 @@
 import { pathOr, path, map, pluck, findIndex, propEq } from 'ramda';
 import functions from '@react-native-firebase/functions';
+import { OrderState } from '../../providers/payment/payment-types';
 
 import { t } from '../../i18n/i18n';
 import {
@@ -176,18 +177,18 @@ export const checkoutCartTotalSelector = (
 export const processPayment = async (
   checkoutCart: CheckoutCart,
   userPaymentData: Card,
-  createOrder: (cardId: string, paymentToken: string) => Promise<boolean>,
+  createOrder: (cardId: string, paymentToken: string) => Promise<OrderState>,
   setOrderCreated: (status: boolean) => void,
   setPurchasing: (purchasing: boolean) => void,
 ): Promise<void> => {
   if (checkoutCart && userPaymentData) {
     setPurchasing(true);
-    const created = await createOrder(
+    const orderState = await createOrder(
       checkoutCart.cartId,
       userPaymentData.paymentToken,
     );
 
-    if (created) {
+    if (orderState.created) {
       setOrderCreated(true);
     } else {
       setOrderCreated(false);
@@ -196,12 +197,12 @@ export const processPayment = async (
     setPurchasing(false);
   }
 };
-
+ 
 export const getWarningModalProps = (
-  orderCreated: boolean | undefined,
+  orderState: OrderState | undefined,
   checkoutCart: CheckoutCart,
   userPaymentData: Card,
-  createOrder: (cardId: string, paymentToken: string) => Promise<boolean>,
+  createOrder: (cardId: string, paymentToken: string) => Promise<OrderState>,
   setOrderCreated: (status: boolean) => void,
   onSuccess: () => void,
   onCancel: () => void,
@@ -215,7 +216,7 @@ export const getWarningModalProps = (
   onSecondaryActionPressed?: () => void;
   imageSrc?: ImageSourcePropType;
 } => {
-  if (orderCreated === undefined) {
+  if (orderState === undefined) {
     return {
       title: t('payment.purchaseModalTitle'),
       primaryActionText: `${t('buttons.purchase')} ${checkoutCartTotalSelector(
@@ -234,7 +235,7 @@ export const getWarningModalProps = (
     };
   }
 
-  if (orderCreated) {
+  if (orderState.created) {
     return {
       imageSrc: successImage,
       title: t('payment.purchaseSuccessfullMessage'),
@@ -244,7 +245,7 @@ export const getWarningModalProps = (
   } else {
     return {
       imageSrc: failedImage,
-      title: t('payment.purchaseFailedMessage'),
+      title: orderState.message,
       primaryActionText: t('buttons.backToPaymentDetails'),
       onPrimaryActionPressed: onError,
     };

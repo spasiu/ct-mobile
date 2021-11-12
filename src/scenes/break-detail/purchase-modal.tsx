@@ -73,6 +73,9 @@ export const PurchaseModal = ({
     setPurchasing,
     onError,
   );
+
+  console.log('>>>', orderCreated);
+
   return (
     <WarningModal
       {...modalProps}

@@ -5,6 +5,11 @@ export interface PaymentProviderProps {
   children: React.ReactNode;
 }
 
+export interface OrderState {
+  created: boolean;
+  message: string;
+}
+
 export type PaymentContextType = {
   cards: Card[];
   setCards: (cards: Card[]) => void;

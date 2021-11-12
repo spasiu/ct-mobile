@@ -319,7 +319,8 @@
     "generic": "Something went wrong. Check your internet connection and try again.",
     "emailInUse": "The email provided is already in use.",
     "validateEmail": "Check your email to validate your account.",
-    "duplicatedUsername": "Username already in use. Please try another combination."
+    "duplicatedUsername": "Username already in use. Please try another combination.",
+    "purchase_no_longer_available": "Your purchase is no longer available."
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

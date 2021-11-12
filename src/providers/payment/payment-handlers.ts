@@ -2,8 +2,9 @@ import firestore from '@react-native-firebase/firestore';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { find, propEq } from 'ramda';
-import { handleError } from '../../lib/errors';
+import { handleErrorNoDisplay } from '../../common/error';
 import { CardInput, Card } from '../../common/payment';
+import { OrderState } from './payment-types';
 
 export const createBigCommerceUser = functions().httpsCallable(
   'createBigCommerceUser',
@@ -20,7 +21,7 @@ export const createCardHandler = async (
     const response = await addCard(cardDetails);
     return response.data as Card;
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
   }
 };
 
@@ -29,7 +30,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
     return false;
   }
 };
@@ -39,7 +40,7 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
     return false;
   }
 };
@@ -77,7 +78,7 @@ export const saveDefaultPaymentMethodHandler = async (
     );
     return true;
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
     return false;
   }
 };
@@ -105,7 +106,7 @@ export const createUserOnPaymentPlatformHandler = async (
     });
     return true;
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
     return false;
   }
 };
@@ -122,7 +123,7 @@ export const removeDefaultPaymentHandler = async (
     );
     return true;
   } catch (error) {
-    handleError(error as Error);
+    handleErrorNoDisplay(error);
     return false;
   }
 };
@@ -130,13 +131,13 @@ export const removeDefaultPaymentHandler = async (
 export const createOrderHandler = async (
   cartId: string,
   paymentToken: string,
-): Promise<boolean> => {
+): Promise<OrderState> => {
   try {
     await createOrder({ cartId, paymentToken });
-    return true;
-  } catch (error) {
-    handleError(error as Error);
-    return false;
+    return { created: true, message: 'success' };
+  } catch (error: unknown) {
+    const errorMessage = handleErrorNoDisplay(error);
+    return { created: false, message: errorMessage };
   }
 };
 
