@@ -11,7 +11,7 @@ query ScheduledEvents(
     Events(
       limit: 5
       where: {
-        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED }}, {archived: { _neq:  true}}]
         Breaks: {
           break_type: $breakTypeFilter
           Inventory: { Product: { category: $sportTypeFilter } }

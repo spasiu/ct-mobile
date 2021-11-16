@@ -1,9 +1,9 @@
 query UserUpcomingBreaks($userId: String) {
   Breaks(
     where: {
-      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       Event: {
-        _and: [{ status: { _neq: COMPLETED } }, { status: { _neq: DRAFT } }]
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       }
       Saves: { user_id: { _eq: $userId } }
     }

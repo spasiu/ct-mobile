@@ -1,5 +1,8 @@
 query FeaturedHits {
-  Hits(limit: 6, order_by: { created_at: desc }) {
+  Hits(limit: 6
+    where:{ archived: { _eq: false } }
+    order_by: { created_at: desc }
+  ) {
     id
     image_front
     description
