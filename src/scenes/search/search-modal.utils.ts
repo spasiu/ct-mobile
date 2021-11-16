@@ -130,6 +130,7 @@ export const breakScheduleSelector = (
 };
 
 export const breakerCardSelector = (breaker: Users): BreakerCardProps => ({
+  breakerId: breaker.id,
   title: userNameSelector(breaker),
   image: userImageSelector(breaker),
   description: breakerBioSelector(breaker),

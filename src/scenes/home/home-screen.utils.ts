@@ -50,6 +50,7 @@ export const featuredEventDetailSelector = (
 
 export const featuredBreakerSelector = (breaker: Users): BreakerCardProps => {
   return {
+    breakerId: breaker.id,
     title: userNameSelector(breaker),
     description: breakerBioSelector(breaker),
     image: userImageSelector(breaker),

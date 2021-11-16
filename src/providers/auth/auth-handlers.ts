@@ -17,7 +17,7 @@ export const emailSignUpHandler = async (
   try {
     await auth().createUserWithEmailAndPassword(email, password);
   } catch (e) {
-    if (e.code === 'auth/email-already-in-use') {
+    if ((e as any).code === 'auth/email-already-in-use') {
       showMessage({
         message: t('errors.emailInUse'),
         type: 'danger',

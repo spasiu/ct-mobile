@@ -1,4 +1,4 @@
-import { pathOr, head, find, propEq, omit } from 'ramda';
+import { pathOr, head, find, propEq } from 'ramda';
 
 import {
   Users,
