@@ -1,7 +1,7 @@
 query UserUpcomingEvents($userId: String) {
   Events(
     where: {
-      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       Saves: { user_id: { _eq: $userId } }
     }
   ) {

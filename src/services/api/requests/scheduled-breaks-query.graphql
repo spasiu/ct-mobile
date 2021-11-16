@@ -5,9 +5,9 @@ query ScheduledBreaks(
 ) {
   Breaks(
     where: {
-      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }]
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       Event: {
-        _and: [{ status: { _neq: COMPLETED } }, { status: { _neq: DRAFT } }]
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       }
       Inventory: { Product: { category: $sportTypeFilter } }
       break_type: $breakTypeFilter
