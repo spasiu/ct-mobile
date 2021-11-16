@@ -2,9 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
   ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Text,
+  FlatList
 } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';

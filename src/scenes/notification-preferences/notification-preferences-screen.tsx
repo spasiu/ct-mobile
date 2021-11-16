@@ -20,7 +20,6 @@ export const NotificationPreferencesScreen = ({
   navigation,
   route,
 }: NotificationPreferencesScreenProps): JSX.Element => {
-  const { notificationPreferences } = route.params;
   const { notificationsEnabled, setNotificationsEnabled } = useContext(
     NotificationContext,
   ) as NotificationContextType;

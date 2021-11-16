@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { ImageCard, ImageCardSizeTypes } from '../image-card';
 import { StatusBadge } from '../status-badge';
-import { LeagueIcon } from '../league-icon';
 import {
   FollowButton,
   FollowButtonSizeTypes,

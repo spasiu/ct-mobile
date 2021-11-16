@@ -6,7 +6,6 @@ import { ChatMessage } from '../../common/chat';
 import { OverScreenModalProps, SlidingBoxProps } from '../../components';
 import { ProtectedStackParamList, ROUTES_IDS } from '../../navigators';
 import { BreakResultUser, BreakResultItem } from '../../common/break/break';
-import { TeamShadow } from './animation/team-shadow';
 import {
   Breaks,
   Break_Type_Enum,

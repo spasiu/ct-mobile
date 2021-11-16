@@ -9,6 +9,7 @@ import { BreakerCardProps } from '../../components';
 import { Users, Users_Bool_Exp } from '../../services/api/requests';
 
 export const breakerCardSelector = (breaker: Users): BreakerCardProps => ({
+  breakerId: breaker.id,
   title: userNameSelector(breaker),
   image: userImageSelector(breaker),
   description: breakerBioSelector(breaker),
