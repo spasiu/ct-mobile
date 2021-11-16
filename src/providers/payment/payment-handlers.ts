@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { find, propEq } from 'ramda';
-import { handleErrorNoDisplay, handleError } from '../../common/error';
+import { handleError, CtError, getFirebaseErrorCode } from '../../common/error';
 import { CardInput, Card } from '../../common/payment';
 import { OrderState } from './payment-types';
 
@@ -21,7 +21,7 @@ export const createCardHandler = async (
     const response = await addCard(cardDetails);
     return response.data as Card;
   } catch (error) {
-    handleError(error);
+    handleError(new CtError('generic', 'danger', error));
   }
 
   return undefined;
@@ -32,7 +32,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    handleError(error);
+    handleError(new CtError('user_cards_not_retreived', 'danger', error));
     return false;
   }
 };
@@ -42,7 +42,9 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    handleError(error);
+    handleError(
+      new CtError('generic','danger',error)
+    );
     return false;
   }
 };
@@ -61,7 +63,9 @@ export const getDefaultPaymentMethodHandler = async (
       return paymentData.defaultPaymentId || '';
     }
   } catch (error) {
-    handleErrorNoDisplay(error);
+    handleError(
+      new CtError('generic', 'none', error)
+    );
   }
   return '';
 };
@@ -79,7 +83,9 @@ export const saveDefaultPaymentMethodHandler = async (
     );
     return true;
   } catch (error) {
-    handleError(error);
+    handleError(
+      new CtError('generic','warning', error)
+    );
     return false;
   }
 };
@@ -107,7 +113,9 @@ export const createUserOnPaymentPlatformHandler = async (
     });
     return true;
   } catch (error) {
-    handleError(error);
+    handleError(
+      new CtError('generic', 'danger', error)
+    );
     return false;
   }
 };
@@ -124,7 +132,9 @@ export const removeDefaultPaymentHandler = async (
     );
     return true;
   } catch (error) {
-    handleError(error);
+    handleError(
+      new CtError('generic','warning', error)
+    );
     return false;
   }
 };
@@ -137,7 +147,9 @@ export const createOrderHandler = async (
     await createOrder({ cartId, paymentToken });
     return { created: true, message: 'success' };
   } catch (error: unknown) {
-    const errorMessage = handleErrorNoDisplay(error);
+    const errorMessage = handleError(
+      new CtError(getFirebaseErrorCode(error),'none', error)
+    );
     return { created: false, message: errorMessage };
   }
 };
