@@ -24,6 +24,7 @@ import {
 import { addressSingleLineSelector } from '../../common/address/address-selectors';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import { Card } from '../../common/payment';
+import { OrderState } from '../../providers/payment/payment-types';
 
 export const PurchaseModal = ({
   visible,
@@ -38,7 +39,7 @@ export const PurchaseModal = ({
   const { createOrder } = useContext(PaymentContext) as PaymentContextType;
 
   const [checkoutCart, setCheckoutCart] = useState<CheckoutCart>();
-  const [orderCreated, setOrderCreated] = useState<boolean | undefined>();
+  const [orderCreated, setOrderCreated] = useState<OrderState | undefined>();
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
 
@@ -73,6 +74,7 @@ export const PurchaseModal = ({
     setPurchasing,
     onError,
   );
+
   return (
     <WarningModal
       {...modalProps}

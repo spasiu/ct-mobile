@@ -1,11 +1,10 @@
-import { showMessage } from 'react-native-flash-message';
 import firestore from '@react-native-firebase/firestore';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import functions from '@react-native-firebase/functions';
 import { find, propEq } from 'ramda';
-
+import { handleError, CtError, getFirebaseErrorCode } from '../../common/error';
 import { CardInput, Card } from '../../common/payment';
-import { t } from '../../i18n/i18n';
+import { OrderState } from './payment-types';
 
 export const createBigCommerceUser = functions().httpsCallable(
   'createBigCommerceUser',
@@ -20,15 +19,12 @@ export const createCardHandler = async (
 ): Promise<Card | undefined> => {
   try {
     const response = await addCard(cardDetails);
-    const card = response.data as Card;
-    return card;
+    return response.data as Card;
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
-    return undefined;
+    handleError(new CtError('generic', 'danger', error));
   }
+
+  return undefined;
 };
 
 export const getCardsHandler = async (): Promise<Card[] | false> => {
@@ -36,10 +32,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+    handleError(new CtError('user_cards_not_retreived', 'danger', error));
     return false;
   }
 };
@@ -49,10 +42,9 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+    handleError(
+      new CtError('generic','danger',error)
+    );
     return false;
   }
 };
@@ -70,11 +62,12 @@ export const getDefaultPaymentMethodHandler = async (
       const paymentData = userDocument.data() as { defaultPaymentId: string };
       return paymentData.defaultPaymentId || '';
     }
-
-    return '';
-  } catch (e) {
-    return '';
+  } catch (error) {
+    handleError(
+      new CtError('generic', 'none', error)
+    );
   }
+  return '';
 };
 
 export const saveDefaultPaymentMethodHandler = async (
@@ -89,11 +82,10 @@ export const saveDefaultPaymentMethodHandler = async (
       { merge: true },
     );
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(
+      new CtError('generic','warning', error)
+    );
     return false;
   }
 };
@@ -120,11 +112,10 @@ export const createUserOnPaymentPlatformHandler = async (
       last_name: lastName,
     });
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(
+      new CtError('generic', 'danger', error)
+    );
     return false;
   }
 };
@@ -140,11 +131,10 @@ export const removeDefaultPaymentHandler = async (
       { merge: true },
     );
     return true;
-  } catch (e) {
-    showMessage({
-      message: t('errors.generic'),
-      type: 'danger',
-    });
+  } catch (error) {
+    handleError(
+      new CtError('generic','warning', error)
+    );
     return false;
   }
 };
@@ -152,13 +142,15 @@ export const removeDefaultPaymentHandler = async (
 export const createOrderHandler = async (
   cartId: string,
   paymentToken: string,
-): Promise<boolean> => {
+): Promise<OrderState> => {
   try {
     await createOrder({ cartId, paymentToken });
-    return true;
-  } catch (error) {
-    console.log('ERROR ON PURCHASE', error);
-    return false;
+    return { created: true, message: 'success' };
+  } catch (error: unknown) {
+    const errorMessage = handleError(
+      new CtError(getFirebaseErrorCode(error),'none', error)
+    );
+    return { created: false, message: errorMessage };
   }
 };
 

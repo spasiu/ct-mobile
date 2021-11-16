@@ -4,7 +4,7 @@ import { append, head } from 'ramda';
 
 import { Card, CardInput } from '../../common/payment';
 
-import { PaymentProviderProps } from './payment-types';
+import { PaymentProviderProps, OrderState } from './payment-types';
 import {
   createCardHandler,
   getCardsHandler,
@@ -92,9 +92,9 @@ export const PaymentProvider = ({
     );
   };
 
-  const createOrder = async (cartId: string) => {
+  const createOrder = async (cartId: string): Promise<OrderState> => {
     const defaultCard = getDefaultPaymentCard(defaultPaymentMethod, cards);
-    return await createOrderHandler(cartId, defaultCard.paymentToken);
+    return createOrderHandler(cartId, defaultCard.paymentToken);
   };
 
   const cleanPaymentInfo = () => {
