@@ -1,30 +1,5 @@
 import { MessageType, showMessage } from 'react-native-flash-message';
-import { t } from '../../i18n/i18n';
-
-const classifyError = (
-  error: unknown,
-): { message: string; type: MessageType } => {
-  let ctErrorCode: string | undefined;
-
-  // check for a details object containing a ct_error_code from Firebase Cloud Functions
-  if (error && 'details' in (error as any)) {
-    ctErrorCode = (error as any).details.ct_error_code;
-  }
-
-  switch (ctErrorCode) {
-    // additional error cases go here
-    case 'purchase_no_longer_available':
-      return {
-        message: t('errors.purchase_no_longer_available'),
-        type: 'danger' as MessageType,
-      };
-    default:
-      return {
-        message: t('errors.generic') || 'An error occured.',
-        type: 'danger' as MessageType,
-      };
-  }
-};
+import { CtError, CtErrorCode } from './error';
 
 const displayError = (message: string, type: MessageType) => {
   showMessage({
@@ -36,25 +11,27 @@ const displayError = (message: string, type: MessageType) => {
   });
 };
 
-export const handleError = (
-  error: unknown,
-  message: string | undefined = undefined,
-  type: MessageType | undefined = undefined,
-  showError = true,
-): string => {
-  const data = classifyError(error);
-  message = message || data?.message;
-  type = type || data?.type;
-  console.error(error, (error as Error).stack); // log
-  if (showError) displayError(message, type); // display to user
-  return message;
+export const getFirebaseErrorCode = (error: unknown): CtErrorCode => {
+  return isHttpsError(error)
+    ? ((error as any).details.ct_error_code as CtErrorCode)
+    : 'generic';
+
+  function isHttpsError(error: unknown): Boolean {
+    return 'details' in (error as any);
+  }
 };
 
-export const handleErrorNoDisplay = (
-  error: unknown,
-  message = undefined,
-  type = undefined,
-): string => handleError(error, message, type, false);
+export const handleError = (error: CtError): string => {
+  const message = error.message || 'An error has occurred';
+  console.error(
+    'Error: ' + message,
+    `\nCaused by:  ${error.cause?.name}\n`,
+    error.cause?.stack,
+  );
+  // re-use 'none' MessageType to prevent display
+  if (error.type !== 'none') displayError(message, error.type);
+  return message;
+};
 
 export * from './error-selectors';
 export * from './error';
