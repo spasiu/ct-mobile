@@ -321,7 +321,13 @@
     "validateEmail": "Check your email to validate your account.",
     "duplicatedUsername": "Username already in use. Please try another combination.",
     "purchase_no_longer_available": "Your purchase is no longer available.",
-    "user_cards_not_retreived":"Could not access your payment methods. Please log out and log back in."
+    "user_cards_not_retreived":"Could not access your payment methods. Please log out and log back in.",
+    "user_card_not_deleted":"Could not delete your payment method. Please try again.",
+    "user_card_not_created":"Could not add your new payment method. Please try again.",
+    "could_not_get_default_payment_method":"Could not retrieve your default payment method. Please try again.",
+    "could_not_set_default_payment_method":"Could not set your default payment method. Please try again.",
+    "could_not_unset_default_payment_method":"Could not unset your default payment method. Please try again.",
+    "big_commerce_creation_error":"Could not set you up on our payment platform. Please try again."
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

@@ -21,7 +21,7 @@ export const createCardHandler = async (
     const response = await addCard(cardDetails);
     return response.data as Card;
   } catch (error) {
-    handleError(new CtError('generic', 'danger', error));
+    handleError(new CtError('user_card_not_created', 'danger', error));
   }
 
   return undefined;
@@ -43,7 +43,7 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     return true;
   } catch (error) {
     handleError(
-      new CtError('generic','danger',error)
+      new CtError('user_card_not_deleted','danger',error)
     );
     return false;
   }
@@ -64,7 +64,7 @@ export const getDefaultPaymentMethodHandler = async (
     }
   } catch (error) {
     handleError(
-      new CtError('generic', 'none', error)
+      new CtError('could_not_get_default_payment_method', 'warning', error)
     );
   }
   return '';
@@ -84,7 +84,7 @@ export const saveDefaultPaymentMethodHandler = async (
     return true;
   } catch (error) {
     handleError(
-      new CtError('generic','warning', error)
+      new CtError('could_not_set_default_payment_method','warning', error)
     );
     return false;
   }
@@ -114,7 +114,7 @@ export const createUserOnPaymentPlatformHandler = async (
     return true;
   } catch (error) {
     handleError(
-      new CtError('generic', 'danger', error)
+      new CtError('big_commerce_creation_error', 'danger', error)
     );
     return false;
   }
@@ -133,7 +133,7 @@ export const removeDefaultPaymentHandler = async (
     return true;
   } catch (error) {
     handleError(
-      new CtError('generic','warning', error)
+      new CtError('could_not_unset_default_payment_method','warning', error)
     );
     return false;
   }
