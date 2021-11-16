@@ -32,7 +32,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    handleError(new CtError('generic', 'danger', error));
+    handleError(new CtError('user_cards_not_retreived', 'danger', error));
     return false;
   }
 };
