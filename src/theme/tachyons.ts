@@ -123,6 +123,7 @@ NativeTachyons.build(
       ba2: { borderWidth: 2 },
       b_white: { borderWidth: 1, borderColor: '#FFFFFF' },
       flx_wrap: { flexWrap: 'wrap' },
+      br_12: { borderRadius: 12 }
     },
   },
   StyleSheet,

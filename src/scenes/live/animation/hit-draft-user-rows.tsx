@@ -50,6 +50,7 @@ export const UserRows = ({
         {rows.map((_, index) => {
           return (
             <HitDraftUserRow
+              key={index.toString()}
               users={getUsersForRow(index)}
               rowIndex={index}
               currentUserId={userId}

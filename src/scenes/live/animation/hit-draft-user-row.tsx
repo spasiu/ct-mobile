@@ -21,6 +21,7 @@ export const UserRow = ({
 }: HitDraftUserRowProps): JSX.Element => {
   const boxMargin = (7 * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;
+  const textWidth = (150 * WINDOW_WIDTH) / 750;
   const avatarSize = (80 * WINDOW_WIDTH) / 750;
   const userBoxAnim = useSharedValue(0);
   const avatarAnim = useSharedValue(0);
@@ -81,7 +82,7 @@ export const UserRow = ({
                   s.ba2,
                   s.b__white,
                   s.no_overflow,
-                  { borderRadius: 12 },
+                  s.br_12
                 ]}>
                 <View
                   style={[
@@ -106,42 +107,40 @@ export const UserRow = ({
                       backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     },
                   ]}>
-                  {
-                    <View style={[s.b__white, s.flx_row, s.aic, { padding: boxMargin * 2}]}>
-                      <View
-                        style={[
-                          s.circle_m2,
-                          s.no_overflow,
-                          s.jcc,
-                          s.aic,
-                          s.asc,
-                          s.circle_m2,
-                          s.ba2,
-                          s.b__white,
-                          {
-                            height: avatarSize,
-                            width: avatarSize,
-                            marginRight: boxMargin
-                          },
-                        ]}
-                      >
-                        <Image
-                          source={{ uri: getFullImageUrl(user.image) }}
-                          style={{
-                            width: avatarSize,
-                            height: avatarSize,
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                      <Text
-                        allowFontScaling
-                        numberOfLines={2}
-                        style={[s.white, s.mr1, s.ml2, s.f5, s.b, s.ff_alt_b, { width: 80}]}>
-                        {user.username}
-                      </Text>
+                  <View style={[s.b__white, s.flx_row, s.aic, { padding: boxMargin * 2}]}>
+                    <View
+                      style={[
+                        s.circle_m2,
+                        s.no_overflow,
+                        s.jcc,
+                        s.aic,
+                        s.asc,
+                        s.circle_m2,
+                        s.ba2,
+                        s.b__white,
+                        {
+                          height: avatarSize,
+                          width: avatarSize,
+                          marginRight: boxMargin
+                        },
+                      ]}
+                    >
+                      <Image
+                        source={{ uri: getFullImageUrl(user.image) }}
+                        style={{
+                          width: avatarSize,
+                          height: avatarSize,
+                        }}
+                        resizeMode="contain"
+                      />
                     </View>
-                  }
+                    <Text
+                      allowFontScaling
+                      numberOfLines={2}
+                      style={[s.white, s.mr1, s.ml2, s.f5, s.b, s.ff_alt_b, { width: textWidth }]}>
+                      {user.username}
+                    </Text>
+                  </View>
                 </View>
               </View>
               <Animated.View

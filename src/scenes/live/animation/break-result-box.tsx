@@ -19,9 +19,11 @@ export const BreakResultBox = ({
     <View>
       <View
         style={[
-          { width: boxWidth },
+          {
+            width: boxWidth,
+          },
+          s.br_12,
           s.mb4,
-          s.br3,
           s.no_overflow,
           s.bg_black,
           s.b__white,

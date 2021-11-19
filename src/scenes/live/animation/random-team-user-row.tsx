@@ -89,7 +89,7 @@ export const TeamUserRow = ({
                   s.ba2,
                   s.b__white,
                   s.no_overflow,
-                  { borderRadius: 12 },
+                  s.br_12
                 ]}>
                 <View
                   style={[
