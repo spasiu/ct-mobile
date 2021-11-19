@@ -102,7 +102,7 @@ export const TeamUserRows = ({
     if (isLastColumn && isLastRow) {
       setTimeout(() => {
         setEnded(true);
-        onEnd();
+        onEnd && onEnd();
         playSound('players');
       }, 2000);
     }

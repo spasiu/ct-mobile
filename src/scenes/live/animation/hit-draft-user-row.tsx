@@ -1,9 +1,9 @@
 import React, { memo, useEffect } from 'react';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { RandomTeamUserRowProps } from '../live-screen.props';
+import { HitDraftUserRowProps } from '../live-screen.props';
 import { WINDOW_WIDTH } from '../../../theme/sizes';
-import { View, Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Animated, {
   Easing,
   interpolate,
@@ -12,23 +12,16 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { TeamRandomizer } from './team-randomizer';
-import { AnimatedTeamShadow } from './team-shadow';
 import { getImgixUrlWithQueryParams } from '../../../services/imgix';
 
-export const TeamUserRow = ({
+export const UserRow = ({
   currentUserId,
   users,
-  visibleTeamsInRow,
-  allTeams,
-  injectElementsAtColumnIndex,
   rowIndex,
-  usersPerRow,
-}: RandomTeamUserRowProps): JSX.Element => {
-  const boxWidth = usersPerRow < 6 ? 84 : 70;
+}: HitDraftUserRowProps): JSX.Element => {
   const boxMargin = (7 * WINDOW_WIDTH) / 750;
-  const boxSize = (boxWidth * WINDOW_WIDTH) / 750;
   const headerHeight = (34 * WINDOW_WIDTH) / 750;
+  const textWidth = (150 * WINDOW_WIDTH) / 750;
   const avatarSize = (80 * WINDOW_WIDTH) / 750;
   const userBoxAnim = useSharedValue(0);
   const avatarAnim = useSharedValue(0);
@@ -114,35 +107,41 @@ export const TeamUserRow = ({
                       backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     },
                   ]}>
-                  {
-                    // replace with actual component
-                    user.items!.map((item: any, index: number) => {
-                      return (
-                        <View key={index.toString()}>
-                          <TeamRandomizer
-                            key={index.toString()}
-                            result={item}
-                            rowIndex={rowIndex}
-                            preloadTeams={usersPerRow >= 5} // to prevent rendering delays
-                            isReady={injectElementsAtColumnIndex === index}
-                            currentAnimatingIndex={visibleTeamsInRow}
-                            teamIndex={index}
-                            columnIndex={columnIndex}
-                            boxSize={boxSize}
-                            boxMargin={boxMargin}
-                            allTeams={allTeams.slice(0, 6)}
-                          />
-                          {index == injectElementsAtColumnIndex && (
-                            <AnimatedTeamShadow
-                              boxMargin={boxMargin}
-                              boxSize={boxSize}
-                              rowIndex={rowIndex}
-                            />
-                          )}
-                        </View>
-                      );
-                    })
-                  }
+                  <View style={[s.b__white, s.flx_row, s.aic, { padding: boxMargin * 2}]}>
+                    <View
+                      style={[
+                        s.circle_m2,
+                        s.no_overflow,
+                        s.jcc,
+                        s.aic,
+                        s.asc,
+                        s.circle_m2,
+                        s.ba2,
+                        s.b__white,
+                        s.bg_black,
+                        {
+                          height: avatarSize,
+                          width: avatarSize,
+                          marginRight: boxMargin
+                        },
+                      ]}
+                    >
+                      <Image
+                        source={{ uri: getFullImageUrl(user.image) }}
+                        style={{
+                          width: avatarSize,
+                          height: avatarSize,
+                        }}
+                        resizeMode="contain"
+                      />
+                    </View>
+                    <Text
+                      allowFontScaling
+                      numberOfLines={2}
+                      style={[s.white, s.mr1, s.ml2, s.f5, s.b, s.ff_alt_b, { width: textWidth }]}>
+                      {user.username}
+                    </Text>
+                  </View>
                 </View>
               </View>
               <Animated.View
@@ -156,8 +155,8 @@ export const TeamUserRow = ({
                   s.asc,
                   s.circle_m2,
                   s.ba2,
+                  s.bg_blue,
                   s.b__white,
-                  s.bg_black,
                   {
                     top: (avatarSize / 2) * -1,
                     height: avatarSize,
@@ -178,14 +177,7 @@ export const TeamUserRow = ({
                     };
                   }),
                 ]}>
-                <Image
-                  source={{ uri: getFullImageUrl(user.image) }}
-                  style={{
-                    width: avatarSize,
-                    height: avatarSize,
-                  }}
-                  resizeMode="contain"
-                />
+                <Text style={[s.f4, s.ff_alt_sb, s.white]}>{(columnIndex + 1) + (rowIndex * 2)}</Text>
               </Animated.View>
             </Animated.View>
           );
@@ -195,11 +187,6 @@ export const TeamUserRow = ({
   );
 };
 
-export const RandomTeamUserRow = memo(TeamUserRow, (prevProps, nextProps) => {
-  if (
-    prevProps.injectElementsAtColumnIndex !==
-    nextProps.injectElementsAtColumnIndex
-  )
-    return false;
-  return prevProps.visibleTeamsInRow === nextProps.visibleTeamsInRow;
+export const HitDraftUserRow = memo(UserRow, (prevProps, nextProps) => {
+  return true;
 });

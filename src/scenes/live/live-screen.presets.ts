@@ -64,11 +64,21 @@ export const digitsStyle = {
 };
 
 export const getUserRowsCount = (usersCount: number, teamsPerUser: number) => {
+  if (teamsPerUser === 1) {
+    if (usersCount <= 4) {
+      return Math.ceil(usersCount / 2);
+    }
+    if (usersCount <= 9) {
+      return Math.ceil(usersCount / 3);
+    }
+    if (usersCount <= 16) {
+      return Math.ceil(usersCount / 4);
+    }
+    return Math.ceil(usersCount / 5);
+  }
+
   if (usersCount <= 10) {
     return Math.ceil(usersCount / (6 / teamsPerUser));
-  }
-  if (usersCount >= 16 && usersCount <= 25 && teamsPerUser === 1) {
-    return Math.ceil(usersCount / 5);
   }
 
   return Math.ceil(usersCount / (6 / teamsPerUser));
@@ -78,12 +88,17 @@ export const getUsersPerRowCount = (
   usersCount: number,
   teamsPerUser: number,
 ) => {
-  if (usersCount >= 16 && usersCount <= 25 && teamsPerUser === 1) {
+  if (teamsPerUser == 1) {
+    if (usersCount <= 4) {
+      return 2;
+    }
+    if (usersCount <= 9) {
+      return 3;
+    }
+    if (usersCount <= 16) {
+      return 4;
+    }
     return 5;
-  }
-
-  if (usersCount > 25 && teamsPerUser == 1) {
-    return 6;
   }
 
   return 6 / teamsPerUser;

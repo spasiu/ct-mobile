@@ -24,11 +24,11 @@ export const HitDraftBreakResultBox = ({
             height: boxHeight,
           },
           s.mb4,
-          s.br3,
           s.no_overflow,
           s.bg_black,
           s.b__white,
           s.ba2,
+          s.br_12
         ]}>
         <View style={[s.flx_i]}>
           <View
@@ -48,7 +48,7 @@ export const HitDraftBreakResultBox = ({
             />
             <Text
               allowFontScaling
-              style={[s.white, s.flx_i, s.mr1, s.ml2, s.f6, s.ff_alt_r]}>
+              style={[s.white, s.flx_i, s.mr1, s.ml2, s.f5, s.ff_alt_b]}>
               {userTeam.username}
             </Text>
           </View>
