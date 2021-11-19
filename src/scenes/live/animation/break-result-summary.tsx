@@ -14,11 +14,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
+import { Break_Type_Enum } from '../../../services/api/requests';
 
 export const BreakResultSummary = ({
   userCount,
-  teamCount,
+  teamCount = 0,
   hideTeamCount,
+  breakType,
   onEnd = () => undefined,
 }: BreakResultSummaryProps): JSX.Element => {
   const [animationStage, setAnimationStage] = React.useState(0);
@@ -45,6 +47,17 @@ export const BreakResultSummary = ({
     setTimeout(() => {
       setAnimationStage(stage);
     }, duration);
+  }
+
+  function getHeadingImage() {
+    switch(breakType) {
+      case Break_Type_Enum.HitDraft:
+        return require('../../../assets/hit-draft.png');
+      case Break_Type_Enum.RandomTeam:
+        return require('../../../assets/team-draft.png');
+      default:
+        return require('../../../assets/team-draft.png');
+    }
   }
 
   useEffect(() => {
@@ -218,7 +231,7 @@ export const BreakResultSummary = ({
           imageStyle,
         ]}>
         <Image
-          source={require('../../../assets/team-draft.png')}
+          source={getHeadingImage()}
           style={{ width: imageWidth, height: imageHeight, zIndex: 2 }}
         />
       </Animated.View>

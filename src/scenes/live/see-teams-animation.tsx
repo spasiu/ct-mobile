@@ -26,6 +26,7 @@ export const SeeTeamsAnimation = ({
           <BreakResultSummary
             hideTeamCount
             userCount={result.length}
+            breakType={breakType}
             onEnd={() => {
               setTimeout(() => {
                 setSummaryAnimationEnded(true);
@@ -72,6 +73,7 @@ export const SeeTeamsAnimation = ({
           <BreakResultSummary
             teamCount={result[0]?.items?.length}
             userCount={result.length}
+            breakType={breakType}
             onEnd={() => {
               setTimeout(() => {
                 setSummaryAnimationEnded(true);

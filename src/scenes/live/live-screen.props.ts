@@ -80,6 +80,7 @@ export interface SeeTeamsAnimationProps {
 export interface BreakResultSummaryProps {
   teamCount?: number;
   userCount: number;
+  breakType: Break_Type_Enum;
   hideTeamCount?: boolean;
   onEnd?: () => void;
 }

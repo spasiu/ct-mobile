@@ -157,6 +157,7 @@ export const TeamUserRow = ({
                   s.circle_m2,
                   s.ba2,
                   s.b__white,
+                  s.bg_black,
                   {
                     top: (avatarSize / 2) * -1,
                     height: avatarSize,

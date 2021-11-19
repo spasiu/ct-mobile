@@ -118,6 +118,7 @@ export const UserRow = ({
                         s.circle_m2,
                         s.ba2,
                         s.b__white,
+                        s.bg_black,
                         {
                           height: avatarSize,
                           width: avatarSize,
