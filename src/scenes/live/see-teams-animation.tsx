@@ -71,6 +71,7 @@ export const SeeTeamsAnimation = ({
       <View style={teamsAnimationContainerStyle}>
         {!summaryAnimationEnded && (
           <BreakResultSummary
+            hideTeamCount={breakType == Break_Type_Enum.RandomDivision}
             teamCount={result[0]?.items?.length}
             userCount={result.length}
             breakType={breakType}
