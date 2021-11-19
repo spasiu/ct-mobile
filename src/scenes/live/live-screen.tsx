@@ -167,6 +167,7 @@ export const LiveScreen = ({
 
   useEffect(() => {
     if (isEmpty(currentLiveBreak) && !isEmpty(liveBreak)) {
+      setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
 
