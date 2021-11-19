@@ -348,6 +348,7 @@ export const LiveScreen = ({
               onPressClose={() => setShowRandomTeamsAnimation(false)}
               userId={authUser?.uid as string}
               result={liveBreakResult}
+              breakType={breakTypeSelector(liveBreak)}
             />
           )}
           <LineupModal

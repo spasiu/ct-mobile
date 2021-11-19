@@ -78,8 +78,9 @@ export interface SeeTeamsAnimationProps {
 }
 
 export interface BreakResultSummaryProps {
-  teamCount: number;
+  teamCount?: number;
   userCount: number;
+  hideTeamCount?: boolean;
   onEnd?: () => void;
 }
 
@@ -97,6 +98,18 @@ export interface RandomTeamUserRowProps {
   injectElementsAtColumnIndex: number;
   rowIndex: number;
   usersPerRow: number;
+}
+
+export interface HitDraftUserRowsProps {
+  userId: string;
+  users: BreakResultUser[];
+  onEnd?: () => void;
+}
+
+export interface HitDraftUserRowProps {
+  currentUserId: string;
+  users: BreakResultUser[];
+  rowIndex: number;
 }
 
 export interface TeamRandomizerProps {

@@ -18,6 +18,7 @@ import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../../theme/sizes';
 export const BreakResultSummary = ({
   userCount,
   teamCount,
+  hideTeamCount,
   onEnd = () => undefined,
 }: BreakResultSummaryProps): JSX.Element => {
   const [animationStage, setAnimationStage] = React.useState(0);
@@ -334,7 +335,7 @@ export const BreakResultSummary = ({
                 </View>
               </Animated.View>
             </View>
-            <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
+            {!hideTeamCount && <View style={[s.flx_i, s.flx_col, s.aic, s.jcc]}>
               <Animated.View
                 style={[
                   s.tc,
@@ -427,7 +428,7 @@ export const BreakResultSummary = ({
                   </View>
                 </View>
               </Animated.View>
-            </View>
+            </View>}
           </View>
         </View>
       </Animated.View>
