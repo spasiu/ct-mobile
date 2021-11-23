@@ -14,7 +14,7 @@ export class CtError extends Error {
   cause?: Error;
 
   constructor(code: CtErrorCode, type: MessageType, cause?: unknown) {
-    super(t(code));
+    super(t(`errors.${code}`));
     
     this.code = code;
     this.type = type;
