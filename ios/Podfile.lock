@@ -560,6 +560,8 @@ PODS:
     - react-native-video/Video (= 5.1.1)
   - react-native-video/Video (5.1.1):
     - React-Core
+  - react-native-webrtc (1.92.2):
+    - React-Core
   - react-native-webview (11.4.0):
     - React-Core
   - React-perflogger (0.64.0)
@@ -735,6 +737,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -843,6 +846,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-splash-screen"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-webrtc:
+    :path: "../node_modules/react-native-webrtc"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -916,7 +921,7 @@ SPEC CHECKSUMS:
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: 6486b7a8e87acb3ccd0d6d876237db4bc4af4b1d
+  FBReactNativeSpec: e78888eba7c0600e34f91e1ad26968283dc29839
   Firebase: d59ad4129167f9f0d2a4f6c1f0c462254b6002c8
   FirebaseAuth: 667e576a716f6f9fe31687791406f61135002d47
   FirebaseCore: 049029df3096e5c118917029be7da75ee16f3b1b
@@ -955,6 +960,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
+  react-native-webrtc: 41526e4060dac373c18676f866962d4180ee47b9
   react-native-webview: 4dfb534e9600b87fe667c5ca4fe09149383218b9
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
@@ -989,6 +995,6 @@ SPEC CHECKSUMS:
   Sentry: 1d3eb1a25f8c5333c88dd5603904a6d461cd9fcf
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 73d687177ea01b10fb24d9ac2dc3da12bd290993
+PODFILE CHECKSUM: 198bfa0f3a257d4d5834e5ea66dd372225019f8c
 
 COCOAPODS: 1.10.1

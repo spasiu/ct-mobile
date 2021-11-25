@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import Video from 'react-native-video';
+import { VideoPlayer } from './video-player';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -153,7 +153,9 @@ export const LiveScreen = ({
   }, []);
 
   useLayoutEffect(() => {
-    if (!liveTermsAccepted) setTermsOfUseVisible(true);
+    if (!liveTermsAccepted) {
+      setTermsOfUseVisible(true);
+    }
   }, []);
 
   const event = eventSelector(data);
@@ -167,7 +169,6 @@ export const LiveScreen = ({
 
   useEffect(() => {
     if (isEmpty(currentLiveBreak) && !isEmpty(liveBreak)) {
-      setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
 
@@ -191,20 +192,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      {streamUrl ? (
-        <Video
-          source={{
-            uri: streamUrl,
-          }}
-          resizeMode="cover"
-          style={[s.absolute_fill]}
-          onLoad={() => setStreamReady(true)}
-        />
-      ) : (
-        <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
-          <Loading containerStyle={[s.flx_i, s.jcc, s.aic]} />
-        </View>
-      )}
+      <VideoPlayer streamId={'ktvfpcri'} />
       {streamReady ? null : (
         <View
           style={[
@@ -348,7 +336,6 @@ export const LiveScreen = ({
               onPressClose={() => setShowRandomTeamsAnimation(false)}
               userId={authUser?.uid as string}
               result={liveBreakResult}
-              breakType={breakTypeSelector(liveBreak)}
             />
           )}
           <LineupModal
