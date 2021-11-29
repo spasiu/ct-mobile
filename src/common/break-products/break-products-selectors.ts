@@ -33,10 +33,6 @@ export const breakProductItemsWithQuantitySelector = (
 ): BreakProductItems[] => {
   const breakProductItems = breakProductsItemsSelector(eventBreak);
   const selectedIds = selectedItems.map(item => item.id);
-  breakProductItems.forEach(item => {
-    console.log(`Selected Item contains ${item.id}: ${selectedIds.includes(item.id)}`)
-  })
-
   return breakProductItems.filter(item =>
     breakProductExternalQuantity(item) === 0
       ? selectedIds.includes(item.id)
