@@ -192,7 +192,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      <VideoPlayer streamId={'ktvfpcri'} />
+      <VideoPlayer streamName={'kwdrca3d'} />
       {streamReady ? null : (
         <View
           style={[

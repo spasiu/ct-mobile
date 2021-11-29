@@ -9,65 +9,82 @@ import { View } from 'react-native';
 import { Loading } from '../../components';
 import { styles } from 'react-native-style-tachyons';
 
-const WS_URL = 'wss://streamevents.millicast.com/ws';
+const MILLICAST_ACCOUNT_ID = 'mnNRvw';
+const SUBSCRIBE_URL = 'https://director.millicast.com/api/director/subscribe';
 const TURN_URL = 'https://turn.millicast.com/webrtc/_turn';
 const TURN_RETRIES = 2;
 
 type VideoPlayerProps = {
-  streamId: string;
+  streamName: string;
 };
 
-export const VideoPlayer = ({ streamId }: VideoPlayerProps): JSX.Element => {
+export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
   const [streamURL, setStreamURL] = useState<string>('');
   const s = styles;
   useLayoutEffect(() => {
-    connect(streamId).then(streamUrl => setStreamURL(streamUrl));
-  }, [streamId]);
+    connect(streamName).then(streamUrl => setStreamURL(streamUrl));
+  }, [streamName]);
 
   console.log('COMPONENT LOADED', streamURL);
 
   return (
-    <View style={[s.absolute_fill]}>
-      {streamURL ? (
-        <RTCView streamURL={streamURL} />
-      ) : (
-        <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
-          <Loading containerStyle={[s.flx_i, s.jcc, s.aic]} />
-        </View>
-      )}
+    <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
+      <RTCView
+        style={[
+          s.flx_i,
+          s.jcc,
+          s.aic,
+          s.absolute_fill,
+          { backgroundColor: 'black' },
+        ]}
+        streamURL={streamURL}
+      />
     </View>
   );
 };
 
-async function connect(streamId: string): Promise<string> {
+async function connect(streamName: string): Promise<string> {
   console.log('CALLED CONNECT');
-  const websocket = new WebSocket(WS_URL);
+  const wsUrl = await getWebsocketUrl(streamName);
+  const websocket = new WebSocket(wsUrl);
   const connection = new RTCPeerConnection({
     iceServers: await getIceServers(),
   });
 
   // send SDP
   websocket.onmessage = (event: WebSocketMessageEvent) => {
-    console.log('Message recieved', JSON.stringify(event, null, 4));
-    if (event.data?.error) {
+    console.log('onevent');
+    let data;
+    try {
+      data = JSON.parse(event.data);
+    } catch (error: unknown) {
+      console.error(`Error parsing event data ${event} (${error})`);
+      // It's possible with certain error events that the data prop is not serialized, it's a JS object.
+      data = event.data;
+    }
+
+    console.log(`MESSAGE >>> ${JSON.stringify(data, null, 4)}`);
+
+    if (data.error) {
       console.error(
         `Error message event from WebRTC provider ${event.data.error}`,
       );
-
       return;
     }
 
-    if (event.data?.type === 'response') {
+    if (data.type === 'response') {
       const description = new RTCSessionDescription({
         type: 'answer',
-        sdp: event.data?.data?.sdp,
+        sdp: data.data.sdp,
       });
       connection.setRemoteDescription(description);
+      console.log('set description', description);
       return;
     }
   };
 
   websocket.onopen = async () => {
+    console.log('onopen');
     const offer = await connection.createOffer({
       offerToReceiveAudio: true,
       offerToReceiveVideo: true,
@@ -80,7 +97,7 @@ async function connect(streamId: string): Promise<string> {
         transId: 0,
         name: 'view',
         data: {
-          streamId,
+          streamId: `${MILLICAST_ACCOUNT_ID}/${streamName}`,
           sdp: offer.sdp,
         },
       }),
@@ -107,6 +124,7 @@ async function connect(streamId: string): Promise<string> {
 }
 
 async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
+  console.log('CALLED getIceServers');
   let r: Response;
   try {
     r = await fetch(TURN_URL, { method: 'PUT' });
@@ -138,4 +156,30 @@ async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
 function backoff(attempt: number): Promise<void> {
   const ms = 2 ** (attempt - 1) * 500 + Math.floor(Math.random() * 1000);
   return new Promise(resolve => setTimeout(() => resolve(), ms));
+}
+
+async function getWebsocketUrl(streamName: string): Promise<string> {
+  console.log('CALLED getWebsocketUrl', streamName);
+  const r = await fetch(SUBSCRIBE_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      streamAccountId: MILLICAST_ACCOUNT_ID,
+      streamName,
+      unauthorizedSubscribe: true,
+    }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (r.status > 299) {
+    const body = await r.json();
+    throw new Error(
+      `Subscribe failed ${r.status} ${JSON.stringify(body, null, 4)}`,
+    );
+  }
+
+  const body = await r.json();
+  return `${body.data.wsUrl}?token=${body.data.jwt}`;
 }
