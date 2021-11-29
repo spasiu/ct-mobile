@@ -146,10 +146,10 @@ export const checkoutCartSubtotalSelector = (
 export const checkoutCartTaxSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const tax = path(['tax'], checkoutCart);
+  const tax = path(['tax'], checkoutCart) as number;
   // since 0 evaluates to false in js
   // we need to explicitly check for undefined
-  return tax !== undefined ? `${t('payment.paymentCurrencySign')}${tax}` : '';
+  return tax !== undefined ? `${t('payment.paymentCurrencySign')}${(Math.round(tax * 100) / 100).toFixed(2)}` : '';
 };
 
 export const checkoutCartShippingSelector = (
@@ -166,11 +166,11 @@ export const checkoutCartShippingSelector = (
 export const checkoutCartTotalSelector = (
   checkoutCart: CheckoutCart | undefined,
 ): string => {
-  const total = path(['total'], checkoutCart);
+  const total = path(['total'], checkoutCart) as number;
   // since 0 evaluates to false in js
   // we need to explicitly check for undefined
   return total !== undefined
-    ? `${t('payment.paymentCurrencySign')}${total}`
+    ? `${t('payment.paymentCurrencySign')}${(Math.round(total * 100) / 100).toFixed(2)}`
     : '';
 };
 

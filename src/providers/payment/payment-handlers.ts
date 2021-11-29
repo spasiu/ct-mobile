@@ -144,7 +144,7 @@ export const createOrderHandler = async (
   paymentToken: string,
 ): Promise<OrderState> => {
   try {
-    await createOrder({ cartId, paymentToken });
+    const t = await createOrder({ cartId, paymentToken });
     return { created: true, message: 'success' };
   } catch (error: unknown) {
     const errorMessage = handleError(
