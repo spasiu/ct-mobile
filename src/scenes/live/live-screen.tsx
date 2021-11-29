@@ -23,7 +23,6 @@ import {
   StatusBadge,
   StatusBadgeTypes,
   ServerImage,
-  Loading,
   FollowButtonBreaker,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
@@ -45,7 +44,7 @@ import {
   eventUpcomingBreakSelector,
   eventViewCountSelector,
 } from '../../common/event';
-import { ICON_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../theme/sizes';
+import { ICON_SIZE } from '../../theme/sizes';
 import {
   userImageSelector,
   userNameSelector,
@@ -193,15 +192,6 @@ export const LiveScreen = ({
   return (
     <View style={[s.flx_i, s.bg_black]}>
       <VideoPlayer streamName={'kwdrca3d'} />
-      {streamReady ? null : (
-        <View
-          style={[
-            s.absolute,
-            { top: WINDOW_HEIGHT / 3, right: WINDOW_WIDTH / 3 },
-          ]}>
-          <Image source={logoIcon} />
-        </View>
-      )}
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.5 }}

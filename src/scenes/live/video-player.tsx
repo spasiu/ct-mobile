@@ -5,9 +5,10 @@ import {
   EventOnAddStream,
 } from 'react-native-webrtc';
 import React, { useLayoutEffect, useState } from 'react';
-import { View } from 'react-native';
-import { Loading } from '../../components';
+import { View, Image } from 'react-native';
 import { styles } from 'react-native-style-tachyons';
+import { logoIcon } from './live-screen.presets';
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../theme/sizes';
 
 const MILLICAST_ACCOUNT_ID = 'mnNRvw';
 const SUBSCRIBE_URL = 'https://director.millicast.com/api/director/subscribe';
@@ -19,10 +20,14 @@ type VideoPlayerProps = {
 };
 
 export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
-  const [streamURL, setStreamURL] = useState<string>('');
+  const [streamURL, setStreamURL] = useState('');
+  const [streamReady, setStreamReady] = useState(false);
   const s = styles;
   useLayoutEffect(() => {
-    connect(streamName).then(streamUrl => setStreamURL(streamUrl));
+    connect(streamName).then(streamUrl => {
+      setStreamURL(streamUrl);
+      setStreamReady(true);
+    });
   }, [streamName]);
 
   console.log('COMPONENT LOADED', streamURL);
@@ -39,6 +44,15 @@ export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
         ]}
         streamURL={streamURL}
       />
+      {streamReady ? null : (
+        <View
+          style={[
+            s.absolute,
+            { top: WINDOW_HEIGHT / 3, right: WINDOW_WIDTH / 3 },
+          ]}>
+          <Image source={logoIcon} />
+        </View>
+      )}
     </View>
   );
 };
