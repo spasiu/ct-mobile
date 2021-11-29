@@ -20,31 +20,132 @@ type VideoPlayerProps = {
 };
 
 export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
-  const [streamURL, setStreamURL] = useState('');
-  const [streamReady, setStreamReady] = useState(false);
+  const [streamURL, setStreamURL] = useState<string | null>(null);
   const s = styles;
+
   useLayoutEffect(() => {
-    connect(streamName).then(streamUrl => {
-      setStreamURL(streamUrl);
-      setStreamReady(true);
-    });
+    let websocket: WebSocket | null;
+    let connection: RTCPeerConnection | null;
+    // IIFE (useEffect can't take an async func as a CB)
+    (async () => {
+      console.log('CALLED CONNECT');
+      const wsUrl = await getWebsocketUrl(streamName);
+      websocket = new WebSocket(wsUrl);
+      connection = new RTCPeerConnection({
+        iceServers: await getIceServers(),
+      });
+
+      // send SDP
+      websocket.onmessage = (event: WebSocketMessageEvent) => {
+        console.log('onevent');
+        let streamUrl: string | null = null;
+        let data;
+        try {
+          data = JSON.parse(event.data);
+        } catch (error: unknown) {
+          console.error(`Error parsing event data ${event} (${error})`);
+          // It's possible with certain error events that the data prop is not serialized, it's a JS object.
+          data = event.data;
+        }
+
+        console.log(`MESSAGE >>> ${JSON.stringify(data, null, 4)}`);
+
+        if (data.error) {
+          console.error(
+            `Error message event from WebRTC provider ${event.data.error}`,
+          );
+        }
+
+        if (data.type === 'event' && data.name === 'inactive') {
+          setStreamURL(null);
+        }
+
+        if (
+          data.type === 'event' &&
+          data.name === 'active' &&
+          streamUrl !== null
+        ) {
+          setStreamURL(streamUrl);
+        }
+
+        if (data.type === 'response') {
+          const description = new RTCSessionDescription({
+            type: 'answer',
+            sdp: data.data.sdp,
+          });
+          connection.setRemoteDescription(description);
+          console.log('set description', description);
+        }
+      };
+
+      websocket.onopen = async () => {
+        console.log('onopen');
+        const offer = await connection.createOffer({
+          offerToReceiveAudio: true,
+          offerToReceiveVideo: true,
+        });
+
+        connection.setLocalDescription(offer);
+        websocket.send(
+          JSON.stringify({
+            type: 'cmd',
+            transId: 0,
+            name: 'view',
+            data: {
+              streamId: `${MILLICAST_ACCOUNT_ID}/${streamName}`,
+              sdp: offer.sdp,
+            },
+          }),
+        );
+      };
+
+      websocket.onerror = (error: unknown) => {
+        console.error(
+          `Error on websocket connection ${JSON.stringify(error, null, 4)}`,
+        );
+      };
+
+      websocket.onclose = event => {
+        console.log(
+          `Websocket connection closed ${JSON.stringify(event, null, 4)}`,
+        );
+
+        setStreamURL(null);
+      };
+
+      connection.onaddstream = (event: EventOnAddStream) => {
+        console.log('onaddstream', event);
+        streamUrl = event.stream.toURL();
+        setStreamURL(streamUrl);
+      };
+    })();
+
+    // clean up function
+    return () => {
+      console.log('CLEAN UP');
+      websocket?.close();
+      connection?.close();
+      websocket = null;
+      connection = null;
+    };
   }, [streamName]);
 
   console.log('COMPONENT LOADED', streamURL);
 
   return (
     <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
-      <RTCView
-        style={[
-          s.flx_i,
-          s.jcc,
-          s.aic,
-          s.absolute_fill,
-          { backgroundColor: 'black' },
-        ]}
-        streamURL={streamURL}
-      />
-      {streamReady ? null : (
+      {streamURL ? (
+        <RTCView
+          style={[
+            s.flx_i,
+            s.jcc,
+            s.aic,
+            s.absolute_fill,
+            { backgroundColor: 'black' },
+          ]}
+          streamURL={streamURL}
+        />
+      ) : (
         <View
           style={[
             s.absolute,
@@ -56,86 +157,6 @@ export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
     </View>
   );
 };
-
-async function connect(streamName: string): Promise<string> {
-  console.log('CALLED CONNECT');
-  const wsUrl = await getWebsocketUrl(streamName);
-  const websocket = new WebSocket(wsUrl);
-  const connection = new RTCPeerConnection({
-    iceServers: await getIceServers(),
-  });
-
-  // send SDP
-  websocket.onmessage = (event: WebSocketMessageEvent) => {
-    console.log('onevent');
-    let data;
-    try {
-      data = JSON.parse(event.data);
-    } catch (error: unknown) {
-      console.error(`Error parsing event data ${event} (${error})`);
-      // It's possible with certain error events that the data prop is not serialized, it's a JS object.
-      data = event.data;
-    }
-
-    console.log(`MESSAGE >>> ${JSON.stringify(data, null, 4)}`);
-
-    if (data.error) {
-      console.error(
-        `Error message event from WebRTC provider ${event.data.error}`,
-      );
-      return;
-    }
-
-    if (data.type === 'response') {
-      const description = new RTCSessionDescription({
-        type: 'answer',
-        sdp: data.data.sdp,
-      });
-      connection.setRemoteDescription(description);
-      console.log('set description', description);
-      return;
-    }
-  };
-
-  websocket.onopen = async () => {
-    console.log('onopen');
-    const offer = await connection.createOffer({
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
-    });
-
-    connection.setLocalDescription(offer);
-    websocket.send(
-      JSON.stringify({
-        type: 'cmd',
-        transId: 0,
-        name: 'view',
-        data: {
-          streamId: `${MILLICAST_ACCOUNT_ID}/${streamName}`,
-          sdp: offer.sdp,
-        },
-      }),
-    );
-  };
-
-  websocket.onerror = (error: unknown) => {
-    console.error(
-      `Error on websocket connection ${JSON.stringify(error, null, 4)}`,
-    );
-  };
-
-  websocket.onclose = event => {
-    console.log(
-      `Websocket connection closed ${JSON.stringify(event, null, 4)}`,
-    );
-  };
-
-  return new Promise(resolve => {
-    connection.onaddstream = (event: EventOnAddStream) => {
-      resolve(event.stream.toURL());
-    };
-  });
-}
 
 async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
   console.log('CALLED getIceServers');
