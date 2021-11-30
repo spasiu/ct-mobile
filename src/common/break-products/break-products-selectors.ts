@@ -1,4 +1,4 @@
-import { filter, head, pathOr } from 'ramda';
+import { pathOr } from 'ramda';
 import { t } from '../../i18n/i18n';
 
 import {
@@ -29,19 +29,15 @@ export const breakProductExternalQuantity = (
 
 export const breakProductItemsWithQuantitySelector = (
   eventBreak: Breaks,
+  selectedItems: BreakProductItems[],
 ): BreakProductItems[] => {
   const breakProductItems = breakProductsItemsSelector(eventBreak);
-  return filter(
-    item => breakProductExternalQuantity(item) !== 0,
-    breakProductItems,
+  const selectedIds = selectedItems.map(item => item.id);
+  return breakProductItems.filter(item =>
+    breakProductExternalQuantity(item) === 0
+      ? selectedIds.includes(item.id)
+      : true,
   );
-};
-
-export const breakProductsFirstItemSelector = (
-  eventBreak: Breaks,
-): Partial<BreakProductItems> => {
-  const breakProductItems = breakProductItemsWithQuantitySelector(eventBreak);
-  return head(breakProductItems) || {};
 };
 
 export const breakProductExternalProductId = (

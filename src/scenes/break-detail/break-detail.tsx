@@ -30,6 +30,13 @@ import { findSelectedItem } from './break-detail-modal.utils';
 import { BreakDetailProps } from './break-detail-modal.props';
 import { checkIcon } from './break-detail-modal.presets';
 import { addressSingleLineSelector } from '../../common/address/address-selectors';
+import {
+  BreakProductItems,
+  useBreakItemUpdateMutation,
+} from '../../services/api/requests';
+import { ApolloError } from '@apollo/client';
+
+
 
 export const BreakDetail = ({
   breakData,
@@ -41,7 +48,28 @@ export const BreakDetail = ({
   paymentData,
   userAddress,
 }: BreakDetailProps): JSX.Element => {
+
+  const [updateBreakItem] = useBreakItemUpdateMutation({
+    onError: (error:ApolloError) => console.error('SQL ERROR',error)
+  });
+
+  const updateItem = (
+    item: BreakProductItems,
+    itemIndex: number,
+    selectedItems: BreakProductItems[],
+    selected: boolean
+  ): BreakProductItems[] => {
+    const [newSelectedItems, quantity] = selected
+      ? [remove(itemIndex, 1, selectedItems), 1]
+      : [append(item, selectedItems), -1];
+
+    updateBreakItem({variables:{itemId: item.id, quantity: quantity}});
+    return newSelectedItems;
+  };
+
   const [openModal, setOpenModal] = useState(false);
+
+
 
   return (
     <KeyboardAwareScrollView>
@@ -113,7 +141,7 @@ export const BreakDetail = ({
                   <View style={[s.h_custom(1), s.bg_black_10]} />
                 )}
                 style={[s.mb4]}
-                data={breakProductItemsWithQuantitySelector(breakData)}
+                data={breakProductItemsWithQuantitySelector(breakData, selectedItems)}
                 renderItem={({ item }) => {
                   const itemIndex = findSelectedItem(item, selectedItems);
                   const selected = itemIndex !== -1;
@@ -121,10 +149,8 @@ export const BreakDetail = ({
                     <BorderlessButton
                       style={[s.flx_row, s.jcsb, s.pv3]}
                       onPress={() => {
-                        const newSelectedItems = selected
-                          ? remove(itemIndex, 1, selectedItems)
-                          : append(item, selectedItems);
-                        setSelectedItems(newSelectedItems);
+                        const items = updateItem(item, itemIndex, selectedItems, selected);
+                        setSelectedItems(items);
                       }}>
                       <Text>{`${item.title} • $${item.price}`}</Text>
                       {selected ? (
@@ -147,6 +173,7 @@ export const BreakDetail = ({
           </Modal>
         </>
       )}
+      
     </KeyboardAwareScrollView>
   );
 };
