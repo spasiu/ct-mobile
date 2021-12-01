@@ -3,8 +3,9 @@ import {
   RTCSessionDescription,
   EventOnAddStream,
 } from 'react-native-webrtc';
+import Config from 'react-native-config';
 
-const MILLICAST_ACCOUNT_ID = 'mnNRvw';
+const MILLICAST_ACCOUNT_ID = Config.MILLICAST_ACCOUNT_ID;
 const SUBSCRIBE_URL = 'https://director.millicast.com/api/director/subscribe';
 const TURN_URL = 'https://turn.millicast.com/webrtc/_turn';
 const TURN_RETRIES = 2;
@@ -160,7 +161,7 @@ async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
     }
 
     await backoff(retryCount);
-    return getIceServers(retryCount + 1);
+    return getIceServers(retryCount + 1); 
   }
 
   const data = await r.json();

@@ -68,7 +68,6 @@ import {
   diamondIcon,
   // shareIcon,
   shopIcon,
-  logoIcon,
 } from './live-screen.presets';
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
@@ -191,7 +190,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      <VideoPlayer streamName={'kwdrca3d'} />
+      <VideoPlayer streamName={'YOUR_STREAM_NAME_HERE'} />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.5 }}
