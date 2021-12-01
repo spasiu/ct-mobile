@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { VideoPlayer } from './video-player';
+import { VideoPlayer } from './stream/video-player';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
