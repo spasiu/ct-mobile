@@ -43,13 +43,13 @@ import {
   eventSelector,
   eventUpcomingBreakSelector,
   eventViewCountSelector,
+  eventStreamNameSelector,
 } from '../../common/event';
 import { ICON_SIZE } from '../../theme/sizes';
 import {
   userImageSelector,
   userNameSelector,
   userSelector,
-  userStreamUrlSelector,
 } from '../../common/user-profile';
 
 import { LiveNowBox } from './live-now-box';
@@ -98,7 +98,6 @@ export const LiveScreen = ({
   const [showTeams, setShowTeams] = useState(false);
   const [showRandomTeamAnimation, setShowRandomTeamsAnimation] =
     useState(false);
-  const [streamReady, setStreamReady] = useState(false);
   const [showLineup, setShowLineup] = useState(false);
   const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
@@ -160,9 +159,9 @@ export const LiveScreen = ({
   const breaker = eventBreakerSelector(event);
   const liveBreak = eventLiveBreakSelector(event);
   const upcomingBreak = eventUpcomingBreakSelector(event);
+  const streamName = eventStreamNameSelector(event);
 
   const breakUser = userSelector(users);
-  const streamUrl = userStreamUrlSelector(breaker);
   const liveBreakResult = breakResultSelector(liveBreak);
 
   useEffect(() => {
@@ -190,7 +189,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      <VideoPlayer streamName={'YOUR_STREAM_NAME_HERE'} />
+      <VideoPlayer streamName={streamName} />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.5 }}
