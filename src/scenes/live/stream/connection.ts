@@ -145,7 +145,6 @@ export const connect = async (
 };
 
 async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
-  console.log('CALLED getIceServers');
   let r: Response;
   try {
     r = await fetch(TURN_URL, { method: 'PUT' });
@@ -180,7 +179,6 @@ function backoff(attempt: number): Promise<void> {
 }
 
 async function getWebsocketUrl(streamName: string): Promise<string> {
-  console.log('CALLED getWebsocketUrl', streamName);
   const r = await fetch(SUBSCRIBE_URL, {
     method: 'POST',
     body: JSON.stringify({

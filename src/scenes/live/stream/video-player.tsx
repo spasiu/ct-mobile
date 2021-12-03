@@ -30,8 +30,6 @@ export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
     });
   }, [streamName]);
 
-  console.log('COMPONENT LOADED', streamURL);
-
   return (
     <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
       {streamURL ? (

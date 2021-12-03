@@ -150,9 +150,7 @@ export const LiveScreen = ({
   }, []);
 
   useLayoutEffect(() => {
-    if (!liveTermsAccepted) {
-      setTermsOfUseVisible(true);
-    }
+    if (!liveTermsAccepted) setTermsOfUseVisible(true);
   }, []);
 
   const event = eventSelector(data);
@@ -166,6 +164,7 @@ export const LiveScreen = ({
 
   useEffect(() => {
     if (isEmpty(currentLiveBreak) && !isEmpty(liveBreak)) {
+      setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
 
@@ -324,6 +323,7 @@ export const LiveScreen = ({
               onPressClose={() => setShowRandomTeamsAnimation(false)}
               userId={authUser?.uid as string}
               result={liveBreakResult}
+              breakType={breakTypeSelector(liveBreak)}
             />
           )}
           <LineupModal
