@@ -15,12 +15,12 @@ type OnErrorCallback = (error: Error) => any;
 type OnInactiveCallback = () => any;
 type OnCloseCallback = () => any;
 
-interface Connection {
+export interface Connection {
   onActive: (cb: OnActiveCallback) => void;
   onInactive: (cb: OnInactiveCallback) => void;
   onClose: (cb: OnCloseCallback) => void;
   onError: (cb: OnErrorCallback) => void;
-  close: () => Connection;
+  close: () => void;
 }
 
 export const connect = async (
