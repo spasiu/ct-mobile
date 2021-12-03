@@ -1,0 +1,8 @@
+mutation BreakItemUpdate($itemId: uuid, $quantity: Int) {
+  update_BreakProductItems(
+      where: { id: { _eq: $itemId } }
+      _inc: { quantity: $quantity }
+  ) {
+    affected_rows
+  }
+}

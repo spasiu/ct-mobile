@@ -10680,6 +10680,37 @@ export type BreakDetailQuery = (
   )> }
 );
 
+export type BreakItemUpdateMutationVariables = Exact<{
+  itemId?: Maybe<Scalars['uuid']>;
+  quantity?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type BreakItemUpdateMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_BreakProductItems?: Maybe<(
+    { __typename?: 'BreakProductItems_mutation_response' }
+    & Pick<BreakProductItems_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type BreakItemsSubscriptionVariables = Exact<{
+  breakId?: Maybe<Scalars['uuid']>;
+}>;
+
+
+export type BreakItemsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { Breaks: Array<(
+    { __typename?: 'Breaks' }
+    & Pick<Breaks, 'id' | 'title' | 'description' | 'image' | 'break_type'>
+    & { BreakProductItems: Array<(
+      { __typename?: 'BreakProductItems' }
+      & Pick<BreakProductItems, 'id' | 'title' | 'price' | 'quantity' | 'bc_product_id' | 'bc_variant_id'>
+    )> }
+  )> }
+);
+
 export type BreakerBreaksQueryVariables = Exact<{
   id: Scalars['String'];
   userId?: Maybe<Scalars['String']>;
@@ -12020,6 +12051,85 @@ export function useBreakDetailLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type BreakDetailQueryHookResult = ReturnType<typeof useBreakDetailQuery>;
 export type BreakDetailLazyQueryHookResult = ReturnType<typeof useBreakDetailLazyQuery>;
 export type BreakDetailQueryResult = Apollo.QueryResult<BreakDetailQuery, BreakDetailQueryVariables>;
+export const BreakItemUpdateDocument = gql`
+    mutation BreakItemUpdate($itemId: uuid, $quantity: Int) {
+  update_BreakProductItems(
+    where: {id: {_eq: $itemId}}
+    _inc: {quantity: $quantity}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type BreakItemUpdateMutationFn = Apollo.MutationFunction<BreakItemUpdateMutation, BreakItemUpdateMutationVariables>;
+
+/**
+ * __useBreakItemUpdateMutation__
+ *
+ * To run a mutation, you first call `useBreakItemUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBreakItemUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [breakItemUpdateMutation, { data, loading, error }] = useBreakItemUpdateMutation({
+ *   variables: {
+ *      itemId: // value for 'itemId'
+ *      quantity: // value for 'quantity'
+ *   },
+ * });
+ */
+export function useBreakItemUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<BreakItemUpdateMutation, BreakItemUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<BreakItemUpdateMutation, BreakItemUpdateMutationVariables>(BreakItemUpdateDocument, options);
+      }
+export type BreakItemUpdateMutationHookResult = ReturnType<typeof useBreakItemUpdateMutation>;
+export type BreakItemUpdateMutationResult = Apollo.MutationResult<BreakItemUpdateMutation>;
+export type BreakItemUpdateMutationOptions = Apollo.BaseMutationOptions<BreakItemUpdateMutation, BreakItemUpdateMutationVariables>;
+export const BreakItemsDocument = gql`
+    subscription BreakItems($breakId: uuid) {
+  Breaks(where: {id: {_eq: $breakId}}) {
+    id
+    title
+    description
+    image
+    break_type
+    BreakProductItems {
+      id
+      title
+      price
+      quantity
+      bc_product_id
+      bc_variant_id
+    }
+  }
+}
+    `;
+
+/**
+ * __useBreakItemsSubscription__
+ *
+ * To run a query within a React component, call `useBreakItemsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useBreakItemsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakItemsSubscription({
+ *   variables: {
+ *      breakId: // value for 'breakId'
+ *   },
+ * });
+ */
+export function useBreakItemsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<BreakItemsSubscription, BreakItemsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<BreakItemsSubscription, BreakItemsSubscriptionVariables>(BreakItemsDocument, options);
+      }
+export type BreakItemsSubscriptionHookResult = ReturnType<typeof useBreakItemsSubscription>;
+export type BreakItemsSubscriptionResult = Apollo.SubscriptionResult<BreakItemsSubscription>;
 export const BreakerBreaksDocument = gql`
     query BreakerBreaks($id: String!, $userId: String) {
   Breaks(

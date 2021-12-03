@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { showMessage } from 'react-native-flash-message';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { isEmpty } from 'ramda';
 
@@ -9,8 +8,10 @@ import { t } from '../../i18n/i18n';
 import { OverScreenModal, Loading } from '../../components';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
+  BreakItemsDocument,
   BreakProductItems,
   useBreakDetailQuery,
+  useBreakItemUpdateMutation,
 } from '../../services/api/requests';
 import {
   userDefaultAddressSelector,
@@ -40,6 +41,8 @@ import {
 import { BreakDetailModalProps, ModalRoute } from './break-detail-modal.props';
 import { PurchaseModal } from './purchase-modal';
 import { addressCleanSelector } from '../../common/address/address-selectors';
+import { CtError, handleError } from '../../common/error';
+import { ApolloError } from '@apollo/client';
 
 export const BreakDetailModal = ({
   breakId,
@@ -59,19 +62,17 @@ export const BreakDetailModal = ({
   const [selectedItems, setSelectedItems] = useState<BreakProductItems[]>([]);
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
-  const { data, loading, refetch } = useBreakDetailQuery({
+  const { data, loading, refetch, subscribeToMore } = useBreakDetailQuery({
     fetchPolicy: 'network-only',
     variables: {
-      breakId,
+      breakId: breakId,
       userId: authUser?.uid,
     },
-    onError: () => {
-      if (isVisible) {
-        showMessage({
-          message: t('errors.generic'),
-          type: 'danger',
-        });
-      }
+    onError: (error: ApolloError) => {
+      const level = isVisible ? 'warning' : 'none';
+      handleError(
+        new CtError('breaker_detail_retrieval_error', level, error),
+      );
     },
   });
 
@@ -79,13 +80,23 @@ export const BreakDetailModal = ({
     if (isEmpty(cards)) {
       getCards(authUser as FirebaseAuthTypes.User);
     }
+
+    subscribeToMore({
+      document: BreakItemsDocument,
+      variables: {
+        breakId: breakId,
+      },
+      onError: (error: Error) => console.error('SUBSC ERROR', error),
+      updateQuery: (prev, { subscriptionData }) => 
+        prev.Breaks = subscriptionData.data.Breaks
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const breakData = breakSelector(data);
   const userData = userSelector(data);
 
-  const isBreakSoldOut = breakSoldOutSelector(breakData);
+  const isBreakSoldOut = isEmpty(selectedItems) ? false : breakSoldOutSelector(breakData);
   const isBreakCompleted = breakCompletedSelector(breakData);
 
   const userAddress = userDefaultAddressSelector(userData);
@@ -93,7 +104,16 @@ export const BreakDetailModal = ({
   const shouldAllowToContinueToCheckout =
     !isEmpty(selectedItems) && Boolean(userAddress) && Boolean(userPaymentData);
 
-  const cleanModalOnClose = () => {
+  const [updateBreakItem] = useBreakItemUpdateMutation({
+    onError: (error:ApolloError) => console.error('SQL ERROR',error)
+  });
+
+  const cleanModalOnClose = (success:boolean = true) => {
+    if (!success) { // if closed without purchase, restore inventory
+        selectedItems.forEach(item => {
+          updateBreakItem({variables:{itemId: item.id, quantity: 1}});
+      })
+    }
     setSelectedItems([]);
     setShowPurchaseModal(false);
     setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL });
@@ -104,7 +124,7 @@ export const BreakDetailModal = ({
       {...modalProps}
       {...getRootModalProps(loading, visibleRoute, isBreakSoldOut)}
       onPressClose={() => {
-        cleanModalOnClose();
+        cleanModalOnClose(false);
         onPressClose();
       }}
       onPressBack={() => {
@@ -215,7 +235,7 @@ export const BreakDetailModal = ({
         }}
         onCancel={() => setShowPurchaseModal(false)}
         onError={() => {
-          cleanModalOnClose();
+          cleanModalOnClose(false);
           refetch();
         }}
       />

@@ -1,0 +1,17 @@
+subscription BreakItems($breakId: uuid) {
+  Breaks(where: { id: { _eq: $breakId } }) {
+    id
+    title
+    description
+    image
+    break_type
+    BreakProductItems {
+      id
+      title
+      price
+      quantity
+      bc_product_id
+      bc_variant_id
+    }
+  }
+}
