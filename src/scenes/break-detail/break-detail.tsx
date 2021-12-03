@@ -141,7 +141,10 @@ export const BreakDetail = ({
                   <View style={[s.h_custom(1), s.bg_black_10]} />
                 )}
                 style={[s.mb4]}
-                data={breakProductItemsWithQuantitySelector(breakData, selectedItems)}
+                data={
+                  breakProductItemsWithQuantitySelector(breakData, selectedItems)
+                    .sort((a, b) => a.bc_variant_id! - b.bc_variant_id!)
+                }
                 renderItem={({ item }) => {
                   const itemIndex = findSelectedItem(item, selectedItems);
                   const selected = itemIndex !== -1;
