@@ -18,24 +18,33 @@ export const VideoPlayer = ({ streamName }: VideoPlayerProps): JSX.Element => {
   useLayoutEffect(() => {
     if (streamName) {
       let activeConnection: Connection;
-      connect(streamName).then(connection => {
-        activeConnection = connection;
-        connection.onActive(streamUrl => {
-          setStreamURL(streamUrl);
-        });
-        connection.onInactive(() => {
-          setStreamURL(null);
-        });
-        connection.onError((error: Error) => {
+      connect(streamName)
+        .then(connection => {
+          activeConnection = connection;
+          connection.onActive(streamUrl => {
+            setStreamURL(streamUrl);
+          });
+          connection.onInactive(() => {
+            setStreamURL(null);
+          });
+          connection.onError((error: Error) => {
+            console.error(`Error after connecting to stream ${error}`);
+            showMessage({
+              message: error.message,
+              type: 'warning',
+            });
+          });
+          connection.onClose(() => {
+            setStreamURL(null);
+          });
+        })
+        .catch(error => {
+          console.error(`Error trying to connect to stream ${error}`);
           showMessage({
             message: error.message,
             type: 'warning',
           });
         });
-        connection.onClose(() =>{
-          setStreamURL(null);
-        });
-      });
       return () => activeConnection && activeConnection.close();
     }
   }, [streamName]);

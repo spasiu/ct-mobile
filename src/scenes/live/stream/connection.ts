@@ -35,9 +35,8 @@ export const connect = async (
 
   const wsUrl = await getWebsocketUrl(streamName);
   const websocket = new WebSocket(wsUrl);
-  const connection = new RTCPeerConnection({
-    iceServers: await getIceServers(),
-  });
+  const iceServers = await getIceServers();
+  const connection = new RTCPeerConnection({ iceServers });
 
   connection.onaddstream = (event: EventOnAddStream) => {
     streamUrl = event.stream.toURL();
@@ -52,7 +51,6 @@ export const connect = async (
     }
 
     const data = JSON.parse(event.data);
-
     if (data.type === 'event' && data.name === 'inactive') {
       onInactiveObserver();
     }
@@ -96,20 +94,9 @@ export const connect = async (
 
   websocket.onclose = event => {
     // on close wipe out the connection and reconnect
-    try {
-      connection.close();
-    } catch (error) {
-      console.error(`Unable to close RTC Peer Connection ${error}`);
-    }
-
-    try {
-      websocket.close();
-    } catch (error) {
-      // should already be closed
-      console.error(`Unable to close web socket ${error}`);
-    }
-
-    // if we're not trying to kill the connection then don't try to reconnect
+    connection.close();
+    websocket.close();
+    // if we're trying to kill the connection then don't try to reconnect
     if (!shouldTerminate) {
       backoff(1).then(() =>
         connect(
@@ -122,6 +109,22 @@ export const connect = async (
       );
     }
   };
+
+  // if after a few seconds we're unable to set the  stream URL try again
+  backoff(3).then(() => {
+    if (!streamUrl) {
+      shouldTerminate = true;
+      connection.close();
+      websocket.close();
+      connect(
+        streamName,
+        onActiveObserver,
+        onInactiveObserver,
+        onCloseObserver,
+        onErrorObserver,
+      );
+    }
+  });
 
   return {
     onActive: (cb: OnActiveCallback) => {
@@ -160,7 +163,7 @@ async function getIceServers(retryCount = 0): Promise<{ url: string }[]> {
     }
 
     await backoff(retryCount);
-    return getIceServers(retryCount + 1); 
+    return getIceServers(retryCount + 1);
   }
 
   const data = await r.json();
@@ -178,7 +181,10 @@ function backoff(attempt: number): Promise<void> {
   return new Promise(resolve => setTimeout(() => resolve(), ms));
 }
 
-async function getWebsocketUrl(streamName: string): Promise<string> {
+async function getWebsocketUrl(
+  streamName: string,
+  retryCount = 0,
+): Promise<string> {
   const r = await fetch(SUBSCRIBE_URL, {
     method: 'POST',
     body: JSON.stringify({
@@ -194,9 +200,11 @@ async function getWebsocketUrl(streamName: string): Promise<string> {
 
   if (r.status > 299) {
     const body = await r.json();
-    throw new Error(
+    console.error(
       `Subscribe failed ${r.status} ${JSON.stringify(body, null, 4)}`,
     );
+    await backoff(retryCount);
+    return getWebsocketUrl(streamName, retryCount + 1);
   }
 
   const body = await r.json();
