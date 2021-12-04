@@ -636,6 +636,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L4FDBYMKF2;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CardsAndTreasure/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
