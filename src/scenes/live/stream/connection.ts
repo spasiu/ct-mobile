@@ -107,6 +107,8 @@ export const connect = async (
           onErrorObserver,
         ),
       );
+    } else {
+      onCloseObserver();
     }
   };
 
