@@ -9,30 +9,23 @@ const MILLICAST_ACCOUNT_ID = Config.MILLICAST_ACCOUNT_ID;
 const SUBSCRIBE_URL = 'https://director.millicast.com/api/director/subscribe';
 const TURN_URL = 'https://turn.millicast.com/webrtc/_turn';
 const TURN_RETRIES = 2;
-
-type OnActiveCallback = (streamURl: string) => any;
-type OnErrorCallback = (error: Error) => any;
-type OnInactiveCallback = () => any;
-type OnCloseCallback = () => any;
-
 export interface Connection {
-  onActive: (cb: OnActiveCallback) => void;
-  onInactive: (cb: OnInactiveCallback) => void;
-  onClose: (cb: OnCloseCallback) => void;
-  onError: (cb: OnErrorCallback) => void;
   close: () => void;
+}
+export interface Observers {
+  onClose: () => void;
+  onInactive: () => void;
+  onActive: (streamUrl: string) => void;
+  onError: (error: Error) => void;
 }
 
 export const connect = async (
   streamName: string,
-  onActiveObserver: OnActiveCallback = (streamUrl: string) => undefined,
-  onInactiveObserver: OnInactiveCallback = () => undefined,
-  onCloseObserver: OnCloseCallback = () => undefined,
-  onErrorObserver: OnErrorCallback = (error: Error) => undefined,
+  observers: Observers,
 ): Promise<Connection> => {
   let streamUrl: string;
   let shouldTerminate = false;
-
+  const { onActive, onInactive, onClose, onError } = observers;
   const wsUrl = await getWebsocketUrl(streamName);
   const websocket = new WebSocket(wsUrl);
   const iceServers = await getIceServers();
@@ -40,23 +33,23 @@ export const connect = async (
 
   connection.onaddstream = (event: EventOnAddStream) => {
     streamUrl = event.stream.toURL();
-    onActiveObserver(streamUrl);
+    onActive(streamUrl);
   };
 
   websocket.onmessage = (event: WebSocketMessageEvent) => {
     const socketError = event.data?.error;
     if (socketError) {
-      onErrorObserver(new Error(socketError));
+      onError(new Error(socketError));
       return;
     }
 
     const data = JSON.parse(event.data);
     if (data.type === 'event' && data.name === 'inactive') {
-      onInactiveObserver();
+      onInactive();
     }
 
     if (data.type === 'event' && data.name === 'active' && streamUrl) {
-      onActiveObserver(streamUrl);
+      onActive(streamUrl);
     }
 
     if (data.type === 'response') {
@@ -89,7 +82,7 @@ export const connect = async (
   };
 
   websocket.onerror = (error: unknown) => {
-    onErrorObserver(error as Error);
+    onError(error as Error);
   };
 
   websocket.onclose = event => {
@@ -98,17 +91,9 @@ export const connect = async (
     websocket.close();
     // if we're trying to kill the connection then don't try to reconnect
     if (!shouldTerminate) {
-      backoff(1).then(() =>
-        connect(
-          streamName,
-          onActiveObserver,
-          onInactiveObserver,
-          onCloseObserver,
-          onErrorObserver,
-        ),
-      );
+      backoff(1).then(() => connect(streamName, observers));
     } else {
-      onCloseObserver();
+      onClose();
     }
   };
 
@@ -118,29 +103,11 @@ export const connect = async (
       shouldTerminate = true;
       connection.close();
       websocket.close();
-      connect(
-        streamName,
-        onActiveObserver,
-        onInactiveObserver,
-        onCloseObserver,
-        onErrorObserver,
-      );
+      connect(streamName, observers);
     }
   });
 
   return {
-    onActive: (cb: OnActiveCallback) => {
-      onActiveObserver = cb;
-    },
-    onInactive: (cb: OnInactiveCallback) => {
-      onInactiveObserver = cb;
-    },
-    onClose: (cb: OnCloseCallback) => {
-      onCloseObserver = cb;
-    },
-    onError: (cb: OnErrorCallback) => {
-      onErrorObserver = cb;
-    },
     close: () => {
       shouldTerminate = true;
       connection.close();
