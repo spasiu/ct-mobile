@@ -235,7 +235,7 @@ export const BreakDetailModal = ({
         }}
         onCancel={() => setShowPurchaseModal(false)}
         onError={() => {
-          cleanModalOnClose(false);
+          cleanModalOnClose();
           refetch();
         }}
       />
