@@ -2,6 +2,7 @@ subscription LiveStream($eventId: uuid, $userId: String) {
   Events(where: { id: { _eq: $eventId } }) {
     id
     start_time
+    stream_name
     status
     User {
       id

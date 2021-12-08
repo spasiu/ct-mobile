@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import Video from 'react-native-video';
+import { Video } from './stream/video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,7 +23,6 @@ import {
   StatusBadge,
   StatusBadgeTypes,
   ServerImage,
-  Loading,
   FollowButtonBreaker,
 } from '../../components';
 import { COLORS } from '../../theme/colors';
@@ -44,13 +43,13 @@ import {
   eventSelector,
   eventUpcomingBreakSelector,
   eventViewCountSelector,
+  eventStreamNameSelector,
 } from '../../common/event';
-import { ICON_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH } from '../../theme/sizes';
+import { ICON_SIZE } from '../../theme/sizes';
 import {
   userImageSelector,
   userNameSelector,
   userSelector,
-  userStreamUrlSelector,
 } from '../../common/user-profile';
 
 import { LiveNowBox } from './live-now-box';
@@ -69,7 +68,6 @@ import {
   diamondIcon,
   // shareIcon,
   shopIcon,
-  logoIcon,
 } from './live-screen.presets';
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
@@ -100,7 +98,6 @@ export const LiveScreen = ({
   const [showTeams, setShowTeams] = useState(false);
   const [showRandomTeamAnimation, setShowRandomTeamsAnimation] =
     useState(false);
-  const [streamReady, setStreamReady] = useState(false);
   const [showLineup, setShowLineup] = useState(false);
   const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
@@ -160,9 +157,9 @@ export const LiveScreen = ({
   const breaker = eventBreakerSelector(event);
   const liveBreak = eventLiveBreakSelector(event);
   const upcomingBreak = eventUpcomingBreakSelector(event);
+  const streamName = eventStreamNameSelector(event);
 
   const breakUser = userSelector(users);
-  const streamUrl = userStreamUrlSelector(breaker);
   const liveBreakResult = breakResultSelector(liveBreak);
 
   useEffect(() => {
@@ -191,29 +188,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      {streamUrl ? (
-        <Video
-          source={{
-            uri: streamUrl,
-          }}
-          resizeMode="cover"
-          style={[s.absolute_fill]}
-          onLoad={() => setStreamReady(true)}
-        />
-      ) : (
-        <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
-          <Loading containerStyle={[s.flx_i, s.jcc, s.aic]} />
-        </View>
-      )}
-      {streamReady ? null : (
-        <View
-          style={[
-            s.absolute,
-            { top: WINDOW_HEIGHT / 3, right: WINDOW_WIDTH / 3 },
-          ]}>
-          <Image source={logoIcon} />
-        </View>
-      )}
+      <Video streamName={streamName} />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.5 }}

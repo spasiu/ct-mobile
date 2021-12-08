@@ -523,6 +523,13 @@ export type BreakProductItems_Mutation_Response = {
   returning: Array<BreakProductItems>;
 };
 
+/** input type for inserting object relation for remote table "BreakProductItems" */
+export type BreakProductItems_Obj_Rel_Insert_Input = {
+  data: BreakProductItems_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<BreakProductItems_On_Conflict>;
+};
+
 /** on conflict condition type for table "BreakProductItems" */
 export type BreakProductItems_On_Conflict = {
   constraint: BreakProductItems_Constraint;
@@ -1748,8 +1755,10 @@ export type Events = {
   event_status: Event_Status;
   id: Scalars['uuid'];
   image: Scalars['String'];
+  publishing_token?: Maybe<Scalars['String']>;
   start_time?: Maybe<Scalars['timestamptz']>;
   status: Event_Status_Enum;
+  stream_name?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
@@ -1845,8 +1854,10 @@ export type Events_Bool_Exp = {
   event_status?: Maybe<Event_Status_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
+  publishing_token?: Maybe<String_Comparison_Exp>;
   start_time?: Maybe<Timestamptz_Comparison_Exp>;
   status?: Maybe<Event_Status_Enum_Comparison_Exp>;
+  stream_name?: Maybe<String_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
@@ -1869,8 +1880,10 @@ export type Events_Insert_Input = {
   event_status?: Maybe<Event_Status_Obj_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  publishing_token?: Maybe<Scalars['String']>;
   start_time?: Maybe<Scalars['timestamptz']>;
   status?: Maybe<Event_Status_Enum>;
+  stream_name?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
@@ -1883,7 +1896,9 @@ export type Events_Max_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  publishing_token?: Maybe<Scalars['String']>;
   start_time?: Maybe<Scalars['timestamptz']>;
+  stream_name?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
@@ -1895,7 +1910,9 @@ export type Events_Max_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  publishing_token?: Maybe<Order_By>;
   start_time?: Maybe<Order_By>;
+  stream_name?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
@@ -1908,7 +1925,9 @@ export type Events_Min_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  publishing_token?: Maybe<Scalars['String']>;
   start_time?: Maybe<Scalars['timestamptz']>;
+  stream_name?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
@@ -1920,7 +1939,9 @@ export type Events_Min_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  publishing_token?: Maybe<Order_By>;
   start_time?: Maybe<Order_By>;
+  stream_name?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
@@ -1960,8 +1981,10 @@ export type Events_Order_By = {
   event_status?: Maybe<Event_Status_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  publishing_token?: Maybe<Order_By>;
   start_time?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
+  stream_name?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
@@ -1985,9 +2008,13 @@ export enum Events_Select_Column {
   /** column name */
   Image = 'image',
   /** column name */
+  PublishingToken = 'publishing_token',
+  /** column name */
   StartTime = 'start_time',
   /** column name */
   Status = 'status',
+  /** column name */
+  StreamName = 'stream_name',
   /** column name */
   Title = 'title',
   /** column name */
@@ -2003,8 +2030,10 @@ export type Events_Set_Input = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  publishing_token?: Maybe<Scalars['String']>;
   start_time?: Maybe<Scalars['timestamptz']>;
   status?: Maybe<Event_Status_Enum>;
+  stream_name?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
@@ -2023,9 +2052,13 @@ export enum Events_Update_Column {
   /** column name */
   Image = 'image',
   /** column name */
+  PublishingToken = 'publishing_token',
+  /** column name */
   StartTime = 'start_time',
   /** column name */
   Status = 'status',
+  /** column name */
+  StreamName = 'stream_name',
   /** column name */
   Title = 'title',
   /** column name */
@@ -7318,6 +7351,10 @@ export type Mutation_Root = {
   delete_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** delete single row from the table: "event_status" */
   delete_event_status_by_pk?: Maybe<Event_Status>;
+  /** delete data from the table: "order_in_process" */
+  delete_order_in_process?: Maybe<Order_In_Process_Mutation_Response>;
+  /** delete single row from the table: "order_in_process" */
+  delete_order_in_process_by_pk?: Maybe<Order_In_Process>;
   /** delete data from the table: "unit_of_measure" */
   delete_unit_of_measure?: Maybe<Unit_Of_Measure_Mutation_Response>;
   /** delete single row from the table: "unit_of_measure" */
@@ -7426,6 +7463,10 @@ export type Mutation_Root = {
   insert_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** insert a single row into the table: "event_status" */
   insert_event_status_one?: Maybe<Event_Status>;
+  /** insert data into the table: "order_in_process" */
+  insert_order_in_process?: Maybe<Order_In_Process_Mutation_Response>;
+  /** insert a single row into the table: "order_in_process" */
+  insert_order_in_process_one?: Maybe<Order_In_Process>;
   /** insert data into the table: "unit_of_measure" */
   insert_unit_of_measure?: Maybe<Unit_Of_Measure_Mutation_Response>;
   /** insert a single row into the table: "unit_of_measure" */
@@ -7534,6 +7575,10 @@ export type Mutation_Root = {
   update_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** update single row of the table: "event_status" */
   update_event_status_by_pk?: Maybe<Event_Status>;
+  /** update data of the table: "order_in_process" */
+  update_order_in_process?: Maybe<Order_In_Process_Mutation_Response>;
+  /** update single row of the table: "order_in_process" */
+  update_order_in_process_by_pk?: Maybe<Order_In_Process>;
   /** update data of the table: "unit_of_measure" */
   update_unit_of_measure?: Maybe<Unit_Of_Measure_Mutation_Response>;
   /** update single row of the table: "unit_of_measure" */
@@ -7846,6 +7891,18 @@ export type Mutation_RootDelete_Event_StatusArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Event_Status_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Order_In_ProcessArgs = {
+  where: Order_In_Process_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Order_In_Process_By_PkArgs = {
+  product_id: Scalars['uuid'];
 };
 
 
@@ -8220,6 +8277,20 @@ export type Mutation_RootInsert_Event_StatusArgs = {
 export type Mutation_RootInsert_Event_Status_OneArgs = {
   object: Event_Status_Insert_Input;
   on_conflict?: Maybe<Event_Status_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Order_In_ProcessArgs = {
+  objects: Array<Order_In_Process_Insert_Input>;
+  on_conflict?: Maybe<Order_In_Process_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Order_In_Process_OneArgs = {
+  object: Order_In_Process_Insert_Input;
+  on_conflict?: Maybe<Order_In_Process_On_Conflict>;
 };
 
 
@@ -8630,6 +8701,20 @@ export type Mutation_RootUpdate_Event_Status_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Order_In_ProcessArgs = {
+  _set?: Maybe<Order_In_Process_Set_Input>;
+  where: Order_In_Process_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Order_In_Process_By_PkArgs = {
+  _set?: Maybe<Order_In_Process_Set_Input>;
+  pk_columns: Order_In_Process_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Unit_Of_MeasureArgs = {
   _set?: Maybe<Unit_Of_Measure_Set_Input>;
   where: Unit_Of_Measure_Bool_Exp;
@@ -8684,6 +8769,113 @@ export enum Order_By {
   DescNullsFirst = 'desc_nulls_first',
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
+}
+
+/** columns and relationships of "order_in_process" */
+export type Order_In_Process = {
+  __typename?: 'order_in_process';
+  /** An object relationship */
+  BreakProductItems?: Maybe<BreakProductItems>;
+  product_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "order_in_process" */
+export type Order_In_Process_Aggregate = {
+  __typename?: 'order_in_process_aggregate';
+  aggregate?: Maybe<Order_In_Process_Aggregate_Fields>;
+  nodes: Array<Order_In_Process>;
+};
+
+/** aggregate fields of "order_in_process" */
+export type Order_In_Process_Aggregate_Fields = {
+  __typename?: 'order_in_process_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Order_In_Process_Max_Fields>;
+  min?: Maybe<Order_In_Process_Min_Fields>;
+};
+
+
+/** aggregate fields of "order_in_process" */
+export type Order_In_Process_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Order_In_Process_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "order_in_process". All fields are combined with a logical 'AND'. */
+export type Order_In_Process_Bool_Exp = {
+  BreakProductItems?: Maybe<BreakProductItems_Bool_Exp>;
+  _and?: Maybe<Array<Order_In_Process_Bool_Exp>>;
+  _not?: Maybe<Order_In_Process_Bool_Exp>;
+  _or?: Maybe<Array<Order_In_Process_Bool_Exp>>;
+  product_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "order_in_process" */
+export enum Order_In_Process_Constraint {
+  /** unique or primary key constraint */
+  OrderInProcessPkey = 'order_in_process_pkey'
+}
+
+/** input type for inserting data into table "order_in_process" */
+export type Order_In_Process_Insert_Input = {
+  BreakProductItems?: Maybe<BreakProductItems_Obj_Rel_Insert_Input>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Order_In_Process_Max_Fields = {
+  __typename?: 'order_in_process_max_fields';
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type Order_In_Process_Min_Fields = {
+  __typename?: 'order_in_process_min_fields';
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "order_in_process" */
+export type Order_In_Process_Mutation_Response = {
+  __typename?: 'order_in_process_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Order_In_Process>;
+};
+
+/** on conflict condition type for table "order_in_process" */
+export type Order_In_Process_On_Conflict = {
+  constraint: Order_In_Process_Constraint;
+  update_columns?: Array<Order_In_Process_Update_Column>;
+  where?: Maybe<Order_In_Process_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "order_in_process". */
+export type Order_In_Process_Order_By = {
+  BreakProductItems?: Maybe<BreakProductItems_Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: order_in_process */
+export type Order_In_Process_Pk_Columns_Input = {
+  product_id: Scalars['uuid'];
+};
+
+/** select columns of table "order_in_process" */
+export enum Order_In_Process_Select_Column {
+  /** column name */
+  ProductId = 'product_id'
+}
+
+/** input type for updating data in table "order_in_process" */
+export type Order_In_Process_Set_Input = {
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "order_in_process" */
+export enum Order_In_Process_Update_Column {
+  /** column name */
+  ProductId = 'product_id'
 }
 
 export type Query_Root = {
@@ -8838,6 +9030,12 @@ export type Query_Root = {
   event_status_aggregate: Event_Status_Aggregate;
   /** fetch data from the table: "event_status" using primary key columns */
   event_status_by_pk?: Maybe<Event_Status>;
+  /** fetch data from the table: "order_in_process" */
+  order_in_process: Array<Order_In_Process>;
+  /** fetch aggregated fields from the table: "order_in_process" */
+  order_in_process_aggregate: Order_In_Process_Aggregate;
+  /** fetch data from the table: "order_in_process" using primary key columns */
+  order_in_process_by_pk?: Maybe<Order_In_Process>;
   /** fetch data from the table: "unit_of_measure" */
   unit_of_measure: Array<Unit_Of_Measure>;
   /** fetch aggregated fields from the table: "unit_of_measure" */
@@ -9432,6 +9630,29 @@ export type Query_RootEvent_Status_By_PkArgs = {
 };
 
 
+export type Query_RootOrder_In_ProcessArgs = {
+  distinct_on?: Maybe<Array<Order_In_Process_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Order_In_Process_Order_By>>;
+  where?: Maybe<Order_In_Process_Bool_Exp>;
+};
+
+
+export type Query_RootOrder_In_Process_AggregateArgs = {
+  distinct_on?: Maybe<Array<Order_In_Process_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Order_In_Process_Order_By>>;
+  where?: Maybe<Order_In_Process_Bool_Exp>;
+};
+
+
+export type Query_RootOrder_In_Process_By_PkArgs = {
+  product_id: Scalars['uuid'];
+};
+
+
 export type Query_RootUnit_Of_MeasureArgs = {
   distinct_on?: Maybe<Array<Unit_Of_Measure_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9643,6 +9864,12 @@ export type Subscription_Root = {
   event_status_aggregate: Event_Status_Aggregate;
   /** fetch data from the table: "event_status" using primary key columns */
   event_status_by_pk?: Maybe<Event_Status>;
+  /** fetch data from the table: "order_in_process" */
+  order_in_process: Array<Order_In_Process>;
+  /** fetch aggregated fields from the table: "order_in_process" */
+  order_in_process_aggregate: Order_In_Process_Aggregate;
+  /** fetch data from the table: "order_in_process" using primary key columns */
+  order_in_process_by_pk?: Maybe<Order_In_Process>;
   /** fetch data from the table: "unit_of_measure" */
   unit_of_measure: Array<Unit_Of_Measure>;
   /** fetch aggregated fields from the table: "unit_of_measure" */
@@ -10234,6 +10461,29 @@ export type Subscription_RootEvent_Status_AggregateArgs = {
 
 export type Subscription_RootEvent_Status_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+export type Subscription_RootOrder_In_ProcessArgs = {
+  distinct_on?: Maybe<Array<Order_In_Process_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Order_In_Process_Order_By>>;
+  where?: Maybe<Order_In_Process_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrder_In_Process_AggregateArgs = {
+  distinct_on?: Maybe<Array<Order_In_Process_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Order_In_Process_Order_By>>;
+  where?: Maybe<Order_In_Process_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrder_In_Process_By_PkArgs = {
+  product_id: Scalars['uuid'];
 };
 
 
@@ -11263,7 +11513,7 @@ export type LiveStreamSubscription = (
   { __typename?: 'subscription_root' }
   & { Events: Array<(
     { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'start_time' | 'status'>
+    & Pick<Events, 'id' | 'start_time' | 'stream_name' | 'status'>
     & { User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
@@ -13248,6 +13498,7 @@ export const LiveStreamDocument = gql`
   Events(where: {id: {_eq: $eventId}}) {
     id
     start_time
+    stream_name
     status
     User {
       id
