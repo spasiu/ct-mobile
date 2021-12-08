@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { VideoPlayer } from './stream/video-player';
+import { Video } from './stream/video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -188,7 +188,7 @@ export const LiveScreen = ({
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
-      <VideoPlayer streamName={streamName} />
+      <Video streamName={streamName} />
       <LinearGradient
         colors={[COLORS.transparent, COLORS.alpha_black]}
         start={{ x: 0, y: 0.5 }}
