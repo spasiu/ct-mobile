@@ -21,16 +21,18 @@ export const Video = ({ streamName }): JSX.Element => {
   useEffect(() => {
     class StreamConnection extends Connection {
       onActive(url: string) {
+        console.log('Connected to stream');
         setStreamUrl(url);
+      }
+
+      onError(error: Error) {
+        console.error('Error connecting to stream', error);
       }
     }
 
     const connection = new StreamConnection(streamName);
     if (streamName) {
-      connection
-        .connect()
-        .then(() => console.log('CONNECTED'))
-        .catch(error => console.error(error));
+      connection.connect();
     }
 
     return () => connection.close();
@@ -96,69 +98,82 @@ class Connection {
   }
 
   async connect() {
-    const url = await getWsUrl(this.streamName);
-    const iceServers = await getIceServers();
+    try {
+      const url = await getWsUrl(this.streamName);
+      const iceServers = await getIceServers();
 
-    this.ws = new WebSocket(url);
-    this.pc = new RTCPeerConnection({ iceServers });
+      this.ws = new WebSocket(url);
+      this.pc = new RTCPeerConnection({ iceServers });
 
-    const offer = await this.pc.createOffer({
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
-    });
-
-    this.pc.setLocalDescription(offer);
-    this.ws.onopen = () => {
-      const payload = JSON.stringify({
-        type: 'cmd',
-        transId: 0,
-        name: 'view',
-        data: {
-          streamId: `${MILLICAST_ACCOUNT_ID}/${this.streamName}`,
-          sdp: offer.sdp,
-        },
+      const offer = await this.pc.createOffer({
+        offerToReceiveAudio: true,
+        offerToReceiveVideo: true,
       });
-      this.ws?.send(payload);
-    };
 
-    this.ws.onclose = event => {
-      this.close();
-    };
-
-    this.ws.onerror = (error: unknown) => {
-      this.onError(error as Error);
-    };
-
-    this.ws.onmessage = (event: WebSocketMessageEvent) => {
-      const socketError = event.data?.error;
-      if (socketError) {
-        this.onError(new Error(socketError));
-        return;
-      }
-
-      const data = JSON.parse(event.data);
-      if (data.type === 'event' && data.name === 'inactive') {
-        this.onInactive();
-      }
-
-      if (data.type === 'event' && data.name === 'active' && this.streamUrl) {
-        this.onActive(this.streamUrl);
-      }
-
-      if (data.type === 'response') {
-        const description = new RTCSessionDescription({
-          type: 'answer',
-          sdp: data.data.sdp,
+      this.pc.setLocalDescription(offer);
+      this.ws.onopen = () => {
+        const payload = JSON.stringify({
+          type: 'cmd',
+          transId: 0,
+          name: 'view',
+          data: {
+            streamId: `${MILLICAST_ACCOUNT_ID}/${this.streamName}`,
+            sdp: offer.sdp,
+          },
         });
+        this.ws?.send(payload);
+      };
 
-        this.pc?.setRemoteDescription(description);
+      this.ws.onclose = event => {
+        this.close();
+      };
+
+      this.ws.onerror = (error: unknown) => {
+        this.onError(error as Error);
+      };
+
+      this.ws.onmessage = (event: WebSocketMessageEvent) => {
+        const socketError = event.data?.error;
+        if (socketError) {
+          this.onError(new Error(socketError));
+          return;
+        }
+
+        const data = JSON.parse(event.data);
+        if (data.type === 'event' && data.name === 'inactive') {
+          this.onInactive();
+        }
+
+        if (data.type === 'event' && data.name === 'active' && this.streamUrl) {
+          this.onActive(this.streamUrl);
+        }
+
+        if (data.type === 'response') {
+          const description = new RTCSessionDescription({
+            type: 'answer',
+            sdp: data.data.sdp,
+          });
+
+          this.pc?.setRemoteDescription(description);
+        }
+      };
+
+      this.pc.onaddstream = (event: EventOnAddStream) => {
+        this.streamUrl = event.stream.toURL();
+        this.onActive(this.streamUrl);
+      };
+    } catch (error) {
+      this.onError(error as Error);
+    }
+
+    // Kill connection and try again if stream not established in 3-5 seconds.
+    setTimeout(() => {
+      if (!this.streamUrl) {
+        console.log('Reattempting connection');
+        this.close();
+        this.connect();
       }
-    };
-
-    this.pc.onaddstream = (event: EventOnAddStream) => {
-      this.streamUrl = event.stream.toURL();
-      this.onActive(this.streamUrl);
-    };
+    }, 3000 + Math.floor(Math.random() * 2000));
   }
 }
 

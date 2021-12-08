@@ -523,6 +523,13 @@ export type BreakProductItems_Mutation_Response = {
   returning: Array<BreakProductItems>;
 };
 
+/** input type for inserting object relation for remote table "BreakProductItems" */
+export type BreakProductItems_Obj_Rel_Insert_Input = {
+  data: BreakProductItems_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<BreakProductItems_On_Conflict>;
+};
+
 /** on conflict condition type for table "BreakProductItems" */
 export type BreakProductItems_On_Conflict = {
   constraint: BreakProductItems_Constraint;
@@ -8767,6 +8774,8 @@ export enum Order_By {
 /** columns and relationships of "order_in_process" */
 export type Order_In_Process = {
   __typename?: 'order_in_process';
+  /** An object relationship */
+  BreakProductItems?: Maybe<BreakProductItems>;
   product_id: Scalars['uuid'];
 };
 
@@ -8794,6 +8803,7 @@ export type Order_In_Process_Aggregate_FieldsCountArgs = {
 
 /** Boolean expression to filter rows from the table "order_in_process". All fields are combined with a logical 'AND'. */
 export type Order_In_Process_Bool_Exp = {
+  BreakProductItems?: Maybe<BreakProductItems_Bool_Exp>;
   _and?: Maybe<Array<Order_In_Process_Bool_Exp>>;
   _not?: Maybe<Order_In_Process_Bool_Exp>;
   _or?: Maybe<Array<Order_In_Process_Bool_Exp>>;
@@ -8808,6 +8818,7 @@ export enum Order_In_Process_Constraint {
 
 /** input type for inserting data into table "order_in_process" */
 export type Order_In_Process_Insert_Input = {
+  BreakProductItems?: Maybe<BreakProductItems_Obj_Rel_Insert_Input>;
   product_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -8841,6 +8852,7 @@ export type Order_In_Process_On_Conflict = {
 
 /** Ordering options when selecting data from "order_in_process". */
 export type Order_In_Process_Order_By = {
+  BreakProductItems?: Maybe<BreakProductItems_Order_By>;
   product_id?: Maybe<Order_By>;
 };
 
