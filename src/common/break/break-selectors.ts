@@ -63,8 +63,8 @@ export const breakPriceSelector = (eventBreak: Partial<Breaks>): string => {
   return maxPrice === minPrice
     ? `${t('payment.paymentCurrencySign')}${maxPrice}`
     : `${t('payment.paymentCurrencySign')}${minPrice} - ${t(
-      'payment.paymentCurrencySign',
-    )}${maxPrice}`;
+        'payment.paymentCurrencySign',
+      )}${maxPrice}`;
 };
 
 export const breakSpotsSelector = (eventBreak: Partial<Breaks>): string => {
