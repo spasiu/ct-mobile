@@ -63,8 +63,8 @@ export const breakPriceSelector = (eventBreak: Partial<Breaks>): string => {
   return maxPrice === minPrice
     ? `${t('payment.paymentCurrencySign')}${maxPrice}`
     : `${t('payment.paymentCurrencySign')}${minPrice} - ${t(
-        'payment.paymentCurrencySign',
-      )}${maxPrice}`;
+      'payment.paymentCurrencySign',
+    )}${maxPrice}`;
 };
 
 export const breakSpotsSelector = (eventBreak: Partial<Breaks>): string => {
@@ -88,19 +88,14 @@ export const breakCardStatusSelector = (
   const event = optionalEvent ? optionalEvent : breakEventSelector(eventBreak);
   const eventStatus = eventCardStatusSelector(event);
   const breakStatus = breakStatusSelector(eventBreak);
+  if ([Break_Status_Enum.Notified, Break_Status_Enum.Live].includes(breakStatus)) {
+    return StatusBadgeTypes.live;
+  }
 
   if (breakStatus === Break_Status_Enum.Available) {
     return eventStatus === StatusBadgeTypes.live
       ? StatusBadgeTypes.upcoming
       : StatusBadgeTypes.scheduled;
-  }
-
-  if (breakStatus === Break_Status_Enum.Notified) {
-    return StatusBadgeTypes.live;
-  }
-
-  if (breakStatus === Break_Status_Enum.Live) {
-    return StatusBadgeTypes.live;
   }
 
   return StatusBadgeTypes.completed;
