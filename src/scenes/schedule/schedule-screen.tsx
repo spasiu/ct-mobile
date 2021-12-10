@@ -51,7 +51,7 @@ export const ScheduleScreen = (): JSX.Element => {
       <View>
         <TitleBar
           wrapperStyle={[s.mh3, s.mv0, s.mt4, s.mb0]}
-          title={t(breaksView ? 'sections.event' : 'sections.break')}
+          title={t(breaksView ? 'sections.break' : 'sections.event')}
           rightElement={
             <ScheduleToggle
               isOn={breaksView}
