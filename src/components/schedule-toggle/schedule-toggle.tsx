@@ -23,7 +23,7 @@ export const ScheduleToggle = ({
     size={'large'}
     icon={
       <Image
-        source={isOn ? eventScheduleIcon : breakScheduleIcon}
+        source={isOn ? breakScheduleIcon : eventScheduleIcon }
         resizeMode={'contain'}
       />
     }
