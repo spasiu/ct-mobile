@@ -33,7 +33,7 @@ import {
 import { WINDOW_WIDTH } from '../../theme/sizes';
 
 export const ScheduleScreen = (): JSX.Element => {
-  const [eventsView, setEventsView] = useState(false);
+  const [breaksView, setBreaksView] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const {
@@ -51,11 +51,11 @@ export const ScheduleScreen = (): JSX.Element => {
       <View>
         <TitleBar
           wrapperStyle={[s.mh3, s.mv0, s.mt4, s.mb0]}
-          title={t(eventsView ? 'sections.event' : 'sections.break')}
+          title={t(breaksView ? 'sections.break' : 'sections.event')}
           rightElement={
             <ScheduleToggle
-              isOn={eventsView}
-              onToggle={() => setEventsView(!eventsView)}
+              isOn={breaksView}
+              onToggle={() => setBreaksView(!breaksView)}
             />
           }
         />
@@ -83,7 +83,7 @@ export const ScheduleScreen = (): JSX.Element => {
           }}
         />
       </View>
-      {eventsView ? <EventsView /> : <BreaksView />}
+      {breaksView ? <BreaksView /> : <EventsView />}
       <View
         style={[
           s.absolute,
