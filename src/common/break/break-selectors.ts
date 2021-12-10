@@ -96,7 +96,7 @@ export const breakCardStatusSelector = (
   }
 
   if (breakStatus === Break_Status_Enum.Notified) {
-    return StatusBadgeTypes.upcoming;
+    return StatusBadgeTypes.live;
   }
 
   if (breakStatus === Break_Status_Enum.Live) {
