@@ -3,6 +3,8 @@ import {
   RTCPeerConnection,
   RTCSessionDescription,
 } from 'react-native-webrtc';
+import InCallManager from 'react-native-incall-manager';
+import { DeviceEventEmitter } from 'react-native';
 import Config from 'react-native-config';
 
 const MILLICAST_ACCOUNT_ID = Config.MILLICAST_ACCOUNT_ID;
@@ -14,20 +16,28 @@ export class Connection {
   onInactive?: () => void;
   onError?: (error: Error) => void;
   onClose?: () => void;
+  shouldTerminate: boolean;
   streamName: string;
   streamUrl?: string;
   pc?: RTCPeerConnection;
   ws?: WebSocket;
+
   constructor(streamName: string) {
     this.streamName = streamName;
+    this.shouldTerminate = false;
+    DeviceEventEmitter.addListener('WiredHeadset', ({ isPlugged }) => {
+      InCallManager.setForceSpeakerphoneOn(isPlugged);
+    });
   }
 
-  close(): void {
+  close(shouldTerminate = false): void {
+    this.shouldTerminate = shouldTerminate;
     this.ws?.close();
     this.pc?.close();
     delete this.ws;
     delete this.pc;
     this.onClose && this.onClose();
+    InCallManager.stop();
   }
 
   async connect(): Promise<void> {
@@ -94,6 +104,14 @@ export class Connection {
       this.pc.onaddstream = (event: EventOnAddStream) => {
         this.streamUrl = event.stream.toURL();
         this.onActive && this.onActive(this.streamUrl);
+        InCallManager.start({ media: 'video' });
+        InCallManager.getIsWiredHeadsetPluggedIn()
+          .then(isHeadSetActive => {
+            if (!isHeadSetActive) {
+              InCallManager.setForceSpeakerphoneOn(true);
+            }
+          })
+          .catch();
       };
     } catch (error) {
       this.onError && this.onError(error as Error);
@@ -101,7 +119,7 @@ export class Connection {
 
     // Kill connection and try again if stream not established in 3-5 seconds.
     setTimeout(() => {
-      if (!this.streamUrl) {
+      if (!this.streamUrl && !this.shouldTerminate) {
         console.log('Reattempting connection');
         this.close();
         this.connect();
