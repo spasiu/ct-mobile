@@ -11,7 +11,7 @@ import Config from 'react-native-config';
 import * as Sentry from '@sentry/react-native';
 import SplashScreen from 'react-native-splash-screen';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-
+import Sound from 'react-native-sound';
 import './theme/tachyons';
 import { RootNavigator } from './navigators/root-navigator';
 import { setI18nConfig } from './i18n/i18n';
@@ -39,6 +39,7 @@ const App = (): JSX.Element | null => {
 
   // concentrates all init functions
   useEffect(() => {
+    Sound.setCategory('Playback');
     setI18nConfig();
     RNLocalize.addEventListener('change', setI18nConfig);
     GoogleSignin.configure({ webClientId: Config.GOOGLE_SIGN_IN_CLIENT_ID });

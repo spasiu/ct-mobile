@@ -33,7 +33,7 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
       connection.connect();
     }
 
-    return () => connection.close();
+    return () => connection.close(true);
   }, [streamName]);
 
   return (
