@@ -19,6 +19,7 @@ import {
   breakIdSelector,
   breaksSelector,
   handleBreakPress,
+  breakStatusSelector,
 } from '../../common/break';
 import { SimpleBreaker } from './breaker-detail-screen.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -83,7 +84,7 @@ export const BreaksView = ({
         );
         return (
           <BreakCard
-            breakStatus={breakItem.status}
+            breakStatus={breakStatusSelector(breakItem)}
             onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}

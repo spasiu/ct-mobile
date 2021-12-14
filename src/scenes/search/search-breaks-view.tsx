@@ -22,7 +22,11 @@ import { LiveScreenNavigationProp } from '../live/live-screen.props';
 
 import { breakScheduleSelector } from './search-modal.utils';
 import { SearchBreaksViewProps } from './search-modal.props';
-import { breakIdSelector, handleBreakPress } from '../../common/break';
+import {
+  breakIdSelector,
+  handleBreakPress,
+  breakStatusSelector,
+} from '../../common/break';
 
 export const SearchBreaksView = ({
   breaks,
@@ -51,7 +55,7 @@ export const SearchBreaksView = ({
           const breakSchedule = breakScheduleSelector(eventBreak);
           return (
             <BreakCard
-              breakStatus={eventBreak.status}
+              breakStatus={breakStatusSelector(eventBreak)}
               {...breakSchedule}
               onPressBuy={() => setBreakId(breakIdSelector(eventBreak))}
               onPress={() =>

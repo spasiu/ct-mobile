@@ -45,7 +45,8 @@ export const BreakCard = ({
   const buyDisabled =
     breakStatus === 'COMPLETED' ||
     breakStatus === 'LIVE' ||
-    breakStatus === 'SOLDOUT';
+    breakStatus === 'SOLDOUT' ||
+    parseInt(spotsLeft, 10) === 0;
 
   return (
     <BorderlessButton

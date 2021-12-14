@@ -17,7 +17,7 @@ import {
   updateFollowBreakCache,
   updateUnfollowBreakCache,
 } from '../../utils/cache';
-
+import { breakStatusSelector } from '../../common/break';
 import { breakCardSelector } from './live-screen.utils';
 import { UpcomingBreaksProps } from './live-screen.props';
 import { formatScheduledStatus } from '../../utils/date';
@@ -54,7 +54,7 @@ export const LineupModal = ({
           const breakCardDetails = breakCardSelector(item, breaker, event);
           return (
             <BreakCard
-              breakStatus={item.status}
+              breakStatus={breakStatusSelector(item)}
               {...breakCardDetails}
               eventDate={formatScheduledStatus(eventTimeSelector(event))}
               onPressBuy={() => setBreakId(item.id)}
