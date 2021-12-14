@@ -42,7 +42,6 @@ export const UserUpcomingBreaks = (): JSX.Element => {
       userId: authUser?.uid,
     },
   });
-
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
 
@@ -74,6 +73,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
       {indexedMap((item, index) => {
         const breakItem = item as Breaks;
         const breakerBreakDetail = breakScheduleSelector(breakItem);
+        console.log(`>>> ${JSON.stringify(breakerBreakDetail)}`);
         return (
           <BreakCard
             breakStatus={breakStatusSelector(breakItem)}

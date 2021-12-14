@@ -14,7 +14,7 @@ export interface BreakCardProps extends BorderlessButtonProps {
   breakType: Break_Type_Enum;
   eventDate?: string;
   price?: string;
-  spotsLeft?: string;
+  spotsLeft?: number;
   onPressFollow?: () => void;
   userFollows?: boolean;
   onPressBuy?: () => void;

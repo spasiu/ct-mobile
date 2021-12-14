@@ -34,7 +34,7 @@ export const BreakCard = ({
   breakerImage,
   breakType,
   price,
-  spotsLeft = '',
+  spotsLeft,
   eventDate,
   onPressFollow = () => undefined,
   userFollows = false,
@@ -46,7 +46,7 @@ export const BreakCard = ({
     breakStatus === 'COMPLETED' ||
     breakStatus === 'LIVE' ||
     breakStatus === 'SOLDOUT' ||
-    parseInt(spotsLeft, 10) === 0;
+    spotsLeft === 0;
 
   return (
     <BorderlessButton
