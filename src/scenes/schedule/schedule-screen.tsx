@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 
@@ -33,15 +33,20 @@ import {
 import { WINDOW_WIDTH } from '../../theme/sizes';
 
 export const ScheduleScreen = (): JSX.Element => {
-  const [breaksView, setBreaksView] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-
   const {
     breakTypeFilter,
     sportTypeFilter,
     setBreakTypeFilter,
     setSportTypeFilter,
+    itemTypeFilter,
+    setItemTypeFilter,
+    cleanFilters
   } = useContext(FilterContext) as FilterContextType;
+
+  const [breaksView, setBreaksView] = useState(itemTypeFilter === 'Breaks');
+  const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {setBreaksView(itemTypeFilter === 'Breaks')},[itemTypeFilter])
 
   return (
     <Container
@@ -55,7 +60,12 @@ export const ScheduleScreen = (): JSX.Element => {
           rightElement={
             <ScheduleToggle
               isOn={breaksView}
-              onToggle={() => setBreaksView(!breaksView)}
+              onToggle={() => {
+                setBreaksView(!breaksView);
+                breaksView ? setItemTypeFilter('Events') : setItemTypeFilter('Breaks');
+                cleanFilters();
+              }
+            }
             />
           }
         />

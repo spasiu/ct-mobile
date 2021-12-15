@@ -77,7 +77,7 @@ import { EventDetailModalProps } from '../event-detail/event-detail-modal.props'
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { setSportTypeFilter } = useContext(FilterContext) as FilterContextType;
+  const { setSportTypeFilter, setItemTypeFilter } = useContext(FilterContext) as FilterContextType;
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
   const {
@@ -197,6 +197,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                         <FilterItem
                           onPress={() => {
                             setSportTypeFilter(sport.key);
+                            setItemTypeFilter('Breaks');
                             navigation.navigate(ROUTES_IDS.SCHEDULE_TAB);
                           }}
                           type={FilterItemTypes.circle}
