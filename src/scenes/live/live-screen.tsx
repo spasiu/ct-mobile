@@ -185,7 +185,6 @@ export const LiveScreen = ({
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
   };
-
   return (
     <View style={[s.flx_i, s.bg_black]}>
       <Video streamName={streamName} />

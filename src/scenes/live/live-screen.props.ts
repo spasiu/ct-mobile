@@ -20,7 +20,7 @@ export interface LiveNowBoxProps extends SlidingBoxProps {
 export interface UpNextBoxProps extends SlidingBoxProps {
   breakTitle?: string;
   price?: string;
-  spotsLeft?: string;
+  spotsLeft?: number;
 }
 
 export interface ChatProps {

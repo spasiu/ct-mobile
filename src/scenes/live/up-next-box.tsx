@@ -10,13 +10,14 @@ import { UpNextBoxProps } from './live-screen.props';
 export const UpNextBox = ({
   breakTitle = '',
   price = '',
-  spotsLeft = '',
+  spotsLeft,
   ...slidingBoxProps
 }: UpNextBoxProps): JSX.Element => {
   return (
     <SlidingBox
       {...slidingBoxProps}
       containerStyle={[s.mt3]}
+      actionDisabled={spotsLeft === 0}
       isActionBuy
       handleText={t('buttons.upNext')}>
       <View style={[s.flx_i]}>
