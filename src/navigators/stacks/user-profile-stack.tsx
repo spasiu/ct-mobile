@@ -5,12 +5,11 @@ import { ROUTES_IDS } from '../routes/identifiers';
 import { UserProfileScreen } from '../../scenes/user-profile/user-profile-screen';
 import { BreakPreferencesScreen } from '../../scenes/break-preferences/break-preferences-screen';
 import { EditBreakPreferencesScreen } from '../../scenes/edit-break-preferences/edit-break-preferences-screen';
-import { NotificationPreferencesScreen } from '../../scenes/notification-preferences/notification-preferences-screen';
 import { AddressesListScreen } from '../../scenes/addresses-list/addresses-list-screen';
 import { AddAddressScreen } from '../../scenes/add-address/add-address-screen';
 import { EditAddressScreen } from '../../scenes/edit-address/edit-address-screen';
 
-import { Notifications, Addresses } from '../../services/api/requests';
+import { Addresses } from '../../services/api/requests';
 
 import { PaymentStack } from './payment-stack';
 import { Question } from '../../common/break-preferences';
@@ -23,9 +22,6 @@ export type UserProfileStackParamList = {
     content: Question;
     userSelection: BreakType;
     pageTitle: string;
-  };
-  [ROUTES_IDS.NOTIFICATION_PREFERENCES_SCREEN]: {
-    notificationPreferences: Partial<Notifications>;
   };
   [ROUTES_IDS.PAYMENT_INFORMATION_LIST_SCREEN]: undefined;
   [ROUTES_IDS.ADD_PAYMENT_INFORMATION_SCREEN]: undefined;
@@ -56,10 +52,6 @@ export const UserProfileStack = (): JSX.Element => (
     <Stack.Screen
       name={ROUTES_IDS.EDIT_BREAK_PREFERENCES_SCREEN}
       component={EditBreakPreferencesScreen}
-    />
-    <Stack.Screen
-      name={ROUTES_IDS.NOTIFICATION_PREFERENCES_SCREEN}
-      component={NotificationPreferencesScreen}
     />
     <Stack.Screen
       name={ROUTES_IDS.PAYMENT_INFORMATION_LIST_SCREEN}

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, Switch } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import Config from 'react-native-config';
@@ -11,7 +11,6 @@ import {
   userUsernameSelector,
   userNameSelector,
   userImageSelector,
-  userNotificationsSelector,
   userDefaultAddressSingleLineSelector,
 } from '../../common/user-profile';
 import {
@@ -39,7 +38,6 @@ import { UserProfileScreenProps } from './user-profile-screen.props';
 import {
   userIcon,
   breakPreferencesIcon,
-  notificationsIcon,
   rulesOfPlayIcon,
   termsOfServiceIcon,
   privacyPolicyIcon,
@@ -57,19 +55,20 @@ import {
 export const UserProfileScreen = ({
   navigation,
 }: UserProfileScreenProps): JSX.Element => {
-  const { logout, uploadPhoto, user: authUser } = useContext(
-    AuthContext,
-  ) as AuthContextType;
   const {
-    cards,
-    getCards,
-    getDefaultPaymentCard,
-    cleanPaymentInfo,
-  } = useContext(PaymentContext) as PaymentContextType;
+    logout,
+    uploadPhoto,
+    user: authUser,
+  } = useContext(AuthContext) as AuthContextType;
+  const { cards, getCards, getDefaultPaymentCard, cleanPaymentInfo } =
+    useContext(PaymentContext) as PaymentContextType;
   const { cleanFilters } = useContext(FilterContext) as FilterContextType;
-  const { cleanNotificationData } = useContext(
-    NotificationContext,
-  ) as NotificationContextType;
+
+  const {
+    notificationsEnabled,
+    setNotificationsEnabled,
+    cleanNotificationData,
+  } = useContext(NotificationContext) as NotificationContextType;
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
@@ -167,19 +166,22 @@ export const UserProfileScreen = ({
                 }
               />
               <RowLink
-                icon={notificationsIcon}
-                text={t('profile.notifications')}
-                containerStyle={[s.mb2]}
-                onPress={() => {
-                  navigation.navigate(
-                    ROUTES_IDS.NOTIFICATION_PREFERENCES_SCREEN,
-                    {
-                      notificationPreferences: userNotificationsSelector(
-                        user as Users,
-                      ),
-                    },
-                  );
-                }}
+                text={t('notificationPreferences.enableNotifications')}
+                showArrow={false}
+                containerStyle={[s.mb4]}
+                rightElementContainerStyle={[s.aic]}
+                rightElement={
+                  <Switch
+                    value={notificationsEnabled}
+                    onValueChange={() => {
+                      if (notificationsEnabled) {
+                        setNotificationsEnabled(false);
+                      } else {
+                        setNotificationsEnabled(true);
+                      }
+                    }}
+                  />
+                }
               />
             </View>
             <View style={[s.mb4]}>
