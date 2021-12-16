@@ -26,7 +26,7 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
     };
 
     connection.onError = (error: Error) => {
-      console.error('Error connecting to stream', error);
+      console.log('Error connecting to stream', error);
     };
 
     if (streamName) {
