@@ -12,9 +12,7 @@ import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEmpty } from 'ramda';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 import {
   NavigationBar,
@@ -71,7 +69,6 @@ import {
 } from './live-screen.presets';
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
-import { indexedMap } from '../../utils/ramda';
 import { SeeAllTeamsModal } from './see-all-teams-modal';
 import { LineupModal } from './lineup-modal';
 import { TermsOfUseModal } from './terms-of-use-modal';
@@ -125,32 +122,49 @@ export const LiveScreen = ({
     },
   });
 
+  const addDiamond = () =>
+    firestore().collection('LiveChat').doc(eventId).collection('Diamonds').add({
+      createdOn: firestore.FieldValue.serverTimestamp(),
+    });
+
   useEffect(() => {
-    const unsubscribe = firestore()
+    const unsubscribeFromDiamonds = firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .collection('Diamonds')
+      .onSnapshot(snapshot => {
+        const newDocs = snapshot
+          .docChanges()
+          .filter(change => change.type === 'added');
+
+        // TODO trigger the animation instead of logging
+        console.log(`Show ${newDocs.length} diamonds.`);
+      });
+
+    const unsubscribeFromMessages = firestore()
       .collection('LiveChat')
       .doc(eventId)
       .collection('Messages')
-      .limit(60)
       .orderBy('createdOn', 'desc')
-      .onSnapshot(documentSnapshot => {
-        const listenerUpdates = documentSnapshot.docs;
-        const newMessages: ChatMessage[] = indexedMap(listenerUpdate => {
-          const updateData =
-            listenerUpdate as FirebaseFirestoreTypes.DocumentData;
-          return {
-            id: updateData.id,
-            ...updateData.data(),
-          };
-        }, listenerUpdates);
-        setMessages(newMessages);
-      });
+      .onSnapshot(snapshot =>
+        setMessages(
+          snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as ChatMessage[],
+        ),
+      );
 
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      unsubscribeFromMessages();
+      unsubscribeFromDiamonds();
+    };
   }, []);
 
   useLayoutEffect(() => {
-    if (!liveTermsAccepted) setTermsOfUseVisible(true);
+    if (!liveTermsAccepted) {
+      setTermsOfUseVisible(true);
+    }
   }, []);
 
   const event = eventSelector(data);
@@ -178,7 +192,6 @@ export const LiveScreen = ({
       setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveBreak, currentLiveBreak]);
 
   const handleConfirmTermsOfUse = () => {
@@ -294,7 +307,7 @@ export const LiveScreen = ({
                 ]}
               />
               <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
-                <IconButton>
+                <IconButton onPress={addDiamond}>
                   <Image source={diamondIcon} />
                 </IconButton>
                 {/* <IconButton>
