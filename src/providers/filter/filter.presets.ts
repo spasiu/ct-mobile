@@ -9,8 +9,8 @@ export const EVENT_TYPES = [
 ];
 export const SPORTS_TYPES = [ALL_FILTER_OPTION, ...Object.values(Sports)];
 
-export const TEXT_KEY_FOR_BREAK_TYPE: {
-  [key in BreakType | typeof ALL_FILTER_OPTION]: string;
+export const TEXT_KEY_FOR_FILTER_TYPE: {
+  [key in BreakType  | Sports | typeof ALL_FILTER_OPTION]: string;
 } = {
   [Break_Type_Enum.HitDraft]: 'filter.breakTypes.hitDraft',
   [Break_Type_Enum.Personal]: 'filter.breakTypes.personal',
@@ -18,12 +18,6 @@ export const TEXT_KEY_FOR_BREAK_TYPE: {
   [Break_Type_Enum.PickYourTeam]: 'filter.breakTypes.pickYourTeam',
   [Break_Type_Enum.RandomDivision]: 'filter.breakTypes.randomDivision',
   [Break_Type_Enum.RandomTeam]: 'filter.breakTypes.randomTeam',
-  [ALL_FILTER_OPTION]: 'filter.all',
-};
-
-export const TEXT_KEY_FOR_SPORT_TYPE: {
-  [key in Sports | typeof ALL_FILTER_OPTION]: string;
-} = {
   [Sports.baseball]: 'filter.sportTypes.baseball',
   [Sports.basketball]: 'filter.sportTypes.basketball',
   [Sports.soccer]: 'filter.sportTypes.soccer',
