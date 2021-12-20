@@ -8,7 +8,6 @@ import { FollowButton, FollowButtonTypes } from '../follow-button';
 import { BuyButton } from '../buy-button';
 import { BreakTypeBadge } from '../break-type-badge';
 import { ServerImage } from '../server-image';
-import { StatusBadgeTypes } from '../status-badge'
 import { t } from '../../i18n/i18n';
 
 import {
