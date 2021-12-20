@@ -31,7 +31,6 @@ import {
 import {
   breakIdSelector,
   handleBreakPress,
-  breakStatusSelector,
 } from '../../common/break';
 
 export const BreaksView = (): JSX.Element => {
@@ -91,7 +90,6 @@ export const BreaksView = (): JSX.Element => {
           const breakSchedule = breakScheduleSelector(eventBreak);
           return (
             <BreakCard
-              breakStatus={breakStatusSelector(eventBreak)}
               {...breakSchedule}
               onPressBuy={() => setBreakId(breakIdSelector(eventBreak))}
               onPress={() =>

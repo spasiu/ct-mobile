@@ -7,7 +7,6 @@ import {
   breakIdSelector,
   breaksSelector,
   handleBreakPress,
-  breakStatusSelector,
 } from '../../common/break';
 import { BreakCard, EmptyState } from '../../components';
 import { t } from '../../i18n/i18n';
@@ -75,7 +74,6 @@ export const UserUpcomingBreaks = (): JSX.Element => {
         const breakerBreakDetail = breakScheduleSelector(breakItem);
         return (
           <BreakCard
-            breakStatus={breakStatusSelector(breakItem)}
             onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}

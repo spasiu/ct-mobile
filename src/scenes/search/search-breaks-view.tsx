@@ -25,7 +25,6 @@ import { SearchBreaksViewProps } from './search-modal.props';
 import {
   breakIdSelector,
   handleBreakPress,
-  breakStatusSelector,
 } from '../../common/break';
 
 export const SearchBreaksView = ({
@@ -55,7 +54,6 @@ export const SearchBreaksView = ({
           const breakSchedule = breakScheduleSelector(eventBreak);
           return (
             <BreakCard
-              breakStatus={breakStatusSelector(eventBreak)}
               {...breakSchedule}
               onPressBuy={() => setBreakId(breakIdSelector(eventBreak))}
               onPress={() =>

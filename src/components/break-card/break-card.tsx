@@ -8,7 +8,7 @@ import { FollowButton, FollowButtonTypes } from '../follow-button';
 import { BuyButton } from '../buy-button';
 import { BreakTypeBadge } from '../break-type-badge';
 import { ServerImage } from '../server-image';
-
+import { StatusBadgeTypes } from '../status-badge'
 import { t } from '../../i18n/i18n';
 
 import {
@@ -27,7 +27,6 @@ import { BreakCardProps } from './break-card.props';
 import { ICON_SIZE } from '../../theme/sizes';
 
 export const BreakCard = ({
-  breakStatus,
   title = '',
   status,
   league,
@@ -43,9 +42,8 @@ export const BreakCard = ({
   ...borderlessButtonProps
 }: BreakCardProps): JSX.Element => {
   const buyDisabled =
-    breakStatus === 'COMPLETED' ||
-    breakStatus === 'LIVE' ||
-    breakStatus === 'SOLDOUT' ||
+    status === 'completed' ||
+    status === 'live' ||
     spotsLeft === 0;
 
   return (
