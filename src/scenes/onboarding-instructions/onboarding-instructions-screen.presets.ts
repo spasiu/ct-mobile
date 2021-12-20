@@ -1,23 +1,26 @@
-export const instructionImage = require('../../assets/instruction-one.png');
+export const img1 = require('../../assets/instruction-one.png');
+export const img2 = require('../../assets/instruction-two.png');
+export const img3 = require('../../assets/instruction-three.png');
+export const img4 = require('../../assets/instruction-four.png');
 
 export const instructions = [
   {
-    image: instructionImage,
+    image: img1,
     titleKey: 'onboarding.firstInstructionTitle',
     subtitleKey: 'onboarding.firstInstructionSubtitle',
   },
   {
-    image: instructionImage,
+    image: img2,
     titleKey: 'onboarding.secondInstructionTitle',
     subtitleKey: 'onboarding.secondInstructionSubtitle',
   },
   {
-    image: instructionImage,
+    image: img3,
     titleKey: 'onboarding.thridInstructionTitle',
     subtitleKey: 'onboarding.thridInstructionSubtitle',
   },
   {
-    image: instructionImage,
+    image: img4,
     titleKey: 'onboarding.fourthInstructionTitle',
     subtitleKey: 'onboarding.fourthInstructionSubtitle',
   },
