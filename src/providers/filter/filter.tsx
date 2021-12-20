@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { ItemTypeFilterOptions } from '.';
 
 import {
   BreakTypeFilterOptions,
@@ -22,6 +23,8 @@ export const FilterProvider = ({
     setSportTypeFilter,
   ] = useState<SportTypeFilterOptions>(ALL_FILTER_OPTION);
 
+  const [itemTypeFilter, setItemTypeFilter] = useState<ItemTypeFilterOptions>('Events');
+
   return (
     <FilterContext.Provider
       value={{
@@ -29,6 +32,8 @@ export const FilterProvider = ({
         setBreakTypeFilter,
         sportTypeFilter,
         setSportTypeFilter,
+        itemTypeFilter,
+        setItemTypeFilter,
         cleanFilters: () => {
           setBreakTypeFilter(ALL_FILTER_OPTION);
           setSportTypeFilter(ALL_FILTER_OPTION);

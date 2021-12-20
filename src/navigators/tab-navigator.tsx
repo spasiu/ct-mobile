@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, Text } from 'react-native';
+import { Image, Text, Touchable, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import { COLORS } from '../theme/colors';
@@ -12,6 +12,8 @@ import { HomeStack } from './stacks/home-stack';
 import { BreakersStack } from './stacks/breakers-stack';
 
 import { ROUTES_IDS } from './routes/identifiers';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FilterContext, FilterContextType } from '../providers/filter';
 
 export type TabNavigatorParamList = {
   [ROUTES_IDS.HOME_TAB]: undefined;
@@ -40,6 +42,11 @@ const homeIcon = require('../assets/home-icon.png');
 const scheduleIcon = require('../assets/schedule-icon.png');
 const hitsIcon = require('../assets/hits-icon.png');
 const breakersIcon = require('../assets/breakers-icon.png');
+
+const {
+  setItemTypeFilter,
+  cleanFilters
+} = useContext(FilterContext) as FilterContextType;
 
 export const TabNavigator = (): JSX.Element => (
   <Tab.Navigator>
@@ -74,6 +81,10 @@ export const TabNavigator = (): JSX.Element => (
       component={ScheduleStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
+          <TouchableOpacity onPress={() => {
+            setItemTypeFilter('Events');
+            cleanFilters();
+          }}>
           <Image
             source={scheduleIcon}
             style={[
@@ -84,6 +95,7 @@ export const TabNavigator = (): JSX.Element => (
               },
             ]}
           />
+          </TouchableOpacity>
         ),
         tabBarLabel: ({ focused }) => {
           const labelStyle = focused
