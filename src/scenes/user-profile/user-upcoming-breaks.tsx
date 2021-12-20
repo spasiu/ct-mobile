@@ -41,7 +41,6 @@ export const UserUpcomingBreaks = (): JSX.Element => {
       userId: authUser?.uid,
     },
   });
-
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
 

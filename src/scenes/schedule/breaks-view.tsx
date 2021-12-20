@@ -28,7 +28,10 @@ import {
   getBreakTypeFilter,
   getSportTypeFilter,
 } from './schedule-screen.utils';
-import { breakIdSelector, handleBreakPress } from '../../common/break';
+import {
+  breakIdSelector,
+  handleBreakPress,
+} from '../../common/break';
 
 export const BreaksView = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
@@ -87,7 +90,6 @@ export const BreaksView = (): JSX.Element => {
           const breakSchedule = breakScheduleSelector(eventBreak);
           return (
             <BreakCard
-              breakStatus={eventBreak.status}
               {...breakSchedule}
               onPressBuy={() => setBreakId(breakIdSelector(eventBreak))}
               onPress={() =>
