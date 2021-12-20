@@ -11,6 +11,7 @@ import {
   checkoutCartShippingSelector,
   checkoutCartSubtotalSelector,
   checkoutCartTaxSelector,
+  checkoutCartDiscountSelector,
   createCheckout,
   getCheckoutCartInfo,
   getCheckoutParams,
@@ -31,6 +32,7 @@ export const PurchaseModal = ({
   userAddress,
   userPaymentData,
   cartItems,
+  coupon,
   onSuccess,
   onCancel,
   onError,
@@ -46,19 +48,21 @@ export const PurchaseModal = ({
   useEffect(() => {
     setLoading(true);
     if (visible) {
-      const checkoutParams = getCheckoutParams(userAddress, cartItems);
+      const checkoutParams = getCheckoutParams(userAddress, cartItems, coupon);
       createCheckout(checkoutParams)
         .then((response: CheckoutResponse) => {
           const cart = getCheckoutCartInfo(response);
           setCheckoutCart(cart);
           setLoading(false);
         })
-        .catch(() =>
+        .catch(e => {
+          setLoading(false);
+          onCancel();
           showMessage({
-            message: t('errors.generic'),
+            message: t(e.message),
             type: 'danger',
-          }),
-        );
+          });
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
@@ -110,6 +114,14 @@ export const PurchaseModal = ({
             </Text>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
               {checkoutCartSubtotalSelector(checkoutCart)}
+            </Text>
+          </View>
+          <View style={[s.flx_row, s.jcsb, s.mb2]}>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {t('payment.discounts')}
+            </Text>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              -{checkoutCartDiscountSelector(checkoutCart)}
             </Text>
           </View>
           <View style={[s.flx_row, s.jcsb, s.mb2]}>

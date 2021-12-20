@@ -219,6 +219,7 @@
     "addPaymentDetails": "Add Payment Details",
     "numberOfSpots": "Number of Spots",
     "subtotal": "Subtotal",
+    "discounts": "Discounts",
     "tax": "Tax",
     "shipping": "Shipping",
     "addCoupon": "+ Add Coupon",
@@ -329,7 +330,8 @@
     "could_not_unset_default_payment_method":"Could not unset your default payment method. Please try again.",
     "big_commerce_creation_error":"Could not set you up on our payment platform. Please try again.",
     "breaker_detail_retrieval_error":"Could not retrieve data for the break. Please try again.",
-    "could_not_complete_PaySafe_payment": "Could not complete payment"
+    "could_not_complete_PaySafe_payment": "Could not complete payment",
+    "invalid_coupon_code": "Invalid coupon code"
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

@@ -42,11 +42,13 @@ export const transformProductToCheckout = (
 export const getCheckoutParams = (
   userAddress: Addresses,
   breakProducts: BreakProductItems[],
+  coupon: string,
 ): CheckoutParams => ({
   first_name: addressRecipientFirstNameSelector(userAddress),
   last_name: addressRecipientLastNameSelector(userAddress),
   address: addressWithoutRecipientSelector(userAddress),
   products: map(product => transformProductToCheckout(product), breakProducts),
+  coupon: coupon,
 });
 
 export const getCheckoutCartInfo = (
@@ -59,12 +61,14 @@ export const getCheckoutCartInfo = (
     paymentData,
   );
   const cartId = pathOr('', ['cart', 'id'], paymentData);
+  const discount = paymentData.cart.coupons[0]?.discounted_amount || '';
   return {
     cartItems,
     cartId,
     tax: paymentData.tax_total,
     subtotal: paymentData.subtotal_ex_tax,
     shipping: paymentData.shipping_cost_total_ex_tax,
+    discount,
     total: paymentData.grand_total,
   };
 };
@@ -140,6 +144,19 @@ export const checkoutCartSubtotalSelector = (
   // we need to explicitly check for undefined
   return subtotal !== undefined
     ? `${t('payment.paymentCurrencySign')}${subtotal}`
+    : '';
+};
+
+export const checkoutCartDiscountSelector = (
+  checkoutCart: CheckoutCart | undefined,
+): string => {
+  const discount = path(['discount'], checkoutCart) as number;
+  // since 0 evaluates to false in js
+  // we need to explicitly check for undefined
+  return discount !== undefined
+    ? `${t('payment.paymentCurrencySign')}${(
+        Math.round(discount * 100) / 100
+      ).toFixed(2)}`
     : '';
 };
 
