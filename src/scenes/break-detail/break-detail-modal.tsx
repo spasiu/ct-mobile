@@ -43,6 +43,7 @@ import { PurchaseModal } from './purchase-modal';
 import { addressCleanSelector } from '../../common/address/address-selectors';
 import { CtError, handleError } from '../../common/error';
 import { ApolloError } from '@apollo/client';
+import { NotificationContext, NotificationContextType } from '../../providers/notification';
 
 export const BreakDetailModal = ({
   breakId,
@@ -50,6 +51,9 @@ export const BreakDetailModal = ({
   onPressClose = () => undefined,
   ...modalProps
 }: BreakDetailModalProps): JSX.Element => {
+  const { requestNotificationPermission } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { cards, getCards, getDefaultPaymentCard } = useContext(
     PaymentContext,
@@ -232,6 +236,7 @@ export const BreakDetailModal = ({
         onSuccess={() => {
           cleanModalOnClose();
           onPressClose();
+          requestNotificationPermission();
         }}
         onCancel={() => setShowPurchaseModal(false)}
         onError={() => {

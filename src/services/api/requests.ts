@@ -12278,7 +12278,7 @@ export type BreakDetailQueryResult = Apollo.QueryResult<BreakDetailQuery, BreakD
 export const BreakItemUpdateDocument = gql`
     mutation BreakItemUpdate($itemId: uuid, $quantity: Int) {
   update_BreakProductItems(
-    where: {id: {_eq: $itemId}}
+    where: {_and: [{id: {_eq: $itemId}}, {order_id: {_is_null: true}}]}
     _inc: {quantity: $quantity}
   ) {
     affected_rows
