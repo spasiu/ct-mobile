@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { t } from '../../i18n/i18n';
+import { NotificationContext, NotificationContextType } from '../../providers/notification';
 
 import { IconButton } from '../icon-button';
 
@@ -25,13 +26,21 @@ export const FollowButton = ({
   selectedContainerStyle = [],
   defaultImageStyle = [],
   selectedImageStyle = [],
+  onPress,
   ...borderlessButtonProps
 }: FollowButtonProps): JSX.Element => {
+  const { requestNotificationPermission } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
   const selected = isFollowing(type);
   if (isSizeFull(size)) {
     return (
       <BorderlessButton
         {...borderlessButtonProps}
+        onPress={pointer => {
+          onPress && onPress(pointer);
+          requestNotificationPermission();
+        }}
         style={[
           ...buttonTypeStyle.full[type],
           ...(selected ? selectedContainerStyle : defaultContainerStyle),

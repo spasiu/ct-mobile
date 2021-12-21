@@ -15,8 +15,6 @@ export const NotificationProvider = ({
 }: NotifictionProviderProps): JSX.Element => {
   const [registeredInIntercom, setRegisteredInIntercom] = useState(false);
   const [notificationToken, setNotificationToken] = useState('');
-
-  // TODO: should also be persisted
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
@@ -26,22 +24,21 @@ export const NotificationProvider = ({
   useEffect(() => {
     if (notificationsEnabled) {
       requestNotificationPermissionHandler();
-      const subscription = Notifications.events().registerRemoteNotificationsRegistered(
-        ({ deviceToken }: Registered) => {
-          // TODO: send the token to server
-          setNotificationToken(deviceToken);
-          if (registeredInIntercom) {
-            Intercom.sendTokenToIntercom(notificationToken);
-          }
-        },
-      );
+      const subscription =
+        Notifications.events().registerRemoteNotificationsRegistered(
+          ({ deviceToken }: Registered) => {
+            setNotificationToken(deviceToken);
+            if (registeredInIntercom) {
+              Intercom.sendTokenToIntercom(notificationToken);
+            }
+          },
+        );
 
       return () => {
         subscription.remove();
       };
     } else {
       setNotificationToken('');
-      return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notificationsEnabled, registeredInIntercom]);

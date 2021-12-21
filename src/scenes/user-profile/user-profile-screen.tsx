@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, ScrollView, Text, Switch } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import Config from 'react-native-config';
@@ -64,11 +64,9 @@ export const UserProfileScreen = ({
     useContext(PaymentContext) as PaymentContextType;
   const { cleanFilters } = useContext(FilterContext) as FilterContextType;
 
-  const {
-    notificationsEnabled,
-    setNotificationsEnabled,
-    cleanNotificationData,
-  } = useContext(NotificationContext) as NotificationContextType;
+  const { cleanNotificationData } = useContext(
+    NotificationContext,
+  ) as NotificationContextType;
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
@@ -163,24 +161,6 @@ export const UserProfileScreen = ({
                 containerStyle={[s.mb2]}
                 onPress={() =>
                   navigation.navigate(ROUTES_IDS.BREAK_PREFERENCES_SCREEN)
-                }
-              />
-              <RowLink
-                text={t('notificationPreferences.enableNotifications')}
-                showArrow={false}
-                containerStyle={[s.mb4]}
-                rightElementContainerStyle={[s.aic]}
-                rightElement={
-                  <Switch
-                    value={notificationsEnabled}
-                    onValueChange={() => {
-                      if (notificationsEnabled) {
-                        setNotificationsEnabled(false);
-                      } else {
-                        setNotificationsEnabled(true);
-                      }
-                    }}
-                  />
                 }
               />
             </View>
