@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import Animated, {
@@ -8,30 +8,33 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  withDelay
+  withDelay,
 } from 'react-native-reanimated';
 import { repeat } from 'ramda';
 import { FloatingDiamondsProps } from '../live-screen.props';
 
 interface AnimationProps {
-  children: React.ReactNode,
-  left: boolean,
-  delay: number
+  children: React.ReactNode;
+  left: boolean;
+  delay: number;
 }
 
-const SlowAnimation = ({ children, left, delay }: AnimationProps): JSX.Element => {
+const SlowAnimation = ({
+  children,
+  left,
+  delay,
+}: AnimationProps): JSX.Element => {
   const floatingAnim = useSharedValue(0);
 
-  const height = 70
+  const height = 70;
   useEffect(() => {
-    floatingAnim.value = withDelay(delay, withTiming(
-      1,
-      { duration: 4000, easing: Easing.linear },
-      () => {
-        floatingAnim.value = 0 // remove test after testing
-      },
-    ));
-  })
+    floatingAnim.value = withDelay(
+      delay,
+      withTiming(1, { duration: 4000, easing: Easing.linear }, () => {
+        floatingAnim.value = 0;
+      }),
+    );
+  });
 
   return (
     <Animated.View
@@ -52,11 +55,11 @@ const SlowAnimation = ({ children, left, delay }: AnimationProps): JSX.Element =
                 translateX: interpolate(
                   floatingAnim.value,
                   [0, 0.5, 1],
-                  [0, left ? 15 : -15 , left ? -15 : 15],
+                  [0, left ? 15 : -15, left ? -15 : 15],
                 ),
               },
               {
-                scale: 0.5
+                scale: 0.5,
               },
             ],
             opacity: interpolate(
@@ -66,28 +69,34 @@ const SlowAnimation = ({ children, left, delay }: AnimationProps): JSX.Element =
             ),
           };
         }),
-      ]}
-    >
+      ]}>
       {children}
     </Animated.View>
-  )
-}
+  );
+};
 
-const FastAnimation = ({ children, left, delay }: AnimationProps): JSX.Element => {
+const FastAnimation = ({
+  children,
+  left,
+  delay,
+}: AnimationProps): JSX.Element => {
   const floatingAnim = useSharedValue(0);
 
-  const height = 70
+  const height = 70;
   useEffect(() => {
-    floatingAnim.value = withDelay(delay, withTiming(
-      1,
-      { duration: 1000, easing: Easing.bezier(0, 0, 0.58, 1) },
-      () => {
-        floatingAnim.value = 0 // remove this after testing
-      },
-    ));
-  })
+    floatingAnim.value = withDelay(
+      delay,
+      withTiming(
+        1,
+        { duration: 1000, easing: Easing.bezier(0, 0, 0.58, 1) },
+        () => {
+          floatingAnim.value = 0;
+        },
+      ),
+    );
+  });
 
-  const random = Math.floor(Math.random() * 30)
+  const random = Math.floor(Math.random() * 30);
 
   return (
     <Animated.View
@@ -112,7 +121,7 @@ const FastAnimation = ({ children, left, delay }: AnimationProps): JSX.Element =
                 ),
               },
               {
-                scale: 0.3
+                scale: 0.3,
               },
             ],
             opacity: interpolate(
@@ -122,60 +131,58 @@ const FastAnimation = ({ children, left, delay }: AnimationProps): JSX.Element =
             ),
           };
         }),
-      ]}
-    >
+      ]}>
       {children}
     </Animated.View>
-  )
-}
+  );
+};
 
-export const FloatingDiamondsAnimation = ({
+export const FloatingDiamonds = ({
   large = 0,
-  small = 0
+  small = 0,
 }: FloatingDiamondsProps): JSX.Element => {
-
   const getDiamonds = (count: number) => {
     return repeat('r', count).map((_, index) => {
       return {
-        left: index % 2 == 0
-      }
-    })
-  }
+        left: index % 2 == 0,
+      };
+    });
+  };
 
   return (
-    <View style={{
-      width: 34,
-      height: 28,
-      position: 'relative'
-    }}>
-      {
-        getDiamonds(large).map((diamond, index) => {
-          return (
-            <SlowAnimation left={diamond.left} delay={index * 300} key={index.toString()}>
-              <Image
-                source={require('../../../assets/diamond.png')}
-                style={{ width: 50, height: 50, zIndex: 2 }}
-              />
-            </SlowAnimation>
-          )
-        })
-      }
-      {
-        getDiamonds(small).map((diamond, index) => {
-          return (
-            <FastAnimation left={diamond.left} delay={index * 100} key={index.toString()} index={index}>
-              <Image
-                source={require('../../../assets/diamond.png')}
-                style={{ width: 50, height: 50, zIndex: 2 }}
-              />
-            </FastAnimation>
-          )
-        })
-      }
+    <View
+      style={{
+        width: 34,
+        height: 28,
+        position: 'relative',
+      }}>
+      {getDiamonds(large).map((diamond, index) => {
+        return (
+          <SlowAnimation
+            left={diamond.left}
+            delay={index * 300}
+            key={index.toString()}>
+            <Image
+              source={require('../../../assets/diamond.png')}
+              style={{ width: 50, height: 50, zIndex: 2 }}
+            />
+          </SlowAnimation>
+        );
+      })}
+      {getDiamonds(small).map((diamond, index) => {
+        return (
+          <FastAnimation
+            left={diamond.left}
+            delay={index * 100}
+            key={index.toString()}
+            index={index}>
+            <Image
+              source={require('../../../assets/diamond.png')}
+              style={{ width: 50, height: 50, zIndex: 2 }}
+            />
+          </FastAnimation>
+        );
+      })}
     </View>
-  )
-}
-
-export const FloatingDiamonds = memo(FloatingDiamondsAnimation, (prevProps, nextProps) => {
-  return !(prevProps.large !== nextProps.large || prevProps.small !== nextProps.small)
-});
+  );
+};

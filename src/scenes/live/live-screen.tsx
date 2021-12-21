@@ -128,10 +128,10 @@ export const LiveScreen = ({
     firestore().collection('LiveChat').doc(eventId).collection('Diamonds').add({
       createdOn: firestore.FieldValue.serverTimestamp(),
     });
-    setDiamonds({ large: diamonds.large + 1, small: diamonds.small + 1})
-  }
+  };
 
   useEffect(() => {
+    let shouldShowDiamonds = false;
     const unsubscribeFromDiamonds = firestore()
       .collection('LiveChat')
       .doc(eventId)
@@ -141,8 +141,11 @@ export const LiveScreen = ({
           .docChanges()
           .filter(change => change.type === 'added');
 
-        // TODO trigger the animation instead of logging
-        console.log(`Show ${newDocs.length} diamonds.`);
+        if (shouldShowDiamonds && newDocs.length > 0) {
+          setDiamonds({ large: newDocs.length, small: newDocs.length });
+        }
+        // ignore first snapshot event which contains all previous events
+        shouldShowDiamonds = true;
       });
 
     const unsubscribeFromMessages = firestore()
