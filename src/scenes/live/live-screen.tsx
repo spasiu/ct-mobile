@@ -75,6 +75,7 @@ import { TermsOfUseModal } from './terms-of-use-modal';
 
 import { LiveScreenProps } from './live-screen.props';
 import { SeeTeamsAnimation } from './see-teams-animation';
+import { FloatingDiamonds } from './animation/floating-diamonds';
 import { UserContext } from '../../providers/user/user';
 import { UserContextType } from '../../providers/user/user.types';
 
@@ -99,6 +100,7 @@ export const LiveScreen = ({
   const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
   const [currentLiveBreak, setCurrentLiveBreak] = useState<Partial<Breaks>>();
+  const [diamonds, setDiamonds] = useState({ large: 0, small: 0})
 
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
@@ -122,12 +124,14 @@ export const LiveScreen = ({
     },
   });
 
-  const addDiamond = () =>
+  const addDiamond = () => {
     firestore().collection('LiveChat').doc(eventId).collection('Diamonds').add({
       createdOn: firestore.FieldValue.serverTimestamp(),
     });
+  };
 
   useEffect(() => {
+    let shouldShowDiamonds = false;
     const unsubscribeFromDiamonds = firestore()
       .collection('LiveChat')
       .doc(eventId)
@@ -137,8 +141,11 @@ export const LiveScreen = ({
           .docChanges()
           .filter(change => change.type === 'added');
 
-        // TODO trigger the animation instead of logging
-        console.log(`Show ${newDocs.length} diamonds.`);
+        if (shouldShowDiamonds && newDocs.length > 0) {
+          setDiamonds({ large: newDocs.length, small: newDocs.length });
+        }
+        // ignore first snapshot event which contains all previous events
+        shouldShowDiamonds = true;
       });
 
     const unsubscribeFromMessages = firestore()
@@ -306,6 +313,12 @@ export const LiveScreen = ({
                 ]}
               />
               <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
+                <View style={[s.absolute, { bottom: 0}]}>
+                  <FloatingDiamonds
+                    large={diamonds.large}
+                    small={diamonds.small}
+                  />
+                </View>
                 <IconButton onPress={addDiamond}>
                   <Image source={diamondIcon} />
                 </IconButton>
