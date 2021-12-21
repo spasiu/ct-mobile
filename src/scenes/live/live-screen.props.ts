@@ -131,3 +131,8 @@ export interface TeamShadowProps {
   boxSize: number;
   rowIndex: number;
 }
+
+export interface FloatingDiamondsProps {
+  large: number;
+  small: number;
+}
