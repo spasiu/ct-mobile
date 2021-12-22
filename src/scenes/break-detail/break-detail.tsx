@@ -45,7 +45,7 @@ export const BreakDetail = ({
   paymentData,
   userAddress,
   coupon,
-  changeCoupon,
+  setCoupon,
   error,
 }: BreakDetailProps): JSX.Element => {
   const [updateBreakItem] = useBreakItemUpdateMutation({
@@ -115,7 +115,7 @@ export const BreakDetail = ({
           <View style={[s.flx_row, s.bg_white, s.h3, s.br4]}>
             <TextInput
               value={coupon}
-              onChange={e => changeCoupon(e.nativeEvent.text)}
+              onChange={e => setCoupon(e.nativeEvent.text)}
               autoCapitalize={'none'}
               spellCheck={false}
               autoCorrect={false}

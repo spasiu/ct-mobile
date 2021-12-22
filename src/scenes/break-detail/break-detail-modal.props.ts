@@ -81,9 +81,9 @@ export interface BreakDetailProps {
   paymentData: Card | undefined;
   userAddress: Addresses | undefined;
   coupon: string;
-  changeCoupon: (coupon: string) => void;
+  setCoupon: (coupon: string) => void;
   error: string;
-  changeError: (error: string) => void;
+  setError: (error: string) => void;
 }
 
 export interface PurchaseModalProps extends WarningModalProps {
@@ -95,5 +95,5 @@ export interface PurchaseModalProps extends WarningModalProps {
   onCancel: () => void;
   onError: () => void;
   error: string;
-  changeError: (error: string) => void;
+  setError: (error: string) => void;
 }

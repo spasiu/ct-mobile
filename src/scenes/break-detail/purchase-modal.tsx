@@ -32,7 +32,7 @@ export const PurchaseModal = ({
   cartItems,
   coupon,
   error,
-  changeError,
+  setError,
   onSuccess,
   onCancel,
   onError,
@@ -56,7 +56,7 @@ export const PurchaseModal = ({
           setLoading(false);
         })
         .catch(e => {
-          changeError(e.details.ct_error_code);
+          setError(e.details.ct_error_code);
           setLoading(false);
           onCancel();
         });
