@@ -44,6 +44,8 @@ import { addressCleanSelector } from '../../common/address/address-selectors';
 import { CtError, handleError } from '../../common/error';
 import { ApolloError } from '@apollo/client';
 
+import {showMessage} from 'react-native-flash-message'
+
 export const BreakDetailModal = ({
   breakId,
   isVisible,
@@ -56,7 +58,13 @@ export const BreakDetailModal = ({
   ) as PaymentContextType;
 
   const [couponCode, setCouponCode] = useState('');
-  const changeCoupon = (coupon: string): void => setCouponCode(coupon);
+  const changeCoupon = (coupon: string) => setCouponCode(coupon);
+  const [error, setError] = useState('')
+  const changeError = (error: string) => setError(error)
+
+  useEffect(() => {
+    error === "invalid_coupon_code" ? setError('') : null;
+  }, [couponCode])
 
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
     route: ROUTES_IDS.BREAK_DETAIL_MODAL,
@@ -175,6 +183,8 @@ export const BreakDetailModal = ({
               paymentData={userPaymentData}
               coupon={couponCode}
               changeCoupon={changeCoupon}
+              error={error}
+              changeError={changeError}
             />
           ) : null}
           {isAddressList(visibleRoute) ? (
@@ -235,6 +245,8 @@ export const BreakDetailModal = ({
         userPaymentData={userPaymentData}
         cartItems={selectedItems}
         coupon={couponCode}
+        error={error}
+        changeError={changeError}
         onSuccess={() => {
           cleanModalOnClose();
           onPressClose();

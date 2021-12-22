@@ -46,6 +46,7 @@ export const BreakDetail = ({
   userAddress,
   coupon,
   changeCoupon,
+  error,
 }: BreakDetailProps): JSX.Element => {
   const [updateBreakItem] = useBreakItemUpdateMutation({
     onError: (error: ApolloError) => console.error('SQL ERROR', error)
@@ -64,8 +65,8 @@ export const BreakDetail = ({
     updateBreakItem({ variables: { itemId: item.id, quantity: quantity } });
     return newSelectedItems;
   };
-
   const [openModal, setOpenModal] = useState(false);
+
   return (
     <KeyboardAwareScrollView>
       <View style={[s.aic]}>
@@ -122,6 +123,11 @@ export const BreakDetail = ({
               placeholder={t('payment.addCoupon')}
             />
           </View>
+
+          {error ? <View style={[s.flx_row, s.h3]}>
+            <Text style={[s.pl3, s.pv3, s.negative]}>{t(`errors.${error}`)}</Text>
+          </View> : null}
+          
           <Modal
             style={[s.ma0, s.jcfe]}
             isVisible={openModal}

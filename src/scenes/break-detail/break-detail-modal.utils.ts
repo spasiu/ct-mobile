@@ -48,7 +48,7 @@ export const getCheckoutParams = (
   last_name: addressRecipientLastNameSelector(userAddress),
   address: addressWithoutRecipientSelector(userAddress),
   products: map(product => transformProductToCheckout(product), breakProducts),
-  coupon: coupon,
+  coupon,
 });
 
 export const getCheckoutCartInfo = (
@@ -61,7 +61,8 @@ export const getCheckoutCartInfo = (
     paymentData,
   );
   const cartId = pathOr('', ['cart', 'id'], paymentData);
-  const discount = paymentData.cart.coupons[0]?.discounted_amount || '';
+
+  const discount = paymentData.cart.coupons[0]?.discounted_amount || 0;
   return {
     cartItems,
     cartId,

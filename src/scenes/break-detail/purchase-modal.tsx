@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { showMessage } from 'react-native-flash-message';
-
 import { t } from '../../i18n/i18n';
 import { WarningModal } from '../../components';
 
@@ -33,6 +31,8 @@ export const PurchaseModal = ({
   userPaymentData,
   cartItems,
   coupon,
+  error,
+  changeError,
   onSuccess,
   onCancel,
   onError,
@@ -56,12 +56,9 @@ export const PurchaseModal = ({
           setLoading(false);
         })
         .catch(e => {
+          changeError(e.details.ct_error_code);
           setLoading(false);
           onCancel();
-          showMessage({
-            message: t(e.message),
-            type: 'danger',
-          });
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

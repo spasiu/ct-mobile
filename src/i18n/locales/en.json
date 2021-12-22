@@ -331,7 +331,8 @@
     "big_commerce_creation_error":"Could not set you up on our payment platform. Please try again.",
     "breaker_detail_retrieval_error":"Could not retrieve data for the break. Please try again.",
     "could_not_complete_PaySafe_payment": "Could not complete payment",
-    "invalid_coupon_code": "Invalid coupon code"
+    "invalid_coupon_code": "Invalid coupon code",
+    "could_not_complete_checkout": "Could not complete checkout."
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",
