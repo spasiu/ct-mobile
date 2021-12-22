@@ -61,7 +61,7 @@ export const BreakDetailModal = ({
   const changeError = (error: string) => setError(error)
 
   useEffect(() => {
-    error === "invalid_coupon_code" ? setError('') : null;
+    error === 'invalid_coupon_code' ? setError('') : null;
   }, [couponCode])
 
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
