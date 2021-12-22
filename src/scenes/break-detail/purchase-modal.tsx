@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { showMessage } from 'react-native-flash-message';
-
 import { t } from '../../i18n/i18n';
 import { WarningModal } from '../../components';
 
@@ -11,6 +9,7 @@ import {
   checkoutCartShippingSelector,
   checkoutCartSubtotalSelector,
   checkoutCartTaxSelector,
+  checkoutCartDiscountSelector,
   createCheckout,
   getCheckoutCartInfo,
   getCheckoutParams,
@@ -31,6 +30,9 @@ export const PurchaseModal = ({
   userAddress,
   userPaymentData,
   cartItems,
+  coupon,
+  error,
+  setError,
   onSuccess,
   onCancel,
   onError,
@@ -46,19 +48,18 @@ export const PurchaseModal = ({
   useEffect(() => {
     setLoading(true);
     if (visible) {
-      const checkoutParams = getCheckoutParams(userAddress, cartItems);
+      const checkoutParams = getCheckoutParams(userAddress, cartItems, coupon);
       createCheckout(checkoutParams)
         .then((response: CheckoutResponse) => {
           const cart = getCheckoutCartInfo(response);
           setCheckoutCart(cart);
           setLoading(false);
         })
-        .catch(() =>
-          showMessage({
-            message: t('errors.generic'),
-            type: 'danger',
-          }),
-        );
+        .catch(e => {
+          setError(e.details.ct_error_code);
+          setLoading(false);
+          onCancel();
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
@@ -114,18 +115,26 @@ export const PurchaseModal = ({
           </View>
           <View style={[s.flx_row, s.jcsb, s.mb2]}>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
-              {t('payment.tax')}
-            </Text>
-            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
-              {checkoutCartTaxSelector(checkoutCart)}
-            </Text>
-          </View>
-          <View style={[s.flx_row, s.jcsb, s.mb2]}>
-            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
               {t('payment.shipping')}
             </Text>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
               {checkoutCartShippingSelector(checkoutCart)}
+            </Text>
+          </View>
+          <View style={[s.flx_row, s.jcsb, s.mb2]}>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {t('payment.discounts')}
+            </Text>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              -{checkoutCartDiscountSelector(checkoutCart)}
+            </Text>
+          </View>
+          <View style={[s.flx_row, s.jcsb, s.mb2]}>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {t('payment.tax')}
+            </Text>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {checkoutCartTaxSelector(checkoutCart)}
             </Text>
           </View>
         </View>

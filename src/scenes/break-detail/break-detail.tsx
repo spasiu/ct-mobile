@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, Image, View, FlatList } from 'react-native';
+import { Text, Image, View, FlatList, TextInput } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 import Modal from 'react-native-modal';
 import { BorderlessButton } from 'react-native-gesture-handler';
@@ -13,7 +13,6 @@ import {
   ArrowDirection,
   PaymentMethods,
   ReadMore,
-  TextLink,
   ImageGallery,
   ActionButton,
   ProductRowLink,
@@ -36,8 +35,6 @@ import {
 } from '../../services/api/requests';
 import { ApolloError } from '@apollo/client';
 
-
-
 export const BreakDetail = ({
   breakData,
   setVisibleRoute,
@@ -47,10 +44,12 @@ export const BreakDetail = ({
   setSelectedItems,
   paymentData,
   userAddress,
+  coupon,
+  setCoupon,
+  error,
 }: BreakDetailProps): JSX.Element => {
-
   const [updateBreakItem] = useBreakItemUpdateMutation({
-    onError: (error:ApolloError) => console.error('SQL ERROR',error)
+    onError: (error: ApolloError) => console.error('SQL ERROR', error)
   });
 
   const updateItem = (
@@ -63,13 +62,10 @@ export const BreakDetail = ({
       ? [remove(itemIndex, 1, selectedItems), 1]
       : [append(item, selectedItems), -1];
 
-    updateBreakItem({variables:{itemId: item.id, quantity: quantity}});
+    updateBreakItem({ variables: { itemId: item.id, quantity: quantity } });
     return newSelectedItems;
   };
-
   const [openModal, setOpenModal] = useState(false);
-
-
 
   return (
     <KeyboardAwareScrollView>
@@ -116,12 +112,22 @@ export const BreakDetail = ({
               setVisibleRoute({ route: ROUTES_IDS.ADDRESSES_LIST_SCREEN })
             }
           />
-          <View style={[s.flx_i, s.h_custom(1), s.bg_black_20, s.mv1]} />
-          <View style={[s.flx_row, s.flx_i, s.jcsb, s.mr2]}>
-            <TextLink textStyle={[s.f6]} text={t('payment.addCoupon')} />
-            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>{'- $0'}</Text>
+          <View style={[s.flx_row, s.bg_white, s.h3, s.br4]}>
+            <TextInput
+              value={coupon}
+              onChange={e => setCoupon(e.nativeEvent.text)}
+              autoCapitalize={'none'}
+              spellCheck={false}
+              autoCorrect={false}
+              style={[s.pl3]}
+              placeholder={t('payment.addCoupon')}
+            />
           </View>
-          <View style={[s.flx_i, s.h_custom(1), s.bg_black_20, s.mv1]} />
+
+          {error ? <View style={[s.flx_row, s.h3]}>
+            <Text style={[s.pl3, s.pv3, s.negative]}>{t(`errors.${error}`)}</Text>
+          </View> : null}
+          
           <Modal
             style={[s.ma0, s.jcfe]}
             isVisible={openModal}
@@ -176,7 +182,6 @@ export const BreakDetail = ({
           </Modal>
         </>
       )}
-      
     </KeyboardAwareScrollView>
   );
 };

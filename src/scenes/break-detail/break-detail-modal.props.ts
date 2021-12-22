@@ -12,6 +12,14 @@ export type CheckoutCartData = {
   line_items: {
     physical_items: CartProduct[];
   };
+  coupons: CouponData[];
+};
+
+type CouponData = {
+  code: string;
+  id: number;
+  discounted_amount: number;
+  coupon_type: string;
 };
 
 export type CheckoutData = {
@@ -35,6 +43,7 @@ export type CheckoutCart = {
   subtotal: string;
   shipping: string;
   total: string;
+  discount?: number;
 };
 
 export type CheckoutParams = {
@@ -42,6 +51,7 @@ export type CheckoutParams = {
   first_name: string;
   last_name: string;
   address?: Addresses;
+  coupon?: string;
 };
 
 export type CartProduct = {
@@ -70,13 +80,20 @@ export interface BreakDetailProps {
   isBreakCompleted: boolean;
   paymentData: Card | undefined;
   userAddress: Addresses | undefined;
+  coupon: string;
+  setCoupon: (coupon: string) => void;
+  error: string;
+  setError: (error: string) => void;
 }
 
 export interface PurchaseModalProps extends WarningModalProps {
+  coupon: string;
   userAddress: Addresses;
   userPaymentData: Card | undefined;
   cartItems: BreakProductItems[];
   onSuccess: () => void;
   onCancel: () => void;
   onError: () => void;
+  error: string;
+  setError: (error: string) => void;
 }

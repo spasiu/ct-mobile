@@ -59,6 +59,13 @@ export const BreakDetailModal = ({
     PaymentContext,
   ) as PaymentContextType;
 
+  const [couponCode, setCouponCode] = useState('');
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    error === 'invalid_coupon_code' ? setError('') : null;
+  }, [couponCode])
+
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
     route: ROUTES_IDS.BREAK_DETAIL_MODAL,
   });
@@ -174,6 +181,10 @@ export const BreakDetailModal = ({
               isBreakCompleted={isBreakCompleted}
               userAddress={userAddress}
               paymentData={userPaymentData}
+              coupon={couponCode}
+              setCoupon={setCouponCode}
+              error={error}
+              setError={setError}
             />
           ) : null}
           {isAddressList(visibleRoute) ? (
@@ -233,6 +244,9 @@ export const BreakDetailModal = ({
         userAddress={addressCleanSelector(userAddress)}
         userPaymentData={userPaymentData}
         cartItems={selectedItems}
+        coupon={couponCode}
+        error={error}
+        setError={setError}
         onSuccess={() => {
           cleanModalOnClose();
           onPressClose();
