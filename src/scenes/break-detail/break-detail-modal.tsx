@@ -44,8 +44,6 @@ import { addressCleanSelector } from '../../common/address/address-selectors';
 import { CtError, handleError } from '../../common/error';
 import { ApolloError } from '@apollo/client';
 
-import {showMessage} from 'react-native-flash-message'
-
 export const BreakDetailModal = ({
   breakId,
   isVisible,

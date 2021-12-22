@@ -115,6 +115,14 @@ export const PurchaseModal = ({
           </View>
           <View style={[s.flx_row, s.jcsb, s.mb2]}>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {t('payment.shipping')}
+            </Text>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
+              {checkoutCartShippingSelector(checkoutCart)}
+            </Text>
+          </View>
+          <View style={[s.flx_row, s.jcsb, s.mb2]}>
+            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
               {t('payment.discounts')}
             </Text>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
@@ -127,14 +135,6 @@ export const PurchaseModal = ({
             </Text>
             <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
               {checkoutCartTaxSelector(checkoutCart)}
-            </Text>
-          </View>
-          <View style={[s.flx_row, s.jcsb, s.mb2]}>
-            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
-              {t('payment.shipping')}
-            </Text>
-            <Text style={[s.ff_alt_r, s.f6, s.black_80]}>
-              {checkoutCartShippingSelector(checkoutCart)}
             </Text>
           </View>
         </View>
