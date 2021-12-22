@@ -118,4 +118,4 @@ export const eventUpcomingBreakSelector = (
 };
 
 export const eventStreamNameSelector = (event: Partial<Events>) =>
-  event.stream_name || null;
+  event.stream_name || undefined;
