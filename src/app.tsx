@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import * as RNLocalize from 'react-native-localize';
 import {
@@ -29,7 +30,10 @@ import { UserProvider } from './providers/user';
 // for performance optimizations and native feel
 // https://reactnavigation.org/docs/react-native-screens
 enableScreens();
-Sentry.init({ dsn: Config.SENTRY_DSN_URL });
+Sentry.init({
+  dsn: Config.SENTRY_DSN_URL,
+  environment: `${__DEV__ ? 'development' : 'production'} ${ Platform.OS } v${ Platform.Version }`,
+});
 
 const App = (): JSX.Element | null => {
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -61,7 +65,7 @@ const App = (): JSX.Element | null => {
           const onboardingStatus = await checkOnboardingStatusOnFirestore(authUser);
           setOnboardingComplete(onboardingStatus);
           setUser(authUser);
-
+          Sentry.setUser({ userId: authUser?.uid });
           if (initializing) {
             SplashScreen.hide();
             setInitializing(false);
