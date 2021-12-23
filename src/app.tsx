@@ -32,7 +32,7 @@ import { UserProvider } from './providers/user';
 enableScreens();
 Sentry.init({
   dsn: Config.SENTRY_DSN_URL,
-  environment: `${__DEV__ ? 'development' : 'production'} ${ Platform.OS } v${ Platform.Version }`,
+  environment: __DEV__ ? 'development' : 'production',
 });
 
 const App = (): JSX.Element | null => {
