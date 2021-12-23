@@ -100,7 +100,7 @@ export const LiveScreen = ({
   const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
   const [currentLiveBreak, setCurrentLiveBreak] = useState<Partial<Breaks>>();
-  const [diamonds, setDiamonds] = useState({ large: 0, small: 0})
+  const [diamonds, setDiamonds] = useState({ large: 0, small: 0 });
 
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
@@ -313,7 +313,7 @@ export const LiveScreen = ({
                 ]}
               />
               <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
-                <View style={[s.absolute, { bottom: 0}]}>
+                <View style={[s.absolute, { bottom: 0 }]}>
                   <FloatingDiamonds
                     large={diamonds.large}
                     small={diamonds.small}
@@ -331,11 +331,14 @@ export const LiveScreen = ({
               </View>
             </View>
           </KeyboardAvoidingView>
-          <BreakDetailModal
-            breakId={breakId}
-            isVisible={Boolean(breakId)}
-            onPressClose={() => setBreakId('')}
-          />
+          {breakId ? (
+            <BreakDetailModal
+              breakId={breakId}
+              isVisible={Boolean(breakId)}
+              onPressClose={() => setBreakId('')}
+            />
+          ) : null}
+
           <SeeAllTeamsModal
             isVisible={showTeams && Boolean(liveBreakResult)}
             onPressClose={() => setShowTeams(false)}

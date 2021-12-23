@@ -7,33 +7,33 @@ import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../../theme/sizes';
 import { Connection } from './connection';
 
 interface VideoProps {
-  streamName: string;
+  streamName?: string;
 }
 
 export const Video = ({ streamName }: VideoProps): JSX.Element => {
   const [streamUrl, setStreamUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const connection = new Connection(streamName);
-
-    connection.onActive = (url: string) => {
-      console.log('Connected to stream');
-      setStreamUrl(url);
-    };
-
-    connection.onInactive = () => {
-      setStreamUrl(null);
-    };
-
-    connection.onError = (error: Error) => {
-      console.log('Error connecting to stream', error);
-    };
-
     if (streamName) {
-      connection.connect();
-    }
+      const connection = new Connection(streamName);
 
-    return () => connection.close(true);
+      connection.onActive = (url: string) => {
+        console.log('Connected to stream');
+        setStreamUrl(url);
+      };
+
+      connection.onInactive = () => {
+        setStreamUrl(null);
+      };
+
+      connection.onError = (error: Error) => {
+        console.log('Error connecting to stream', error);
+      };
+
+      connection.connect();
+
+      return () => connection.close(true);
+    }
   }, [streamName]);
 
   return (
