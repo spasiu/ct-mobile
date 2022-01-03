@@ -54,7 +54,6 @@ export const LineupModal = ({
           const breakCardDetails = breakCardSelector(item, breaker, event);
           return (
             <BreakCard
-              breakStatus={breakStatusSelector(item)}
               {...breakCardDetails}
               eventDate={formatScheduledStatus(eventTimeSelector(event))}
               onPressBuy={() => setBreakId(item.id)}

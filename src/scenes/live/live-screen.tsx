@@ -58,6 +58,7 @@ import {
   breakSpotsSelector,
   breakTitleSelector,
   breakTypeSelector,
+  breakStatusSelector,
 } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 
@@ -180,6 +181,8 @@ export const LiveScreen = ({
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
 
+
+
   const breakUser = userSelector(users);
   const liveBreakResult = breakResultSelector(liveBreak);
 
@@ -205,6 +208,14 @@ export const LiveScreen = ({
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
   };
+
+  const canBuyBreak = breakStatusSelector(liveBreak) === "Notified" && parseInt(breakSpotsSelector(liveBreak), 10) > 0
+  console.log(`>>${JSON.stringify(liveBreak)}`);
+  console.log(`>>${breakStatusSelector(liveBreak)}     <> ${breakSpotsSelector(liveBreak)}`);
+  console.log(canBuyBreak);
+  
+
+
   return (
     <View style={[s.flx_i, s.bg_black]}>
       <Video streamName={streamName} />
@@ -254,8 +265,10 @@ export const LiveScreen = ({
             {isEmpty(liveBreak) ? null : (
               <LiveNowBox
                 breakTitle={breakTitleSelector(liveBreak)}
-                onPressAction={() => setShowTeams(true)}
-                onPressBox={() => setShowTeams(true)}
+                canBuy={canBuyBreak}
+                onPressAction={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
+                onPressBox={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
+                //ternary for callbacks, and status
               />
             )}
             {isEmpty(upcomingBreak) ? null : (

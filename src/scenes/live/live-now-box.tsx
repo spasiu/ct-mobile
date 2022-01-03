@@ -9,6 +9,7 @@ import { LiveNowBoxProps } from './live-screen.props';
 
 export const LiveNowBox = ({
   breakTitle = '',
+  canBuy,
   ...slidingBoxProps
 }: LiveNowBoxProps): JSX.Element => {
   return (
@@ -16,7 +17,7 @@ export const LiveNowBox = ({
       {...slidingBoxProps}
       handleText={t('buttons.liveNow')}
       handleStyle={[s.bg_secondary]}
-      actionText={t('buttons.seeTeams')}
+      actionText={canBuy ? t('buttons.buy') : t('buttons.seeTeams')}
       containerStyle={[s.bg_alpha_secondary]}>
       <View style={[s.flx_i]}>
         <Text
