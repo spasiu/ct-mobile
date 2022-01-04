@@ -16,6 +16,8 @@ import {
 export interface LiveNowBoxProps extends SlidingBoxProps {
   breakTitle?: string;
   canBuy: boolean;
+  price?: string;
+  spotsLeft?: number;
 }
 
 export interface UpNextBoxProps extends SlidingBoxProps {

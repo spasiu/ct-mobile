@@ -13529,7 +13529,7 @@ export const LiveStreamDocument = gql`
         id
       }
     }
-    Breaks(where: {status: {_neq: DRAFT}}) {
+    Breaks(where: {status: {_neq: DRAFT}, archived: {_neq: true}}) {
       id
       break_type
       description

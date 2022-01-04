@@ -209,10 +209,7 @@ export const LiveScreen = ({
     setLiveTermsAccepted(true);
   };
 
-  const canBuyBreak = breakStatusSelector(liveBreak) === "Notified" && parseInt(breakSpotsSelector(liveBreak), 10) > 0
-  console.log(`>>${JSON.stringify(liveBreak)}`);
-  console.log(`>>${breakStatusSelector(liveBreak)}     <> ${breakSpotsSelector(liveBreak)}`);
-  console.log(canBuyBreak);
+  const canBuyBreak = breakStatusSelector(liveBreak) === "NOTIFIED" && breakSpotsSelector(liveBreak) > 0;
   
 
 
@@ -266,12 +263,14 @@ export const LiveScreen = ({
               <LiveNowBox
                 breakTitle={breakTitleSelector(liveBreak)}
                 canBuy={canBuyBreak}
+                spotsLeft={breakSpotsSelector(liveBreak)}
+                price={breakPriceSelector(liveBreak)}
                 onPressAction={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
                 onPressBox={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
                 //ternary for callbacks, and status
               />
             )}
-            {isEmpty(upcomingBreak) ? null : (
+            {isEmpty(upcomingBreak) || upcomingBreak === liveBreak ? null : (
               <UpNextBox
                 breakTitle={breakTitleSelector(upcomingBreak)}
                 spotsLeft={breakSpotsSelector(upcomingBreak)}
