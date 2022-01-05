@@ -35,6 +35,7 @@ import {
 import { useContext } from 'react';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
+  eventNotifiedBreakSelector,
   eventBreakerSelector,
   eventBreaksSelector,
   eventLiveBreakSelector,
@@ -177,6 +178,7 @@ export const LiveScreen = ({
   const event = eventSelector(data);
   const breaker = eventBreakerSelector(event);
   const liveBreak = eventLiveBreakSelector(event);
+  const notifiedBreak = eventNotifiedBreakSelector(event)
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
 
@@ -204,7 +206,8 @@ export const LiveScreen = ({
   const handleConfirmTermsOfUse = () => {
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
-  };
+  };  
+
   return (
     <View style={[s.flx_i, s.bg_black]}>
       <Video streamName={streamName} />
@@ -251,14 +254,17 @@ export const LiveScreen = ({
                 />
               </View>
             </View>
-            {isEmpty(liveBreak) ? null : (
+            {isEmpty(liveBreak) && isEmpty(notifiedBreak) ? null : (
               <LiveNowBox
-                breakTitle={breakTitleSelector(liveBreak)}
-                onPressAction={() => setShowTeams(true)}
-                onPressBox={() => setShowTeams(true)}
+                breakTitle={breakTitleSelector(isEmpty(liveBreak) ? notifiedBreak : liveBreak)}
+                notified={isEmpty(liveBreak)}
+                spotsLeft={breakSpotsSelector(notifiedBreak)}
+                price={breakPriceSelector(notifiedBreak)}
+                onPressAction={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true) }
+                onPressBox={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true)}
               />
             )}
-            {isEmpty(upcomingBreak) ? null : (
+            {isEmpty(upcomingBreak) || upcomingBreak === notifiedBreak ? null : (
               <UpNextBox
                 breakTitle={breakTitleSelector(upcomingBreak)}
                 spotsLeft={breakSpotsSelector(upcomingBreak)}
