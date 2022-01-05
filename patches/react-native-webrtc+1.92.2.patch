@@ -1,0 +1,118 @@
+diff --git a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.h b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.h
+new file mode 100644
+index 0000000..88965ec
+--- /dev/null
++++ b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.h
+@@ -0,0 +1,8 @@
++//  RTCAudioSession.h
++#import <WebRTC/RTCAudioSession.h>
++#import <React/RCTBridgeModule.h>
++#import <AVFoundation/AVFoundation.h>
++
++@interface RTCAudioSession : NSObject <RCTBridgeModule>
++
++@end
+\ No newline at end of file
+diff --git a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+new file mode 100644
+index 0000000..904568d
+--- /dev/null
++++ b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+@@ -0,0 +1,42 @@
++#import <objc/runtime.h>
++
++#import <WebRTC/RTCAudioSession.h>
++#import <WebRTC/RTCAudioSessionConfiguration.h>
++#import <AVFoundation/AVFoundation.h>
++#import <React/RCTLog.h>
++
++#import "WebRTCModule.h"
++
++@implementation WebRTCModule (RTCAudioSession)
++
++RCT_EXPORT_METHOD(setViewerOnlyMode:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
++{
++    RCTLogInfo(@"setting viewer mode");
++    RTCAudioSessionConfiguration *audioConfig = [[RTCAudioSessionConfiguration alloc] init];
++    audioConfig.category = AVAudioSessionCategoryPlayback;
++    audioConfig.categoryOptions = AVAudioSessionCategoryOptionAllowBluetooth;
++    audioConfig.mode = AVAudioSessionModeMoviePlayback;
++
++    RTCAudioSession *session = [RTCAudioSession sharedInstance];
++    [session lockForConfiguration];
++    BOOL success = [session setConfiguration:audioConfig error:nil];
++    [session unlockForConfiguration];
++    resolve(nil);
++}
++
++RCT_EXPORT_METHOD(setPublisherMode:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
++{
++    RCTLogInfo(@"setting publisher mode");
++
++    RTCAudioSessionConfiguration *audioConfig = [[RTCAudioSessionConfiguration alloc] init];
++    audioConfig.category = AVAudioSessionCategoryPlayAndRecord;
++    audioConfig.categoryOptions = AVAudioSessionCategoryOptionAllowBluetooth;
++    audioConfig.mode = AVAudioSessionModeVoiceChat;
++
++    RTCAudioSession *session = [RTCAudioSession sharedInstance];
++    [session lockForConfiguration];
++    BOOL success = [session setConfiguration:audioConfig error:nil];
++    [session unlockForConfiguration];
++    resolve(nil);
++}
++@end
+\ No newline at end of file
+diff --git a/node_modules/react-native-webrtc/src/AudioSession.js b/node_modules/react-native-webrtc/src/AudioSession.js
+new file mode 100644
+index 0000000..65e8abd
+--- /dev/null
++++ b/node_modules/react-native-webrtc/src/AudioSession.js
+@@ -0,0 +1,24 @@
++'use strict';
++
++import { NativeModules, Platform } from 'react-native';
++
++const { WebRTCModule } = NativeModules;
++const isIOS = Platform.OS === 'ios';
++
++
++export default {
++    setPublisherMode: async () => {
++        if (!isIOS) {
++            return;
++        }
++
++        return await WebRTCModule.setPublisherMode();
++    },
++    setViewerOnlyMode: async () => {
++        if (!isIOS) {
++            return;
++        }
++
++        return WebRTCModule.setViewerOnlyMode();
++    }
++};
+\ No newline at end of file
+diff --git a/node_modules/react-native-webrtc/src/index.js b/node_modules/react-native-webrtc/src/index.js
+index 4f4d576..c291b1a 100644
+--- a/node_modules/react-native-webrtc/src/index.js
++++ b/node_modules/react-native-webrtc/src/index.js
+@@ -9,6 +9,8 @@ import MediaStream from './MediaStream';
+ import MediaStreamTrack from './MediaStreamTrack';
+ import mediaDevices from './MediaDevices';
+ import permissions from './Permissions';
++import AudioSession from './AudioSession';
++
+ 
+ export {
+   ScreenCapturePickerView,
+@@ -20,7 +22,8 @@ export {
+   MediaStreamTrack,
+   mediaDevices,
+   permissions,
+-  registerGlobals
++  registerGlobals,
++	AudioSession
+ };
+ 
+ function registerGlobals() {

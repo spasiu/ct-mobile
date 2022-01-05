@@ -1,4 +1,4 @@
-import { RTCView } from 'react-native-webrtc';
+import { RTCView, AudioSession } from 'react-native-webrtc';
 import React, { useEffect, useState } from 'react';
 import { View, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
@@ -19,7 +19,12 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
 
       connection.onActive = (url: string) => {
         console.log('Connected to stream');
-        setStreamUrl(url);
+        AudioSession.setViewerOnlyMode()
+          .then(() => setStreamUrl(url))
+          .catch(error => {
+            console.error(`Unable to set viewer only mode ${error}.`);
+            setStreamUrl(url);
+          });
       };
 
       connection.onInactive = () => {
