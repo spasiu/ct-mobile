@@ -11,7 +11,7 @@ import { Video } from './stream/video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { is, isEmpty } from 'ramda';
+import { isEmpty } from 'ramda';
 import firestore from '@react-native-firebase/firestore';
 
 import {
@@ -59,7 +59,6 @@ import {
   breakSpotsSelector,
   breakTitleSelector,
   breakTypeSelector,
-  breakStatusSelector,
 } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 
@@ -183,8 +182,6 @@ export const LiveScreen = ({
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
 
-
-
   const breakUser = userSelector(users);
   const liveBreakResult = breakResultSelector(liveBreak);
 
@@ -210,7 +207,6 @@ export const LiveScreen = ({
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
   };  
-
 
   return (
     <View style={[s.flx_i, s.bg_black]}>

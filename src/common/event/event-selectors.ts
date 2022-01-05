@@ -93,7 +93,7 @@ export const eventLiveBreakSelector = (
   event: Partial<Events>,
 ): Partial<Breaks> => {
   const breaks = eventBreaksSelector(event);
-  const liveBreak = find(propEq('status', Break_Status_Enum.Live), breaks)
+  const liveBreak = find(propEq('status', Break_Status_Enum.Live), breaks);
   return liveBreak || {};
 };
 
@@ -101,7 +101,7 @@ export const eventNotifiedBreakSelector = (
   event: Partial<Events>,
 ): Partial<Breaks> => {
   const breaks = eventBreaksSelector(event);
-  const notifiedBreaks = find(propEq('status', Break_Status_Enum.Notified), breaks)
+  const notifiedBreaks = find(propEq('status', Break_Status_Enum.Notified), breaks);
   return notifiedBreaks || {};
 };
 
