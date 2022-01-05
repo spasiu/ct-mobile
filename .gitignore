@@ -65,3 +65,9 @@ ios/GoogleService-Info.plist
 # Env config
 .env
 .vscode
+
+# Vim
+*.swp
+*.swo
+*~
+
