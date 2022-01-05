@@ -11,7 +11,7 @@ import { Video } from './stream/video';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { isEmpty } from 'ramda';
+import { is, isEmpty } from 'ramda';
 import firestore from '@react-native-firebase/firestore';
 
 import {
@@ -35,6 +35,7 @@ import {
 import { useContext } from 'react';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
+  eventNotifiedBreakSelector,
   eventBreakerSelector,
   eventBreaksSelector,
   eventLiveBreakSelector,
@@ -178,6 +179,7 @@ export const LiveScreen = ({
   const event = eventSelector(data);
   const breaker = eventBreakerSelector(event);
   const liveBreak = eventLiveBreakSelector(event);
+  const notifiedBreak = eventNotifiedBreakSelector(event)
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
 
@@ -207,10 +209,7 @@ export const LiveScreen = ({
   const handleConfirmTermsOfUse = () => {
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
-  };
-
-  const canBuyBreak = breakStatusSelector(liveBreak) === "NOTIFIED" && breakSpotsSelector(liveBreak) > 0;
-  
+  };  
 
 
   return (
@@ -259,18 +258,17 @@ export const LiveScreen = ({
                 />
               </View>
             </View>
-            {isEmpty(liveBreak) ? null : (
+            {isEmpty(liveBreak) && isEmpty(notifiedBreak) ? null : (
               <LiveNowBox
-                breakTitle={breakTitleSelector(liveBreak)}
-                canBuy={canBuyBreak}
-                spotsLeft={breakSpotsSelector(liveBreak)}
-                price={breakPriceSelector(liveBreak)}
-                onPressAction={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
-                onPressBox={() => canBuyBreak ? setBreakId(liveBreak.id) : setShowTeams(true)}
-                //ternary for callbacks, and status
+                breakTitle={breakTitleSelector(isEmpty(liveBreak) ? notifiedBreak : liveBreak)}
+                notified={isEmpty(liveBreak)}
+                spotsLeft={breakSpotsSelector(notifiedBreak)}
+                price={breakPriceSelector(notifiedBreak)}
+                onPressAction={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true) }
+                onPressBox={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true)}
               />
             )}
-            {isEmpty(upcomingBreak) || upcomingBreak === liveBreak ? null : (
+            {isEmpty(upcomingBreak) || upcomingBreak === notifiedBreak ? null : (
               <UpNextBox
                 breakTitle={breakTitleSelector(upcomingBreak)}
                 spotsLeft={breakSpotsSelector(upcomingBreak)}

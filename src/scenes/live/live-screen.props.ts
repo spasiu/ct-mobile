@@ -15,7 +15,7 @@ import {
 
 export interface LiveNowBoxProps extends SlidingBoxProps {
   breakTitle?: string;
-  canBuy: boolean;
+  notified: boolean;
   price?: string;
   spotsLeft?: number;
 }
