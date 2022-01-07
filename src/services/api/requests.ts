@@ -11536,7 +11536,7 @@ export type LiveStreamSubscription = (
       ) }
     )>, Breaks: Array<(
       { __typename?: 'Breaks' }
-      & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result' | 'created_at'>
+      & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
       & { Inventory: Array<(
         { __typename?: 'Inventory' }
         & { Product: (
@@ -11785,7 +11785,7 @@ export type SearchQuery = (
     )> }
   )>, Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'created_at'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
     & { Inventory: Array<(
       { __typename?: 'Inventory' }
       & { Product: (
@@ -12093,7 +12093,7 @@ export type UserUpcomingBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'created_at'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
     & { Inventory: Array<(
       { __typename?: 'Inventory' }
       & { Product: (
@@ -13541,7 +13541,6 @@ export const LiveStreamDocument = gql`
       status
       title
       result
-      created_at
       Inventory(limit: 1) {
         Product {
           category
@@ -13958,7 +13957,6 @@ export const SearchDocument = gql`
     description
     status
     title
-    created_at
     Inventory(limit: 1) {
       Product {
         category
@@ -14531,7 +14529,6 @@ export const UserUpcomingBreaksDocument = gql`
     description
     status
     title
-    created_at
     Inventory(limit: 1) {
       Product {
         category

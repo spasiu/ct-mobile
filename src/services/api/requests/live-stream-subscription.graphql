@@ -43,7 +43,6 @@ subscription LiveStream($eventId: uuid, $userId: String) {
       status
       title
       result
-      created_at
       Inventory(limit: 1) {
         Product {
           category

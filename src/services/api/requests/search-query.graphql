@@ -62,7 +62,6 @@ query Search($searchInput: String, $userId: String) {
     description
     status
     title
-    created_at
     Inventory(limit: 1) {
       Product {
         category
