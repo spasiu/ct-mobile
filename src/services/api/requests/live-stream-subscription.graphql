@@ -33,13 +33,17 @@ subscription LiveStream($eventId: uuid, $userId: String) {
         id
       }
     }
-    Breaks(where: { status: { _neq: DRAFT }, archived: { _neq:  true } }) {
+    Breaks(
+      where: { status: { _neq: DRAFT }, archived: { _neq:  true } }
+      order_by: { created_at: asc }
+    ) {
       id
       break_type
       description
       status
       title
       result
+      created_at
       Inventory(limit: 1) {
         Product {
           category

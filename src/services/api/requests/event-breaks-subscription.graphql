@@ -4,6 +4,7 @@ subscription NewEventBreaks($id: uuid!, $userId: String) {
       _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
       Event: { id: { _eq: $id } }
     }
+    order_by: { created_at: asc }
   ) {
     id
     break_type

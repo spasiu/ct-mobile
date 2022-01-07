@@ -1,18 +1,20 @@
 query UserUpcomingBreaks($userId: String) {
   Breaks(
     where: {
-      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
+      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, { archived: { _neq:  true } }]
       Event: {
-        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
+        _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, { archived: { _neq:  true } }]
       }
       Saves: { user_id: { _eq: $userId } }
     }
+    order_by: [{ Event: { start_time: asc } }, { created_at: asc }]
   ) {
     id
     break_type
     description
     status
     title
+    created_at
     Inventory(limit: 1) {
       Product {
         category

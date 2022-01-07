@@ -7,6 +7,7 @@ subscription NewUserUpcomingBreaks($userId: String) {
       }
       Saves: { user_id: { _eq: $userId } }
     }
+    order_by: [{ Event: { start_time: asc } }, { created_at: asc }]
   ) {
     id
     break_type

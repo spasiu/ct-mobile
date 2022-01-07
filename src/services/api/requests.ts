@@ -11536,7 +11536,7 @@ export type LiveStreamSubscription = (
       ) }
     )>, Breaks: Array<(
       { __typename?: 'Breaks' }
-      & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
+      & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result' | 'created_at'>
       & { Inventory: Array<(
         { __typename?: 'Inventory' }
         & { Product: (
@@ -11785,7 +11785,7 @@ export type SearchQuery = (
     )> }
   )>, Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'created_at'>
     & { Inventory: Array<(
       { __typename?: 'Inventory' }
       & { Product: (
@@ -12093,7 +12093,7 @@ export type UserUpcomingBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'created_at'>
     & { Inventory: Array<(
       { __typename?: 'Inventory' }
       & { Product: (
@@ -12828,6 +12828,7 @@ export const EventBreaksDocument = gql`
     query EventBreaks($id: uuid!, $userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    order_by: {created_at: asc}
   ) {
     id
     break_type
@@ -12906,6 +12907,7 @@ export const NewEventBreaksDocument = gql`
     subscription NewEventBreaks($id: uuid!, $userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    order_by: {created_at: asc}
   ) {
     id
     break_type
@@ -13529,13 +13531,17 @@ export const LiveStreamDocument = gql`
         id
       }
     }
-    Breaks(where: {status: {_neq: DRAFT}, archived: {_neq: true}}) {
+    Breaks(
+      where: {status: {_neq: DRAFT}, archived: {_neq: true}}
+      order_by: {created_at: asc}
+    ) {
       id
       break_type
       description
       status
       title
       result
+      created_at
       Inventory(limit: 1) {
         Product {
           category
@@ -13944,13 +13950,15 @@ export const SearchDocument = gql`
     }
   }
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}}], _or: [{title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}, {Event: {_or: [{User: {_or: [{first_name: {_ilike: $searchInput}}, {last_name: {_ilike: $searchInput}}]}}, {title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}}]}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}, {Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}}], _or: [{title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}, {Event: {_or: [{User: {_or: [{first_name: {_ilike: $searchInput}}, {last_name: {_ilike: $searchInput}}]}}, {title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}}]}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
     description
     status
     title
+    created_at
     Inventory(limit: 1) {
       Product {
         category
@@ -14443,6 +14451,7 @@ export const NewUserUpcomingBreaksDocument = gql`
     subscription NewUserUpcomingBreaks($userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Saves: {user_id: {_eq: $userId}}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -14515,12 +14524,14 @@ export const UserUpcomingBreaksDocument = gql`
     query UserUpcomingBreaks($userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Saves: {user_id: {_eq: $userId}}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
     description
     status
     title
+    created_at
     Inventory(limit: 1) {
       Product {
         category
