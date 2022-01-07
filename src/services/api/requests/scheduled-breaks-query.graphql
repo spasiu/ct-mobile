@@ -12,7 +12,7 @@ query ScheduledBreaks(
       Inventory: { Product: { category: $sportTypeFilter } }
       break_type: $breakTypeFilter
     }
-    order_by: { Event: { start_time: asc } }
+    order_by: [{ Event: { start_time: asc } }, { created_at: asc }]
   ) {
     id
     break_type
