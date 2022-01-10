@@ -12358,7 +12358,7 @@ export const BreakerBreaksDocument = gql`
     query BreakerBreaks($id: String!, $userId: String) {
   Breaks(
     where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -12437,7 +12437,7 @@ export const NewBreakerBreaksDocument = gql`
     subscription NewBreakerBreaks($id: String!, $userId: String) {
   Breaks(
     where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -12828,6 +12828,7 @@ export const EventBreaksDocument = gql`
     query EventBreaks($id: uuid!, $userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    order_by: {created_at: asc}
   ) {
     id
     break_type
@@ -12906,6 +12907,7 @@ export const NewEventBreaksDocument = gql`
     subscription NewEventBreaks($id: uuid!, $userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    order_by: {created_at: asc}
   ) {
     id
     break_type
@@ -13529,7 +13531,10 @@ export const LiveStreamDocument = gql`
         id
       }
     }
-    Breaks(where: {status: {_neq: DRAFT}, archived: {_neq: true}}) {
+    Breaks(
+      where: {status: {_neq: DRAFT}, archived: {_neq: true}}
+      order_by: {created_at: asc}
+    ) {
       id
       break_type
       description
@@ -13643,7 +13648,7 @@ export const ScheduledBreaksDocument = gql`
     query ScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -13723,7 +13728,7 @@ export const NewScheduledBreaksDocument = gql`
     subscription NewScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -13944,7 +13949,8 @@ export const SearchDocument = gql`
     }
   }
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}}], _or: [{title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}, {Event: {_or: [{User: {_or: [{first_name: {_ilike: $searchInput}}, {last_name: {_ilike: $searchInput}}]}}, {title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}}]}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}, {Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}]}}], _or: [{title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}, {Event: {_or: [{User: {_or: [{first_name: {_ilike: $searchInput}}, {last_name: {_ilike: $searchInput}}]}}, {title: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}]}}]}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -14443,6 +14449,7 @@ export const NewUserUpcomingBreaksDocument = gql`
     subscription NewUserUpcomingBreaks($userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Saves: {user_id: {_eq: $userId}}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -14515,6 +14522,7 @@ export const UserUpcomingBreaksDocument = gql`
     query UserUpcomingBreaks($userId: String) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Saves: {user_id: {_eq: $userId}}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type

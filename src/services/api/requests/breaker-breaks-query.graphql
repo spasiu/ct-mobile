@@ -7,7 +7,7 @@ query BreakerBreaks($id: String!, $userId: String) {
       }
       _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
     }
-    order_by: { Event: { start_time: asc } }
+    order_by: [{ Event: { start_time: asc } }, { created_at: asc }]
   ) {
     id
     break_type
