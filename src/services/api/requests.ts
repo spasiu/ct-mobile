@@ -12358,7 +12358,7 @@ export const BreakerBreaksDocument = gql`
     query BreakerBreaks($id: String!, $userId: String) {
   Breaks(
     where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -12437,7 +12437,7 @@ export const NewBreakerBreaksDocument = gql`
     subscription NewBreakerBreaks($id: String!, $userId: String) {
   Breaks(
     where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -13648,7 +13648,7 @@ export const ScheduledBreaksDocument = gql`
     query ScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
@@ -13728,7 +13728,7 @@ export const NewScheduledBreaksDocument = gql`
     subscription NewScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
-    order_by: {Event: {start_time: asc}}
+    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
     break_type
