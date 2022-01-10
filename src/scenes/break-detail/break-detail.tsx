@@ -119,7 +119,8 @@ export const BreakDetail = ({
               autoCapitalize={'none'}
               spellCheck={false}
               autoCorrect={false}
-              style={[s.pl3]}
+              style={[s.pl3 , {flex:1}]}
+              placeholderTextColor={'black'}
               placeholder={t('payment.addCoupon')}
             />
           </View>
