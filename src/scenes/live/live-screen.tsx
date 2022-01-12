@@ -62,6 +62,8 @@ import {
 } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 
+import {Diamond} from './diamonds';
+
 import {
   closeIcon,
   diamondIcon,
@@ -319,18 +321,7 @@ export const LiveScreen = ({
                 ]}
               />
               <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
-                <View style={[s.absolute, { bottom: 0 }]}>
-                  <FloatingDiamonds
-                    large={diamonds.large}
-                    small={diamonds.small}
-                  />
-                </View>
-                <IconButton onPress={addDiamond}>
-                  <Image source={diamondIcon} />
-                </IconButton>
-                {/* <IconButton>
-                  <Image source={shareIcon} />
-                </IconButton> */}
+                <Diamond />
                 <IconButton onPress={() => setShowLineup(true)}>
                   <Image source={shopIcon} />
                 </IconButton>
