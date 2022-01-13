@@ -7,6 +7,8 @@ import { FloatingDiamonds } from '../animation/floating-diamonds';
 import { diamondIcon } from '../live-screen.presets';
 
 class Queue {
+  delayMultiplier = 300; /*ms*/
+  limit = 100;
   bucket = 0;
   blocked = false;
   callback: (n: number) => void;
@@ -20,14 +22,15 @@ class Queue {
     if (this.bucket < 1 || this.blocked) {
       return;
     }
-    const n = this.bucket;
+    const n = this.bucket > this.limit ? this.limit : this.bucket;
+    console.log(n);
     this.bucket = 0;
     this.blocked = true;
     this.callback(n);
     this.timer = setTimeout(() => {
       this.blocked = false;
       this.batch();
-    }, n * 300 /*ms*/); // delay before firing next batch
+    }, n * this.delayMultiplier); // delay before firing next batch
   }
 
   push(n: number) {
@@ -60,6 +63,7 @@ export const Diamond = ({
 
   const animationQueue = new Queue(n => setDiamonds(n));
   const networkQueue = new Queue(n => send(n));
+  networkQueue.delayMultiplier = 500; /*ms*/
 
   const hold = () => {
     animationQueue.push(1);
@@ -73,7 +77,6 @@ export const Diamond = ({
   const release = () => {
     clearInterval(timer.current);
     animationQueue.cancel();
-    networkQueue.cancel();
   };
 
   useEffect(() => {
@@ -99,6 +102,7 @@ export const Diamond = ({
     return () => {
       release();
       unsubscribe();
+      networkQueue.cancel();
     };
   }, [eventId, userId]);
 
