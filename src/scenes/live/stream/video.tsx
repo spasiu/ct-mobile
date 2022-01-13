@@ -35,7 +35,7 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
         console.log('Error connecting to stream', error);
       };
 
-      // connection.connect();
+      connection.connect();
 
       return () => connection.close(true);
     }
