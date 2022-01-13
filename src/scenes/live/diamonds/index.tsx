@@ -27,7 +27,7 @@ class Queue {
     this.timer = setTimeout(() => {
       this.blocked = false;
       this.batch();
-    }, n * 300 /*ms*/); // delay before playing next animation
+    }, n * 300 /*ms*/); // delay before firing next batch
   }
 
   push(n: number) {
@@ -49,28 +49,31 @@ export const Diamond = ({
   eventId: string;
   userId: string;
 }): JSX.Element => {
-  // console.log({ eventId, userId });
   const timer = useRef<any>(undefined);
   const [diamonds, setDiamonds] = useState(0);
-  const send = (count: number) => firestore()
-    .collection('LiveChat')
-    .doc(eventId)
-    .collection('Diamonds')
-    .add({ count, userId });
+  const send = (count: number) =>
+    firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .collection('Diamonds')
+      .add({ count, userId });
 
-  const queue = new Queue(n => {
-    setDiamonds(n);
-    send(n);
-  });
+  const animationQueue = new Queue(n => setDiamonds(n));
+  const networkQueue = new Queue(n => send(n));
 
   const hold = () => {
-    queue.push(1);
-    timer.current = setInterval(() => queue.push(1), 200 /*ms*/); // interval delay
+    animationQueue.push(1);
+    networkQueue.push(1);
+    timer.current = setInterval(() => {
+      animationQueue.push(1);
+      networkQueue.push(1);
+    }, 200 /*ms*/); // interval delay
   };
 
   const release = () => {
     clearInterval(timer.current);
-    queue.cancel();
+    animationQueue.cancel();
+    networkQueue.cancel();
   };
 
   useEffect(() => {
@@ -87,7 +90,9 @@ export const Diamond = ({
           .filter(change => change.doc.data().userId !== userId)
           .map(change => change.doc.data().count || 1)
           .reduce((x, y) => x + y, 0);
-        if (shouldShowDiamonds && count > 0) queue.push(count);
+        if (shouldShowDiamonds && count > 0) {
+          animationQueue.push(count);
+        }
         shouldShowDiamonds = true; // ignore first snapshot event which contains all previous events
       });
 
