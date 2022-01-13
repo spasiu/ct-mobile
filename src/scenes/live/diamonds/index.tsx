@@ -23,7 +23,6 @@ class Queue {
       return;
     }
     const n = this.bucket > this.limit ? this.limit : this.bucket;
-    console.log(n);
     this.bucket = 0;
     this.blocked = true;
     this.callback(n);
