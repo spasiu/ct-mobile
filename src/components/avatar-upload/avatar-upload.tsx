@@ -19,6 +19,7 @@ import {
   ACTION_SHEET_OPTIONS,
   AVATAR_DIMENSIONS,
   errorTextPreset,
+  errorBorderStyle,
 } from './avatar-upload.presets';
 
 export const AvatarUpload = ({
@@ -30,7 +31,6 @@ export const AvatarUpload = ({
   errorMessage = '',
 }: AvatarUploadProps): JSX.Element => {
   const actionSheetRef = useRef() as React.MutableRefObject<ActionSheet>;
-
   const AvatarImage = image ? (
     <ServerImage
       style={[...imageSizeStyle, ...imageStyle]}
@@ -48,7 +48,12 @@ export const AvatarUpload = ({
   );
 
   return (
-    <View style={[...viewContainerStyle, ...containerStyle]}>
+    <View
+      style={[
+        ...viewContainerStyle,
+        ...containerStyle,
+        errorMessage ? errorBorderStyle : {},
+      ]}>
       {isLoading ? <Loading containerStyle={loadingWrapper} /> : AvatarImage}
       <BorderlessButton
         style={borderlessButtonStyle}
@@ -79,9 +84,9 @@ export const AvatarUpload = ({
           }
         }}
       />
-      {errorMessage ? (
-        <Text style={errorTextPreset}>{errorMessage}</Text>
-      ) : null}
+      <View>
+        <Text style={errorTextPreset}>{errorMessage || ''}</Text>
+      </View>
     </View>
   );
 };
