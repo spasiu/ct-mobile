@@ -51,7 +51,7 @@ export const Diamond = ({
   eventId: string;
   userId: string;
 }): JSX.Element => {
-  const timer = useRef<any>(undefined);
+  const timer = useRef<NodeJS.Timer | undefined>(undefined);
   const [diamonds, setDiamonds] = useState(0);
   const send = (count: number) =>
     firestore()
@@ -74,7 +74,7 @@ export const Diamond = ({
   };
 
   const release = () => {
-    clearInterval(timer.current);
+    timer.current && clearInterval(timer.current);
     animationQueue.cancel();
   };
 
