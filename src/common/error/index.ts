@@ -1,7 +1,10 @@
 import { MessageType, showMessage } from 'react-native-flash-message';
 import { CtError, CtErrorCode } from './error';
 
-const displayError = (message: string, type: MessageType) => {
+export const displayError = (
+  message: string,
+  type: MessageType = 'default',
+): void => {
   showMessage({
     message,
     type,

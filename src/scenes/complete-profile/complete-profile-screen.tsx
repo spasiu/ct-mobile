@@ -18,6 +18,7 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import { useUpdateUserMutation } from '../../services/api/requests';
 import { getFieldStatus } from '../../utils/form-field';
+import { displayError } from '../../common/error';
 
 import { CompleteProfileScreenProps } from './complete-profile-screen.props';
 import {
@@ -206,7 +207,12 @@ export const CompleteProfileScreen = ({
             <ActionFooter
               isLoading={loading || processing}
               buttonText={t('buttons.createAccount')}
-              onPress={handleSubmit}>
+              onPress={() => {
+                handleSubmit();
+                if (!values.image) {
+                  displayError(t('forms.noPhoto'));
+                }
+              }}>
               <TextLink
                 style={[s.ml1]}
                 textStyle={[s.underline]}
