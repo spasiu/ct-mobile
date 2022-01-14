@@ -54,6 +54,7 @@
     "breakersTab": "Breakers"
   },
   "forms": {
+    "noPhoto": "A profile image is required",
     "emailLabel": "Email",
     "passwordLabel": "Password",
     "usernameLabel": "Username",

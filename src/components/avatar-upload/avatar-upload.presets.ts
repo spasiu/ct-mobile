@@ -14,7 +14,11 @@ export const AVATAR_DIMENSIONS = {
 };
 
 export const viewContainerStyle = [
-  { width: ICON_SIZE.XL, height: ICON_SIZE.XL + ICON_SIZE.M / 4 },
+  {
+    width: ICON_SIZE.XL + ICON_SIZE.M / 4,
+    height: ICON_SIZE.XL + ICON_SIZE.M / 4,
+    alignItems: 'center',
+  },
 ] as ViewStyle[];
 
 export const imageSizeStyle = [s.circle_xl] as ImageStyle[];
@@ -44,3 +48,9 @@ export const ACTION_SHEET_OPTIONS = [
 ];
 
 export const errorTextPreset = [s.ff_alt_r, s.f7, s.black, s.mt3, s.h1];
+
+export const errorBorderStyle = {
+  borderColor: 'red',
+  borderWidth: 1.25,
+  borderRadius: 10,
+};
