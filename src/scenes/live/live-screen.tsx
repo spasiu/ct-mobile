@@ -62,12 +62,9 @@ import {
 } from '../../common/break';
 import { ChatMessage } from '../../common/chat';
 
-import {
-  closeIcon,
-  diamondIcon,
-  // shareIcon,
-  shopIcon,
-} from './live-screen.presets';
+import { Diamond } from './diamonds';
+
+import { closeIcon, shopIcon } from './live-screen.presets';
 import { Chat } from './chat';
 import { createChatMessage } from './live-screen.utils';
 import { SeeAllTeamsModal } from './see-all-teams-modal';
@@ -76,7 +73,6 @@ import { TermsOfUseModal } from './terms-of-use-modal';
 
 import { LiveScreenProps } from './live-screen.props';
 import { SeeTeamsAnimation } from './see-teams-animation';
-import { FloatingDiamonds } from './animation/floating-diamonds';
 import { UserContext } from '../../providers/user/user';
 import { UserContextType } from '../../providers/user/user.types';
 
@@ -86,6 +82,7 @@ export const LiveScreen = ({
 }: LiveScreenProps): JSX.Element => {
   const { eventId } = route.params;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const userId = authUser?.uid;
   const { liveTermsAccepted, setLiveTermsAccepted } = useContext(
     UserContext,
   ) as UserContextType;
@@ -101,19 +98,18 @@ export const LiveScreen = ({
   const [termsOfUseVisible, setTermsOfUseVisible] = useState(false);
 
   const [currentLiveBreak, setCurrentLiveBreak] = useState<Partial<Breaks>>();
-  const [diamonds, setDiamonds] = useState({ large: 0, small: 0 });
 
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
-      id: authUser?.uid,
+      id: userId,
     },
   });
 
   const { data } = useLiveStreamSubscription({
     variables: {
       eventId,
-      userId: authUser?.uid,
+      userId,
     },
     onSubscriptionData: options => {
       if (!currentLiveBreak) {
@@ -125,31 +121,8 @@ export const LiveScreen = ({
     },
   });
 
-  const addDiamond = () => {
-    firestore().collection('LiveChat').doc(eventId).collection('Diamonds').add({
-      createdOn: firestore.FieldValue.serverTimestamp(),
-    });
-  };
-
   useEffect(() => {
-    let shouldShowDiamonds = false;
-    const unsubscribeFromDiamonds = firestore()
-      .collection('LiveChat')
-      .doc(eventId)
-      .collection('Diamonds')
-      .onSnapshot(snapshot => {
-        const newDocs = snapshot
-          .docChanges()
-          .filter(change => change.type === 'added');
-
-        if (shouldShowDiamonds && newDocs.length > 0) {
-          setDiamonds({ large: newDocs.length, small: newDocs.length });
-        }
-        // ignore first snapshot event which contains all previous events
-        shouldShowDiamonds = true;
-      });
-
-    const unsubscribeFromMessages = firestore()
+    const unsubscribe = firestore()
       .collection('LiveChat')
       .doc(eventId)
       .collection('Messages')
@@ -163,10 +136,7 @@ export const LiveScreen = ({
         ),
       );
 
-    return () => {
-      unsubscribeFromMessages();
-      unsubscribeFromDiamonds();
-    };
+    return unsubscribe;
   }, []);
 
   useLayoutEffect(() => {
@@ -178,7 +148,7 @@ export const LiveScreen = ({
   const event = eventSelector(data);
   const breaker = eventBreakerSelector(event);
   const liveBreak = eventLiveBreakSelector(event);
-  const notifiedBreak = eventNotifiedBreakSelector(event)
+  const notifiedBreak = eventNotifiedBreakSelector(event);
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
 
@@ -206,7 +176,7 @@ export const LiveScreen = ({
   const handleConfirmTermsOfUse = () => {
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
-  };  
+  };
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
@@ -256,15 +226,26 @@ export const LiveScreen = ({
             </View>
             {isEmpty(liveBreak) && isEmpty(notifiedBreak) ? null : (
               <LiveNowBox
-                breakTitle={breakTitleSelector(isEmpty(liveBreak) ? notifiedBreak : liveBreak)}
+                breakTitle={breakTitleSelector(
+                  isEmpty(liveBreak) ? notifiedBreak : liveBreak,
+                )}
                 notified={isEmpty(liveBreak)}
                 spotsLeft={breakSpotsSelector(notifiedBreak)}
                 price={breakPriceSelector(notifiedBreak)}
-                onPressAction={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true) }
-                onPressBox={() => isEmpty(liveBreak) ? setBreakId(notifiedBreak.id) : setShowTeams(true)}
+                onPressAction={() =>
+                  isEmpty(liveBreak)
+                    ? setBreakId(notifiedBreak.id)
+                    : setShowTeams(true)
+                }
+                onPressBox={() =>
+                  isEmpty(liveBreak)
+                    ? setBreakId(notifiedBreak.id)
+                    : setShowTeams(true)
+                }
               />
             )}
-            {isEmpty(upcomingBreak) || upcomingBreak === notifiedBreak ? null : (
+            {isEmpty(upcomingBreak) ||
+            upcomingBreak === notifiedBreak ? null : (
               <UpNextBox
                 breakTitle={breakTitleSelector(upcomingBreak)}
                 spotsLeft={breakSpotsSelector(upcomingBreak)}
@@ -289,7 +270,7 @@ export const LiveScreen = ({
                 onSubmitEditing={submitEvent => {
                   const newChatMessage = createChatMessage(
                     submitEvent.nativeEvent.text,
-                    authUser?.uid as string,
+                    userId as string,
                     breakUser,
                   );
 
@@ -319,18 +300,7 @@ export const LiveScreen = ({
                 ]}
               />
               <View style={[s.flx_ratio(0.2), s.flx_row, s.jcsb, s.ml3]}>
-                <View style={[s.absolute, { bottom: 0 }]}>
-                  <FloatingDiamonds
-                    large={diamonds.large}
-                    small={diamonds.small}
-                  />
-                </View>
-                <IconButton onPress={addDiamond}>
-                  <Image source={diamondIcon} />
-                </IconButton>
-                {/* <IconButton>
-                  <Image source={shareIcon} />
-                </IconButton> */}
+                <Diamond userId={userId as string} eventId={eventId} />
                 <IconButton onPress={() => setShowLineup(true)}>
                   <Image source={shopIcon} />
                 </IconButton>
@@ -348,14 +318,14 @@ export const LiveScreen = ({
           <SeeAllTeamsModal
             isVisible={showTeams && Boolean(liveBreakResult)}
             onPressClose={() => setShowTeams(false)}
-            userId={authUser?.uid as string}
+            userId={userId as string}
             result={liveBreakResult}
             breakType={breakTypeSelector(liveBreak)}
           />
           {showRandomTeamAnimation && (
             <SeeTeamsAnimation
               onPressClose={() => setShowRandomTeamsAnimation(false)}
-              userId={authUser?.uid as string}
+              userId={userId as string}
               result={liveBreakResult}
               breakType={breakTypeSelector(liveBreak)}
             />
