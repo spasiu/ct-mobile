@@ -30,16 +30,13 @@ export const PaymentProvider = ({
     cardInput: CardInput,
   ) => {
     const card = await createCardHandler(cardInput);
-    const firstCard = cards.length === 0;
     if (card) {
       setCards(append(card, cards));
-      if (firstCard) {
-        await saveAndSetAsDefaultHandler(
-          user,
-          card.id,
-          setDefaultPaymentMethod,
-        );
-      }
+      await saveAndSetAsDefaultHandler(
+        user,
+        card.id,
+        setDefaultPaymentMethod,
+      );
     }
     return card;
   };

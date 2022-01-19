@@ -1,5 +1,4 @@
-const apiKey =
-  'T1QtNjg2MzEwOkItcWEyLTAtNjBjMmNkOTgtMC0zMDJkMDIxNTAwODk2N2UzZDc3MTBlMjA5YjUxYjdmNWU4YzA3OTRhNzdlMzgyOThmOTAyMTQ3ZDM5MDFkOGY5YzNhM2YxZjRmMzRiMjBiNzYyNDhiZDRlOTYwNTIw';
+const paysafeToken = window.paysafeSingleUseToken
 
 const options = {
   environment: 'TEST',
@@ -62,6 +61,13 @@ function areVaultFieldsValid() {
   return invalidVaultFields.length === 0;
 }
 
+function checkDisabled() {
+  areVaultFieldsValid() ?
+    document.getElementById('save').classList.remove("disabled") :
+    document.getElementById('save').classList.add("disabled")
+
+}
+
 function getVaultFields() {
   return {
     holderName: document.querySelector('#cardholderName').value,
@@ -80,7 +86,7 @@ function transformPostalCode(e, fieldInput) {
   fieldInput.value = e.target.value.replace(/[^a-z0-9]/gi, '').toUpperCase();
 }
 
-paysafe.fields.setup(apiKey, options, function (instance, error) {
+paysafe.fields.setup(paysafeToken, options, function (instance, error) {
   if (error) {
     const initializationError = { initError: error };
     window.ReactNativeWebView.postMessage(JSON.stringify(initializationError));
