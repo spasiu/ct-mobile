@@ -16,7 +16,8 @@
     "clean": "yarn clean:js && yarn clean:ios && yarn clean:android && yarn start -- --reset-cache",
     "wrap": "yarn lint && yarn test",
     "generate": "graphql-codegen --config codegen.js -r dotenv/config ./.env",
-    "ts:watch": "tsc --noEmit --skipLibCheck --watch"
+    "ts:watch": "tsc --noEmit --skipLibCheck --watch",
+    "buildclean": "yarn clean:js && yarn clean:ios && yarn install"
   },
   "dependencies": {
     "@apollo/client": "3.3.15",
