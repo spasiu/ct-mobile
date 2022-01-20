@@ -25,6 +25,7 @@ import { find, isEmpty, propEq } from 'ramda';
 
 export const PaymentInformationList = ({
   onAddPayment,
+  goBack,
 }: PaymentInformationListProps): JSX.Element => {
   const {
     cards,
@@ -124,6 +125,7 @@ export const PaymentInformationList = ({
               selectedCard,
             );
             setStatus('idle');
+            goBack();
           }}
           buttonType={
             cards.length === 0 || status !== 'modified'

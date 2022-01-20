@@ -85,3 +85,7 @@ select.arrow {
   background-size: 24px 24px;
   background-position: calc(100% - 10px) center;
 }
+
+.disabled {
+  background-color: grey;
+}

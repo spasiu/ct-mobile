@@ -12,4 +12,5 @@ export interface PaymentInformationListScreenProps {
 
 export interface PaymentInformationListProps {
   onAddPayment: () => void;
+  goBack: () => void;
 }

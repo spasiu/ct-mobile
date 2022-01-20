@@ -21,6 +21,7 @@ export const PaymentInformationListScreen = ({
         title={t('payment.paymentInformation')}
       />
       <PaymentInformationList
+        goBack={navigation.goBack}
         onAddPayment={() =>
           navigation.navigate(ROUTES_IDS.ADD_PAYMENT_INFORMATION_SCREEN)
         }

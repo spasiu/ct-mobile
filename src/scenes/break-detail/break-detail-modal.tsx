@@ -98,7 +98,7 @@ export const BreakDetailModal = ({
         breakId: breakId,
       },
       onError: (error: Error) => console.error('SUBSC ERROR', error),
-      updateQuery: (prev, { subscriptionData }) => 
+      updateQuery: (prev, { subscriptionData }) =>
         prev.Breaks = subscriptionData.data.Breaks
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,13 +116,13 @@ export const BreakDetailModal = ({
     !isEmpty(selectedItems) && Boolean(userAddress) && Boolean(userPaymentData);
 
   const [updateBreakItem] = useBreakItemUpdateMutation({
-    onError: (error:ApolloError) => console.error('SQL ERROR',error)
+    onError: (error: ApolloError) => console.error('SQL ERROR', error)
   });
 
-  const cleanModalOnClose = (success:boolean = true) => {
+  const cleanModalOnClose = (success: boolean = true) => {
     if (!success) { // if closed without purchase, restore inventory
-        selectedItems.forEach(item => {
-          updateBreakItem({variables:{itemId: item.id, quantity: 1}});
+      selectedItems.forEach(item => {
+        updateBreakItem({ variables: { itemId: item.id, quantity: 1 } });
       })
     }
     setSelectedItems([]);
@@ -157,6 +157,7 @@ export const BreakDetailModal = ({
         }
       }}
       onPressAction={() => setShowPurchaseModal(true)}
+      showClose={!(isPaymentList(visibleRoute) || isAddPayment(visibleRoute))}
       isVisible={isVisible}
       actionEnabled={shouldAllowToContinueToCheckout}
       actionStyle={[s.ph3, s.pb3]}
@@ -221,6 +222,9 @@ export const BreakDetailModal = ({
           ) : null}
           {isPaymentList(visibleRoute) ? (
             <PaymentInformationList
+              goBack={() => setVisibleRoute({
+                route: ROUTES_IDS.BREAK_DETAIL_MODAL,
+              })}
               onAddPayment={() =>
                 setVisibleRoute({
                   route: ROUTES_IDS.ADD_PAYMENT_INFORMATION_SCREEN,
