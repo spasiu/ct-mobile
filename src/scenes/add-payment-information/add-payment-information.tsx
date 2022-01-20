@@ -20,6 +20,7 @@ const sourceUri =
 const INJECTED_JAVASCRIPT = `(function() {
   window.googleApiKey = "${Config.GOOGLE_PLACES_API_KEY}";
   window.paysafeSingleUseToken = "${Config.PAYSAFE_SINGLE_USE_TOKEN}";
+  window.paysafeEnv = "${Config.PAYSAFE_ENV}";
   true;
   })();`;
 

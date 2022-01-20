@@ -1,7 +1,8 @@
-const paysafeToken = window.paysafeSingleUseToken
+const paysafeToken = window.paysafeSingleUseToken;
+const paysafeEnv = window.paysafeEnv;
 
 const options = {
-  environment: 'TEST',
+  environment: paysafeEnv,
   style: {
     input: {
       'font-family': 'Inter, sans-serif',

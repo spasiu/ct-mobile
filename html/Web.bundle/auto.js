@@ -13,12 +13,7 @@ let postalField;
 
 document
   .getElementById('places')
-  .setAttribute(
-    'src',
-    'https://maps.googleapis.com/maps/api/js?key=' +
-      window.googleApiKey +
-      '&callback=initAutocomplete&libraries=places&v=weekly',
-  );
+  .setAttribute('src','https://maps.googleapis.com/maps/api/js?key=' + window.googleApiKey + '&callback=initAutocomplete&libraries=places&v=weekly');
 
 function initAutocomplete() {
   address1Field = document.querySelector('#addressLine1');
