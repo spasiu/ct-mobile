@@ -9,6 +9,14 @@
 - [ ] Key restriction for maps API
 - [ ] Key restriction for other google APIs
 
+## Configuring Info.plist
+
+To build for prod, you need to do the following:
+
+- make sure you've updated your .env file with the values from Mobile-Env-Prod in 1PW
+- copy Info.plist from environments/prod to ios/CardsAndTreasure
+- copy GoogleService-Info.plist from environments/prod to ios/
+
 ## Local Setup
 
 1. Using _nvm_ or _n_ make sure your node version is v14.16.
