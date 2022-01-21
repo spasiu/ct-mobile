@@ -61,10 +61,11 @@ Basically you need to build the project using react native and then open it in X
 
 ## Troubleshooting
 
-### Problem 1: `yarn ios` fails
+### Problem 2: `yarn ios` fails
 
 If `yarn ios` fails, it might have to do with your global node/nvm versions ([reference](https://stackoverflow.com/questions/66627590/phasescriptexecution-error-in-react-native-app?rq=1)). Try this:
 
+1. When in doubt wipe out ios/Pods the podfile lock and Xcode/DerivedData.
 1. Go to your `bash_profile/zshrc` and comment the three nvm initialization lines (`export NVM_DIR="$HOME/.nvm" [...]`)
 1. Open a new terminal and do `node -v`, if it still finds something it means that you have a global version somewhere.
 1. Do `brew uses --installed node`. _This will show you what is still using node._
