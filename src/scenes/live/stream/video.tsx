@@ -5,6 +5,7 @@ import { styles as s } from 'react-native-style-tachyons';
 import { logoIcon } from '../live-screen.presets';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../../theme/sizes';
 import { Connection } from './connection';
+import IdleTimerManager from 'react-native-idle-timer';
 
 interface VideoProps {
   streamName?: string;
@@ -40,6 +41,11 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
       return () => connection.close(true);
     }
   }, [streamName]);
+
+  useEffect(() => {
+    IdleTimerManager.setIdleTimerDisabled(true);
+    return () => IdleTimerManager.setIdleTimerDisabled(false);
+  }, []);
 
   return (
     <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
