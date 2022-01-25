@@ -21,5 +21,5 @@ export interface AddAddressListScreenProps {
 
 export interface AddAddressProps {
   onAddressAdded: () => void;
-  shouldBeDefault: boolean;
+  setId: (id:string) => void;
 }

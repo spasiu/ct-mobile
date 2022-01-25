@@ -27,6 +27,7 @@ export const AddressesListScreen = ({
         onEditAddress={params =>
           navigation.navigate(ROUTES_IDS.EDIT_ADDRESS_SCREEN, params)
         }
+        onSave={()=> navigation.goBack()}
       />
     </Container>
   );

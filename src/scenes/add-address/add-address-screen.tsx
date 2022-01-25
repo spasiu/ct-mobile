@@ -11,8 +11,7 @@ export const AddAddressScreen = ({
   navigation,
   route,
 }: AddAddressListScreenProps): JSX.Element => {
-  const { shouldBeDefault } = route.params;
-
+  
   return (
     <Container
       style={[s.mh0]}
@@ -23,7 +22,7 @@ export const AddAddressScreen = ({
         title={t('addresses.deliveryAddress')}
       />
       <AddAddress
-        shouldBeDefault={shouldBeDefault}
+        setId={route.params.setId}
         onAddressAdded={() => navigation.goBack()}
       />
     </Container>

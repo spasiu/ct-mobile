@@ -5410,7 +5410,7 @@ export type Teams = {
   color?: Maybe<Scalars['bpchar']>;
   color_secondary?: Maybe<Scalars['bpchar']>;
   end_year?: Maybe<Scalars['smallint']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   short_code: Scalars['String'];
   sport: Scalars['String'];
   start_year: Scalars['smallint'];
@@ -5471,7 +5471,7 @@ export type Teams_Bool_Exp = {
 /** unique or primary key constraints on table "Teams" */
 export enum Teams_Constraint {
   /** unique or primary key constraint */
-  TeamsPkey1 = 'Teams_pkey1'
+  TeamsPkey = 'teams_pkey'
 }
 
 /** input type for incrementing numeric columns in table "Teams" */
@@ -5797,7 +5797,8 @@ export type Teams_Order_By = {
 
 /** primary key columns input for table: Teams */
 export type Teams_Pk_Columns_Input = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -7815,7 +7816,8 @@ export type Mutation_RootDelete_TeamsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Teams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -9484,7 +9486,8 @@ export type Query_RootTeams_AggregateArgs = {
 
 
 export type Query_RootTeams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -10317,7 +10320,8 @@ export type Subscription_RootTeams_AggregateArgs = {
 
 
 export type Subscription_RootTeams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -14323,7 +14327,7 @@ export const UserAddressesDocument = gql`
     id
     first_name
     last_name
-    Addresses {
+    Addresses(order_by: [{is_default: desc}, {line1: desc}]) {
       id
       ...AddressOverview
     }

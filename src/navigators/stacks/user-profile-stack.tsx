@@ -26,7 +26,7 @@ export type UserProfileStackParamList = {
   [ROUTES_IDS.PAYMENT_INFORMATION_LIST_SCREEN]: undefined;
   [ROUTES_IDS.ADD_PAYMENT_INFORMATION_SCREEN]: undefined;
   [ROUTES_IDS.ADDRESSES_LIST_SCREEN]: undefined;
-  [ROUTES_IDS.ADD_ADDRESS_SCREEN]: { shouldBeDefault: boolean };
+  [ROUTES_IDS.ADD_ADDRESS_SCREEN]: { setId: (id:string) => void };
   [ROUTES_IDS.EDIT_ADDRESS_SCREEN]: {
     address: Addresses;
     addresses: Addresses[];

@@ -35,6 +35,7 @@ import { userAddressesSelector, userSelector } from '../../common/user-profile';
 export const AddressesList = ({
   onEditAddress,
   onAddAddress,
+  onSave,
 }: AddressesListProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [selectedAddress, setSelectedAddress] = useState('');
@@ -58,6 +59,13 @@ export const AddressesList = ({
 
   const user = userSelector(data);
   const addresses = userAddressesSelector(user);
+
+  useEffect(() => {
+    const defaultAddress = addresses.find(a => a.is_default)
+    if (defaultAddress) {
+      setSelectedAddress(defaultAddress.id)
+    }
+  }, []);
 
   // when a user deletes an address, we can't be sure if what is on selectedAddress is correct
   // because user might have deleted the previous default address
@@ -132,7 +140,7 @@ export const AddressesList = ({
       <View style={[s.mh3]}>
         <ActionFooter
           buttonType={
-            selectedAddress
+            !addresses.find(a => a.id === selectedAddress && a.is_default)
               ? ActionButtonTypes.primary
               : ActionButtonTypes.disabled
           }
@@ -166,11 +174,11 @@ export const AddressesList = ({
                 },
               });
             }
+            onSave();
           }}
           topElement={
             <ActionButton
-              onPress={() =>
-                onAddAddress({ shouldBeDefault: addresses.length === 0 })
+              onPress={() => onAddAddress({ setId: setSelectedAddress })
               }
               buttonType={ActionButtonTypes.tertiary}
               text={t('buttons.addDeliveryAddress')}

@@ -5,7 +5,7 @@ query UserAddresses($id: String) {
     id
     first_name
     last_name
-    Addresses {
+    Addresses (order_by: [{ is_default: desc }, { line1: desc }]){
       id
       ...AddressOverview
     }

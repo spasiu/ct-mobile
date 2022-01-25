@@ -29,7 +29,7 @@ import { ADD_ADDRESS_FORM_INITIAL_VALUES } from './add-address-screen.presets';
 
 export const AddAddress = ({
   onAddressAdded,
-  shouldBeDefault,
+  setId,
 }: AddAddressProps): JSX.Element => {
   const [activeField, setActiveField] = useState('');
   const [addressPredictions, setAddressPredictions] = useState<
@@ -45,7 +45,7 @@ export const AddAddress = ({
           message: t('errors.generic'),
           type: 'danger',
         }),
-      onCompleted: onAddressAdded,
+      onCompleted: address => setId(address?.insert_Addresses_one?.id) || onAddressAdded(),
       refetchQueries: [
         {
           query: UserAddressesDocument,
@@ -74,7 +74,7 @@ export const AddAddress = ({
           variables: {
             address: {
               ...values,
-              is_default: shouldBeDefault,
+              is_default: false,
               user_id: authUser?.uid,
             },
           },
@@ -209,8 +209,8 @@ export const AddAddress = ({
                   handleChange(ADDRESS_FORM_FIELDS.POSTAL_CODE)(
                     addressPostalCode,
                   );
-
                   setAddressPredictions([]);
+                  secondAddressLine.current?.focus()
                 }}
               />
             )}

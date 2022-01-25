@@ -24,9 +24,12 @@ type AddParams = UserProfileStackParamList[AddAddressType];
 export interface AddressesListScreenProps {
   navigation: AddressesListScreenNavigationProp;
   route: AddressesListScreenRouteProp;
+  setId?: (id:string) => void;
 }
 
 export interface AddressesListProps {
   onEditAddress: (params: EditParams) => void;
   onAddAddress: (params: AddParams) => void;
+  setId?: (id:string) => void;
+  onSave: () => void;
 }
