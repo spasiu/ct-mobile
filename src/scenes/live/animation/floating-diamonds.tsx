@@ -140,6 +140,7 @@ const FastAnimation = ({
 export const FloatingDiamonds = ({
   large = 0,
   small = 0,
+  _reanimate
 }: FloatingDiamondsProps): JSX.Element => {
   const getDiamonds = (count: number) => {
     return repeat('r', count).map((_, index) => {
