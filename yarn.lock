@@ -7979,7 +7979,7 @@ react-native-gesture-handler@1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-idle-timer@^2.1.7:
+react-native-idle-timer@2.1.7:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/react-native-idle-timer/-/react-native-idle-timer-2.1.7.tgz#62e19217cf9b29482fa9ec7c4774bdfea422b765"
   integrity sha512-3i9yuHYuzaJmRHD6nGsvw8fj+VBMmwwqef0UIdUNJG9szhPRXvtN7rcyDTfchPHpYfRRhOYR62OgpOqHKFj+dw==
