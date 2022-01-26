@@ -52,7 +52,7 @@ export const Diamond = ({
   userId: string;
 }): JSX.Element => {
   const timer = useRef<NodeJS.Timer | undefined>(undefined);
-  const [diamonds, setDiamonds] = useState(0);
+  const [diamonds, setDiamonds] = useState({ n: 0, x: 0 });
   const send = (count: number) =>
     firestore()
       .collection('LiveChat')
@@ -60,7 +60,9 @@ export const Diamond = ({
       .collection('Diamonds')
       .add({ count, userId });
 
-  const animationQueue = new Queue(n => setDiamonds(n));
+  const animationQueue = new Queue(n =>
+    setDiamonds(({ x }) => ({ n, x: x + 1 })),
+  );
   const networkQueue = new Queue(n => send(n));
   networkQueue.delayMultiplier = 500; /*ms*/
 
@@ -111,7 +113,11 @@ export const Diamond = ({
       onResponderStart={hold}
       onResponderRelease={release}>
       <View style={[s.absolute, { bottom: 0 }]}>
-        <FloatingDiamonds large={diamonds} small={diamonds} />
+        <FloatingDiamonds
+          _reanimate={diamonds.x}
+          large={diamonds.n}
+          small={diamonds.n}
+        />
       </View>
       <IconButton>
         <Image source={diamondIcon} />

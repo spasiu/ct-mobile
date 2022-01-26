@@ -138,4 +138,5 @@ export interface TeamShadowProps {
 export interface FloatingDiamondsProps {
   large: number;
   small: number;
+  _reanimate: number;
 }
