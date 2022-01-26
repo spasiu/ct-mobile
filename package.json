@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "set:dev": "cp environments/dev/.env ./ && cp environments/dev/GoogleService-Info.plist ./ios/",
-    "set:prod": "cp environments/prod/.env ./ && cp environments/prod/GoogleService-Info.plist ./ios/",
+    "set:dev": "cp environments/dev/.env ./ && cp environments/dev/GoogleService-Info.plist ./ios/ && cp environments/dev/Info.plist ./ios/cardsandtreasure/",
+    "set:prod": "cp environments/prod/.env ./ && cp environments/prod/GoogleService-Info.plist ./ios/ && cp environments/prod/Info.plist ./ios/cardsandtreasure/",
     "postinstall": "patch-package && cp -r patches/WebRTC.xcframework ./node_modules/react-native-webrtc/apple && echo 'copied webrtc framework'",
     "prestart": "node config && yarn generate",
     "android": "react-native run-android",

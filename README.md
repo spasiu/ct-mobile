@@ -28,6 +28,7 @@ To build for prod, you need to do the following:
 1. Make sure Xcode and Android Studio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
 1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
 1. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour. :P
+1. If you want to make use of the `yarn set:dev` and `yarn set:prod` commands place prod and dev _.env_ files in the prod and dev folders under _environments_. 
 
 ## Running the app on your iPhone from local dev
 
