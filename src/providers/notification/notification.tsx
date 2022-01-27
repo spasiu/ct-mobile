@@ -10,10 +10,6 @@ export const NotificationProvider = ({
 }: NotifictionProviderProps): JSX.Element => {
   const [registeredInIntercom, setRegisteredInIntercom] = useState(false);
 
-  const requestNotificationPermission = (): void => {
-    Notifications.registerRemoteNotifications();
-  };
-
   useEffect(() => {
     const subscription =
         Notifications.events().registerRemoteNotificationsRegistered(
@@ -38,10 +34,8 @@ export const NotificationProvider = ({
     <NotificationContext.Provider
       value={{
         setRegisteredInIntercom,
-        requestNotificationPermission: requestNotificationPermission,
-        cleanNotificationData: () => {
-          setRegisteredInIntercom(false);
-        },
+        requestNotificationPermission: () => Notifications.registerRemoteNotifications(),
+        cleanNotificationData: () => setRegisteredInIntercom(false)
       }}>
       {children}
     </NotificationContext.Provider>
