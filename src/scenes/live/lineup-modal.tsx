@@ -17,7 +17,6 @@ import {
   updateFollowBreakCache,
   updateUnfollowBreakCache,
 } from '../../utils/cache';
-import { breakStatusSelector } from '../../common/break';
 import { breakCardSelector } from './live-screen.utils';
 import { UpcomingBreaksProps } from './live-screen.props';
 import { formatScheduledStatus } from '../../utils/date';

@@ -56,6 +56,7 @@ export const FollowButton = ({
 
   return (
     <IconButton
+      onPress={onPress}
       {...borderlessButtonProps}
       style={[
         ...buttonTypeStyle.short[type],
