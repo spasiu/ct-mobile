@@ -24,14 +24,14 @@ To build for prod, you need to do the following:
 1. Install CocoaPods `sudo gem install cocoapods -v 1.10.1`.
 1. Install/Update Java `https://java.com/en/download/`.
 1. Clone this repo.
-1. Copy the dev _.env_ file from 1Password into the root project folder.
-1. Copy the dev GoogleService-Info.plist from ./environments/dev/ into ./ios/.
-1. Copy the dev Info.plist from ./environments/dev/ into ./ios/cardsandtreasure/.
+1. If you want to make use of the `yarn set:dev` and `yarn set:prod` commands place prod and dev _.env_ files in the prod and dev folders under _environments_. Otherwise do the following three things:
+  1. Copy the dev _.env_ file from 1Password into the root project folder.
+  1. Copy the dev GoogleService-Info.plist from ./environments/dev/ into ./ios/.
+  1. Copy the dev Info.plist from ./environments/dev/ into ./ios/cardsandtreasure/.
 1. Make sure Xcode and Android Studio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
 1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
 1. To prepare the app dependencies run `yarn install`, `yarn clean:ios` and `yarn generate`. On M1 the chip you'll need to alias `pod` in your .zshrc file: _alias pod='arch -x86_64 pod'_.
 1. Run `yarn ios` to build the app and run the simulator. You can run a specific simulator by appending a device tag like so `yarn ios --simulator="iPhone SE (2nd generation)"`. You can find a list of available devices with `xcrun simctl list devices`.
-1. If you want to make use of the `yarn set:dev` and `yarn set:prod` commands place prod and dev _.env_ files in the prod and dev folders under _environments_. 
 
 ## Running the app on your iPhone from local dev
 
