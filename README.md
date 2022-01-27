@@ -24,10 +24,13 @@ To build for prod, you need to do the following:
 1. Install Watchman `brew install watchman`.
 1. Install CocoaPods `sudo gem install cocoapods -v 1.10.1`.
 1. Install/Update Java `https://java.com/en/download/`.
-1. Copy the _.env.example_ file to a new _.env_ file and fill in the missing environment variables.
+1. Copy the dev _.env_ file from 1Password into the root project folder.
+1. Copythe dev GoogleService-Info.plist into ./ios/.
+1. Copy the dev Info.plist into ./ios/cardsandtreasure/.
 1. Make sure Xcode and Android Studio are installed and run `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
 1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
-1. Run `yarn clean`. Once Metro Bundler is running, run `yarn ios` in another terminal and then wait for like an hour. :P
+1. To prepare the app dependencies run `yarn install`, `yarn clean:ios` and `yarn generate`.
+1. Run `yarn ios` to build the app and run the simulator. You can run a specific simulator by appending a device tag like so `yarn ios --simulator="iPhone SE (2nd generation)"`. Youcan find a list of available devices with `xcrun simctl list devices`.
 1. If you want to make use of the `yarn set:dev` and `yarn set:prod` commands place prod and dev _.env_ files in the prod and dev folders under _environments_. 
 
 ## Running the app on your iPhone from local dev
