@@ -20,10 +20,10 @@ To build for prod, you need to do the following:
 ## Local Setup
 
 1. Using _nvm_ or _n_ make sure your node version is v14.16.
-1. Clone the repo and run `yarn install` in the project directory.
 1. Install Watchman `brew install watchman`.
 1. Install CocoaPods `sudo gem install cocoapods -v 1.10.1`.
 1. Install/Update Java `https://java.com/en/download/`.
+1. Clone this repo.
 1. Copy the dev _.env_ file from 1Password into the root project folder.
 1. Copythe dev GoogleService-Info.plist into ./ios/.
 1. Copy the dev Info.plist into ./ios/cardsandtreasure/.
