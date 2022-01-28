@@ -87,8 +87,6 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  console.log('RENDERING HOME')
-
   useEffect(() => {
     const unsubscribe = subscribeToMoreEvents({
       document: NewFeaturedEventsDocument,
