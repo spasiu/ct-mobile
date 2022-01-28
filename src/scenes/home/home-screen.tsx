@@ -87,10 +87,17 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  subscribeToMoreEvents({
-    document: NewFeaturedEventsDocument,
-    updateQuery: (prev, { subscriptionData }) =>
-      subscriptionData.data || prev
+  console.log('RENDERING HOME')
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMoreEvents({
+      document: NewFeaturedEventsDocument,
+      updateQuery: (prev, { subscriptionData }) => 
+        subscriptionData.data || prev
+    });
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const {
@@ -100,10 +107,15 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  subscribeToMoreHits({
-    document: NewFeaturedHitsDocument,
-    updateQuery: (prev, { subscriptionData }) =>
-      subscriptionData.data || prev,
+  useEffect(() => {
+    const unsubscribe = subscribeToMoreHits({
+      document: NewFeaturedHitsDocument,
+      updateQuery: (prev, { subscriptionData }) =>
+        subscriptionData.data || prev
+    });
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const { data: featuredBreakers } = useFeaturedBreakersQuery({
