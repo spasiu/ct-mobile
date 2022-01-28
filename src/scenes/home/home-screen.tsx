@@ -87,11 +87,23 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
+  subscribeToMoreEvents({
+    document: NewFeaturedEventsDocument,
+    updateQuery: (prev, { subscriptionData }) =>
+      subscriptionData.data || prev
+  });
+
   const {
     data: featuredHits,
     subscribeToMore: subscribeToMoreHits,
   } = useFeaturedHitsQuery({
     fetchPolicy: 'cache-and-network',
+  });
+
+  subscribeToMoreHits({
+    document: NewFeaturedHitsDocument,
+    updateQuery: (prev, { subscriptionData }) =>
+      subscriptionData.data || prev,
   });
 
   const { data: featuredBreakers } = useFeaturedBreakersQuery({
@@ -113,28 +125,6 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
       });
     },
   });
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMoreEvents({
-      document: NewFeaturedEventsDocument,
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMoreHits({
-      document: NewFeaturedHitsDocument,
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!featuredBreakers && !featuredEvents) {
     return <Loading />;
