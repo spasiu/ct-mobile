@@ -89,7 +89,7 @@ export const AddAddress = ({
         touched,
       }) => (
         <>
-          <KeyboardAwareScrollView contentContainerStyle={[s.ph3]}>
+          <KeyboardAwareScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[s.ph3]}>
             <FormInput
               onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.FIRST_NAME)}
               status={getFieldStatus(

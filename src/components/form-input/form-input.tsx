@@ -1,5 +1,5 @@
 import React, { forwardRef, LegacyRef } from 'react';
-import { View, Text, TextInput, Image } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 
 import { COLORS } from '../../theme/colors';
 
@@ -33,6 +33,7 @@ export const FormInput = forwardRef(
       showTooltip = false,
       isPicker = false,
       tooltipText = '',
+      openModal,
       ...textInputProps
     }: FormInputProps,
     ref: LegacyRef<TextInput>,
@@ -67,13 +68,15 @@ export const FormInput = forwardRef(
           </Tooltip>
         ) : null}
         {isPicker ? (
-          <View style={viewPreset.iconWrapper}>
-            <Image
-              style={arrowStyle}
-              resizeMode={'contain'}
-              source={arrowIcon}
-            />
-          </View>
+          <TouchableOpacity onPress={() => openModal && openModal()} >
+            <View style={viewPreset.iconWrapper}>
+              <Image
+                style={arrowStyle}
+                resizeMode={'contain'}
+                source={arrowIcon}
+              />
+            </View>
+          </TouchableOpacity>
         ) : null}
       </View>
       <Text style={errorTextPreset}>

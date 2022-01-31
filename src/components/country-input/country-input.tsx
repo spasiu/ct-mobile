@@ -72,6 +72,10 @@ export const CountryInput = ({
           setOpenModal(true);
         }}
         isPicker={true}
+        openModal={()=> {
+          onFocus();
+          setOpenModal(true);
+        }}
       />
     </>
   );

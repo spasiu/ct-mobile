@@ -190,6 +190,7 @@ export const BreakDetailModal = ({
           ) : null}
           {isAddressList(visibleRoute) ? (
             <AddressesList
+              onSave={()=> setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL })}
               onAddAddress={params =>
                 setVisibleRoute({
                   route: ROUTES_IDS.ADD_ADDRESS_SCREEN,

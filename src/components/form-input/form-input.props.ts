@@ -18,4 +18,5 @@ export interface FormInputProps extends TextInputProps {
   showTooltip?: boolean;
   tooltipText?: string;
   isPicker?: boolean;
+  openModal?: ()=> void;
 }
