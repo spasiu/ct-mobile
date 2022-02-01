@@ -11311,25 +11311,10 @@ export type FeaturedBreakersQuery = (
   )> }
 );
 
-export type FeaturedEventsQueryVariables = Exact<{ [key: string]: never; }>;
+export type FeaturedEventsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeaturedEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image'>
-    ) }
-  )> }
-);
-
-export type NewFeaturedEventsSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type NewFeaturedEventsSubscription = (
+export type FeaturedEventsSubscription = (
   { __typename?: 'subscription_root' }
   & { Events: Array<(
     { __typename?: 'Events' }
@@ -11341,21 +11326,10 @@ export type NewFeaturedEventsSubscription = (
   )> }
 );
 
-export type FeaturedHitsQueryVariables = Exact<{ [key: string]: never; }>;
+export type FeaturedHitsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeaturedHitsQuery = (
-  { __typename?: 'query_root' }
-  & { Hits: Array<(
-    { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
-  )> }
-);
-
-export type NewFeaturedHitsSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type NewFeaturedHitsSubscription = (
+export type FeaturedHitsSubscription = (
   { __typename?: 'subscription_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
@@ -13023,7 +12997,7 @@ export type FeaturedBreakersQueryHookResult = ReturnType<typeof useFeaturedBreak
 export type FeaturedBreakersLazyQueryHookResult = ReturnType<typeof useFeaturedBreakersLazyQuery>;
 export type FeaturedBreakersQueryResult = Apollo.QueryResult<FeaturedBreakersQuery, FeaturedBreakersQueryVariables>;
 export const FeaturedEventsDocument = gql`
-    query FeaturedEvents {
+    subscription FeaturedEvents {
   Events(
     limit: 5
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
@@ -13046,77 +13020,28 @@ export const FeaturedEventsDocument = gql`
     `;
 
 /**
- * __useFeaturedEventsQuery__
+ * __useFeaturedEventsSubscription__
  *
- * To run a query within a React component, call `useFeaturedEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFeaturedEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFeaturedEventsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFeaturedEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FeaturedEventsQuery, FeaturedEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<FeaturedEventsQuery, FeaturedEventsQueryVariables>(FeaturedEventsDocument, options);
-      }
-export function useFeaturedEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeaturedEventsQuery, FeaturedEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<FeaturedEventsQuery, FeaturedEventsQueryVariables>(FeaturedEventsDocument, options);
-        }
-export type FeaturedEventsQueryHookResult = ReturnType<typeof useFeaturedEventsQuery>;
-export type FeaturedEventsLazyQueryHookResult = ReturnType<typeof useFeaturedEventsLazyQuery>;
-export type FeaturedEventsQueryResult = Apollo.QueryResult<FeaturedEventsQuery, FeaturedEventsQueryVariables>;
-export const NewFeaturedEventsDocument = gql`
-    subscription NewFeaturedEvents {
-  Events(
-    limit: 5
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: {start_time: asc_nulls_last}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    User {
-      id
-      first_name
-      last_name
-      image
-    }
-  }
-}
-    `;
-
-/**
- * __useNewFeaturedEventsSubscription__
- *
- * To run a query within a React component, call `useNewFeaturedEventsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNewFeaturedEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFeaturedEventsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewFeaturedEventsSubscription({
+ * const { data, loading, error } = useFeaturedEventsSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useNewFeaturedEventsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewFeaturedEventsSubscription, NewFeaturedEventsSubscriptionVariables>) {
+export function useFeaturedEventsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<FeaturedEventsSubscription, FeaturedEventsSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useSubscription<NewFeaturedEventsSubscription, NewFeaturedEventsSubscriptionVariables>(NewFeaturedEventsDocument, options);
+        return ApolloReactHooks.useSubscription<FeaturedEventsSubscription, FeaturedEventsSubscriptionVariables>(FeaturedEventsDocument, options);
       }
-export type NewFeaturedEventsSubscriptionHookResult = ReturnType<typeof useNewFeaturedEventsSubscription>;
-export type NewFeaturedEventsSubscriptionResult = Apollo.SubscriptionResult<NewFeaturedEventsSubscription>;
+export type FeaturedEventsSubscriptionHookResult = ReturnType<typeof useFeaturedEventsSubscription>;
+export type FeaturedEventsSubscriptionResult = Apollo.SubscriptionResult<FeaturedEventsSubscription>;
 export const FeaturedHitsDocument = gql`
-    query FeaturedHits {
+    subscription FeaturedHits {
   Hits(limit: 6, where: {archived: {_eq: false}}, order_by: {created_at: desc}) {
     id
     image_front
@@ -13127,63 +13052,26 @@ export const FeaturedHitsDocument = gql`
     `;
 
 /**
- * __useFeaturedHitsQuery__
+ * __useFeaturedHitsSubscription__
  *
- * To run a query within a React component, call `useFeaturedHitsQuery` and pass it any options that fit your needs.
- * When your component renders, `useFeaturedHitsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFeaturedHitsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFeaturedHitsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FeaturedHitsQuery, FeaturedHitsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<FeaturedHitsQuery, FeaturedHitsQueryVariables>(FeaturedHitsDocument, options);
-      }
-export function useFeaturedHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeaturedHitsQuery, FeaturedHitsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<FeaturedHitsQuery, FeaturedHitsQueryVariables>(FeaturedHitsDocument, options);
-        }
-export type FeaturedHitsQueryHookResult = ReturnType<typeof useFeaturedHitsQuery>;
-export type FeaturedHitsLazyQueryHookResult = ReturnType<typeof useFeaturedHitsLazyQuery>;
-export type FeaturedHitsQueryResult = Apollo.QueryResult<FeaturedHitsQuery, FeaturedHitsQueryVariables>;
-export const NewFeaturedHitsDocument = gql`
-    subscription NewFeaturedHits {
-  Hits(limit: 6, where: {archived: {_eq: false}}, order_by: {created_at: desc}) {
-    id
-    image_front
-    description
-    player
-  }
-}
-    `;
-
-/**
- * __useNewFeaturedHitsSubscription__
- *
- * To run a query within a React component, call `useNewFeaturedHitsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNewFeaturedHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFeaturedHitsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useFeaturedHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewFeaturedHitsSubscription({
+ * const { data, loading, error } = useFeaturedHitsSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useNewFeaturedHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewFeaturedHitsSubscription, NewFeaturedHitsSubscriptionVariables>) {
+export function useFeaturedHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<FeaturedHitsSubscription, FeaturedHitsSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useSubscription<NewFeaturedHitsSubscription, NewFeaturedHitsSubscriptionVariables>(NewFeaturedHitsDocument, options);
+        return ApolloReactHooks.useSubscription<FeaturedHitsSubscription, FeaturedHitsSubscriptionVariables>(FeaturedHitsDocument, options);
       }
-export type NewFeaturedHitsSubscriptionHookResult = ReturnType<typeof useNewFeaturedHitsSubscription>;
-export type NewFeaturedHitsSubscriptionResult = Apollo.SubscriptionResult<NewFeaturedHitsSubscription>;
+export type FeaturedHitsSubscriptionHookResult = ReturnType<typeof useFeaturedHitsSubscription>;
+export type FeaturedHitsSubscriptionResult = Apollo.SubscriptionResult<FeaturedHitsSubscription>;
 export const FollowBreakDocument = gql`
     mutation FollowBreak($follow: SaveBreak_insert_input!) {
   insert_SaveBreak_one(object: $follow) {

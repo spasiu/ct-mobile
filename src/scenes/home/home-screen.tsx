@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -36,16 +36,14 @@ import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
 import {
-  useFeaturedEventsQuery,
   useFeaturedBreakersQuery,
   useUserMinimalInformationQuery,
   Users,
-  useFeaturedHitsQuery,
-  NewFeaturedHitsDocument,
   Hits,
-  NewFeaturedEventsDocument,
   Events,
   Event_Status_Enum,
+  useFeaturedEventsSubscription,
+  useFeaturedHitsSubscription,
 } from '../../services/api/requests';
 
 import {
@@ -81,40 +79,12 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
 
   const {
-    data: featuredEvents,
-    subscribeToMore: subscribeToMoreEvents,
-  } = useFeaturedEventsQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMoreEvents({
-      document: NewFeaturedEventsDocument,
-      updateQuery: (prev, { subscriptionData }) => 
-        subscriptionData.data || prev
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+    data: featuredEvents
+  } = useFeaturedEventsSubscription();
 
   const {
-    data: featuredHits,
-    subscribeToMore: subscribeToMoreHits,
-  } = useFeaturedHitsQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMoreHits({
-      document: NewFeaturedHitsDocument,
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+    data: featuredHits
+  } = useFeaturedHitsSubscription();
 
   const { data: featuredBreakers } = useFeaturedBreakersQuery({
     fetchPolicy: 'cache-and-network',

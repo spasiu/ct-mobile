@@ -1,4 +1,4 @@
-subscription NewFeaturedEvents {
+subscription FeaturedEvents {
   Events(
     limit: 5
     where: {
