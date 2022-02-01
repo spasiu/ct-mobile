@@ -144,7 +144,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                   }
                   text={t('buttons.forgotPassword')}
                   textStyle={[s.ff_alt_sb, s.black, s.f6]}
-                  style={[s.mt5]}
+                  style={[s.ml2]}
                 />
               </View>
             </View>
