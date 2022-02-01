@@ -6,8 +6,8 @@ import {
   Break_Status_Enum,
   Events,
   Event_Status_Enum,
-  FeaturedEventsQuery,
   LiveStreamSubscription,
+  FeaturedEventsSubscription,
   SaveEvent,
   Users,
 } from '../../services/api/requests';
@@ -57,7 +57,7 @@ export const eventsSelector = (
   requestData:
     | BreakerEventsQuery
     | LiveStreamSubscription
-    | FeaturedEventsQuery
+    | FeaturedEventsSubscription
     | undefined,
 ): Events[] => pathOr([], ['Events'], requestData);
 

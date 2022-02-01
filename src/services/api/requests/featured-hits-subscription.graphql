@@ -1,4 +1,4 @@
-subscription NewFeaturedHits {
+subscription FeaturedHits {
   Hits(limit: 6
     where:{ archived: { _eq: false } }
     order_by: { created_at: desc }
