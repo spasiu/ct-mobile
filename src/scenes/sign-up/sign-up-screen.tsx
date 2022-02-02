@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Text, Image, TextInput, Dimensions } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
@@ -29,6 +29,9 @@ import { SignUpScreenProps } from './sign-up-screen.props';
 export const SignUpScreen = ({
   navigation,
 }: SignUpScreenProps): JSX.Element => {
+  const height = Dimensions.get('window').height;
+  const isShortScreen = height < 600;
+
   const { signInWithGoogle, signInWithApple, signUpWithEmail } = useContext(
     AuthContext,
   ) as AuthContextType;
@@ -36,6 +39,7 @@ export const SignUpScreen = ({
   const [activeField, setActiveField] = useState<string>('');
   const [processing, setProcessing] = useState(false);
   const password = useRef<TextInput>(null);
+
   return (
     <Container
       style={[s.flx_i, s.jcfe]}
@@ -62,13 +66,16 @@ export const SignUpScreen = ({
           touched,
         }) => (
           <>
-            <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
-              <View style={[s.w_100, s.mv4, s.aic]}>
+            <View style={[s.flx_i, s.jcfs, s.aic]}>
+              <View style={[s.w_100, isShortScreen ? s.mv1 : s.mv4, s.aic]}>
                 <Text style={[s.ff_b, s.f4, s.black]}>
                   {t('account.welcomeText')}
                 </Text>
                 <Image
-                  style={[s.h3, s.w4, s.mv3]}
+                  style={[
+                    s.mv2,
+                    {height: height / 15}
+                  ]}
                   resizeMode="contain"
                   source={logo}
                 />
@@ -90,7 +97,7 @@ export const SignUpScreen = ({
                 text={t('buttons.googleSignUp')}>
                 <Image source={googleLogo} style={[s.mr3]} />
               </ActionButton>
-              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, s.mv4]}>
+              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, isShortScreen ? s.mv1 : s.mv4]}>
                 <View
                   style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]}
                 />
