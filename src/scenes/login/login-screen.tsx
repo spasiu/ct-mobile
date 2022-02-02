@@ -63,11 +63,11 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
         }) => (
           <>
             <View style={[s.flx_i, s.jcfs, s.aic]}>
-              <TitleBar
-                title={isShortScreen ? null : t('account.welcomeBackTitle')}
-                subtitle={isShortScreen ? null : t('account.welcomeBackSubtitle')}
+              { isShortScreen ? null : (<TitleBar
+                title={t('account.welcomeBackTitle')}
+                subtitle={t('account.welcomeBackSubtitle')}
                 wrapperStyle={[s.w_100]}
-              />
+              />)}
               <ActionButton
                 onPress={() => signInWithApple()}
                 style={[s.bg_white, s.ba, s.b__black]}

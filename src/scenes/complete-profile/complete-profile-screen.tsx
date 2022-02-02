@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Dimensions } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
@@ -36,6 +36,8 @@ import { errorDuplicateUsernameSelector } from '../../common/error';
 export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
+  const height = Dimensions.get('window').height;
+  const isShortScreen = height < 600;
   const { user, uploadPhoto, logout } = useContext(
     AuthContext,
   ) as AuthContextType;
@@ -103,16 +105,22 @@ export const CompleteProfileScreen = ({
         }) => (
           <>
             <View style={[s.flx_i, s.jcfs, s.aic, s.mb4]}>
-              <TitleBar
-                title={t('account.completeProfileTitle')}
-                subtitle={t('account.completeProfileSubtitle')}
-                wrapperStyle={[s.w_100]}
-              />
+              {isShortScreen ?
+                (<TitleBar
+                  subtitle={t('account.completeProfileConcise')}
+                  wrapperStyle={[s.w_100, s.mt0]}
+                />) :
+                (<TitleBar
+                  title={t('account.completeProfileTitle')}
+                  subtitle={t('account.completeProfileSubtitle')}
+                  wrapperStyle={[s.w_100]}
+                />)
+              }
               <AvatarUpload
                 errorMessage={errors[COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]}
                 isLoading={uploadingPhoto}
                 image={values[COMPLETE_PROFILE_FORM_FIELDS.USER_PHOTO]}
-                containerStyle={[s.mv4]}
+                containerStyle={[isShortScreen ? s.mb1 : s.mv4]}
                 onNewImageSelected={async response => {
                   setUploadingPhoto(true);
                   const url = await uploadPhoto(response);
