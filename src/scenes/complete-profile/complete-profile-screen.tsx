@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
-import { View, TextInput, Dimensions } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
@@ -32,12 +32,11 @@ import {
   showError,
 } from './complete-profile-screen.utils';
 import { errorDuplicateUsernameSelector } from '../../common/error';
+import { isShortScreen } from '../constants';
 
 export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
-  const height = Dimensions.get('window').height;
-  const isShortScreen = height < 600;
   const { user, uploadPhoto, logout } = useContext(
     AuthContext,
   ) as AuthContextType;

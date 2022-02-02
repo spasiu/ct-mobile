@@ -25,10 +25,9 @@ import {
   googleLogo,
 } from './login-screen.presets';
 import { LoginScreenProps } from './login-screen.props';
+import { isShortScreen } from '../constants';
 
 export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
-  const height = Dimensions.get('window').height;
-  const isShortScreen = height < 600;
   const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(
     AuthContext,
   ) as AuthContextType;
