@@ -25,7 +25,7 @@ import {
   googleLogo,
 } from './login-screen.presets';
 import { LoginScreenProps } from './login-screen.props';
-import { isShortScreen } from '../constants';
+import { isShortScreen } from '../device-properties';
 
 export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
   const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(

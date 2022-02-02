@@ -32,7 +32,7 @@ import {
   showError,
 } from './complete-profile-screen.utils';
 import { errorDuplicateUsernameSelector } from '../../common/error';
-import { isShortScreen } from '../constants';
+import { isShortScreen } from '../device-properties';
 
 export const CompleteProfileScreen = ({
   navigation,

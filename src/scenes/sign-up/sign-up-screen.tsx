@@ -25,12 +25,11 @@ import {
   googleLogo,
 } from './sign-up-screen.presets';
 import { SignUpScreenProps } from './sign-up-screen.props';
-import { isShortScreen } from '../constants';
+import { isShortScreen, screenHeight } from '../device-properties';
 
 export const SignUpScreen = ({
   navigation,
 }: SignUpScreenProps): JSX.Element => {
-  const height = Dimensions.get('window').height;
 
   const { signInWithGoogle, signInWithApple, signUpWithEmail } = useContext(
     AuthContext,
@@ -74,7 +73,7 @@ export const SignUpScreen = ({
                 <Image
                   style={[
                     s.mv2,
-                    {height: height / 15}
+                    {height: screenHeight / 15}
                   ]}
                   resizeMode="contain"
                   source={logo}
