@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Text, Image, TextInput, Dimensions } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
@@ -27,6 +27,8 @@ import {
 import { LoginScreenProps } from './login-screen.props';
 
 export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
+  const height = Dimensions.get('window').height;
+  const isShortScreen = height < 600;
   const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(
     AuthContext,
   ) as AuthContextType;
@@ -62,8 +64,8 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
           <>
             <View style={[s.flx_i, s.jcfs, s.aic]}>
               <TitleBar
-                title={t('account.welcomeBackTitle')}
-                subtitle={t('account.welcomeBackSubtitle')}
+                title={isShortScreen ? null : t('account.welcomeBackTitle')}
+                subtitle={isShortScreen ? null : t('account.welcomeBackSubtitle')}
                 wrapperStyle={[s.w_100]}
               />
               <ActionButton
@@ -80,7 +82,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                 text={t('buttons.googleSignUp')}>
                 <Image source={googleLogo} style={[s.mr3]} />
               </ActionButton>
-              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, s.mv4]}>
+              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, isShortScreen ? s.mv3 : s.mv4]}>
                 <View
                   style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]}
                 />
