@@ -25,6 +25,7 @@ import {
   googleLogo,
 } from './login-screen.presets';
 import { LoginScreenProps } from './login-screen.props';
+import { isShortScreen } from '../device-properties';
 
 export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
   const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(
@@ -61,11 +62,11 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
         }) => (
           <>
             <View style={[s.flx_i, s.jcfs, s.aic]}>
-              <TitleBar
+              { isShortScreen ? null : (<TitleBar
                 title={t('account.welcomeBackTitle')}
                 subtitle={t('account.welcomeBackSubtitle')}
                 wrapperStyle={[s.w_100]}
-              />
+              />)}
               <ActionButton
                 onPress={() => signInWithApple()}
                 style={[s.bg_white, s.ba, s.b__black]}
@@ -80,7 +81,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                 text={t('buttons.googleSignUp')}>
                 <Image source={googleLogo} style={[s.mr3]} />
               </ActionButton>
-              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, s.mv4]}>
+              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, isShortScreen ? s.mv3 : s.mv4]}>
                 <View
                   style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]}
                 />
@@ -144,7 +145,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                   }
                   text={t('buttons.forgotPassword')}
                   textStyle={[s.ff_alt_sb, s.black, s.f6]}
-                  style={[s.mt5]}
+                  style={[s.ml2]}
                 />
               </View>
             </View>

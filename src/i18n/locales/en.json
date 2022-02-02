@@ -97,6 +97,7 @@
     "welcomeBackTitle": "Welcome Back",
     "welcomeBackSubtitle": "Ready for a break?",
     "completeProfileTitle": "Reserve your username",
+    "completeProfileConcise": "Complete your profile",
     "completeProfileSubtitle": "Choose a username and upload an avatar"
   },
   "onboarding": {
