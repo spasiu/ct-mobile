@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { View, Text, Image, TextInput, Dimensions } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 
