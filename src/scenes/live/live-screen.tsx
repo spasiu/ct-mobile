@@ -19,7 +19,6 @@ import firestore from '@react-native-firebase/firestore';
 import {
   NavigationBar,
   IconButton,
-  LiveCountBadge,
   StatusBadge,
   StatusBadgeTypes,
   ServerImage,
@@ -43,7 +42,6 @@ import {
   eventLiveBreakSelector,
   eventSelector,
   eventUpcomingBreakSelector,
-  eventViewCountSelector,
   eventStreamNameSelector,
 } from '../../common/event';
 import { ICON_SIZE } from '../../theme/sizes';
@@ -65,6 +63,7 @@ import {
 import { ChatMessage } from '../../common/chat';
 
 import { Diamond } from './diamonds';
+import { LiveCountBadge } from '../../components/viewership';
 
 import { closeIcon, shopIcon } from './live-screen.presets';
 import { Chat } from './chat';
@@ -224,10 +223,12 @@ export const LiveScreen = ({
                 <FollowButtonBreaker breakerId={breaker.id as string} />
                 <View style={[s.flx_i, s.flx_row, s.jcfe]}>
                   <StatusBadge status={StatusBadgeTypes.live} />
-                  <LiveCountBadge
-                    containerStyle={[s.ml2]}
-                    count={eventViewCountSelector(event)}
-                  />
+                  <View style={[s.ml2]}>
+                    <LiveCountBadge
+                      eventId={eventId}
+                      userId={userId}
+                    />
+                  </View>
                 </View>
               </View>
               {isEmpty(liveBreak) && isEmpty(notifiedBreak) ? null : (

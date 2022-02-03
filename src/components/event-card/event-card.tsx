@@ -9,6 +9,7 @@ import {
   FollowButtonSizeTypes,
   FollowButtonTypes,
 } from '../follow-button';
+import { LiveCountBadge } from '../viewership';
 
 import { EventCardProps } from './event-card.props';
 import {
@@ -39,6 +40,7 @@ export const EventCard = ({
           style={[...contentContainerStylePreset, ...contentContainerStyle]}>
           <View style={infoWrapperStylePreset}>
             <StatusBadge status={status} text={eventDate} />
+            {status === 'live' ? <LiveCountBadge /> : null}
           </View>
           <View style={contentWrapperStyle}>
             <View style={footerWrapperStyle}>
