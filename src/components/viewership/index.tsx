@@ -26,13 +26,19 @@ export const LiveCountBadge = ({ eventId, showPresence }: { eventId: string, sho
       .collection('LiveChat')
       .doc(eventId)
       .get()
-      .then(doc => setCount(n => doc?.data()?.viewers || n));
+      .then(doc => {
+        const n = doc?.data()?.viewers;
+        if (n !== undefined) setCount(n);
+      });
   }, [eventId]);
 
   useEffect(() => firestore()
       .collection('LiveChat')
       .doc(eventId)
-      .onSnapshot(doc => setCount(n => doc?.data()?.viewers || n)), [eventId]);
+      .onSnapshot(doc => {
+        const n = doc?.data()?.viewers;
+        if (n !== undefined) setCount(n);
+      }), [eventId]);
 
   return <Badge image={eyeIcon} text={count.toString()} />;
 }
