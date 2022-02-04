@@ -3,61 +3,36 @@ import React, { useEffect, useState } from 'react';
 import { Badge } from '../badge';
 
 const eyeIcon = require('../../assets/eye-icon.png');
-const TIMEOUT = 30000; //ms
-const INTERVAL = 10000; //ms
 
-export const LiveCountBadge = ({ eventId, userId }: { eventId?: string, userId?: string }): JSX.Element => {
+export const LiveCountBadge = ({ eventId, showPresence }: { eventId: string, showPresence?: boolean }): JSX.Element => {
   const [count, setCount] = useState(0);
+
   useEffect(() => {
-    if (eventId) return poll(eventId, userId, setCount);
-  }, [eventId, userId]);
+    if (showPresence) firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .set({ viewers: firestore.FieldValue.increment(1) }, { merge: true });
+
+    if (showPresence) return () => {
+      firestore()
+        .collection('LiveChat')
+        .doc(eventId)
+        .set({ viewers: firestore.FieldValue.increment(-1) }, { merge: true });
+    }
+  }, [eventId, showPresence]);
+
+  useEffect(() => {
+    firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .get()
+      .then(doc => setCount(n => doc?.data()?.viewers || n));
+  }, [eventId]);
+
+  useEffect(() => firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .onSnapshot(doc => setCount(n => doc?.data()?.viewers || n)), [eventId]);
+
   return <Badge image={eyeIcon} text={count.toString()} />;
-}
-
-function poll(eventId: string, userId:string | undefined, cb: (count: number) => void): () => void {
-  if (userId) firestore()
-    .collection('LiveChat')
-    .doc(eventId)
-    .collection('Viewers')
-    .doc(userId)
-    .set({ timestamp: Date.now() });
-  
-  getCount(eventId).then(cb);
-
-  const intervalId = setInterval(async () => {
-    const timestamp = Date.now();
-    if (userId) firestore()
-      .collection('LiveChat')
-      .doc(eventId)
-      .collection('Viewers')
-      .doc(userId)
-      .update({ timestamp });
-    
-    const count = await getCount(eventId);
-    cb(count);
-  }, INTERVAL);
-
-  return () => {
-    clearTimeout(intervalId);
-    if (userId) firestore()
-      .collection('LiveChat')
-      .doc(eventId)
-      .collection('Viewers')
-      .doc(userId)
-      .delete();
-  }
-}
-
-async function getCount(eventId: string) {
-  const timestamp = Date.now();
-  const snapshot = await firestore()
-    .collection('LiveChat')
-    .doc(eventId)
-    .collection('Viewers')
-    .get();
-
-  return snapshot.docs
-    .map(doc => doc.data().timestamp)
-    .filter(ts => (ts + TIMEOUT) > timestamp)
-    .length;
 }

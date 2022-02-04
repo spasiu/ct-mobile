@@ -85,6 +85,7 @@ export const eventDetailSelector = (
 export const scheduleEventSelector = (event: Events): EventCardProps => {
   const eventTime = eventTimeSelector(event);
   return {
+    eventId: eventIdSelector(event),
     eventDate: formatScheduledStatus(eventTime),
     title: eventTitleSelector(event),
     status: eventCardStatusSelector(event),

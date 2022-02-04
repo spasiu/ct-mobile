@@ -32,7 +32,7 @@ export const FeaturedEventCard = ({
       <View style={[...contentContainerStylePreset, ...contentContainerStyle]}>
         <View style={badgeWrapperStylePreset}>
           {status ? <StatusBadge text={eventDate} status={status} /> : null}
-          {status === 'live' ? <LiveCountBadge /> : null}
+          {status === 'live' ? <LiveCountBadge eventId={eventId} /> : null}
         </View>
         <View style={contentWrapperStylePreset}>
           <Text style={[...titleStylePreset, ...titleTextStyle]}>{title}</Text>
