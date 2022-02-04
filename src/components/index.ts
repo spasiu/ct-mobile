@@ -26,7 +26,6 @@ export * from './icon-button';
 export * from './image-card';
 export * from './image-gallery';
 export * from './league-icon';
-export * from './live-count-badge';
 export * from './loading';
 export * from './navigation-bar';
 export * from './over-screen-modal';

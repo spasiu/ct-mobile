@@ -183,6 +183,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
                         <FeaturedEventCard
                           {...featuredEventSelector(homeEvent)}
                           containerStyle={[s.mr3, s.mb3]}
+                          eventId={homeEvent.id}
                           onPress={() => {
                             const eventStatus = eventStatusSelector(homeEvent);
                             if (eventStatus === Event_Status_Enum.Live) {
