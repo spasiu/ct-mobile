@@ -1,7 +1,7 @@
-export const img1 = require('../../assets/instruction-one.png');
-export const img2 = require('../../assets/instruction-two.png');
-export const img3 = require('../../assets/instruction-three.png');
-export const img4 = require('../../assets/instruction-four.png');
+export const img1 = require('../../assets/instruction01.png');
+export const img2 = require('../../assets/instruction02.png');
+export const img3 = require('../../assets/instruction03.png');
+export const img4 = require('../../assets/instruction04.png');
 
 export const instructions = [
   {
