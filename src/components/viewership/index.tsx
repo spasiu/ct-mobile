@@ -37,7 +37,6 @@ export const LiveCountBadge = ({ eventId, showPresence }: { eventId: string, sho
       .collection('LiveChat')
       .doc(eventId)
       .onSnapshot(doc => {
-        console.log('ONSNAPSHOT');
         const n = doc?.data()?.viewers;
         if (n !== undefined) setCount(n);
       }), [eventId]);
