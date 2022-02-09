@@ -1,1 +1,1 @@
-export const instructionImage = require('../../assets/instruction-one.png');
+export const instructionImage = require('../../assets/instruction01.png');
