@@ -326,15 +326,24 @@
     "purchase_no_longer_available": "Your purchase is no longer available.",
     "user_cards_not_retreived":"Could not access your payment methods. Please log out and log back in.",
     "user_card_not_deleted":"Could not delete your payment method. Please try again.",
-    "user_card_not_created":"Could not add your new payment method. Please try again.",
+    "could_not_add_card":"Could not add your new payment method. Please try again.",
     "could_not_get_default_payment_method":"Could not retrieve your default payment method. Please try again.",
     "could_not_set_default_payment_method":"Could not set your default payment method. Please try again.",
     "could_not_unset_default_payment_method":"Could not unset your default payment method. Please try again.",
     "big_commerce_creation_error":"Could not set you up on our payment platform. Please try again.",
     "breaker_detail_retrieval_error":"Could not retrieve data for the break. Please try again.",
-    "could_not_complete_PaySafe_payment": "Could not complete payment",
+    "could_not_complete_paysafe_auth": "Payment declined, Insufficient funds.",
+    "could_not_complete_paysafe_payment": "Could not complete payment",
     "invalid_coupon_code": "Invalid coupon code",
-    "could_not_complete_checkout": "Could not complete checkout."
+    "could_not_complete_checkout": "Could not complete checkout.",
+    "user_paysafe_profile_does_not_exist": "Your payment profile is unavailable. Please contact support.",
+    "user_profile_missing": "User profile information missing. Please contact support.",
+    "could_not_verify_card": "Could not verify your payment method. Please try again.",
+    "avs_mismatch": "Address does not match payment method. Please try again.",
+    "cvv_mismatch": "CVV does not match payment method. Please try again.",
+    "could_not_complete_order": "Could not complete order. Please contact support if error persists",
+
+
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

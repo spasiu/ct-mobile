@@ -261,7 +261,10 @@ export const getWarningModalProps = (
       imageSrc: failedImage,
       title: orderState.message,
       primaryActionText: t('buttons.backToPaymentDetails'),
-      onPrimaryActionPressed: onError,
+      onPrimaryActionPressed: () => {
+        onError()
+        setOrderCreated(undefined)
+      }
     };
   }
 };

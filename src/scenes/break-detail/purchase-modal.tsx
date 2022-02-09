@@ -56,7 +56,7 @@ export const PurchaseModal = ({
           setLoading(false);
         })
         .catch(e => {
-          setError(e.details.ct_error_code);
+          setError(e.details?.ct_error_code || "generic");
           setLoading(false);
           onCancel();
         });

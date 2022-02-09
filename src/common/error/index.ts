@@ -16,7 +16,7 @@ export const displayError = (
 
 export const getFirebaseErrorCode = (error: unknown): CtErrorCode => {
   return isHttpsError(error)
-    ? ((error as any).details.ct_error_code as CtErrorCode)
+    ? ((error as any).details?.ct_error_code as CtErrorCode)
     : 'generic';
 
   function isHttpsError(error: unknown): Boolean {

@@ -21,7 +21,7 @@ export const createCardHandler = async (
     const response = await addCard(cardDetails);
     return response.data as Card;
   } catch (error) {
-    handleError(new CtError('user_card_not_created', 'danger', error));
+    handleError(new CtError(error?.details?.ct_error_code || "generic", 'danger', error));
   }
 
   return undefined;
@@ -32,7 +32,7 @@ export const getCardsHandler = async (): Promise<Card[] | false> => {
     const response = await getCards();
     return response.data.cards as Card[];
   } catch (error) {
-    handleError(new CtError('user_cards_not_retreived', 'danger', error));
+    handleError(new CtError(error?.details?.ct_error_code || "generic", 'danger', error));
     return false;
   }
 };
@@ -42,9 +42,7 @@ export const deleteCardHandler = async (cardId: string): Promise<boolean> => {
     await removeCard({ cardId });
     return true;
   } catch (error) {
-    handleError(
-      new CtError('user_card_not_deleted','danger',error)
-    );
+    handleError(new CtError(error?.details?.ct_error_code || "generic", 'danger', error));
     return false;
   }
 };
