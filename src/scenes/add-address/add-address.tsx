@@ -42,7 +42,7 @@ export const AddAddress = ({
     {
       onError: () =>
         showMessage({
-          message: t('errors.generic'),
+          message: t('errors.could_not_add_address'),
           type: 'danger',
         }),
       onCompleted: address => setId(address?.insert_Addresses_one?.id) || onAddressAdded(),

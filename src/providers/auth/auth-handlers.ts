@@ -24,7 +24,7 @@ export const emailSignUpHandler = async (
       });
     } else {
       showMessage({
-        message: t('errors.generic'),
+        message: t('errors.could_not_create_user'),
         type: 'danger',
       });
     }
@@ -39,7 +39,7 @@ export const emailSignInHandler = async (
     await auth().signInWithEmailAndPassword(email, password);
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_log_in'),
       type: 'danger',
     });
   }
@@ -52,7 +52,7 @@ export const googleSignInHandler = async (): Promise<void> => {
     await auth().signInWithCredential(googleCredential);
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_log_in'),
       type: 'danger',
     });
   }
@@ -77,7 +77,7 @@ export const appleSignInHandler = async (): Promise<void> => {
     await auth().signInWithCredential(appleCredential);
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_log_in'),
       type: 'danger',
     });
   }
@@ -89,7 +89,7 @@ export const resetPasswordHandler = async (email: string): Promise<boolean> => {
     return true;
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_reset_password'),
       type: 'danger',
     });
     return false;
@@ -105,7 +105,7 @@ export const logoutHandler = async (
     client.clearStore();
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_log_out'),
       type: 'danger',
     });
   }
@@ -124,13 +124,13 @@ export const uploadPhotoHandler = async (
       return `/${avatarPath}`;
     }
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_upload_file'),
       type: 'danger',
     });
     return '';
   } catch (e) {
     showMessage({
-      message: t('errors.generic'),
+      message: t('errors.could_not_upload_file'),
       type: 'danger',
     });
     return '';

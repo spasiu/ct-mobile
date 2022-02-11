@@ -53,7 +53,7 @@ export const CompleteProfileScreen = ({
       if (errorDuplicateUsernameSelector(e.graphQLErrors)) {
         showError(t('errors.duplicatedUsername'));
       } else {
-        showError();
+        showError(t('errors.could_not_create_user'));
       }
     },
     onCompleted: async data => {

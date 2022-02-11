@@ -41,7 +41,7 @@ export const shareHit = (
           })
           .catch(() => {
             showMessage({
-              message: t('errors.generic'),
+              message: t('errors.could_not_share_hit'),
               type: 'danger',
             });
           });

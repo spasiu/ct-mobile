@@ -55,7 +55,7 @@ export const AddPaymentInformation = ({
             const eventData = JSON.parse(event.nativeEvent.data);
             if (eventData.initError) {
               showMessage({
-                message: t('errors.generic'),
+                message: t('errors.could_not_verify_card'),
                 type: 'danger',
               });
             } else {

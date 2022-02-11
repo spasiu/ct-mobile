@@ -50,7 +50,7 @@ export const EditAddress = ({
     {
       onError: () =>
         showMessage({
-          message: t('errors.generic'),
+          message: t('errors.could_not_update_address'),
           type: 'danger',
         }),
       onCompleted: () => onAddressEdited(),
@@ -75,7 +75,7 @@ export const EditAddress = ({
     },
     onError: () =>
       showMessage({
-        message: t('errors.generic'),
+        message: t('errors.could_not_delete_address'),
         type: 'danger',
       }),
     onCompleted: () => {

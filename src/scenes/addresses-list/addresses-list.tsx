@@ -51,7 +51,7 @@ export const AddressesList = ({
     {
       onError: () =>
         showMessage({
-          message: t('errors.generic'),
+          message: t('errors.could_not_set_default_address'),
           type: 'danger',
         }),
     },

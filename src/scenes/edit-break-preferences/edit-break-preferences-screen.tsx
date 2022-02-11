@@ -29,7 +29,7 @@ export const EditBreakPreferencesScreen = ({
     {
       onError: () =>
         showMessage({
-          message: t('errors.generic'),
+          message: t('errors.could_not_set_preferences'),
           type: 'danger',
         }),
       refetchQueries: [
