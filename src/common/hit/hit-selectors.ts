@@ -16,5 +16,19 @@ export const hitImageFrontSelector = (hit: Partial<Hits>): string =>
 export const hitPlayerSelector = (hit: Partial<Hits>): string =>
   pathOr('', ['player'], hit);
 
-export const hitDescriptionSelector = (hit: Partial<Hits>): string =>
-  pathOr('', ['description'], hit);
+export const hitDescription = (hit: Hits): string => {
+    return [
+      hit.Product?.year,
+      hit.Product?.manufacturer,
+      hit.Product?.brand,
+      hit.Product?.series,
+      hit.card_number,
+      hit.player,
+      hit.parallel,
+      hit.insert,
+      (hit.autograph)? 'Autograph' : '',
+      (hit.memoribillia)? hit.memoribillia : '',
+      (hit.rookie_card)? 'Rookie' : '',
+      (hit.numbered)? '/' + hit.numbered : ''
+    ].join(' ');
+}

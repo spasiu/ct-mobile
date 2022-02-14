@@ -6,7 +6,7 @@ import { showMessage } from 'react-native-flash-message';
 import { t } from '../../i18n/i18n';
 import { HitDetailModalProps } from './hit-detail-modal.props';
 import {
-  hitDescriptionSelector,
+  hitDescription,
   hitImageFrontSelector,
   hitPlayerSelector,
 } from '../../common/hit';
@@ -54,7 +54,7 @@ export const hitDetailForModalSelector = (
 ): HitDetailModalProps => {
   return {
     image_front: hitImageFrontSelector(hit),
-    description: hitDescriptionSelector(hit),
+    description: hitDescription(hit),
     player: hitPlayerSelector(hit),
   };
 };
