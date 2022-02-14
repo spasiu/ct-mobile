@@ -108,7 +108,7 @@ export const BreakDetailModal = ({
   const userData = userSelector(data);
 
   const isBreakSoldOut = !isEmpty(selectedItems) ? false : breakSoldOutSelector(breakData);
-  const isBreakCompleted = breakCompletedSelector(breakData);
+  const isBreakCompleted = breakData ? breakCompletedSelector(breakData) : false;
 
   const userAddress = userDefaultAddressSelector(userData);
   const userPaymentData = getDefaultPaymentCard();
