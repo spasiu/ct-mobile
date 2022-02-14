@@ -135,12 +135,11 @@ const ReelSet = () => {
   return (
     <View
       style={[s.flx_i, s.flx_row]}
-      onLayout={event => {
-        if (event) setDimensions({
+      onLayout={event => setDimensions({
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height,
         })
-      }}>
+      }>
       {dimensions ? (
         <>
           {indexedMap((data, index) => {
