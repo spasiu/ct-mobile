@@ -14,8 +14,8 @@ export const LiveCountBadge = ({ eventId, showPresence }: { eventId: string, sho
       .doc(eventId)
       .set({ viewers: firestore.FieldValue.increment(1) }, { merge: true });
 
-    if (showPresence) return () => {
-      firestore()
+    return () => {
+      if (showPresence) firestore()
         .collection('LiveChat')
         .doc(eventId)
         .set({ viewers: firestore.FieldValue.increment(-1) }, { merge: true });
