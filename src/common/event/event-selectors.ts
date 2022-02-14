@@ -14,7 +14,6 @@ import {
 import { StatusBadgeTypes } from '../../components';
 
 import { EventStatusType } from './event';
-import { breakStatusSelector } from '../break';
 
 export const eventStatusSelector = (event: Partial<Events>): EventStatusType =>
   pathOr(Event_Status_Enum.Completed, ['status'], event);
@@ -110,7 +109,7 @@ export const eventUpcomingBreaksSelector = (
 ): Breaks[] => {
   const eventBreaks = eventBreaksSelector(event);
   return filter(eventBreak => {
-    const breakStatus = breakStatusSelector(eventBreak);
+    const breakStatus = eventBreak.status;
     return (
       breakStatus !== Break_Status_Enum.Notified &&
       breakStatus !== Break_Status_Enum.Live &&

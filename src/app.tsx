@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import * as RNLocalize from 'react-native-localize';
 import {

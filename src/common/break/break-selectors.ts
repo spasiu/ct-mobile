@@ -87,12 +87,11 @@ export const breakCardStatusSelector = (
 ): StatusBadgeTypes => {
   const event = optionalEvent ? optionalEvent : breakEventSelector(eventBreak);
   const eventStatus = eventCardStatusSelector(event);
-  const breakStatus = breakStatusSelector(eventBreak);
-  if ([Break_Status_Enum.Notified, Break_Status_Enum.Live].includes(breakStatus)) {
+  if ([Break_Status_Enum.Notified, Break_Status_Enum.Live].includes(eventBreak.status)) {
     return StatusBadgeTypes.live;
   }
 
-  if (breakStatus === Break_Status_Enum.Available) {
+  if (eventBreak.status === Break_Status_Enum.Available) {
     return eventStatus === StatusBadgeTypes.live
       ? StatusBadgeTypes.upcoming
       : StatusBadgeTypes.scheduled;
@@ -132,10 +131,6 @@ export const breakSportSelector = (eventBreak: Breaks): Sports | string => {
   return pathOr('', ['Product', 'category'], head(inventory));
 };
 
-export const breakStatusSelector = (
-  eventBreak: Partial<Breaks>,
-): Break_Status_Enum | string => pathOr('', ['status'], eventBreak);
-
 export const breakResultSelector = (
   eventBreak: Partial<Breaks>,
 ): BreakResult[] => pathOr([], ['result'], eventBreak);
@@ -144,6 +139,5 @@ export const breakIdSelector = (eventBreak: Partial<Breaks>): string =>
   pathOr('', ['id'], eventBreak);
 
 export const breakCompletedSelector = (eventBreak: Breaks): boolean => {
-  const status = breakStatusSelector(eventBreak);
-  return status === Break_Status_Enum.Completed;
+  return eventBreak.status === Break_Status_Enum.Completed;
 };
