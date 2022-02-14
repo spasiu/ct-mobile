@@ -97,7 +97,7 @@
     "@types/i18n-js": "3.8.0",
     "@types/jest": "26.0.21",
     "@types/node-emoji": "1.8.1",
-    "@types/ramda": "0.27.39",
+    "@types/ramda": "0.27.34",
     "@types/react-native": "0.63.52",
     "@types/react-native-actionsheet": "^2.4.3",
     "@types/react-native-incall-manager": "^3.2.1",
