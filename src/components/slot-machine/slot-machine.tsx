@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, ImageSourcePropType } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { range } from 'ramda';
 import Animated, {
@@ -25,7 +25,7 @@ const COLOR_OPTIONS = [
   '#277DA1',
 ];
 
-const IMAGE_OPTIONS = [
+const IMAGE_OPTIONS: ImageSourcePropType[] = [
   require('../../assets/baseball-icon.png'),
   require('../../assets/basketball-icon.png'),
   require('../../assets/football-icon.png'),
@@ -64,7 +64,7 @@ const ROWS_NUMBER = 4;
 const COLUMNS_NUMBER = 4;
 const REELS_REPEAT = 10;
 
-const Symbol = ({ width, height, image }) => {
+const Symbol = ({ width, height, image, index }: { width:number , height:number, image:ImageSourcePropType, index:number }) => {
   return (
     <View style={[{ width, height }, s.bg_transparent, s.jcc, s.aic]}>
       <Image source={image} resizeMode={'contain'} style={[s.flx_i]} />
@@ -72,7 +72,7 @@ const Symbol = ({ width, height, image }) => {
   );
 };
 
-const Reel = ({ width, height, index }) => {
+const Reel = ({ width, height, index }: { width:number , height:number, index:number }) => {
   const symbolHeight = height / ROWS_NUMBER;
   const spriteHeight = symbolHeight * COLOR_OPTIONS.length;
 
@@ -114,7 +114,7 @@ const Reel = ({ width, height, index }) => {
           },
           translationStyle,
         ]}>
-        {indexedMap((image, index) => {
+        {IMAGE_OPTIONS.map((image, index) => {
           return (
             <Symbol
               key={`symbol-${index}`}
@@ -124,19 +124,18 @@ const Reel = ({ width, height, index }) => {
               index={index}
             />
           );
-        }, IMAGE_OPTIONS)}
+        })}
       </Animated.View>
     </View>
   );
 };
 
 const ReelSet = () => {
-  const [dimensions, setDimensions] = useState(undefined);
+  const [dimensions, setDimensions] = useState<{height:number, width:number}>();
   return (
     <View
       style={[s.flx_i, s.flx_row]}
-      onLayout={event =>
-        setDimensions({
+      onLayout={event => setDimensions({
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height,
         })
