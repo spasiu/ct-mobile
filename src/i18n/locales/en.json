@@ -187,7 +187,7 @@
     "noBreakSearchResultTitle": "Hmm… no Breaks match your keywords.",
     "noBreakSearchResultDescription": "Try some other search terms or select another category above if you aren’t looking for a Break. Or try browsing the Schedule page directly.",
     "noHitSearchResultTitle": "Hmm… no Hits match your keywords.",
-    "noHitSearchResultDescription": "Try some other search terms or select another category above if you aren’t looking for one of our awesome Breakers. You can also visit the Hits page and browse our collection of Hits directly.",
+    "noHitSearchResultDescription": "Try some other search terms including sport, player name, brand of card, parallel or insert name, etc.",
     "noBreakersTitle": "Hmm… no Breakers match your keywords.",
     "noBreakersDescription": "Try some other search terms or select another category above if you aren’t looking for one of our awesome Breakers. You can also simply visit the Breakers page and browse from there.",
     "noFollowedBreakersTitle": "No breakers is no fun at all!",
@@ -201,7 +201,7 @@
     "noEventsFollowedByUserTitle": "Your calendar is empty!",
     "noEventsFollowedByUserDescription": "The bad news: you don’t have any Events at the moment. The good news: you can easily change that by going to the Schedule page and following the Events you are interested in.",
     "noHitsFollowedByUserTitle": "No hits yet!?!",
-    "noHitsFollowedByUserDescription": "It’s time to chase your favourite cards and start building up your collection. Join a break today and watch the hits flow in. :)"
+    "noHitsFollowedByUserDescription": "We have a fix for you! Jump into one of our upcoming breaks, pull some :fire: and your problem will be solved!"
   },
   "status": {
     "live": "Live",
