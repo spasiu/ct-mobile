@@ -69,7 +69,8 @@ export const AddAddress = ({
       validateOnBlur
       validationSchema={ADDRESS_FORM_SCHEMA}
       initialValues={ADD_ADDRESS_FORM_INITIAL_VALUES}
-      onSubmit={values =>
+      onSubmit={values => {
+        values.country === "CA" || values.country === "US" ?
         insertUserAddressMutation({
           variables: {
             address: {
@@ -78,7 +79,11 @@ export const AddAddress = ({
               user_id: authUser?.uid,
             },
           },
-        })
+        }) : showMessage({
+          message: t('errors.only_us_or_ca_address'),
+          type: 'danger',
+        });
+      }
       }>
       {({
         handleChange,
@@ -144,9 +149,7 @@ export const AddAddress = ({
               onBlur={() => {
                 setActiveField('');
               }}
-              onSelected={countryCode => {
-                handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode);
-              }}
+              onSelected={countryCode => handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode)}
               status={getFieldStatus(
                 ADDRESS_FORM_FIELDS.COUNTRY,
                 activeField,
@@ -165,10 +168,7 @@ export const AddAddress = ({
               )}
               onChangeText={async text => {
                 handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(text);
-                const predictions = await getPredictions(
-                  text,
-                  values[ADDRESS_FORM_FIELDS.COUNTRY],
-                );
+                const predictions = await getPredictions(text, values[ADDRESS_FORM_FIELDS.COUNTRY]);
                 setAddressPredictions(predictions);
               }}
               onBlur={event => {
@@ -191,9 +191,7 @@ export const AddAddress = ({
                 onItemPressed={suggestion => {
                   const addressFirstLine =
                     suggestion[ADDRESS_FORM_FIELDS.FIRST_LINE];
-                  handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(
-                    addressFirstLine,
-                  );
+                  handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(addressFirstLine);
 
                   const addressCity = suggestion[ADDRESS_FORM_FIELDS.CITY];
                   handleChange(ADDRESS_FORM_FIELDS.CITY)(addressCity);

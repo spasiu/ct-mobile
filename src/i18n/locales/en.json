@@ -354,8 +354,8 @@
     "could_not_update_address": "Could not update address, please try again.",
     "could_not_set_preferences": "Could not save preferences, please try again.",
     "could_not_share_hit": "Could not share hit, please try again.",
-    "could_not_delete_address": "Could not delete address, please try again."
-
+    "could_not_delete_address": "Could not delete address, please try again.",
+    "only_us_or_ca_address": "Only shipping addresses in the United states or Canada are accepted."
 
   },
   "resetPassword": {
