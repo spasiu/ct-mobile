@@ -46,7 +46,6 @@ export const AddPaymentInformation = ({
           onLoadEnd={() => setStatus('idle')}
           renderLoading={() => <Loading />}
           allowFileAccess={true}
-          ref={(e) => (this.e = e)}
           injectedJavaScriptBeforeContentLoaded={INJECTED_JAVASCRIPT}
           javaScriptEnabled={true}
           originWhitelist={['*']}

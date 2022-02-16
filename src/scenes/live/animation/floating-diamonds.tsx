@@ -17,6 +17,7 @@ interface AnimationProps {
   children: React.ReactNode;
   left: boolean;
   delay: number;
+  index?: number;
 }
 
 const SlowAnimation = ({

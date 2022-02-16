@@ -67,15 +67,12 @@ export const breakPriceSelector = (eventBreak: Partial<Breaks>): string => {
       )}${maxPrice}`;
 };
 
-export const breakSpotsSelector = (eventBreak: Partial<Breaks>): string => {
+export const breakSpotsSelector = (eventBreak: Partial<Breaks>): number => {
   const aggregator = breakProductAggregateSelector(eventBreak);
   return breakProductsQuantitySelector(aggregator);
 };
 
-export const breakSoldOutSelector = (eventBreak: Breaks): boolean => {
-  const spots = breakSpotsSelector(eventBreak);
-  return parseInt(spots, 10) === 0;
-};
+export const breakSoldOutSelector = (eventBreak: Breaks): boolean => breakSpotsSelector(eventBreak) === 0;
 
 export const breakTypeSelector = (
   eventBreak: Partial<Breaks>,

@@ -98,8 +98,7 @@ export const BreakDetailModal = ({
         breakId: breakId,
       },
       onError: (error: Error) => console.error('SUBSC ERROR', error),
-      updateQuery: (prev, { subscriptionData }) =>
-        prev.Breaks = subscriptionData.data.Breaks
+      updateQuery: (prev, { subscriptionData }) => Object.assign({}, prev, { Breaks: subscriptionData.data.Breaks })
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

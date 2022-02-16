@@ -17,7 +17,7 @@ export const breakProductsMinPriceSelector = (
 
 export const breakProductsQuantitySelector = (
   breakProducts: Partial<BreakProductItems_Aggregate>,
-): string => pathOr('', ['aggregate', 'sum', 'quantity'], breakProducts);
+): number => pathOr(0, ['aggregate', 'sum', 'quantity'], breakProducts);
 
 export const breakProductsItemsSelector = (
   eventBreak: Breaks,

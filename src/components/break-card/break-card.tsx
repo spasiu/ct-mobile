@@ -69,7 +69,7 @@ export const BreakCard = ({
       </Text>
       <View style={breakDetailsWrapper}>
         <Text style={priceTextStyle}>{price}</Text>
-        <Text style={spotsLeftStyle}>{`${buyDisabled ? '0' : spotsLeft} ${t(
+        <Text style={spotsLeftStyle}>{`${buyDisabled ? 0 : spotsLeft} ${t(
           'break.spotsLeft',
         )}`}</Text>
       </View>

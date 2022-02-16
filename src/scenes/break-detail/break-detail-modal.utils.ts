@@ -217,7 +217,7 @@ export const getWarningModalProps = (
   checkoutCart: CheckoutCart,
   userPaymentData: Card,
   createOrder: (cardId: string, paymentToken: string) => Promise<OrderState>,
-  setOrderCreated: (state: OrderState) => void,
+  setOrderCreated: (state?: OrderState) => void,
   onSuccess: () => void,
   onCancel: () => void,
   setPurchasing: (purchasing: boolean) => void,

@@ -45,7 +45,10 @@ export const AddAddress = ({
           message: t('errors.could_not_add_address'),
           type: 'danger',
         }),
-      onCompleted: address => setId(address?.insert_Addresses_one?.id) || onAddressAdded(),
+      onCompleted: address => {
+        setId(address?.insert_Addresses_one?.id);
+        return onAddressAdded();
+      },
       refetchQueries: [
         {
           query: UserAddressesDocument,

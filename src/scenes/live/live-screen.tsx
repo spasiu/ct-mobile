@@ -252,7 +252,7 @@ export const LiveScreen = ({
                 upcomingBreak === notifiedBreak ? null : (
                 <UpNextBox
                   breakTitle={breakTitleSelector(upcomingBreak)}
-                  spotsLeft={breakSpotsSelector(upcomingBreak)}
+                  spotsLeft={breakSpotsSelector(notifiedBreak)}
                   price={breakPriceSelector(upcomingBreak)}
                   onPressBox={() => setBreakId(upcomingBreak.id)}
                   onPressAction={() => setBreakId(upcomingBreak.id)}

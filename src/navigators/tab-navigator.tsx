@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, Text, Touchable, View } from 'react-native';
+import { Image, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
 import { COLORS } from '../theme/colors';

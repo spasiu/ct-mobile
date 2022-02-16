@@ -50,20 +50,17 @@ export const breakCardSelector = (
   | 'breakerImage'
   | 'league'
   | 'userFollows'
-> => {
-  const breakTime = breakTimeSelector(eventBreak);
-  return {
-    eventDate: formatScheduledStatus(breakTime),
-    status: breakCardStatusSelector(eventBreak, event),
-    price: breakPriceSelector(eventBreak),
-    spotsLeft: breakSpotsSelector(eventBreak),
-    title: breakTitleSelector(eventBreak),
-    breakType: breakTypeSelector(eventBreak),
-    breakerImage: breaker.image as string,
-    league: breakSportSelector(eventBreak),
-    userFollows: breakFollowedByUserSelector(eventBreak),
-  };
-};
+> => ({
+  eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
+  status: breakCardStatusSelector(eventBreak, event),
+  price: breakPriceSelector(eventBreak),
+  spotsLeft: breakSpotsSelector(eventBreak),
+  title: breakTitleSelector(eventBreak),
+  breakType: breakTypeSelector(eventBreak),
+  breakerImage: breaker.image as string,
+  league: breakSportSelector(eventBreak),
+  userFollows: breakFollowedByUserSelector(eventBreak),
+});
 
 export const getNumberOfColumns = (teamsPerUser: number): number => {
   if (teamsPerUser === 1) {

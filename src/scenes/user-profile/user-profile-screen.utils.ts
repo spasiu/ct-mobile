@@ -38,21 +38,17 @@ export const breakScheduleSelector = (
   | 'breakerImage'
   | 'league'
   | 'userFollows'
-> => {
-  const breaker = breakBreakerSelector(eventBreak);
-  const breakTime = breakTimeSelector(eventBreak);
-  return {
-    eventDate: formatScheduledStatus(breakTime),
-    status: breakCardStatusSelector(eventBreak),
-    price: breakPriceSelector(eventBreak),
-    spotsLeft: breakSpotsSelector(eventBreak),
-    title: breakTitleSelector(eventBreak),
-    breakType: breakTypeSelector(eventBreak),
-    breakerImage: userImageSelector(breaker as Users),
-    league: breakSportSelector(eventBreak),
-    userFollows: breakFollowedByUserSelector(eventBreak),
-  };
-};
+> => ({
+  eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
+  status: breakCardStatusSelector(eventBreak),
+  price: breakPriceSelector(eventBreak),
+  spotsLeft: breakSpotsSelector(eventBreak),
+  title: breakTitleSelector(eventBreak),
+  breakType: breakTypeSelector(eventBreak),
+  breakerImage: userImageSelector(breakBreakerSelector(eventBreak)),
+  league: breakSportSelector(eventBreak),
+  userFollows: breakFollowedByUserSelector(eventBreak),
+});
 
 export const upcomingEventSelector = (event: Events): EventCardProps => {
   const eventTime = eventTimeSelector(event);

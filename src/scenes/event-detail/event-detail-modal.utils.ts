@@ -26,17 +26,14 @@ export const breakCardSelector = (
   | 'breakerImage'
   | 'league'
   | 'userFollows'
-> => {
-  const breakTime = breakTimeSelector(eventBreak);
-  return {
-    eventDate: formatScheduledStatus(breakTime),
-    status: breakCardStatusSelector(eventBreak),
-    price: breakPriceSelector(eventBreak),
-    spotsLeft: breakSpotsSelector(eventBreak),
-    title: breakTitleSelector(eventBreak),
-    breakType: breakTypeSelector(eventBreak),
-    breakerImage: breaker.image,
-    league: breakSportSelector(eventBreak),
-    userFollows: breakFollowedByUserSelector(eventBreak),
-  };
-};
+> => ({
+  eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
+  status: breakCardStatusSelector(eventBreak),
+  price: breakPriceSelector(eventBreak),
+  spotsLeft: breakSpotsSelector(eventBreak),
+  title: breakTitleSelector(eventBreak),
+  breakType: breakTypeSelector(eventBreak),
+  breakerImage: breaker.image,
+  league: breakSportSelector(eventBreak),
+  userFollows: breakFollowedByUserSelector(eventBreak),
+});

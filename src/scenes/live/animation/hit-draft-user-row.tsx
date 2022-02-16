@@ -50,7 +50,7 @@ export const UserRow = ({
     fit: 'facearea',
   };
 
-  const getFullImageUrl = src => {
+  const getFullImageUrl = (src: string) => {
     return getImgixUrlWithQueryParams(src, imgixQueryParamsConfig);
   };
 
