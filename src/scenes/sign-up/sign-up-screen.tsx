@@ -49,6 +49,7 @@ export const SignUpScreen = ({
         validationSchema={SIGN_UP_FORM_SCHEMA}
         initialValues={SIGN_UP_FORM_INITIAL_VALUES}
         onSubmit={values => {
+          console.log(`SUBMITTED: ${JSON.stringify(values)}`)
           setProcessing(true);
           signUpWithEmail(
             values[SIGN_UP_FORM_FIELDS.EMAIL],

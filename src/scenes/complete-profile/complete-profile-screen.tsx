@@ -44,6 +44,7 @@ export const CompleteProfileScreen = ({
     PaymentContext,
   ) as PaymentContextType;
 
+
   const [activeField, setActiveField] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -79,6 +80,7 @@ export const CompleteProfileScreen = ({
       backgroundColor={s.bg_white}
       containerType={ContainerTypes.scroll}>
       <Formik
+        enableReinitialize
         validateOnBlur
         validationSchema={COMPLETE_PROFILE_SCHEMA}
         initialValues={{
