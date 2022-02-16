@@ -19,6 +19,7 @@ export const getSuggestedName = (
     const { displayName } = user;
     const firstName = getFirstName(displayName) as string;
     const lastName = replace(firstName, '', displayName);
+    
     return {
       [COMPLETE_PROFILE_FORM_FIELDS.FIRST_NAME]: firstName,
       [COMPLETE_PROFILE_FORM_FIELDS.LAST_NAME]: lastName,
