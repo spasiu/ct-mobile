@@ -1,13 +1,14 @@
 import { pathOr } from 'ramda';
 import {
   BreakerHitsQuery,
+  FeaturedHitsSubscription,
   Hits,
   HitsQuery,
   NewHitsSubscription,
 } from '../../services/api/requests';
 
 export const hitsSelector = (
-  request: HitsQuery | BreakerHitsQuery | NewHitsSubscription | undefined,
+  request: HitsQuery | BreakerHitsQuery | NewHitsSubscription | FeaturedHitsSubscription | undefined,
 ): Hits[] => pathOr([], ['Hits'], request);
 
 export const hitImageFrontSelector = (hit: Partial<Hits>): string =>
@@ -16,7 +17,7 @@ export const hitImageFrontSelector = (hit: Partial<Hits>): string =>
 export const hitPlayerSelector = (hit: Partial<Hits>): string =>
   pathOr('', ['player'], hit);
 
-export const hitDescription = (hit: Hits): string => {
+export const hitDescription = (hit: Partial<Hits>): string => {
     return [
       hit.Product?.year,
       hit.Product?.manufacturer,
