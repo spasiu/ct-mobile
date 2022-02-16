@@ -2,15 +2,13 @@ import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { ADDRESS_FORM_FIELDS } from '../../common/address/address-form';
 import { getPostalCode, PredictionType } from '../../services/places-api';
-import { indexedMap } from '../../utils/ramda';
-
+import { AddressPredictionListProps } from './address-prediction-list.props';
 import {
   containerStyle,
   firstRowSpacing,
   defaultRowSpacing,
   dividerStyle,
 } from './address-prediction-list.presets';
-import { AddressPredictionListProps } from './address-prediction-list.props';
 
 export const AddressPredictionList = ({
   addressPredictions = [],
@@ -36,22 +34,16 @@ export const AddressPredictionList = ({
 
   return (
     <View style={containerStyle}>
-      {indexedMap((addressPrediction, index) => {
-        const isFirstItem = index === 0;
-        const isLastItem = index === addressPredictions.length - 1;
-        const prediction = addressPrediction as PredictionType;
-
-        return (
-          <View key={prediction.place_id}>
-            <TouchableOpacity
-              style={isFirstItem ? firstRowSpacing : defaultRowSpacing}
-              onPress={() => handleOnPress(prediction)}>
-              <Text>{prediction.description}</Text>
-            </TouchableOpacity>
-            {isLastItem ? null : <View style={dividerStyle} />}
-          </View>
-        );
-      }, addressPredictions)}
+      {addressPredictions.map((prediction, i, predicitions) => (
+        <View key={prediction.place_id}>
+          <TouchableOpacity
+            style={i == 0 ? firstRowSpacing : defaultRowSpacing}
+            onPress={() => handleOnPress(prediction)}>
+            <Text>{prediction.description}</Text>
+          </TouchableOpacity>
+          {i == predicitions.length - 1 ? null : <View style={dividerStyle} />}
+        </View>
+      ))}
     </View>
   );
 };
