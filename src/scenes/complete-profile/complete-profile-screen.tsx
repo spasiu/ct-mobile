@@ -79,6 +79,7 @@ export const CompleteProfileScreen = ({
       backgroundColor={s.bg_white}
       containerType={ContainerTypes.scroll}>
       <Formik
+        enableReinitialize
         validateOnBlur
         validationSchema={COMPLETE_PROFILE_SCHEMA}
         initialValues={{

@@ -65,7 +65,7 @@ export const appleSignInHandler = async (): Promise<void> => {
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
 
-    const { identityToken, nonce } = appleAuthRequestResponse;
+    const { identityToken, nonce, fullName } = appleAuthRequestResponse;
     if (!identityToken) {
       throw 'Apple Sign-In Failed';
     }
@@ -75,6 +75,12 @@ export const appleSignInHandler = async (): Promise<void> => {
       nonce,
     );
     await auth().signInWithCredential(appleCredential);
+
+    if (fullName) {
+      await auth().currentUser?.updateProfile({
+        displayName: fullName.givenName + ' ' + fullName.familyName
+      });
+    }
   } catch (e) {
     showMessage({
       message: t('errors.could_not_log_in'),
