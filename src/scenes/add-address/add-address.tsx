@@ -26,6 +26,7 @@ import { getPredictions, PredictionType } from '../../services/places-api';
 
 import { AddAddressProps } from './add-address-screen.props';
 import { ADD_ADDRESS_FORM_INITIAL_VALUES } from './add-address-screen.presets';
+import { CountryCode } from 'react-native-country-picker-modal';
 
 export const AddAddress = ({
   onAddressAdded,
@@ -146,13 +147,13 @@ export const AddAddress = ({
               }}
             />
             <CountryInput
-              value={values[ADDRESS_FORM_FIELDS.COUNTRY]}
+              value={values[ADDRESS_FORM_FIELDS.COUNTRY] as CountryCode}
               errorMessage={errors[ADDRESS_FORM_FIELDS.COUNTRY]}
               onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.COUNTRY)}
               onBlur={() => {
                 setActiveField('');
               }}
-              onSelected={countryCode => handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode)}
+              onSelected={(countryCode) => handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode)}
               status={getFieldStatus(
                 ADDRESS_FORM_FIELDS.COUNTRY,
                 activeField,

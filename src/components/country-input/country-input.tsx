@@ -3,8 +3,7 @@ import { head } from 'ramda';
 import {
   getAllCountries,
   FlagType,
-  Country,
-  CountryCode,
+  Country
 } from 'react-native-country-picker-modal';
 import Emoji from 'node-emoji';
 
@@ -17,7 +16,7 @@ import { getUserCountry, PREFERRED_COUNTRIES } from '../../utils/countries';
 import { CountryInputProps } from './country-input.props';
 
 export const CountryInput = ({
-  value = '',
+  value,
   errorMessage = '',
   onFocus = () => undefined,
   onBlur = () => undefined,
@@ -25,23 +24,19 @@ export const CountryInput = ({
   status,
 }: CountryInputProps): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
-  const [country, setCountry] = useState<Partial<Country>>({
-    name: '',
-    flag: '',
-  });
+  const [country, setCountry] = useState<Country>();
   const preferredCountries = [
-    country.cca2,
-    ...PREFERRED_COUNTRIES.filter(countryCode => countryCode !== country.cca2),
+    ...PREFERRED_COUNTRIES.filter(countryCode => countryCode !== country?.cca2),
   ];
 
   useEffect(() => {
     const userCountry = value || getUserCountry();
-    getAllCountries(FlagType.EMOJI, 'common', undefined, undefined, [
-      userCountry as CountryCode,
-    ]).then((countries: Country[]) => {
-      const firstCountry = head(countries) as Country;
-      setCountry(firstCountry);
-      onSelected(firstCountry.cca2);
+    getAllCountries(FlagType.EMOJI, 'common', undefined, undefined, [userCountry]).then((countries: Country[]) => {
+      const firstCountry = head(countries);
+      if (firstCountry) {
+        setCountry(firstCountry);
+        onSelected(firstCountry.cca2);
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,7 +44,7 @@ export const CountryInput = ({
   return (
     <>
       <CountryPicker
-        countryCode={country.cca2 as CountryCode}
+        countryCode={country?.cca2}
         onClose={() => {
           setOpenModal(false);
           onBlur();
@@ -60,11 +55,11 @@ export const CountryInput = ({
           onSelected(selectedCountry.cca2);
           onBlur();
         }}
-        preferredCountries={preferredCountries as CountryCode[]}
+        preferredCountries={preferredCountries}
       />
       <FormInput
         status={status}
-        value={`${Emoji.get(country.flag as string)} ${country.name}`}
+        value={`${Emoji.get(country?.flag || '')} ${country?.name || ''}`}
         errorMessage={errorMessage}
         placeholder={t('forms.countryLabel')}
         onTouchStart={() => {

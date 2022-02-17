@@ -32,6 +32,7 @@ import {
 import { AuthContext, AuthContextType } from '../../providers/auth';
 
 import { EditAddressProp } from './edit-address-screen.props';
+import { CountryCode } from 'react-native-country-picker-modal';
 
 export const EditAddress = ({
   address,
@@ -193,7 +194,7 @@ export const EditAddress = ({
                 }}
               />
               <CountryInput
-                value={values[ADDRESS_FORM_FIELDS.COUNTRY]}
+                value={values[ADDRESS_FORM_FIELDS.COUNTRY] as CountryCode}
                 errorMessage={errors[ADDRESS_FORM_FIELDS.COUNTRY]}
                 onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.COUNTRY)}
                 onBlur={() => {

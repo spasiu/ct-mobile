@@ -1,9 +1,10 @@
 import { find, propEq } from 'ramda';
+import { CountryCode } from 'react-native-country-picker-modal';
 import * as RNLocalize from 'react-native-localize';
 
 const CountryRegionData = require('../../node_modules/country-region-data/data.json');
 
-export const getUserCountry = (): string => RNLocalize.getCountry();
+export const getUserCountry = (): CountryCode => RNLocalize.getCountry() as CountryCode;
 
 export type RegionDataType = {
   name: string;
@@ -41,9 +42,9 @@ export const isRegionCodeValid = (
   return false;
 };
 
-export const PREFERRED_COUNTRIES = ['US', 'CA'];
+export const PREFERRED_COUNTRIES: CountryCode[] = ['US', 'CA'];
 
-export const SUPPORTED_COUNTRIES = [
+export const SUPPORTED_COUNTRIES: CountryCode[] = [
   'AF',
   'AX',
   'AL',

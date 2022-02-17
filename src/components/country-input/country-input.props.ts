@@ -1,10 +1,11 @@
+import { CountryCode } from 'react-native-country-picker-modal';
 import { FormInputStatusTypes } from '../form-input';
 
 export interface CountryInputProps {
-  value: string;
+  value: CountryCode;
   errorMessage?: string;
   status?: keyof typeof FormInputStatusTypes;
   onFocus?: () => void;
   onBlur?: () => void;
-  onSelected?: (countryCode: string) => void;
+  onSelected?: (countryCode: CountryCode) => void;
 }

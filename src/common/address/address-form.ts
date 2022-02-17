@@ -1,3 +1,4 @@
+import { CountryCode } from 'react-native-country-picker-modal';
 import * as Yup from 'yup';
 
 import { t } from '../../i18n/i18n';
@@ -35,7 +36,5 @@ export const ADDRESS_FORM_SCHEMA = Yup.object().shape({
       const country = ctx.parent[ADDRESS_FORM_FIELDS.COUNTRY];
       return isRegionCodeValid(country, value);
     }),
-  [ADDRESS_FORM_FIELDS.COUNTRY]: Yup.string().required(
-    t('forms.requiredField'),
-  ),
+  [ADDRESS_FORM_FIELDS.COUNTRY]: Yup.mixed<CountryCode>().required(t('forms.requiredField'))
 });
