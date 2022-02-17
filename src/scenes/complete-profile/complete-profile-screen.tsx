@@ -44,7 +44,6 @@ export const CompleteProfileScreen = ({
     PaymentContext,
   ) as PaymentContextType;
 
-
   const [activeField, setActiveField] = useState('');
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [processing, setProcessing] = useState(false);

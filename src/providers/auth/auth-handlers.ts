@@ -81,7 +81,6 @@ export const appleSignInHandler = async (): Promise<void> => {
         displayName: fullName.givenName + ' ' + fullName.familyName
       });
     }
-
   } catch (e) {
     showMessage({
       message: t('errors.could_not_log_in'),
