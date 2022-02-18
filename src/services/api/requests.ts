@@ -11308,7 +11308,7 @@ export type FeaturedHitsSubscription = (
   { __typename?: 'subscription_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+    & HitsDetailFragment
   )> }
 );
 
@@ -11372,6 +11372,15 @@ export type FollowEventMutation = (
   )> }
 );
 
+export type HitsDetailFragment = (
+  { __typename?: 'Hits' }
+  & Pick<Hits, 'id' | 'image_front' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
+  & { Product: (
+    { __typename?: 'Products' }
+    & Pick<Products, 'id' | 'year' | 'category' | 'manufacturer' | 'brand' | 'series'>
+  ) }
+);
+
 export type HitsQueryVariables = Exact<{
   userHitsFilter?: Maybe<String_Comparison_Exp>;
   searchInput?: Maybe<Scalars['String']>;
@@ -11400,11 +11409,7 @@ export type NewHitsSubscription = (
   { __typename?: 'subscription_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
-    & { Product: (
-      { __typename?: 'Products' }
-      & Pick<Products, 'id' | 'year' | 'category' | 'manufacturer' | 'brand' | 'series'>
-    ) }
+    & HitsDetailFragment
   )> }
 );
 
@@ -12166,6 +12171,28 @@ export const AddressOverviewFragmentDoc = gql`
   state_province_region
   city
   country
+}
+    `;
+export const HitsDetailFragmentDoc = gql`
+    fragment HitsDetail on Hits {
+  id
+  image_front
+  player
+  card_number
+  parallel
+  insert
+  rookie_card
+  memoribillia
+  autograph
+  numbered
+  Product {
+    id
+    year
+    category
+    manufacturer
+    brand
+    series
+  }
 }
     `;
 export const BreakDetailDocument = gql`
@@ -13030,13 +13057,10 @@ export const FeaturedHitsDocument = gql`
     where: {_and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
     order_by: {created_at: desc}
   ) {
-    id
-    image_front
-    description
-    player
+    ...HitsDetail
   }
 }
-    `;
+    ${HitsDetailFragmentDoc}`;
 
 /**
  * __useFeaturedHitsSubscription__
@@ -13235,30 +13259,13 @@ export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
 export const NewHitsDocument = gql`
     subscription NewHits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
-    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
+    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
     order_by: {created_at: desc}
   ) {
-    id
-    image_front
-    player
-    card_number
-    parallel
-    insert
-    rookie_card
-    memoribillia
-    autograph
-    numbered
-    Product {
-      id
-      year
-      category
-      manufacturer
-      brand
-      series
-    }
+    ...HitsDetail
   }
 }
-    `;
+    ${HitsDetailFragmentDoc}`;
 
 /**
  * __useNewHitsSubscription__
