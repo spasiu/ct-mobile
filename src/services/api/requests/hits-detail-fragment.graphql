@@ -1,0 +1,21 @@
+fragment HitsDetail on Hits {
+    id
+    image_front
+    player
+    card_number
+    parallel
+    insert
+    rookie_card
+    memoribillia
+    autograph
+    numbered
+    Product {
+      id
+      year
+      category
+      manufacturer
+      brand
+      series
+    }
+
+  }

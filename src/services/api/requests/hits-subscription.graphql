@@ -25,24 +25,5 @@ subscription NewHits(
       _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
     order_by: { created_at: desc }
-  ) {
-    id
-    image_front
-    player
-    card_number
-    parallel
-    insert
-    rookie_card
-    memoribillia
-    autograph
-    numbered
-    Product {
-      id
-      year
-      category
-      manufacturer
-      brand
-      series
-    }
-  }
+  ) { ...HitsDetail }
 }
