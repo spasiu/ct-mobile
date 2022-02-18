@@ -17,6 +17,7 @@ import {
   NotificationContext,
   NotificationContextType,
 } from '../../providers/notification';
+import appsFlyer from 'react-native-appsflyer';
 
 export type ProtectedStackParamList = {
   [ROUTES_IDS.ONBOARDING_STACK]: undefined;
@@ -66,7 +67,7 @@ export const ProtectedStack = (): JSX.Element => {
   useEffect(() => {
     getValidAuthToken(user)
       .then(() => getCards(user as FirebaseAuthTypes.User))
-      .catch(e => {}) // TODO use new error handling  
+      .catch(e => { }); // TODO use new error handling  
   }, []);
 
   useEffect(() => {
@@ -80,6 +81,13 @@ export const ProtectedStack = (): JSX.Element => {
     );
     return () => AppState.removeEventListener('change', () => true);
   }, []);
+
+  useEffect(() => {
+    if (user?.uid) appsFlyer.setCustomerUserId(user.uid);
+    appsFlyer.logEvent(
+      "af_login", {});
+  }, []);
+
 
   return (
     <Stack.Navigator

@@ -76,6 +76,7 @@ import { LiveScreenProps } from './live-screen.props';
 import { SeeTeamsAnimation } from './see-teams-animation';
 import { UserContext } from '../../providers/user/user';
 import { UserContextType } from '../../providers/user/user.types';
+import appsFlyer from 'react-native-appsflyer';
 
 export const LiveScreen = ({
   navigation,
@@ -180,6 +181,18 @@ export const LiveScreen = ({
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
   };
+
+  useEffect((): () => void => {
+    const EnteredLiveStream = Date.now();
+    const sendEvent = () => appsFlyer.logEvent(
+      "af_content_viewed",
+      {
+        af_event_start: EnteredLiveStream,
+        af_event_end: () => Date.now(),
+        af_customer_user_id: userId
+      });
+    return sendEvent;
+  }, []);
 
   return (
     <View style={[s.flx_i, s.bg_black]}>

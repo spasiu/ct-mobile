@@ -2171,10 +2171,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
-"@types/ramda@0.27.39":
-  version "0.27.39"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.39.tgz#7541d9d745a2003c8f635897dff8c65c12be9327"
-  integrity sha512-od24Hng0uS1NcMSPo6ZzKXN2WJxjbF7IBzQhRCtSDyIShdEJTAWXgQlyDg998aylNrXbVvQxkFJmuaLHQcfczg==
+"@types/ramda@0.27.34":
+  version "0.27.34"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.34.tgz#08505be193a1ac9d9de0411fbf5aa0d9e817fd9a"
+  integrity sha512-8pJBMViQ4v88ebcNkDMDf59vZ4/EMTgvN/pKCAgp70XUjEPgs+U40DWhpIzcgOgDmXV2OMew2tqed5tqKwPWZg==
   dependencies:
     ts-toolbelt "^6.15.1"
 
@@ -7928,6 +7928,11 @@ react-native-animatable@1.3.3:
   integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-appsflyer@6.5.20:
+  version "6.5.20"
+  resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-6.5.20.tgz#56af47ae77b39d8425bdbe84832a8db3fd773404"
+  integrity sha512-+gfsOmDev1BhhBFLE6P/eCcT0GLKDFZgQqaKcUPnTgyC8bgIWSv+igB9ziIzgBRZKSEf3YdlZ4TCfrg2w69cow==
 
 react-native-blurhash@1.1.4:
   version "1.1.4"

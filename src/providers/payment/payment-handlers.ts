@@ -5,6 +5,7 @@ import { find, propEq } from 'ramda';
 import { handleError, CtError, getFirebaseErrorCode } from '../../common/error';
 import { CardInput, Card } from '../../common/payment';
 import { OrderState } from './payment-types';
+import appsFlyer from 'react-native-appsflyer';
 
 export const createBigCommerceUser = functions().httpsCallable(
   'createBigCommerceUser',
@@ -142,7 +143,8 @@ export const createOrderHandler = async (
   paymentToken: string,
 ): Promise<OrderState> => {
   try {
-    await createOrder({ cartId, paymentToken });
+    const order = await createOrder({ cartId, paymentToken });
+    appsFlyer.logEvent("af_purchase", order.data);
     return { created: true, message: 'success' };
   } catch (error) {
     const errorMessage = handleError(

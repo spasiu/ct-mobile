@@ -13,9 +13,10 @@ import { AuthUser } from './auth.types';
 export const emailSignUpHandler = async (
   email: string,
   password: string,
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     await auth().createUserWithEmailAndPassword(email, password);
+    return true;
   } catch (e) {
     if ((e as any).code === 'auth/email-already-in-use') {
       showMessage({
@@ -28,6 +29,7 @@ export const emailSignUpHandler = async (
         type: 'danger',
       });
     }
+    return false;
   }
 };
 
@@ -45,20 +47,22 @@ export const emailSignInHandler = async (
   }
 };
 
-export const googleSignInHandler = async (): Promise<void> => {
+export const googleSignInHandler = async (): Promise<boolean> => {
   try {
     const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     await auth().signInWithCredential(googleCredential);
+    return true;
   } catch (e) {
     showMessage({
       message: t('errors.could_not_log_in'),
       type: 'danger',
     });
+    return false;
   }
 };
 
-export const appleSignInHandler = async (): Promise<void> => {
+export const appleSignInHandler = async (): Promise<boolean> => {
   try {
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
@@ -81,11 +85,14 @@ export const appleSignInHandler = async (): Promise<void> => {
         displayName: fullName.givenName + ' ' + fullName.familyName
       });
     }
+
+    return true;
   } catch (e) {
     showMessage({
       message: t('errors.could_not_log_in'),
       type: 'danger',
     });
+    return false;
   }
 };
 

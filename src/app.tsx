@@ -25,6 +25,7 @@ import { checkOnboardingStatusOnFirestore } from './services/firestore/onboardin
 import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
 import { UserProvider } from './providers/user';
+import appsFlyer from 'react-native-appsflyer';
 
 // for performance optimizations and native feel
 // https://reactnavigation.org/docs/react-native-screens
@@ -33,6 +34,14 @@ Sentry.init({
   dsn: Config.SENTRY_DSN_URL,
   environment: __DEV__ ? 'development' : 'production',
 });
+
+appsFlyer.initSdk(
+  {
+    devKey: Config.APPSFLYER_DEV_KEY,
+    isDebug: false,
+    onInstallConversionDataListener: false,
+    appId: Config.APPSFLYER_APP_ID
+  });
 
 const App = (): JSX.Element | null => {
   const [loaded, setLoaded] = useState<boolean>(false);

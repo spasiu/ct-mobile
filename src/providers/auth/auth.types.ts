@@ -7,10 +7,10 @@ export type AuthContextType = {
   user: AuthUser;
   onboardingComplete: boolean;
   getValidAuthToken: (user:AuthUser) => Promise<void>
-  signUpWithEmail: (email: string, password: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<boolean>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
-  signInWithApple: () => Promise<void>;
+  signInWithGoogle: () => Promise<boolean>;
+  signInWithApple: () => Promise<boolean>;
   setOnboardingStatusComplete: () => Promise<void>;
   checkOnboardingStatus: () => Promise<boolean>;
   resetPassword: (email: string) => Promise<boolean>;

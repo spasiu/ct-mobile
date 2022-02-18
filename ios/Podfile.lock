@@ -217,6 +217,9 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - AppsFlyerFramework (6.5.2):
+    - AppsFlyerFramework/Main (= 6.5.2)
+  - AppsFlyerFramework/Main (6.5.2)
   - boost-for-react-native (1.63.0)
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
@@ -537,6 +540,9 @@ PODS:
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
   - React-jsinspector (0.64.0)
+  - react-native-appsflyer (6.5.20):
+    - AppsFlyerFramework (= 6.5.2)
+    - React
   - react-native-blurhash (1.1.4):
     - React-Core
   - react-native-config (1.4.2):
@@ -730,6 +736,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-idle-timer (from `../node_modules/react-native-idle-timer`)
@@ -777,6 +784,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - AppAuth
+    - AppsFlyerFramework
     - boost-for-react-native
     - BoringSSL-GRPC
     - Firebase
@@ -834,6 +842,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-appsflyer:
+    :path: "../node_modules/react-native-appsflyer"
   react-native-blurhash:
     :path: "../node_modules/react-native-blurhash"
   react-native-config:
@@ -922,6 +932,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  AppsFlyerFramework: 9f304d91cc80b6579b1206a59220383056b58b47
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
@@ -959,6 +970,7 @@ SPEC CHECKSUMS:
   React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
+  react-native-appsflyer: fac6d94b40ce52dc69a07c242317b83c7b9e0cc2
   react-native-blurhash: ec98d751a9cb9075cef0b9e3188244c517d6ab22
   react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
   react-native-idle-timer: 5a71c3e74b2ff1b91a0416193e96dee9603e881d

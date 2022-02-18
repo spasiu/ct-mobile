@@ -26,6 +26,12 @@ import {
 } from './sign-up-screen.presets';
 import { SignUpScreenProps } from './sign-up-screen.props';
 import { isShortScreen, screenHeight } from '../device-properties';
+import appsFlyer from 'react-native-appsflyer';
+
+const logEvent = (method: String) =>
+  appsFlyer.logEvent(
+    "af_complete_registration",
+    { af_registration_method: method });
 
 export const SignUpScreen = ({
   navigation,
@@ -53,7 +59,7 @@ export const SignUpScreen = ({
           signUpWithEmail(
             values[SIGN_UP_FORM_FIELDS.EMAIL],
             values[SIGN_UP_FORM_FIELDS.PASSWORD],
-          );
+          ).then((isAuthed) => { if (isAuthed) logEvent("email") });
           setProcessing(false);
         }}>
         {({
@@ -73,7 +79,7 @@ export const SignUpScreen = ({
                 <Image
                   style={[
                     s.mv2,
-                    {height: screenHeight / 15}
+                    { height: screenHeight / 15 }
                   ]}
                   resizeMode="contain"
                   source={logo}
@@ -83,14 +89,18 @@ export const SignUpScreen = ({
                 </Text>
               </View>
               <ActionButton
-                onPress={() => signInWithApple()}
+                onPress={() => {
+                  signInWithApple().then((isAuthed) => { if (isAuthed) logEvent("apple") });
+                }}
                 style={[s.bg_white, s.ba, s.b__black]}
                 textStyle={[s.black]}
                 text={t('buttons.appleSignUp')}>
                 <Image source={appleLogo} style={[s.mr3]} />
               </ActionButton>
               <ActionButton
-                onPress={() => signInWithGoogle()}
+                onPress={() => {
+                  signInWithGoogle().then((isAuthed) => { if (isAuthed) logEvent("google") });
+                }}
                 style={[s.bg_white, s.ba, s.b__black_10, s.mt3]}
                 textStyle={[s.black]}
                 text={t('buttons.googleSignUp')}>
