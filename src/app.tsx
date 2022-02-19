@@ -25,6 +25,13 @@ import { checkOnboardingStatusOnFirestore } from './services/firestore/onboardin
 import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
 import { UserProvider } from './providers/user';
+import VersionCheck from 'react-native-version-check';
+import { Linking } from 'react-native'
+import { WarningModal } from './components/warning-modal'
+import { t } from 'i18n-js';
+import functions from '@react-native-firebase/functions';
+const candtIcon = require('./assets/candt-logo.png');
+const getMinimumVersion = functions().httpsCallable('minimumVersion');
 import appsFlyer from 'react-native-appsflyer';
 
 // for performance optimizations and native feel
@@ -49,6 +56,8 @@ const App = (): JSX.Element | null => {
 
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [appstoreUrl, setAppstoreUrl] = useState('');
 
   // concentrates all init functions
   useEffect(() => {
@@ -87,12 +96,34 @@ const App = (): JSX.Element | null => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded]);
 
+  useEffect(() => {
+    getMinimumVersion().then((minVersion) => {
+      const [currentMajor, currentMinor] = VersionCheck.getCurrentVersion().split(".");
+      const currentBuild = VersionCheck.getCurrentBuildNumber();
+
+      if ((minVersion.data.major > currentMajor) ||
+        (minVersion.data.major === currentMajor && minVersion.data.minor > currentMinor) ||
+        (minVersion.data.major === currentMajor && minVersion.data.minor === currentMinor && minVersion.data.build > currentBuild))
+        setShowUpdateModal(true);
+
+      setAppstoreUrl(minVersion.data.appstoreUrl);
+    });
+  }, []);
+
   if (!loaded || initializing) {
     return null;
   }
 
   return (
     <ApolloProvider client={getClient(user)}>
+      <WarningModal
+        visible={showUpdateModal}
+        title={t('update.force_update_title')}
+        description={t('update.force_update_description')}
+        onPrimaryActionPressed={() => Linking.openURL(appstoreUrl)}
+        primaryActionText={t('buttons.appstore')}
+        imageSrc={candtIcon}
+      />
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <AuthProvider
           user={user}

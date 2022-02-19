@@ -45,7 +45,8 @@
     "done": "Done",
     "continueToCheckout": "Continue to Checkout",
     "proceedToLiveStream": "Great, let’s get ripping!",
-    "takeMeBack": "I disagree, take me back"
+    "takeMeBack": "I disagree, take me back",
+    "appstore": "Update now."
   },
   "tabBar": {
     "homeTab": "Home",
@@ -208,6 +209,10 @@
     "upcoming": "Upcoming",
     "completed": "Completed"
   },
+  "update": {
+    "force_update_title": "Please update your app to continue.",
+    "force_update_description": "Your version of the app is out of date please update to keep using Cards & Treasure."
+  },
   "payment": {
     "paymentTotal": "Total",
     "paymentDescription": "+ Tax",
@@ -356,7 +361,6 @@
     "could_not_share_hit": "Could not share hit, please try again.",
     "could_not_delete_address": "Could not delete address, please try again.",
     "only_us_or_ca_address": "Only shipping addresses in the United states or Canada are accepted."
-
   },
   "resetPassword": {
     "title": "Enter the email you use for Cards & Treasure",

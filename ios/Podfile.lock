@@ -559,6 +559,8 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.2.0):
     - React
+  - react-native-version-check (3.4.2):
+    - React
   - react-native-video (5.1.1):
     - React-Core
     - react-native-video/Video (= 5.1.1)
@@ -744,6 +746,7 @@ DEPENDENCIES:
   - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-version-check (from `../node_modules/react-native-version-check`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -858,6 +861,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-version-check:
+    :path: "../node_modules/react-native-version-check"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-webrtc:
@@ -978,6 +983,7 @@ SPEC CHECKSUMS:
   react-native-notifications: 97c14bf84c64bd6a6eb7bdcdb916036d93d33428
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
+  react-native-version-check: d8b8900e6ce03ae1568cb22ef9451f2508188883
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
   react-native-webrtc: 41526e4060dac373c18676f866962d4180ee47b9
   react-native-webview: 4dfb534e9600b87fe667c5ca4fe09149383218b9
