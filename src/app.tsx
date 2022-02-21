@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { enableScreens } from 'react-native-screens';
 import * as RNLocalize from 'react-native-localize';
 import {
@@ -26,7 +26,7 @@ import { loadSounds } from './utils/sound';
 import { initLibraries } from './initializer';
 import { UserProvider } from './providers/user';
 import VersionCheck from 'react-native-version-check';
-import { Linking } from 'react-native'
+import { Linking, AppState } from 'react-native'
 import { WarningModal } from './components/warning-modal'
 import { t } from 'i18n-js';
 import functions from '@react-native-firebase/functions';
@@ -58,6 +58,7 @@ const App = (): JSX.Element | null => {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [appstoreUrl, setAppstoreUrl] = useState('');
+  const appState = useRef(AppState.currentState);
 
   // concentrates all init functions
   useEffect(() => {
@@ -97,17 +98,24 @@ const App = (): JSX.Element | null => {
   }, [loaded]);
 
   useEffect(() => {
-    getMinimumVersion().then((minVersion) => {
+    const checkVersion = () => getMinimumVersion().then((minVersion) => {
       const [currentMajor, currentMinor] = VersionCheck.getCurrentVersion().split(".");
       const currentBuild = VersionCheck.getCurrentBuildNumber();
-
       if ((minVersion.data.major > currentMajor) ||
         (minVersion.data.major === currentMajor && minVersion.data.minor > currentMinor) ||
         (minVersion.data.major === currentMajor && minVersion.data.minor === currentMinor && minVersion.data.build > currentBuild))
         setShowUpdateModal(true);
-
       setAppstoreUrl(minVersion.data.appstoreUrl);
     });
+    checkVersion();
+    AppState.addEventListener("change", nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) checkVersion();
+      appState.current = nextAppState;
+    });
+    return AppState.removeEventListener("change", () => {});
   }, []);
 
   if (!loaded || initializing) {
