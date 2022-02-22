@@ -25,7 +25,6 @@ subscription NewScheduledBreaks(
       }
     }
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Break {
         id
       }

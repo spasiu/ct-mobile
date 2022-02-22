@@ -20,7 +20,6 @@ subscription NewBreakerBreaks($id: String!, $userId: String) {
       }
     }
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Break {
         id
       }

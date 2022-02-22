@@ -13,7 +13,6 @@ query Breakers($userId: String, $breakerFilter: Users_bool_exp) {
       bio
     }
     Followers(where: { user_id: { _eq: $userId } }) {
-      id
       User {
         id
       }

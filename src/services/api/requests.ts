@@ -4597,7 +4597,6 @@ export type SaveBreak = {
   User: Users;
   break_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4647,7 +4646,6 @@ export type SaveBreak_Bool_Exp = {
   _or?: Maybe<Array<SaveBreak_Bool_Exp>>;
   break_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4664,7 +4662,6 @@ export type SaveBreak_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4674,7 +4671,6 @@ export type SaveBreak_Max_Fields = {
   __typename?: 'SaveBreak_max_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4683,7 +4679,6 @@ export type SaveBreak_Max_Fields = {
 export type SaveBreak_Max_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4693,7 +4688,6 @@ export type SaveBreak_Min_Fields = {
   __typename?: 'SaveBreak_min_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4702,7 +4696,6 @@ export type SaveBreak_Min_Fields = {
 export type SaveBreak_Min_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4729,14 +4722,14 @@ export type SaveBreak_Order_By = {
   User?: Maybe<Users_Order_By>;
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreak */
 export type SaveBreak_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveBreak" */
@@ -4745,8 +4738,6 @@ export enum SaveBreak_Select_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4757,7 +4748,6 @@ export enum SaveBreak_Select_Column {
 export type SaveBreak_Set_Input = {
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4768,8 +4758,6 @@ export enum SaveBreak_Update_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4785,7 +4773,6 @@ export type SaveBreaker = {
   User: Users;
   breaker_id: Scalars['String'];
   created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4835,7 +4822,6 @@ export type SaveBreaker_Bool_Exp = {
   _or?: Maybe<Array<SaveBreaker_Bool_Exp>>;
   breaker_id?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4852,7 +4838,6 @@ export type SaveBreaker_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4862,7 +4847,6 @@ export type SaveBreaker_Max_Fields = {
   __typename?: 'SaveBreaker_max_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4871,7 +4855,6 @@ export type SaveBreaker_Max_Fields = {
 export type SaveBreaker_Max_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4881,7 +4864,6 @@ export type SaveBreaker_Min_Fields = {
   __typename?: 'SaveBreaker_min_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4890,7 +4872,6 @@ export type SaveBreaker_Min_Fields = {
 export type SaveBreaker_Min_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4917,14 +4898,14 @@ export type SaveBreaker_Order_By = {
   User?: Maybe<Users_Order_By>;
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreaker */
 export type SaveBreaker_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveBreaker" */
@@ -4933,8 +4914,6 @@ export enum SaveBreaker_Select_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4945,7 +4924,6 @@ export enum SaveBreaker_Select_Column {
 export type SaveBreaker_Set_Input = {
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4956,8 +4934,6 @@ export enum SaveBreaker_Update_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4973,7 +4949,6 @@ export type SaveEvent = {
   User: Users;
   created_at: Scalars['timestamptz'];
   event_id: Scalars['uuid'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -5023,7 +4998,6 @@ export type SaveEvent_Bool_Exp = {
   _or?: Maybe<Array<SaveEvent_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -5040,7 +5014,6 @@ export type SaveEvent_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5050,7 +5023,6 @@ export type SaveEvent_Max_Fields = {
   __typename?: 'SaveEvent_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5059,7 +5031,6 @@ export type SaveEvent_Max_Fields = {
 export type SaveEvent_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5069,7 +5040,6 @@ export type SaveEvent_Min_Fields = {
   __typename?: 'SaveEvent_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5078,7 +5048,6 @@ export type SaveEvent_Min_Fields = {
 export type SaveEvent_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5105,14 +5074,14 @@ export type SaveEvent_Order_By = {
   User?: Maybe<Users_Order_By>;
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveEvent */
 export type SaveEvent_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveEvent" */
@@ -5121,8 +5090,6 @@ export enum SaveEvent_Select_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5133,7 +5100,6 @@ export enum SaveEvent_Select_Column {
 export type SaveEvent_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5144,8 +5110,6 @@ export enum SaveEvent_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -7743,7 +7707,8 @@ export type Mutation_RootDelete_SaveBreakArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -7755,7 +7720,8 @@ export type Mutation_RootDelete_SaveBreakerArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -7767,7 +7733,8 @@ export type Mutation_RootDelete_SaveEventArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9369,7 +9336,8 @@ export type Query_RootSaveBreak_AggregateArgs = {
 
 
 export type Query_RootSaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9392,7 +9360,8 @@ export type Query_RootSaveBreaker_AggregateArgs = {
 
 
 export type Query_RootSaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9415,7 +9384,8 @@ export type Query_RootSaveEvent_AggregateArgs = {
 
 
 export type Query_RootSaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10203,7 +10173,8 @@ export type Subscription_RootSaveBreak_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10226,7 +10197,8 @@ export type Subscription_RootSaveBreaker_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10249,7 +10221,8 @@ export type Subscription_RootSaveEvent_AggregateArgs = {
 
 
 export type Subscription_RootSaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10929,7 +10902,6 @@ export type BreakerBreaksQuery = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -10982,7 +10954,6 @@ export type NewBreakerBreaksSubscription = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11029,7 +11000,6 @@ export type BreakerEventsQuery = (
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
     & { Saves: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -11054,7 +11024,6 @@ export type NewBreakerEventsSubscription = (
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
     & { Saves: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -11108,7 +11077,6 @@ export type BreakersQuery = (
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
     )>, Followers: Array<(
       { __typename?: 'SaveBreaker' }
-      & Pick<SaveBreaker, 'id'>
       & { User: (
         { __typename?: 'Users' }
         & Pick<Users, 'id'>
@@ -11136,7 +11104,6 @@ export type NewBreakersSubscription = (
       & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
     )>, Followers: Array<(
       { __typename?: 'SaveBreaker' }
-      & Pick<SaveBreaker, 'id'>
       & { User: (
         { __typename?: 'Users' }
         & Pick<Users, 'id'>
@@ -11184,7 +11151,6 @@ export type EventBreaksQuery = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11237,7 +11203,6 @@ export type NewEventBreaksSubscription = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11321,7 +11286,6 @@ export type FollowBreakMutation = (
   { __typename?: 'mutation_root' }
   & { insert_SaveBreak_one?: Maybe<(
     { __typename?: 'SaveBreak' }
-    & Pick<SaveBreak, 'id'>
     & { User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id'>
@@ -11341,7 +11305,6 @@ export type FollowBreakerMutation = (
   { __typename?: 'mutation_root' }
   & { insert_SaveBreaker_one?: Maybe<(
     { __typename?: 'SaveBreaker' }
-    & Pick<SaveBreaker, 'id'>
     & { User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id'>
@@ -11361,7 +11324,6 @@ export type FollowEventMutation = (
   { __typename?: 'mutation_root' }
   & { insert_SaveEvent_one?: Maybe<(
     { __typename?: 'SaveEvent' }
-    & Pick<SaveEvent, 'id'>
     & { User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id'>
@@ -11488,7 +11450,6 @@ export type LiveStreamSubscription = (
       )> }
     ), Saves: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -11522,7 +11483,6 @@ export type LiveStreamSubscription = (
         )> }
       ), Saves: Array<(
         { __typename?: 'SaveBreak' }
-        & Pick<SaveBreak, 'id'>
         & { Break: (
           { __typename?: 'Breaks' }
           & Pick<Breaks, 'id'>
@@ -11576,7 +11536,6 @@ export type ScheduledBreaksQuery = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11630,7 +11589,6 @@ export type NewScheduledBreaksSubscription = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11681,7 +11639,6 @@ export type ScheduledEventsQuery = (
       & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
       & { Saves: Array<(
         { __typename?: 'SaveEvent' }
-        & Pick<SaveEvent, 'id'>
         & { Event: (
           { __typename?: 'Events' }
           & Pick<Events, 'id'>
@@ -11714,7 +11671,6 @@ export type NewScheduledEventsSubscription = (
       & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
       & { Saves: Array<(
         { __typename?: 'SaveEvent' }
-        & Pick<SaveEvent, 'id'>
         & { Event: (
           { __typename?: 'Events' }
           & Pick<Events, 'id'>
@@ -11756,7 +11712,6 @@ export type SearchQuery = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11801,7 +11756,6 @@ export type SearchQuery = (
         & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
       ), Saves: Array<(
         { __typename?: 'SaveEvent' }
-        & Pick<SaveEvent, 'id'>
         & { Event: (
           { __typename?: 'Events' }
           & Pick<Events, 'id'>
@@ -11829,7 +11783,6 @@ export type UnfollowBreakMutation = (
     { __typename?: 'SaveBreak_mutation_response' }
     & { returning: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -11853,7 +11806,6 @@ export type UnfollowBreakerMutation = (
     { __typename?: 'SaveBreaker_mutation_response' }
     & { returning: Array<(
       { __typename?: 'SaveBreaker' }
-      & Pick<SaveBreaker, 'id'>
       & { Breaker: (
         { __typename?: 'Users' }
         & Pick<Users, 'id'>
@@ -11877,7 +11829,6 @@ export type UnfollowEventMutation = (
     { __typename?: 'SaveEvent_mutation_response' }
     & { returning: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -12012,7 +11963,6 @@ export type NewUserUpcomingBreaksSubscription = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -12064,7 +12014,6 @@ export type UserUpcomingBreaksQuery = (
       ) }
     )>, Saves: Array<(
       { __typename?: 'SaveBreak' }
-      & Pick<SaveBreak, 'id'>
       & { Break: (
         { __typename?: 'Breaks' }
         & Pick<Breaks, 'id'>
@@ -12110,7 +12059,6 @@ export type NewUserUpcomingEventsSubscription = (
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
     & { Saves: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -12141,7 +12089,6 @@ export type UserUpcomingEventsQuery = (
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
     & { Saves: Array<(
       { __typename?: 'SaveEvent' }
-      & Pick<SaveEvent, 'id'>
       & { Event: (
         { __typename?: 'Events' }
         & Pick<Events, 'id'>
@@ -12355,7 +12302,6 @@ export const BreakerBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -12434,7 +12380,6 @@ export const NewBreakerBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -12503,7 +12448,6 @@ export const BreakerEventsDocument = gql`
     start_time
     description
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Event {
         id
       }
@@ -12555,7 +12499,6 @@ export const NewBreakerEventsDocument = gql`
     start_time
     description
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Event {
         id
       }
@@ -12681,7 +12624,6 @@ export const BreakersDocument = gql`
       bio
     }
     Followers(where: {user_id: {_eq: $userId}}) {
-      id
       User {
         id
       }
@@ -12737,7 +12679,6 @@ export const NewBreakersDocument = gql`
       bio
     }
     Followers(where: {user_id: {_eq: $userId}}) {
-      id
       User {
         id
       }
@@ -12825,7 +12766,6 @@ export const EventBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -12904,7 +12844,6 @@ export const NewEventBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -13086,7 +13025,6 @@ export type FeaturedHitsSubscriptionResult = Apollo.SubscriptionResult<FeaturedH
 export const FollowBreakDocument = gql`
     mutation FollowBreak($follow: SaveBreak_insert_input!) {
   insert_SaveBreak_one(object: $follow) {
-    id
     User {
       id
     }
@@ -13125,7 +13063,6 @@ export type FollowBreakMutationOptions = Apollo.BaseMutationOptions<FollowBreakM
 export const FollowBreakerDocument = gql`
     mutation FollowBreaker($follow: SaveBreaker_insert_input!) {
   insert_SaveBreaker_one(object: $follow) {
-    id
     User {
       id
     }
@@ -13164,7 +13101,6 @@ export type FollowBreakerMutationOptions = Apollo.BaseMutationOptions<FollowBrea
 export const FollowEventDocument = gql`
     mutation FollowEvent($follow: SaveEvent_insert_input!) {
   insert_SaveEvent_one(object: $follow) {
-    id
     User {
       id
     }
@@ -13433,7 +13369,6 @@ export const LiveStreamDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Event {
         id
       }
@@ -13470,7 +13405,6 @@ export const LiveStreamDocument = gql`
         }
       }
       Saves(where: {User: {id: {_eq: $userId}}}) {
-        id
         Break {
           id
         }
@@ -13571,7 +13505,6 @@ export const ScheduledBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -13651,7 +13584,6 @@ export const NewScheduledBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -13727,7 +13659,6 @@ export const ScheduledEventsDocument = gql`
       start_time
       description
       Saves(where: {User: {id: {_eq: $userId}}}) {
-        id
         Event {
           id
         }
@@ -13795,7 +13726,6 @@ export const NewScheduledEventsDocument = gql`
       start_time
       description
       Saves(where: {User: {id: {_eq: $userId}}}) {
-        id
         Event {
           id
         }
@@ -13873,7 +13803,6 @@ export const SearchDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -13933,7 +13862,6 @@ export const SearchDocument = gql`
         last_name
       }
       Saves(where: {User: {id: {_eq: $userId}}}) {
-        id
         Event {
           id
         }
@@ -13988,7 +13916,6 @@ export const UnfollowBreakDocument = gql`
     where: {User: {id: {_eq: $user_id}}, Break: {id: {_eq: $break_id}}}
   ) {
     returning {
-      id
       Break {
         id
       }
@@ -14032,7 +13959,6 @@ export const UnfollowBreakerDocument = gql`
     where: {User: {id: {_eq: $user_id}}, Breaker: {id: {_eq: $breaker_id}}}
   ) {
     returning {
-      id
       Breaker {
         id
       }
@@ -14076,7 +14002,6 @@ export const UnfollowEventDocument = gql`
     where: {User: {id: {_eq: $user_id}}, Event: {id: {_eq: $event_id}}}
   ) {
     returning {
-      id
       Event {
         id
       }
@@ -14372,7 +14297,6 @@ export const NewUserUpcomingBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -14445,7 +14369,6 @@ export const UserUpcomingBreaksDocument = gql`
       }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Break {
         id
       }
@@ -14518,7 +14441,6 @@ export const NewUserUpcomingEventsDocument = gql`
     start_time
     description
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Event {
         id
       }
@@ -14579,7 +14501,6 @@ export const UserUpcomingEventsDocument = gql`
     start_time
     description
     Saves(where: {User: {id: {_eq: $userId}}}) {
-      id
       Event {
         id
       }

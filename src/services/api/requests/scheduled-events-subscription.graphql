@@ -25,7 +25,6 @@ subscription NewScheduledEvents(
       start_time
       description
       Saves(where: { User: { id: { _eq: $userId } } }) {
-        id
         Event {
           id
         }

@@ -1,6 +1,5 @@
 mutation FollowBreaker($follow: SaveBreaker_insert_input!) {
   insert_SaveBreaker_one(object: $follow) {
-    id
     User {
       id
     }
