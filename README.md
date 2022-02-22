@@ -32,6 +32,7 @@ To build for prod, you need to do the following:
 1. Open the _/android_ folder with Android Studio to generate a _local.properties_ file in that folder pointing at your android SDK path.
 1. To prepare the app dependencies run `yarn install`, `yarn clean:ios` and `yarn generate`. On M1 the chip you'll need to alias `pod` in your .zshrc file: _alias pod='arch -x86_64 pod'_.
 1. Run `yarn ios` to build the app and run the simulator. You can run a specific simulator by appending a device tag like so `yarn ios --simulator="iPhone SE (2nd generation)"`. You can find a list of available devices with `xcrun simctl list devices`. On M1 the chip you need to run yarn ios through a rosetta terminal.
+1. Run `yarn husky install` to get support for pre-commit hooks.
 
 ## Running the app on your iPhone from local dev
 
