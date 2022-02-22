@@ -4,6 +4,6 @@ export interface CountryPickerProps {
   isVisible: boolean;
   onClose: () => void;
   onSelect: (country: Country) => void;
-  countryCode?: CountryCode;
+  countryCode: CountryCode;
   preferredCountries: CountryCode[];
 }

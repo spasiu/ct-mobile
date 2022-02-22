@@ -1,8 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import RNCountryPicker, {
-  CountryCode,
-} from 'react-native-country-picker-modal';
+import RNCountryPicker from 'react-native-country-picker-modal';
 import Modal from 'react-native-modal';
 
 import { PREFERRED_COUNTRIES } from '../../utils/countries';
@@ -32,7 +30,7 @@ export const CountryPicker = ({
           onClose={() => onClose()}
           withModal={false}
           countryCode={countryCode}
-          countryCodes={PREFERRED_COUNTRIES as CountryCode[]}
+          countryCodes={PREFERRED_COUNTRIES}
           withCloseButton={false}
           withFilter
           onSelect={onSelect}
