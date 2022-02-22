@@ -12,7 +12,6 @@ query UserUpcomingEvents($userId: String) {
     start_time
     description
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Event {
         id
       }

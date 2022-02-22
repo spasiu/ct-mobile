@@ -6,7 +6,6 @@ mutation UnfollowEvent($user_id: String, $event_id: uuid!) {
     }
   ) {
     returning {
-      id
       Event {
         id
       }

@@ -68,7 +68,6 @@ query Search($searchInput: String, $userId: String) {
       }
     }
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Break {
         id
       }
@@ -154,7 +153,6 @@ query Search($searchInput: String, $userId: String) {
         last_name
       }
       Saves(where: { User: { id: { _eq: $userId } } }) {
-        id
         Event {
           id
         }

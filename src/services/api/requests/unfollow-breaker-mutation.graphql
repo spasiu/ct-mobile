@@ -6,7 +6,6 @@ mutation UnfollowBreaker($user_id: String, $breaker_id: String) {
     }
   ) {
     returning {
-      id
       Breaker {
         id
       }

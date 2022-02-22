@@ -25,7 +25,6 @@ query ScheduledBreaks(
       }
     }
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Break {
         id
       }

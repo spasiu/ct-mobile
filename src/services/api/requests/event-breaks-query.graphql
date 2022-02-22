@@ -17,7 +17,6 @@ query EventBreaks($id: uuid!, $userId: String) {
       }
     }
     Saves(where: { User: { id: { _eq: $userId } } }) {
-      id
       Break {
         id
       }
