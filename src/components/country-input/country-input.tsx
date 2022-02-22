@@ -43,7 +43,8 @@ export const CountryInput = ({
 
   return (
     <>
-      <CountryPicker
+      {
+        country ? <CountryPicker
         countryCode={country?.cca2}
         onClose={() => {
           setOpenModal(false);
@@ -56,7 +57,8 @@ export const CountryInput = ({
           onBlur();
         }}
         preferredCountries={preferredCountries}
-      />
+      /> : null
+      }
       <FormInput
         status={status}
         value={`${Emoji.get(country?.flag || '')} ${country?.name || ''}`}

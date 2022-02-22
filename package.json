@@ -5,7 +5,7 @@
   "scripts": {
     "set:dev": "cp environments/dev/.env ./ && cp environments/dev/GoogleService-Info.plist ./ios/ && cp environments/dev/Info.plist ./ios/cardsandtreasure/",
     "set:prod": "cp environments/prod/.env ./ && cp environments/prod/GoogleService-Info.plist ./ios/ && cp environments/prod/Info.plist ./ios/cardsandtreasure/",
-    "postinstall": "patch-package && cp -r patches/WebRTC.xcframework ./node_modules/react-native-webrtc/apple && echo 'copied webrtc framework'",
+    "postinstall": "husky install && patch-package && cp -r patches/WebRTC.xcframework ./node_modules/react-native-webrtc/apple && echo 'copied webrtc framework'",
     "prestart": "node config && yarn generate",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -18,7 +18,8 @@
     "clean": "yarn clean:js && yarn clean:ios && yarn clean:android && yarn start -- --reset-cache",
     "wrap": "yarn lint && yarn test",
     "generate": "graphql-codegen --config codegen.js -r dotenv/config ./.env",
-    "ts:watch": "tsc --noEmit --skipLibCheck --watch",
+    "ts:watch": "tsc --noEmit --skipLibCheck --watch --pretty",
+    "ts": "tsc --noEmit --skipLibCheck --pretty",
     "buildclean": "yarn clean:js && yarn clean:ios && yarn install"
   },
   "dependencies": {
@@ -38,6 +39,7 @@
     "@react-navigation/native": "5.9.3",
     "@react-navigation/stack": "5.14.3",
     "@sentry/react-native": "3.2.10",
+    "@types/react-native-version-check": "3.4.4",
     "axios": "0.21.1",
     "country-region-data": "1.10.0",
     "dayjs": "1.10.4",
@@ -113,6 +115,7 @@
     "babel-plugin-import-graphql": "2.8.1",
     "dotenv": "^14.2.0",
     "eslint": "7.22.0",
+    "husky": "^7.0.4",
     "jest": "26.6.3",
     "metro-react-native-babel-preset": "0.64.0",
     "react-test-renderer": "17.0.1",
