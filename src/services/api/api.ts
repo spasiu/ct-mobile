@@ -72,6 +72,25 @@ export const getClient = (
   authUser = user;
   return new ApolloClient({
     link: getLink(authUser),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache(
+      {
+      typePolicies:{
+        Events: {
+          fields: {
+            Saves:{
+              merge: false
+            }
+          }
+        },
+        Breaks: {
+          fields: {
+            Saves:{
+              merge: false
+            }
+          }
+        },
+      }
+    }
+    ),
   });
 };
