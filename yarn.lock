@@ -2206,7 +2206,7 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/react-native-version-check@^3.4.4":
+"@types/react-native-version-check@3.4.4":
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/@types/react-native-version-check/-/react-native-version-check-3.4.4.tgz#c3d01a7a7f261f977d098d9e18db176a4344e86a"
   integrity sha512-Oq4k25w5XAHu/xBNhKlZ0Gh4TDULikjLDO20YRVKyIBZ2J1oIQnp71oo0ERB0A4agsxqKf5yidHpPKHwmSr6yg==

@@ -1,6 +1,7 @@
 fragment HitsDetail on Hits {
     id
     image_front
+    image_back
     player
     card_number
     parallel
@@ -9,6 +10,9 @@ fragment HitsDetail on Hits {
     memoribillia
     autograph
     numbered
+    User {
+      username
+      }
     Product {
       id
       year
@@ -16,6 +20,12 @@ fragment HitsDetail on Hits {
       manufacturer
       brand
       series
+    }  
+    Break {
+      Event {
+        User {
+          username
+      }
     }
-
   }
+}

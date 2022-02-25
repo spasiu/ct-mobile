@@ -8,6 +8,9 @@ import { HitDetailModalProps } from './hit-detail-modal.props';
 import {
   hitDescription,
   hitImageFrontSelector,
+  hitImageBackSelector,
+  hitUserSelector,
+  hitBreakerSelector,
   hitPlayerSelector,
 } from '../../common/hit';
 import { Hits } from '../../services/api/requests';
@@ -51,10 +54,13 @@ export const shareHit = (
 
 export const hitDetailForModalSelector = (
   hit: Partial<Hits>,
-): HitDetailModalProps => {
+): HitDetailModalProps => {  
   return {
     image_front: hitImageFrontSelector(hit),
+    image_back: hitImageBackSelector(hit),
     description: hitDescription(hit),
     player: hitPlayerSelector(hit),
+    user: hitUserSelector(hit),
+    breaker: hitBreakerSelector(hit)
   };
 };

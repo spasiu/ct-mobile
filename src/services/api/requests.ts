@@ -11336,10 +11336,22 @@ export type FollowEventMutation = (
 
 export type HitsDetailFragment = (
   { __typename?: 'Hits' }
-  & Pick<Hits, 'id' | 'image_front' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
-  & { Product: (
+  & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
+  & { User: (
+    { __typename?: 'Users' }
+    & Pick<Users, 'username'>
+  ), Product: (
     { __typename?: 'Products' }
     & Pick<Products, 'id' | 'year' | 'category' | 'manufacturer' | 'brand' | 'series'>
+  ), Break: (
+    { __typename?: 'Breaks' }
+    & { Event: (
+      { __typename?: 'Events' }
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'username'>
+      ) }
+    ) }
   ) }
 );
 
@@ -11353,7 +11365,7 @@ export type HitsQuery = (
   { __typename?: 'query_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
+    & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
     & { Product: (
       { __typename?: 'Products' }
       & Pick<Products, 'id' | 'year' | 'category' | 'manufacturer' | 'brand' | 'series'>
@@ -12124,6 +12136,7 @@ export const HitsDetailFragmentDoc = gql`
     fragment HitsDetail on Hits {
   id
   image_front
+  image_back
   player
   card_number
   parallel
@@ -12132,6 +12145,9 @@ export const HitsDetailFragmentDoc = gql`
   memoribillia
   autograph
   numbered
+  User {
+    username
+  }
   Product {
     id
     year
@@ -12139,6 +12155,13 @@ export const HitsDetailFragmentDoc = gql`
     manufacturer
     brand
     series
+  }
+  Break {
+    Event {
+      User {
+        username
+      }
+    }
   }
 }
     `;
@@ -13144,6 +13167,7 @@ export const HitsDocument = gql`
   ) {
     id
     image_front
+    image_back
     player
     card_number
     parallel

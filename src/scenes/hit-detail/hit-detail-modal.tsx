@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, ScrollView, View, Image } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
@@ -9,14 +9,20 @@ import { HitDetailModalProps } from './hit-detail-modal.props';
 import { shareHit } from './hit-detail-modal.utils';
 
 const shareIcon = require('../../assets/share-icon.png');
+const flipIcon = require('../../assets/flip-icon.png');
 
 export const HitDetailModal = ({
   isVisible,
   onPressClose,
   image_front = '',
+  image_back = '',
   player = '',
   description = '',
+  user = '',
+  breaker = '',
 }: HitDetailModalProps): JSX.Element => {
+  const [showBack, setShowBack] = useState(false);
+  
   return (
     <OverScreenModal onPressClose={onPressClose} isVisible={isVisible}>
       <View
@@ -38,17 +44,47 @@ export const HitDetailModal = ({
           />
         </IconButton>
       </View>
+      <View
+        style={[
+          s.absolute,
+          s.icon_xs,
+          s.right_2,
+          s.mr3,
+          s.mt8,
+          {
+            zIndex: 1,
+            elevation: 1
+          }
+        ]}>
+      <IconButton
+        onPress={() => setShowBack(!showBack)}>
+        <Image
+          resizeMode={'contain'}
+          source={flipIcon}
+          style={[s.tint_black, s.icon_xs]}
+        />
+      </IconButton>
+      </View>
       <ScrollView
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
-        <ImageCard cardSize="large" image={image_front} />
+        <ImageCard containerStyle={[s.br0]} cardSize="large" image={showBack ? image_back : image_front} />
         <View style={[s.flx_i, s.mh5]}>
           <Text style={[s.ff_b, s.f3, s.black, s.mt4, s.mb2]}>{player}</Text>
           <Text
             style={[s.ff_alt_r, s.f5, s.black]}
-            numberOfLines={2}
             ellipsizeMode={'tail'}>
             {description}
+          </Text>
+          <Text
+            style={[s.ff_alt_r, s.f5, s.black]}
+            ellipsizeMode={'tail'}>
+            {`Pulled for: ${user}`}
+          </Text>
+          <Text
+            style={[s.ff_alt_r, s.f5, s.black]}
+            ellipsizeMode={'tail'}>
+            {`Pulled by: ${breaker}`}
           </Text>
         </View>
       </ScrollView>

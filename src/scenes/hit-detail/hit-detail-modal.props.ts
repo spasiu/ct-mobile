@@ -4,4 +4,7 @@ export interface HitDetailModalProps {
   player?: string;
   description?: string;
   image_front?: string;
+  image_back?: string;
+  user?: string;
+  breaker?: string;
 }
