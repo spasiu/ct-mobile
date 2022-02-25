@@ -7,6 +7,7 @@ import { CARD_SIZES } from '../../components/image-card/image-card.presets';
 
 import { HitDetailModalProps } from './hit-detail-modal.props';
 import { shareHit } from './hit-detail-modal.utils';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 const shareIcon = require('../../assets/share-icon.png');
 const flipIcon = require('../../assets/flip-icon.png');
@@ -68,7 +69,11 @@ export const HitDetailModal = ({
       <ScrollView
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
-        <ImageCard containerStyle={[s.br0]} cardSize="large" image={showBack ? image_back : image_front} />
+        <View>
+          <ImageZoom cropWidth={sizes.w5 + sizes.w2} cropHeight={sizes.h5 + sizes.h4 + sizes.h2} imageWidth={sizes.w5 + sizes.w2} imageHeight={sizes.h5 + sizes.h4 + sizes.h2} pinchToZoom={true}>
+            <ImageCard containerStyle={[s.br0]} cardSize="large" image={showBack ? image_back : image_front} />
+          </ImageZoom>
+        </View>
         <View style={[s.flx_i, s.mh5]}>
           <Text style={[s.ff_b, s.f3, s.black, s.mt4, s.mb2]}>{player}</Text>
           <Text
