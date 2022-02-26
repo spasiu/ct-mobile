@@ -60,7 +60,7 @@
     "react-native-flash-message": "0.1.23",
     "react-native-gesture-handler": "1.10.3",
     "react-native-idle-timer": "2.1.7",
-    "react-native-image-pan-zoom": "^2.1.12",
+    "react-native-image-pan-zoom": "2.1.12",
     "react-native-image-picker": "3.3.2",
     "react-native-incall-manager": "3.3.0",
     "react-native-keyboard-aware-scroll-view": "0.9.4",

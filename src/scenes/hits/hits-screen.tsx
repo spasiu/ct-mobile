@@ -46,6 +46,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
       userHitsFilterActive,
     ),
   });
+
   const user = userSelector(users);
   const hits = hitsSelector(requestData);
   return (

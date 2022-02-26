@@ -54,7 +54,7 @@ export const shareHit = (
 
 export const hitDetailForModalSelector = (
   hit: Partial<Hits>,
-): HitDetailModalProps => {  
+): HitDetailModalProps => {
   return {
     image_front: hitImageFrontSelector(hit),
     image_back: hitImageBackSelector(hit),
