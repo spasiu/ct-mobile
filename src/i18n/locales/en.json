@@ -207,7 +207,8 @@
   "status": {
     "live": "Live",
     "upcoming": "Upcoming",
-    "completed": "Completed"
+    "completed": "Completed",
+    "upNext": "Up Next"
   },
   "update": {
     "force_update_title": "Please update your app to continue.",
