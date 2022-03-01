@@ -23,7 +23,7 @@ export const HitDetailModal = ({
   breaker = '',
 }: HitDetailModalProps): JSX.Element => {
   const [showBack, setShowBack] = useState(false);
-  
+
   return (
     <OverScreenModal onPressClose={onPressClose} isVisible={isVisible}>
       <View
@@ -45,27 +45,28 @@ export const HitDetailModal = ({
           />
         </IconButton>
       </View>
-      <View
-        style={[
-          s.absolute,
-          s.icon_xs,
-          s.right_2,
-          s.mr3,
-          s.mt8,
-          {
-            zIndex: 1,
-            elevation: 1
-          }
-        ]}>
-      <IconButton
-        onPress={() => setShowBack(!showBack)}>
-        <Image
-          resizeMode={'contain'}
-          source={flipIcon}
-          style={[s.tint_black, s.icon_xs]}
-        />
-      </IconButton>
-      </View>
+      {image_back ?
+        <View
+          style={[
+            s.absolute,
+            s.icon_xs,
+            s.right_2,
+            s.mr3,
+            s.mt8,
+            {
+              zIndex: 1,
+              elevation: 1
+            }
+          ]}>
+          <IconButton
+            onPress={() => setShowBack(!showBack)}>
+            <Image
+              resizeMode={'contain'}
+              source={flipIcon}
+              style={[s.tint_black, s.icon_xs]}
+            />
+          </IconButton>
+        </View> : null}
       <ScrollView
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
