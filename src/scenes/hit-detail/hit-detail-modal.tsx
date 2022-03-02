@@ -9,6 +9,7 @@ import { shareHit } from './hit-detail-modal.utils';
 import ImageZoom from 'react-native-image-pan-zoom';
 const shareIcon = require('../../assets/share-icon.png');
 const flipIcon = require('../../assets/flip-icon.png');
+const closeIcon = require('../../assets/close-icon.png');
 
 export const HitDetailModal = ({
   isVisible,
@@ -26,15 +27,7 @@ export const HitDetailModal = ({
   return (
     <OverScreenModal onPressClose={onPressClose} isVisible={isVisible}>
       <View
-        style={[
-          s.absolute,
-          s.icon_xs,
-          s.right_2,
-          s.mr3,
-          {
-            marginTop: sizes.mr3 - sizes.mr1 / 2,
-          },
-        ]}>
+        style={[ s.absolute, s.icon_xs, s.right_2, s.mr3, {marginTop: sizes.mr3 - sizes.mr1 / 2}]}>
         <IconButton
           onPress={() => shareHit(player, image_front, CARD_SIZES.large)}>
           <Image
@@ -44,19 +37,8 @@ export const HitDetailModal = ({
           />
         </IconButton>
       </View>
-      {image_back ?
-        <View
-          style={[
-            s.absolute,
-            s.icon_xs,
-            s.right_2,
-            s.mr3,
-            s.mt8,
-            {
-              zIndex: 1,
-              elevation: 1
-            }
-          ]}>
+      {image_back && !zoom?
+        <View style={[ s.absolute, s.icon_xs, s.right_2, s.mr3, s.mt8, {zIndex: 1, elevation: 1}]}>
           <IconButton
             onPress={() => setShowBack(!showBack)}>
             <Image
@@ -66,12 +48,28 @@ export const HitDetailModal = ({
             />
           </IconButton>
         </View> : null}
+        
+        {zoom ?
+        <View style={[ s.absolute, s.icon_xs, s.left_2, s.ml3, s.mt6, {zIndex: 1, elevation: 1}]}>
+          <IconButton
+            onPress={() => setZoom(false)}>
+            <Image
+              resizeMode={'contain'}
+              source={closeIcon}
+              style={[s.tint_black, s.icon_xs]}
+            />
+          </IconButton>
+        </View> : null}
       <ScrollView
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
         <View>
           {zoom ?
-            <ImageZoom cropWidth={Dimensions.get('window').width} cropHeight={Dimensions.get('window').height} imageWidth={Dimensions.get('window').width} imageHeight={Dimensions.get('window').height} pinchToZoom={true}>
+            <ImageZoom
+            cropWidth={Dimensions.get('window').width}
+            cropHeight={Dimensions.get('window').height}
+            imageWidth={Dimensions.get('window').width} imageHeight={Dimensions.get('window').height}
+            pinchToZoom={true}>
               <ImageCard onPress={() => setZoom(false)}
                 cardWidth={Dimensions.get('window').width}
                 cardHeight={Dimensions.get('window').height}
@@ -85,6 +83,7 @@ export const HitDetailModal = ({
               containerStyle={[s.br0]}
               image={showBack ? image_back : image_front} />}
         </View>
+        {!zoom ?
         <View style={[s.flx_i, s.mh5]}>
           <Text style={[s.ff_b, s.f3, s.black, s.mt4, s.mb2]}>{player}</Text>
           <Text
@@ -102,7 +101,7 @@ export const HitDetailModal = ({
             ellipsizeMode={'tail'}>
             {`Pulled by: ${breaker}`}
           </Text>
-        </View>
+        </View> : null }
       </ScrollView>
     </OverScreenModal>
   );
