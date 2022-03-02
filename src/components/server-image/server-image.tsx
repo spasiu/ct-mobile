@@ -41,6 +41,7 @@ export const ServerImage = ({
     q: quality,
     w: width,
     h: height,
+    // fill conditionally or take out completely?  
     fill: 'blur',
     fit,
   };
@@ -89,7 +90,7 @@ export const ServerImage = ({
         <Blurhash
           resizeMode={resizeMode}
           blurhash={blurHash}
-          style={[{ width: width, height: height }, ...style]}
+          style={[{ width, height }, ...style]}
           onLoadEnd={() => setShowOriginal(true)}
         />
       </Animated.View>

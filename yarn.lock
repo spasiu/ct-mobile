@@ -8024,7 +8024,7 @@ react-native-idle-timer@2.1.7:
   resolved "https://registry.yarnpkg.com/react-native-idle-timer/-/react-native-idle-timer-2.1.7.tgz#62e19217cf9b29482fa9ec7c4774bdfea422b765"
   integrity sha512-3i9yuHYuzaJmRHD6nGsvw8fj+VBMmwwqef0UIdUNJG9szhPRXvtN7rcyDTfchPHpYfRRhOYR62OgpOqHKFj+dw==
 
-react-native-image-pan-zoom@^2.1.12:
+react-native-image-pan-zoom@2.1.12:
   version "2.1.12"
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
   integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==

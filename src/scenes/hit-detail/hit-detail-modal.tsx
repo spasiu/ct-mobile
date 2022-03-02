@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, View, Image } from 'react-native';
+import { Text, ScrollView, View, Image, Dimensions } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
 import { OverScreenModal, ImageCard, IconButton } from '../../components';
 import { CARD_SIZES } from '../../components/image-card/image-card.presets';
-
 import { HitDetailModalProps } from './hit-detail-modal.props';
 import { shareHit } from './hit-detail-modal.utils';
 import ImageZoom from 'react-native-image-pan-zoom';
-
 const shareIcon = require('../../assets/share-icon.png');
 const flipIcon = require('../../assets/flip-icon.png');
 
@@ -23,6 +21,7 @@ export const HitDetailModal = ({
   breaker = '',
 }: HitDetailModalProps): JSX.Element => {
   const [showBack, setShowBack] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
   return (
     <OverScreenModal onPressClose={onPressClose} isVisible={isVisible}>
@@ -71,9 +70,20 @@ export const HitDetailModal = ({
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
         <View>
-          <ImageZoom cropWidth={sizes.w5 + sizes.w2} cropHeight={sizes.h5 + sizes.h4 + sizes.h2} imageWidth={sizes.w5 + sizes.w2} imageHeight={sizes.h5 + sizes.h4 + sizes.h2} pinchToZoom={true}>
-            <ImageCard containerStyle={[s.br0]} cardSize="large" image={showBack ? image_back : image_front} />
-          </ImageZoom>
+          {zoom ?
+            <ImageZoom cropWidth={Dimensions.get('window').width} cropHeight={Dimensions.get('window').height} imageWidth={Dimensions.get('window').width} imageHeight={Dimensions.get('window').height} pinchToZoom={true}>
+              <ImageCard onPress={() => setZoom(false)}
+                cardWidth={Dimensions.get('window').width}
+                cardHeight={Dimensions.get('window').height}
+                containerStyle={[s.br0]}
+                image={showBack ? image_back : image_front} />
+            </ImageZoom>
+            :
+            <ImageCard
+              onPress={() => setZoom(true)}
+              cardSize='large'
+              containerStyle={[s.br0]}
+              image={showBack ? image_back : image_front} />}
         </View>
         <View style={[s.flx_i, s.mh5]}>
           <Text style={[s.ff_b, s.f3, s.black, s.mt4, s.mb2]}>{player}</Text>
