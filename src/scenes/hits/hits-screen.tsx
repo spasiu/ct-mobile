@@ -16,7 +16,7 @@ import {
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 import {
-  useNewHitsSubscription,
+  useHitsScreenQuery,
   useUserMinimalInformationQuery,
 } from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -39,7 +39,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
-  const { data: requestData, loading } = useNewHitsSubscription({
+  const { data: requestData, loading } = useHitsScreenQuery({
     variables: getHitsSearchAndFilterParams(
       authUser?.uid as string,
       searchTerm,

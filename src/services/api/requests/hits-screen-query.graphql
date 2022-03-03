@@ -1,4 +1,4 @@
-subscription NewHits(
+query HitsScreen(
   $userHitsFilter: String_comparison_exp
   $searchInput: String
 ) {

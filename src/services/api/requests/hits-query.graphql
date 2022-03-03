@@ -1,7 +1,4 @@
-query Hits(
-  $userHitsFilter: String_comparison_exp
-  $searchInput: String
-) {
+query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
     where: {
       user_id: $userHitsFilter
@@ -9,29 +6,8 @@ query Hits(
         { player: { _ilike: $searchInput } }
         { description: { _ilike: $searchInput } }
       ]
-      _and: [{ archived: { _eq: false } },{ published: { _eq: true } }]
+      _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
     order_by: { created_at: desc }
-  ) {
-    id
-    image_front
-    image_back
-      player
-      card_number
-      parallel
-      insert
-      rookie_card
-      memoribillia
-      autograph
-      numbered
-    Product {
-      id
-      year
-      category
-      manufacturer
-      brand
-      series
-    }
-  }
+  ) { ...HitsDetail }
 }
-
