@@ -1,6 +1,7 @@
 query HitsScreen(
   $userHitsFilter: String_comparison_exp
   $searchInput: String
+  $offset: Int
 ) {
   Hits(
     where: {
@@ -25,5 +26,7 @@ query HitsScreen(
       _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
     order_by: { created_at: desc }
+    limit: 24
+    offset: $offset
   ) { ...HitsDetail }
 }

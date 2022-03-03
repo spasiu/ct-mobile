@@ -16,6 +16,7 @@ import {
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 import {
+  Hits,
   useHitsScreenQuery,
   useUserMinimalInformationQuery,
 } from '../../services/api/requests';
@@ -31,7 +32,8 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [offset, setOffset] = useState(24)
+  const [moreHits, setMoreHits] = useState<Hits[]>([]);
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -39,16 +41,26 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
-  const { data: requestData, loading } = useHitsScreenQuery({
-    variables: getHitsSearchAndFilterParams(
+  const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
+    variables: {...getHitsSearchAndFilterParams(
       authUser?.uid as string,
       searchTerm,
       userHitsFilterActive,
     ),
+    offset: 0,
+  }
   });
+  
 
-  const user = userSelector(users);
+  const paginate = (offset: number) => {
+    fetchMore({
+      variables: { offset }
+    }).then(h => setMoreHits(moreHits ? [...moreHits, ...hitsSelector(h.data)] : hitsSelector(h.data)));
+    setOffset(offset + 24);
+  };
+
   const hits = hitsSelector(requestData);
+  const user = userSelector(users);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -84,7 +96,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           onChangeText={text => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hits} />}
+      {loading ? <Loading /> : <HitsView hits={moreHits ? [...hits, ...moreHits] : hits} onEndReached={() => paginate(offset)} />}
     </Container>
   );
 };

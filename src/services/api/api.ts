@@ -74,7 +74,7 @@ export const getClient = (
     link: getLink(authUser),
     cache: new InMemoryCache(
       {
-      typePolicies:{
+      typePolicies: {
         Events: {
           fields: {
             Saves:{
@@ -89,7 +89,16 @@ export const getClient = (
             }
           }
         },
-      }
+        Query: {
+          fields:{
+            Hits: {
+              merge(existing, incoming) {
+                return existing ? { ...existing, ...incoming } : incoming
+              }
+            }
+          }
+          }
+        }
     }
     ),
   });

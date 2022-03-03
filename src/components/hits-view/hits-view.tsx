@@ -30,7 +30,7 @@ import {
 } from './hits-view.presets';
 import { HitsViewProps } from './hits-view.props';
 
-export const HitsView = ({ hits }: HitsViewProps): JSX.Element => {
+export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => {
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
   return (
     <>
@@ -60,6 +60,7 @@ export const HitsView = ({ hits }: HitsViewProps): JSX.Element => {
               />
             );
           }
+          
           return (
             <HitCard
               onPress={() => setHitDetail(item)}
@@ -73,6 +74,8 @@ export const HitsView = ({ hits }: HitsViewProps): JSX.Element => {
             />
           );
         }}
+        onEndReachedThreshold={.5}
+        onEndReached={() => onEndReached && onEndReached()}
       />
       <HitDetailModal
         isVisible={!isEmpty(hitDetail)}
