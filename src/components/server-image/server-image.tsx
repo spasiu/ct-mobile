@@ -25,6 +25,7 @@ export const ServerImage = ({
   children,
   resizeMode = 'contain',
   fit = 'fill',
+  fill = 'blur'
 }: ServerImageProps): JSX.Element => {
   const opacity = useSharedValue(1);
   const opacityStyle = useAnimatedStyle(() => {
@@ -41,7 +42,7 @@ export const ServerImage = ({
     q: quality,
     w: width,
     h: height,
-    fill: 'blur',
+    fill,
     fit,
   };
 
@@ -89,7 +90,7 @@ export const ServerImage = ({
         <Blurhash
           resizeMode={resizeMode}
           blurhash={blurHash}
-          style={[{ width: width, height: height }, ...style]}
+          style={[{ width, height }, ...style]}
           onLoadEnd={() => setShowOriginal(true)}
         />
       </Animated.View>

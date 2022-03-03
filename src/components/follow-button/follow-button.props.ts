@@ -18,4 +18,5 @@ export interface FollowButtonProps extends BorderlessButtonProps {
   selectedContainerStyle?: ViewStyle[];
   defaultImageStyle?: ImageStyle[];
   selectedImageStyle?: ImageStyle[];
+  onPress?: (pointer?: any) => void;
 }

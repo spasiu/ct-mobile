@@ -9,4 +9,5 @@ export interface ServerImageProps {
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
   children?: React.ReactNode;
   fit?: 'facearea' | 'fill';
+  fill?: string;
 }
