@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Text, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
-import { BreakCard } from '../../components';
+import { BreakCard, StatusBadgeTypes } from '../../components';
 
 import { t } from '../../i18n/i18n';
 import { OverScreenModal } from '../../components';
@@ -22,7 +22,7 @@ import { UpcomingBreaksProps } from './live-screen.props';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
-
+import { Break_Status_Enum } from '../../services/api/requests';
 export const LineupModal = ({
   event,
   isVisible,
@@ -33,6 +33,9 @@ export const LineupModal = ({
 }: UpcomingBreaksProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [breakId, setBreakId] = useState('');
+
+  const completed = breaks.filter(b => b.status === Break_Status_Enum.Completed);
+  const upcoming = breaks.filter(b => b.status !== Break_Status_Enum.Completed);
 
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
@@ -47,13 +50,20 @@ export const LineupModal = ({
       </Text>
       <FlatList
         style={[s.flx_i, s.mv3, s.ph3]}
-        data={breaks}
+        data={[...upcoming, ...completed]}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           const breakCardDetails = breakCardSelector(item, breaker, event);
           return (
             <BreakCard
               {...breakCardDetails}
+              status={
+                (item.status !== Break_Status_Enum.Completed) &&
+                (index === 0 && item.status !== Break_Status_Enum.Live && item.status !== Break_Status_Enum.Notified) ||
+                (index === 1 && (upcoming[0].status === Break_Status_Enum.Live || upcoming[0].status === Break_Status_Enum.Notified)) ?
+                StatusBadgeTypes.upNext :
+                breakCardDetails.status
+              }
               eventDate={formatScheduledStatus(eventTimeSelector(event))}
               onPressBuy={() => setBreakId(item.id)}
               onPress={() => setBreakId(item.id)}
