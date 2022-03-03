@@ -25,6 +25,7 @@ export const ServerImage = ({
   children,
   resizeMode = 'contain',
   fit = 'fill',
+  fill = 'blur'
 }: ServerImageProps): JSX.Element => {
   const opacity = useSharedValue(1);
   const opacityStyle = useAnimatedStyle(() => {
@@ -41,8 +42,7 @@ export const ServerImage = ({
     q: quality,
     w: width,
     h: height,
-    // fill conditionally or take out completely?  
-    fill: 'blur',
+    fill,
     fit,
   };
 
