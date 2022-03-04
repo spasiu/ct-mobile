@@ -13200,8 +13200,8 @@ export const HitsScreenDocument = gql`
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
     order_by: {created_at: desc}
-    limit: 24
     offset: $offset
+    limit: 24
   ) {
     ...HitsDetail
   }

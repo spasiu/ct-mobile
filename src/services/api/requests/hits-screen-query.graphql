@@ -26,7 +26,7 @@ query HitsScreen(
       _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
     order_by: { created_at: desc }
-    limit: 24
     offset: $offset
+    limit: 24
   ) { ...HitsDetail }
 }

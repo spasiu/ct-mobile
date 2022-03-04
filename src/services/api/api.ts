@@ -92,8 +92,11 @@ export const getClient = (
         Query: {
           fields:{
             Hits: {
-              merge(existing, incoming) {
-                return existing ? { ...existing, ...incoming } : incoming
+              read(existing) {
+                return existing
+              },
+              merge(existing=[], incoming) {
+                return [...existing, ...incoming]
               }
             }
           }

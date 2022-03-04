@@ -16,7 +16,6 @@ import {
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 import {
-  Hits,
   useHitsScreenQuery,
   useUserMinimalInformationQuery,
 } from '../../services/api/requests';
@@ -32,8 +31,8 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [offset, setOffset] = useState(24)
-  const [moreHits, setMoreHits] = useState<Hits[]>([]);
+  const [offset, setoffset] = useState(0)
+
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -42,24 +41,21 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   });
 
   const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
-    variables: {...getHitsSearchAndFilterParams(
+    variables: { ...getHitsSearchAndFilterParams(
       authUser?.uid as string,
       searchTerm,
       userHitsFilterActive,
     ),
-    offset: 0,
+    offset,
   }
   });
-  
 
-  const paginate = (offset: number) => {
+  const loadMore = () => {
+    setoffset(offset + 24);
     fetchMore({
-      variables: { offset }
-    }).then(h => setMoreHits(moreHits ? [...moreHits, ...hitsSelector(h.data)] : hitsSelector(h.data)));
-    setOffset(offset + 24);
+      variables: { offset },
+    })
   };
-
-  const hits = hitsSelector(requestData);
   const user = userSelector(users);
   return (
     <Container
@@ -96,7 +92,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           onChangeText={text => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={moreHits ? [...hits, ...moreHits] : hits} onEndReached={() => paginate(offset)} />}
-    </Container>
+      {loading ? <Loading /> : <HitsView hits={hitsSelector(requestData)} onEndReached={() => loadMore()} />}
+   </Container>
   );
 };
