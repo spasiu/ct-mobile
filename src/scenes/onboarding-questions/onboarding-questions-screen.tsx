@@ -14,12 +14,12 @@ import { QUESTIONS, Question } from '../../common/break-preferences';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
-import { useInsertUserPreferencesMutation } from '../../services/api/requests';
 import { WINDOW_WIDTH } from '../../theme/sizes';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 
 import { OnboardingQuestionsScreenProps } from './onboarding-questions-screen.props';
 import { formatUserPreferences } from './onboarding-questions-screen.utils';
+import { useUpdateUserPreferencesMutation } from '../../services/api/requests';
 
 export const OnboardingQuestionsScreen = ({
   navigation,
@@ -29,7 +29,7 @@ export const OnboardingQuestionsScreen = ({
   const [userPreferences, setUserPreferences] = useState({});
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [insertUserPreferences, { loading }] = useInsertUserPreferencesMutation(
+  const [updateUserPreferences, { loading }] = useUpdateUserPreferencesMutation(
     {
       onError: () => {
         navigation.navigate(ROUTES_IDS.ALLOW_NOTIFICATIONS_SCREEN);
@@ -60,12 +60,10 @@ export const OnboardingQuestionsScreen = ({
                     ...userPreferences,
                     [questionProps.questionKey]: alternatives,
                   };
-                  insertUserPreferences({
+                  updateUserPreferences({
                     variables: {
-                      userPreferences: {
-                        ...formatUserPreferences(allUserPreferences, QUESTIONS),
-                        user_id: authUser?.uid,
-                      },
+                        input: {...formatUserPreferences(allUserPreferences, QUESTIONS)},
+                        userId: authUser?.uid,
                     },
                   });
                 } else {

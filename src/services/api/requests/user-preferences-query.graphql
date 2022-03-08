@@ -2,7 +2,6 @@ query UserPreferences($id: String) {
   Users(where: { id: { _eq: $id } }) {
     id
     UserPreference {
-      id
       pricing
       sports
       break_type

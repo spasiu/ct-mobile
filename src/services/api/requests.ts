@@ -5850,7 +5850,6 @@ export type UserPreferences = {
   break_type: Scalars['_text'];
   created_at: Scalars['timestamptz'];
   frequency: Scalars['String'];
-  id: Scalars['uuid'];
   pricing: Scalars['_text'];
   sports: Scalars['_text'];
   updated_at: Scalars['timestamptz'];
@@ -5888,7 +5887,6 @@ export type UserPreferences_Bool_Exp = {
   break_type?: Maybe<_Text_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   frequency?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   pricing?: Maybe<_Text_Comparison_Exp>;
   sports?: Maybe<_Text_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -5898,9 +5896,7 @@ export type UserPreferences_Bool_Exp = {
 /** unique or primary key constraints on table "UserPreferences" */
 export enum UserPreferences_Constraint {
   /** unique or primary key constraint */
-  UserPreferencesPkey = 'UserPreferences_pkey',
-  /** unique or primary key constraint */
-  UserPreferencesUserIdKey = 'UserPreferences_user_id_key'
+  UserPreferencesPkey = 'UserPreferences_pkey'
 }
 
 /** input type for inserting data into table "UserPreferences" */
@@ -5909,7 +5905,6 @@ export type UserPreferences_Insert_Input = {
   break_type?: Maybe<Scalars['_text']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   frequency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   pricing?: Maybe<Scalars['_text']>;
   sports?: Maybe<Scalars['_text']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -5921,7 +5916,6 @@ export type UserPreferences_Max_Fields = {
   __typename?: 'UserPreferences_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   frequency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5931,7 +5925,6 @@ export type UserPreferences_Min_Fields = {
   __typename?: 'UserPreferences_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   frequency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5965,7 +5958,6 @@ export type UserPreferences_Order_By = {
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   frequency?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   pricing?: Maybe<Order_By>;
   sports?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -5974,7 +5966,7 @@ export type UserPreferences_Order_By = {
 
 /** primary key columns input for table: UserPreferences */
 export type UserPreferences_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "UserPreferences" */
@@ -5985,8 +5977,6 @@ export enum UserPreferences_Select_Column {
   CreatedAt = 'created_at',
   /** column name */
   Frequency = 'frequency',
-  /** column name */
-  Id = 'id',
   /** column name */
   Pricing = 'pricing',
   /** column name */
@@ -6002,7 +5992,6 @@ export type UserPreferences_Set_Input = {
   break_type?: Maybe<Scalars['_text']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   frequency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
   pricing?: Maybe<Scalars['_text']>;
   sports?: Maybe<Scalars['_text']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -6017,8 +6006,6 @@ export enum UserPreferences_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   Frequency = 'frequency',
-  /** column name */
-  Id = 'id',
   /** column name */
   Pricing = 'pricing',
   /** column name */
@@ -7784,7 +7771,7 @@ export type Mutation_RootDelete_UserPreferencesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_UserPreferences_By_PkArgs = {
-  id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9479,7 +9466,7 @@ export type Query_RootUserPreferences_AggregateArgs = {
 
 
 export type Query_RootUserPreferences_By_PkArgs = {
-  id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10316,7 +10303,7 @@ export type Subscription_RootUserPreferences_AggregateArgs = {
 
 
 export type Subscription_RootUserPreferences_By_PkArgs = {
-  id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -11422,23 +11409,6 @@ export type InsertUserNotificationsPreferencesMutation = (
   )> }
 );
 
-export type InsertUserPreferencesMutationVariables = Exact<{
-  userPreferences: UserPreferences_Insert_Input;
-}>;
-
-
-export type InsertUserPreferencesMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_UserPreferences_one?: Maybe<(
-    { __typename?: 'UserPreferences' }
-    & Pick<UserPreferences, 'id' | 'break_type' | 'sports' | 'pricing' | 'frequency'>
-    & { User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id'>
-    ) }
-  )> }
-);
-
 export type LiveStreamSubscriptionVariables = Exact<{
   eventId?: Maybe<Scalars['uuid']>;
   userId?: Maybe<Scalars['String']>;
@@ -11900,7 +11870,7 @@ export type UpdateUserPreferencesMutation = (
     { __typename?: 'UserPreferences_mutation_response' }
     & { returning: Array<(
       { __typename?: 'UserPreferences' }
-      & Pick<UserPreferences, 'id' | 'pricing' | 'sports' | 'break_type'>
+      & Pick<UserPreferences, 'user_id' | 'pricing' | 'sports' | 'break_type'>
     )> }
   )> }
 );
@@ -11952,7 +11922,7 @@ export type UserPreferencesQuery = (
     & Pick<Users, 'id'>
     & { UserPreference?: Maybe<(
       { __typename?: 'UserPreferences' }
-      & Pick<UserPreferences, 'id' | 'pricing' | 'sports' | 'break_type'>
+      & Pick<UserPreferences, 'pricing' | 'sports' | 'break_type'>
     )> }
   )> }
 );
@@ -13325,46 +13295,6 @@ export function useInsertUserNotificationsPreferencesMutation(baseOptions?: Apol
 export type InsertUserNotificationsPreferencesMutationHookResult = ReturnType<typeof useInsertUserNotificationsPreferencesMutation>;
 export type InsertUserNotificationsPreferencesMutationResult = Apollo.MutationResult<InsertUserNotificationsPreferencesMutation>;
 export type InsertUserNotificationsPreferencesMutationOptions = Apollo.BaseMutationOptions<InsertUserNotificationsPreferencesMutation, InsertUserNotificationsPreferencesMutationVariables>;
-export const InsertUserPreferencesDocument = gql`
-    mutation InsertUserPreferences($userPreferences: UserPreferences_insert_input!) {
-  insert_UserPreferences_one(object: $userPreferences) {
-    id
-    User {
-      id
-    }
-    break_type
-    sports
-    pricing
-    frequency
-  }
-}
-    `;
-export type InsertUserPreferencesMutationFn = Apollo.MutationFunction<InsertUserPreferencesMutation, InsertUserPreferencesMutationVariables>;
-
-/**
- * __useInsertUserPreferencesMutation__
- *
- * To run a mutation, you first call `useInsertUserPreferencesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useInsertUserPreferencesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [insertUserPreferencesMutation, { data, loading, error }] = useInsertUserPreferencesMutation({
- *   variables: {
- *      userPreferences: // value for 'userPreferences'
- *   },
- * });
- */
-export function useInsertUserPreferencesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertUserPreferencesMutation, InsertUserPreferencesMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<InsertUserPreferencesMutation, InsertUserPreferencesMutationVariables>(InsertUserPreferencesDocument, options);
-      }
-export type InsertUserPreferencesMutationHookResult = ReturnType<typeof useInsertUserPreferencesMutation>;
-export type InsertUserPreferencesMutationResult = Apollo.MutationResult<InsertUserPreferencesMutation>;
-export type InsertUserPreferencesMutationOptions = Apollo.BaseMutationOptions<InsertUserPreferencesMutation, InsertUserPreferencesMutationVariables>;
 export const LiveStreamDocument = gql`
     subscription LiveStream($eventId: uuid, $userId: String) {
   Events(where: {id: {_eq: $eventId}}) {
@@ -14145,7 +14075,7 @@ export const UpdateUserPreferencesDocument = gql`
     mutation UpdateUserPreferences($userId: String, $input: UserPreferences_set_input) {
   update_UserPreferences(where: {user_id: {_eq: $userId}}, _set: $input) {
     returning {
-      id
+      user_id
       pricing
       sports
       break_type
@@ -14268,7 +14198,6 @@ export const UserPreferencesDocument = gql`
   Users(where: {id: {_eq: $id}}) {
     id
     UserPreference {
-      id
       pricing
       sports
       break_type

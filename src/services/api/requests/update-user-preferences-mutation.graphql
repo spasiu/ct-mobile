@@ -4,7 +4,7 @@ mutation UpdateUserPreferences(
 ) {
   update_UserPreferences(where: { user_id: { _eq: $userId } }, _set: $input) {
     returning {
-      id
+      user_id
       pricing
       sports
       break_type
