@@ -75,7 +75,7 @@ export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => 
           );
         }}
         onEndReachedThreshold={.5}
-        onEndReached={() => onEndReached && onEndReached()}
+        onEndReached={() => onEndReached && onEndReached(hits.length)}
       />
       <HitDetailModal
         isVisible={!isEmpty(hitDetail)}

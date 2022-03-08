@@ -77,7 +77,7 @@ export const getClient = (
       typePolicies: {
         Events: {
           fields: {
-            Saves:{
+            Saves: {
               merge: false
             }
           }
@@ -92,11 +92,15 @@ export const getClient = (
         Query: {
           fields:{
             Hits: {
-              read(existing) {
+              read(existing=[]) {
                 return existing
               },
-              merge(existing=[], incoming) {
-                return [...existing, ...incoming]
+              merge(existing=[], incoming, { readField, args }) {
+                if(args?.where._or[0].player._ilike.length > 2) return incoming
+                const hits:any = {};
+                existing.forEach((h:any) => hits[readField("id", h) as string] = h);
+                incoming.forEach((h:any) => hits[readField("id", h) as string] = h);
+                return Object.keys(hits).map(h=>hits[h])
               }
             }
           }

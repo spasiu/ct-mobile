@@ -31,7 +31,6 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [offset, setoffset] = useState(0)
 
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
@@ -41,21 +40,22 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   });
 
   const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
-    variables: { ...getHitsSearchAndFilterParams(
-      authUser?.uid as string,
-      searchTerm,
-      userHitsFilterActive,
-    ),
-    offset,
-  }
+    fetchPolicy: 'network-only',
+    variables: {
+      ...getHitsSearchAndFilterParams(
+        authUser?.uid as string,
+        searchTerm,
+        userHitsFilterActive,
+      ),
+      offset: 0,
+    }
   });
-
-  const loadMore = () => {
-    setoffset(offset + 24);
+  const loadMore = (offset: number) => {
     fetchMore({
       variables: { offset },
     })
   };
+  const hits = hitsSelector(requestData);
   const user = userSelector(users);
   return (
     <Container
@@ -92,7 +92,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           onChangeText={text => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hitsSelector(requestData)} onEndReached={() => loadMore()} />}
-   </Container>
+      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset:number) => hits.length > 15 ? loadMore(offset) : null} />}
+    </Container>
   );
 };
