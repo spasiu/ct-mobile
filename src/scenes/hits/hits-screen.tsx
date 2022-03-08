@@ -53,7 +53,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const loadMore = (offset: number) => {
     fetchMore({
       variables: { offset },
-    })
+    });
   };
   const hits = hitsSelector(requestData);
   const user = userSelector(users);
@@ -92,7 +92,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           onChangeText={text => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset:number) => hits.length > 15 ? loadMore(offset) : null} />}
+      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset: number) => hits.length > 15 ? loadMore(offset) : null} />}
     </Container>
   );
 };

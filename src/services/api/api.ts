@@ -98,13 +98,9 @@ export const getClient = (
               merge(existing=[], incoming, { readField, args }) {
                 if(args?.where._or[0].player._ilike.length > 2) return incoming
                 const hits:any = {};
-                existing.forEach((hitRef:any) => {
-                  const hit = readField("id", hitRef) as string;
-                  if(hit) hits[hit] = hitRef;
-                });
-                incoming.forEach((hitRef:any) => {
-                  const hit = readField("id", hitRef) as string;
-                  if(hit) hits[hit] = hitRef;
+                existing.concat(incoming).forEach((hitRef:any) => {
+                  const id = readField("id", hitRef) as string;
+                  if(id) hits[id] = hitRef;
                 });
                 return Object.keys(hits).map(hit=>hits[hit])
               }
