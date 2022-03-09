@@ -16,7 +16,7 @@ import {
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 import {
-  useNewHitsSubscription,
+  useHitsScreenQuery,
   useUserMinimalInformationQuery,
 } from '../../services/api/requests';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -39,16 +39,24 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
-  const { data: requestData, loading } = useNewHitsSubscription({
-    variables: getHitsSearchAndFilterParams(
-      authUser?.uid as string,
-      searchTerm,
-      userHitsFilterActive,
-    ),
+  const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      ...getHitsSearchAndFilterParams(
+        authUser?.uid as string,
+        searchTerm,
+        userHitsFilterActive,
+      ),
+      offset: 0,
+    },
   });
-
-  const user = userSelector(users);
+  const loadMore = (offset: number) => {
+    fetchMore({
+      variables: { offset },
+    });
+  };
   const hits = hitsSelector(requestData);
+  const user = userSelector(users);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -84,7 +92,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
           onChangeText={text => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hits} />}
+      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset: number) => hits.length > 15 ? loadMore(offset) : null} />}
     </Container>
   );
 };

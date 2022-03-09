@@ -11352,22 +11352,19 @@ export type HitsQuery = (
   { __typename?: 'query_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
-    & { Product: (
-      { __typename?: 'Products' }
-      & Pick<Products, 'id' | 'year' | 'category' | 'manufacturer' | 'brand' | 'series'>
-    ) }
+    & HitsDetailFragment
   )> }
 );
 
-export type NewHitsSubscriptionVariables = Exact<{
+export type HitsScreenQueryVariables = Exact<{
   userHitsFilter?: Maybe<String_Comparison_Exp>;
   searchInput?: Maybe<Scalars['String']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type NewHitsSubscription = (
-  { __typename?: 'subscription_root' }
+export type HitsScreenQuery = (
+  { __typename?: 'query_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
     & HitsDetailFragment
@@ -13135,28 +13132,10 @@ export const HitsDocument = gql`
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
     order_by: {created_at: desc}
   ) {
-    id
-    image_front
-    image_back
-    player
-    card_number
-    parallel
-    insert
-    rookie_card
-    memoribillia
-    autograph
-    numbered
-    Product {
-      id
-      year
-      category
-      manufacturer
-      brand
-      series
-    }
+    ...HitsDetail
   }
 }
-    `;
+    ${HitsDetailFragmentDoc}`;
 
 /**
  * __useHitsQuery__
@@ -13186,11 +13165,13 @@ export function useHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type HitsQueryHookResult = ReturnType<typeof useHitsQuery>;
 export type HitsLazyQueryHookResult = ReturnType<typeof useHitsLazyQuery>;
 export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
-export const NewHitsDocument = gql`
-    subscription NewHits($userHitsFilter: String_comparison_exp, $searchInput: String) {
+export const HitsScreenDocument = gql`
+    query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int) {
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
     order_by: {created_at: desc}
+    offset: $offset
+    limit: 24
   ) {
     ...HitsDetail
   }
@@ -13198,28 +13179,34 @@ export const NewHitsDocument = gql`
     ${HitsDetailFragmentDoc}`;
 
 /**
- * __useNewHitsSubscription__
+ * __useHitsScreenQuery__
  *
- * To run a query within a React component, call `useNewHitsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNewHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useHitsScreenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHitsScreenQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNewHitsSubscription({
+ * const { data, loading, error } = useHitsScreenQuery({
  *   variables: {
  *      userHitsFilter: // value for 'userHitsFilter'
  *      searchInput: // value for 'searchInput'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
-export function useNewHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewHitsSubscription, NewHitsSubscriptionVariables>) {
+export function useHitsScreenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<HitsScreenQuery, HitsScreenQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useSubscription<NewHitsSubscription, NewHitsSubscriptionVariables>(NewHitsDocument, options);
+        return ApolloReactHooks.useQuery<HitsScreenQuery, HitsScreenQueryVariables>(HitsScreenDocument, options);
       }
-export type NewHitsSubscriptionHookResult = ReturnType<typeof useNewHitsSubscription>;
-export type NewHitsSubscriptionResult = Apollo.SubscriptionResult<NewHitsSubscription>;
+export function useHitsScreenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<HitsScreenQuery, HitsScreenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<HitsScreenQuery, HitsScreenQueryVariables>(HitsScreenDocument, options);
+        }
+export type HitsScreenQueryHookResult = ReturnType<typeof useHitsScreenQuery>;
+export type HitsScreenLazyQueryHookResult = ReturnType<typeof useHitsScreenLazyQuery>;
+export type HitsScreenQueryResult = Apollo.QueryResult<HitsScreenQuery, HitsScreenQueryVariables>;
 export const InsertUserAddressDocument = gql`
     mutation InsertUserAddress($address: Addresses_insert_input!) {
   insert_Addresses_one(object: $address) {

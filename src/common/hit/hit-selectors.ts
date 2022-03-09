@@ -4,11 +4,11 @@ import {
   FeaturedHitsSubscription,
   Hits,
   HitsQuery,
-  NewHitsSubscription,
+  HitsScreenQuery,
 } from '../../services/api/requests';
 
 export const hitsSelector = (
-  request: HitsQuery | BreakerHitsQuery | NewHitsSubscription | FeaturedHitsSubscription | undefined,
+  request: HitsQuery | BreakerHitsQuery | HitsScreenQuery | FeaturedHitsSubscription | undefined,
 ): Hits[] => pathOr([], ['Hits'], request);
 
 export const hitImageFrontSelector = (hit: Partial<Hits>): string =>

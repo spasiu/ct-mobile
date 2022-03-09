@@ -1,6 +1,7 @@
-subscription NewHits(
+query HitsScreen(
   $userHitsFilter: String_comparison_exp
   $searchInput: String
+  $offset: Int
 ) {
   Hits(
     where: {
@@ -25,5 +26,7 @@ subscription NewHits(
       _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
     order_by: { created_at: desc }
+    offset: $offset
+    limit: 24
   ) { ...HitsDetail }
 }
