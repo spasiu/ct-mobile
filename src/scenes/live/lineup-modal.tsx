@@ -60,7 +60,7 @@ export const LineupModal = ({
               status={
                 (item.status !== Break_Status_Enum.Completed) &&
                 (index === 0 && item.status !== Break_Status_Enum.Live && item.status !== Break_Status_Enum.Notified) ||
-                (index === 1 && (upcoming[0].status === Break_Status_Enum.Live || upcoming[0].status === Break_Status_Enum.Notified)) ?
+                (index === 1 && (upcoming[0]?.status === Break_Status_Enum.Live || upcoming[0]?.status === Break_Status_Enum.Notified)) ?
                 StatusBadgeTypes.upNext :
                 breakCardDetails.status
               }
