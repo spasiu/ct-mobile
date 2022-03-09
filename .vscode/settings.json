@@ -16,6 +16,5 @@
         "titleBar.inactiveForeground": "#15202b99"
     },
     "peacock.color": "#61dafb",
-    "prettier.jsxBracketSameLine": true,
-    "prettier.useEditorConfig": false
+    "prettier.jsxBracketSameLine": true
 }
