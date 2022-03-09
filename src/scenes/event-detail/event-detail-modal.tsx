@@ -48,7 +48,7 @@ export const EventDetailModal = ({
   ...modalProps
 }: EventDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
 
   const { loading, data, subscribeToMore } = useEventBreaksQuery({
     fetchPolicy: 'cache-and-network',
@@ -159,7 +159,7 @@ export const EventDetailModal = ({
         <BreakDetailModal
           breakId={breakId}
           isVisible={Boolean(breakId)}
-          onPressClose={() => setBreakId('')}
+          onPressClose={() => setBreakId(undefined)}
         />
       ) : null}
     </OverScreenModal>

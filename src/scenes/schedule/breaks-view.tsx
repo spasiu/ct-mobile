@@ -35,7 +35,7 @@ import {
 
 export const BreaksView = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
   const { breakTypeFilter, sportTypeFilter } = useContext(
     FilterContext,
   ) as FilterContextType;
@@ -135,7 +135,7 @@ export const BreaksView = (): JSX.Element => {
         <BreakDetailModal
           breakId={breakId}
           isVisible={Boolean(breakId)}
-          onPressClose={() => setBreakId('')}
+          onPressClose={() => setBreakId(undefined)}
         />
       ) : null}
     </>

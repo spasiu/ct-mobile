@@ -33,7 +33,7 @@ import { LiveScreenNavigationProp } from '../live/live-screen.props';
 export const UserUpcomingBreaks = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
 
   const { data, subscribeToMore } = useUserUpcomingBreaksQuery({
     fetchPolicy: 'cache-and-network',
@@ -112,7 +112,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
         <BreakDetailModal
           breakId={breakId}
           isVisible={Boolean(breakId)}
-          onPressClose={() => setBreakId('')}
+          onPressClose={() => setBreakId(undefined)}
         />
       ) : null}
     </View>
