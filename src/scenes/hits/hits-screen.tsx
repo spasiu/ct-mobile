@@ -48,7 +48,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         userHitsFilterActive,
       ),
       offset: 0,
-    }
+    },
   });
   const loadMore = (offset: number) => {
     fetchMore({
