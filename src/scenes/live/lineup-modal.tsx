@@ -32,7 +32,7 @@ export const LineupModal = ({
   ...modalProps
 }: UpcomingBreaksProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
 
   const completed = breaks.filter(b => b.status === Break_Status_Enum.Completed);
   const upcoming = breaks.filter(b => b.status !== Break_Status_Enum.Completed);
@@ -60,7 +60,7 @@ export const LineupModal = ({
               status={
                 (item.status !== Break_Status_Enum.Completed) &&
                 (index === 0 && item.status !== Break_Status_Enum.Live && item.status !== Break_Status_Enum.Notified) ||
-                (index === 1 && (upcoming[0].status === Break_Status_Enum.Live || upcoming[0].status === Break_Status_Enum.Notified)) ?
+                (index === 1 && (upcoming[0]?.status === Break_Status_Enum.Live || upcoming[0]?.status === Break_Status_Enum.Notified)) ?
                 StatusBadgeTypes.upNext :
                 breakCardDetails.status
               }
@@ -98,11 +98,11 @@ export const LineupModal = ({
           );
         }}
       />
-      <BreakDetailModal
+      { breakId && <BreakDetailModal
         breakId={breakId}
         isVisible={Boolean(breakId)}
-        onPressClose={() => setBreakId('')}
-      />
+        onPressClose={() => setBreakId(undefined)}
+      />}
     </OverScreenModal>
   );
 };

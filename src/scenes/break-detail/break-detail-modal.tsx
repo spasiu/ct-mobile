@@ -76,7 +76,7 @@ export const BreakDetailModal = ({
   const { data, loading, refetch, subscribeToMore } = useBreakDetailQuery({
     fetchPolicy: 'network-only',
     variables: {
-      breakId: breakId,
+      breakId,
       userId: authUser?.uid,
     },
     onError: (error: ApolloError) => {
@@ -94,14 +94,11 @@ export const BreakDetailModal = ({
 
     subscribeToMore({
       document: BreakItemsDocument,
-      variables: {
-        breakId: breakId,
-      },
+      variables: { breakId },
       onError: (error: Error) => console.error('SUBSC ERROR', error),
       updateQuery: (prev, { subscriptionData }) => Object.assign({}, prev, { Breaks: subscriptionData.data.Breaks })
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [breakId]);
 
   const breakData = breakSelector(data);
   const userData = userSelector(data);

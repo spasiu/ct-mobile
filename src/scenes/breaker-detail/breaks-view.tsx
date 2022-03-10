@@ -39,7 +39,7 @@ export const BreaksView = ({
   breaker: SimpleBreaker;
 }): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
   const { loading, data, subscribeToMore } = useBreakerBreaksQuery({
@@ -121,7 +121,7 @@ export const BreaksView = ({
         <BreakDetailModal
           breakId={breakId}
           isVisible={Boolean(breakId)}
-          onPressClose={() => setBreakId('')}
+          onPressClose={() => setBreakId(undefined)}
         />
       ) : null}
     </View>

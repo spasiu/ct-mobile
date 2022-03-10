@@ -31,7 +31,7 @@ export const SearchBreaksView = ({
   breaks,
 }: SearchBreaksViewProps): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
   const [followBreak] = useFollowBreakMutation();
@@ -99,7 +99,7 @@ export const SearchBreaksView = ({
         <BreakDetailModal
           breakId={breakId}
           isVisible={Boolean(breakId)}
-          onPressClose={() => setBreakId('')}
+          onPressClose={() => setBreakId(undefined)}
         />
       ) : null}
     </>

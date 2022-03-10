@@ -92,7 +92,7 @@ export const LiveScreen = ({
   const inputRef = useRef<TextInput>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  const [breakId, setBreakId] = useState('');
+  const [breakId, setBreakId] = useState<string>();
   const [showTeams, setShowTeams] = useState(false);
   const [showRandomTeamAnimation, setShowRandomTeamsAnimation] =
     useState(false);
@@ -330,7 +330,7 @@ export const LiveScreen = ({
             <BreakDetailModal
               breakId={breakId}
               isVisible={Boolean(breakId)}
-              onPressClose={() => setBreakId('')}
+              onPressClose={() => setBreakId(undefined)}
             />
           ) : null}
 
