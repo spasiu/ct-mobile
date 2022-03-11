@@ -1,31 +1,20 @@
 import Sound from 'react-native-sound';
 
-export const playSound = (type: string) => {
-  if (!type) {
-    throw new Error('Invalid sound file provided.')
-  }
-
-  const loadedSound = (sounds as any)[type] as any;
-  if (loadedSound) {
-    loadedSound.setCurrentTime(0);
-    loadedSound.play(() => {});
-    return loadedSound;
-  }
-}
-const errorCallback = (error: string) => {}
-
-export const sounds = {
-  entry: new Sound('entry.wav', Sound.MAIN_BUNDLE, errorCallback),
-  cardEntry: new Sound('card_entry.wav', Sound.MAIN_BUNDLE, errorCallback),
-  players: new Sound('digits.wav', Sound.MAIN_BUNDLE, errorCallback),
-  teams: new Sound('digits.wav', Sound.MAIN_BUNDLE, errorCallback),
-  spin: new Sound('spin.wav', Sound.MAIN_BUNDLE, errorCallback),
-  pop: new Sound('pop.mp3', Sound.MAIN_BUNDLE, errorCallback),
-  drop1: new Sound('drop_1.wav', Sound.MAIN_BUNDLE, errorCallback),
-  drop2: new Sound('drop_2.wav', Sound.MAIN_BUNDLE, errorCallback),
-  drop3: new Sound('drop_3.wav', Sound.MAIN_BUNDLE, errorCallback),
+export const sounds: {[key: string]: Sound} = {
+  entry: new Sound('entry.wav', Sound.MAIN_BUNDLE),
+  cardEntry: new Sound('card_entry.wav', Sound.MAIN_BUNDLE),
+  players: new Sound('digits.wav', Sound.MAIN_BUNDLE),
+  teams: new Sound('digits.wav', Sound.MAIN_BUNDLE),
+  spin: new Sound('spin.wav', Sound.MAIN_BUNDLE),
+  pop: new Sound('pop.mp3', Sound.MAIN_BUNDLE),
+  drop1: new Sound('drop_1.wav', Sound.MAIN_BUNDLE),
+  drop2: new Sound('drop_2.wav', Sound.MAIN_BUNDLE),
+  drop3: new Sound('drop_3.wav', Sound.MAIN_BUNDLE)
 };
 
-export const loadSounds = () => {
-  return sounds;
-}
+export const playSound = (name: string, sound: Sound = sounds[name]) => sound && sound
+  .setCurrentTime(0)
+  .setVolume(0.25)
+  .play(() => {});
+
+export const loadSounds = () => sounds;
