@@ -50,11 +50,12 @@ export const Video = ({ streamName }: VideoProps): JSX.Element => {
   }, []);
 
   return (
-    <View style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}>
+    <View style={[s.absolute_fill]}>
       {streamUrl ? (
         <RTCView
-          style={[s.flx_i, s.jcc, s.aic, s.absolute_fill]}
+          style={[s.absolute_fill]}
           streamURL={streamUrl}
+          objectFit={'cover'}
         />
       ) : (
         <View
