@@ -77,6 +77,7 @@ import { SeeTeamsAnimation } from './see-teams-animation';
 import { UserContext } from '../../providers/user/user';
 import { UserContextType } from '../../providers/user/user.types';
 import appsFlyer from 'react-native-appsflyer';
+import { Break_Type_Enum } from '../../services/api/requests';
 
 export const LiveScreen = ({
   navigation,
@@ -160,7 +161,7 @@ export const LiveScreen = ({
   useEffect(() => {
     if (isEmpty(currentLiveBreak) && !isEmpty(liveBreak)) {
       Keyboard.dismiss();
-      setShowRandomTeamsAnimation(true);
+      if(breakTypeSelector(liveBreak) !== Break_Type_Enum.Personal) setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
 
@@ -172,7 +173,7 @@ export const LiveScreen = ({
       (currentLiveBreak as Breaks).id !== liveBreak.id
     ) {
       Keyboard.dismiss();
-      setShowRandomTeamsAnimation(true);
+      if(breakTypeSelector(liveBreak) !== Break_Type_Enum.Personal) setShowRandomTeamsAnimation(true);
       setCurrentLiveBreak(liveBreak);
     }
   }, [liveBreak, currentLiveBreak]);
