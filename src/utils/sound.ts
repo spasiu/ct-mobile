@@ -14,7 +14,7 @@ export const sounds: {[key: string]: Sound} = {
 
 export const playSound = (name: string, sound: Sound = sounds[name]) => sound && sound
   .setCurrentTime(0)
-  .setVolume(0.25)
+  .setVolume(0.15)
   .play(() => {});
 
 export const loadSounds = () => sounds;
