@@ -14,7 +14,7 @@ query UserUpcomingBreaks($userId: String) {
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
