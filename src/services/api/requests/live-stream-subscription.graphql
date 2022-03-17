@@ -42,7 +42,7 @@ subscription LiveStream($eventId: uuid, $userId: String) {
       status
       title
       result
-      Inventory(limit: 1) {
+      break_products {
         Product {
           category
         }
