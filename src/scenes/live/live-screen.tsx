@@ -158,13 +158,23 @@ export const LiveScreen = ({
   const breakUser = userSelector(users);
   const liveBreakResult = breakResultSelector(liveBreak);
 
+  const showAnimations = (breakType: Break_Type_Enum) => {
+    if (
+      breakType === Break_Type_Enum.PickYourDivision ||
+      breakType === Break_Type_Enum.PickYourTeam
+    ) {
+      setShowTeams(true);
+    } else if (breakType !== Break_Type_Enum.Personal) {
+      setShowRandomTeamsAnimation(true);
+    }
+  };
+
   useEffect(() => {
     if (isEmpty(currentLiveBreak) && !isEmpty(liveBreak)) {
       Keyboard.dismiss();
-      if(breakTypeSelector(liveBreak) !== Break_Type_Enum.Personal) setShowRandomTeamsAnimation(true);
+      showAnimations(breakTypeSelector(liveBreak));
       setCurrentLiveBreak(liveBreak);
     }
-
     if (
       liveBreak &&
       currentLiveBreak &&
@@ -173,7 +183,7 @@ export const LiveScreen = ({
       (currentLiveBreak as Breaks).id !== liveBreak.id
     ) {
       Keyboard.dismiss();
-      if(breakTypeSelector(liveBreak) !== Break_Type_Enum.Personal) setShowRandomTeamsAnimation(true);
+      showAnimations(breakTypeSelector(liveBreak));
       setCurrentLiveBreak(liveBreak);
     }
   }, [liveBreak, currentLiveBreak]);
