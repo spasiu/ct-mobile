@@ -1,5 +1,7 @@
 import Sound from 'react-native-sound';
 
+const VOLUME = 0.1;
+
 export const sounds: {[key: string]: Sound} = {
   entry: new Sound('entry.wav', Sound.MAIN_BUNDLE),
   cardEntry: new Sound('card_entry.wav', Sound.MAIN_BUNDLE),
@@ -14,7 +16,7 @@ export const sounds: {[key: string]: Sound} = {
 
 export const playSound = (name: string, sound: Sound = sounds[name]) => sound && sound
   .setCurrentTime(0)
-  .setVolume(0.15)
+  .setVolume(VOLUME)
   .play(() => {});
 
 export const loadSounds = () => sounds;
