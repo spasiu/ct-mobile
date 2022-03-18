@@ -75,7 +75,7 @@ export type Addresses_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Addresses" */
 export type Addresses_Arr_Rel_Insert_Input = {
   data: Array<Addresses_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Addresses_On_Conflict>;
 };
 
@@ -199,7 +199,7 @@ export type Addresses_Mutation_Response = {
   returning: Array<Addresses>;
 };
 
-/** on_conflict condition type for table "Addresses" */
+/** on conflict condition type for table "Addresses" */
 export type Addresses_On_Conflict = {
   constraint: Addresses_Constraint;
   update_columns?: Array<Addresses_Update_Column>;
@@ -386,7 +386,7 @@ export type BreakProductItems_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "BreakProductItems" */
 export type BreakProductItems_Arr_Rel_Insert_Input = {
   data: Array<BreakProductItems_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<BreakProductItems_On_Conflict>;
 };
 
@@ -526,11 +526,11 @@ export type BreakProductItems_Mutation_Response = {
 /** input type for inserting object relation for remote table "BreakProductItems" */
 export type BreakProductItems_Obj_Rel_Insert_Input = {
   data: BreakProductItems_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<BreakProductItems_On_Conflict>;
 };
 
-/** on_conflict condition type for table "BreakProductItems" */
+/** on conflict condition type for table "BreakProductItems" */
 export type BreakProductItems_On_Conflict = {
   constraint: BreakProductItems_Constraint;
   update_columns?: Array<BreakProductItems_Update_Column>;
@@ -866,11 +866,11 @@ export type BreakerProfiles_Mutation_Response = {
 /** input type for inserting object relation for remote table "BreakerProfiles" */
 export type BreakerProfiles_Obj_Rel_Insert_Input = {
   data: BreakerProfiles_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<BreakerProfiles_On_Conflict>;
 };
 
-/** on_conflict condition type for table "BreakerProfiles" */
+/** on conflict condition type for table "BreakerProfiles" */
 export type BreakerProfiles_On_Conflict = {
   constraint: BreakerProfiles_Constraint;
   update_columns?: Array<BreakerProfiles_Update_Column>;
@@ -987,10 +987,6 @@ export type Breaks = {
   /** An aggregate relationship */
   Saves_aggregate: SaveBreak_Aggregate;
   archived: Scalars['Boolean'];
-  /** An array relationship */
-  break_products: Array<Break_Product>;
-  /** An aggregate relationship */
-  break_products_aggregate: Break_Product_Aggregate;
   /** An object relationship */
   break_status: Break_Status;
   break_type: Break_Type_Enum;
@@ -1094,26 +1090,6 @@ export type BreaksSaves_AggregateArgs = {
 
 
 /** columns and relationships of "Breaks" */
-export type BreaksBreak_ProductsArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Breaks" */
-export type BreaksBreak_Products_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Breaks" */
 export type BreaksDatasetArgs = {
   path?: Maybe<Scalars['String']>;
 };
@@ -1185,7 +1161,7 @@ export type Breaks_Append_Input = {
 /** input type for inserting array relation for remote table "Breaks" */
 export type Breaks_Arr_Rel_Insert_Input = {
   data: Array<Breaks_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Breaks_On_Conflict>;
 };
 
@@ -1215,7 +1191,6 @@ export type Breaks_Bool_Exp = {
   _not?: Maybe<Breaks_Bool_Exp>;
   _or?: Maybe<Array<Breaks_Bool_Exp>>;
   archived?: Maybe<Boolean_Comparison_Exp>;
-  break_products?: Maybe<Break_Product_Bool_Exp>;
   break_status?: Maybe<Break_Status_Bool_Exp>;
   break_type?: Maybe<Break_Type_Enum_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -1277,7 +1252,6 @@ export type Breaks_Insert_Input = {
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   Saves?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
   archived?: Maybe<Scalars['Boolean']>;
-  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -1367,11 +1341,11 @@ export type Breaks_Mutation_Response = {
 /** input type for inserting object relation for remote table "Breaks" */
 export type Breaks_Obj_Rel_Insert_Input = {
   data: Breaks_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Breaks_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Breaks" */
+/** on conflict condition type for table "Breaks" */
 export type Breaks_On_Conflict = {
   constraint: Breaks_Constraint;
   update_columns?: Array<Breaks_Update_Column>;
@@ -1386,7 +1360,6 @@ export type Breaks_Order_By = {
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   Saves_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
   archived?: Maybe<Order_By>;
-  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -1703,7 +1676,7 @@ export type Divisions_Mutation_Response = {
   returning: Array<Divisions>;
 };
 
-/** on_conflict condition type for table "Divisions" */
+/** on conflict condition type for table "Divisions" */
 export type Divisions_On_Conflict = {
   constraint: Divisions_Constraint;
   update_columns?: Array<Divisions_Update_Column>;
@@ -1863,7 +1836,7 @@ export type Events_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Events" */
 export type Events_Arr_Rel_Insert_Input = {
   data: Array<Events_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Events_On_Conflict>;
 };
 
@@ -1986,11 +1959,11 @@ export type Events_Mutation_Response = {
 /** input type for inserting object relation for remote table "Events" */
 export type Events_Obj_Rel_Insert_Input = {
   data: Events_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Events_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Events" */
+/** on conflict condition type for table "Events" */
 export type Events_On_Conflict = {
   constraint: Events_Constraint;
   update_columns?: Array<Events_Update_Column>;
@@ -2167,7 +2140,7 @@ export type ExtensibleValues_Mutation_Response = {
   returning: Array<ExtensibleValues>;
 };
 
-/** on_conflict condition type for table "ExtensibleValues" */
+/** on conflict condition type for table "ExtensibleValues" */
 export type ExtensibleValues_On_Conflict = {
   constraint: ExtensibleValues_Constraint;
   update_columns?: Array<ExtensibleValues_Update_Column>;
@@ -2286,7 +2259,7 @@ export type Hits_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Hits" */
 export type Hits_Arr_Rel_Insert_Input = {
   data: Array<Hits_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Hits_On_Conflict>;
 };
 
@@ -2454,7 +2427,7 @@ export type Hits_Mutation_Response = {
   returning: Array<Hits>;
 };
 
-/** on_conflict condition type for table "Hits" */
+/** on conflict condition type for table "Hits" */
 export type Hits_On_Conflict = {
   constraint: Hits_Constraint;
   update_columns?: Array<Hits_Update_Column>;
@@ -2755,7 +2728,7 @@ export type Inventory_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Inventory" */
 export type Inventory_Arr_Rel_Insert_Input = {
   data: Array<Inventory_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Inventory_On_Conflict>;
 };
 
@@ -2877,7 +2850,7 @@ export type Inventory_Mutation_Response = {
   returning: Array<Inventory>;
 };
 
-/** on_conflict condition type for table "Inventory" */
+/** on conflict condition type for table "Inventory" */
 export type Inventory_On_Conflict = {
   constraint: Inventory_Constraint;
   update_columns?: Array<Inventory_Update_Column>;
@@ -3139,11 +3112,11 @@ export type NotificationSettings_Mutation_Response = {
 /** input type for inserting object relation for remote table "NotificationSettings" */
 export type NotificationSettings_Obj_Rel_Insert_Input = {
   data: NotificationSettings_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<NotificationSettings_On_Conflict>;
 };
 
-/** on_conflict condition type for table "NotificationSettings" */
+/** on conflict condition type for table "NotificationSettings" */
 export type NotificationSettings_On_Conflict = {
   constraint: NotificationSettings_Constraint;
   update_columns?: Array<NotificationSettings_Update_Column>;
@@ -3312,11 +3285,11 @@ export type Notifications_Mutation_Response = {
 /** input type for inserting object relation for remote table "Notifications" */
 export type Notifications_Obj_Rel_Insert_Input = {
   data: Notifications_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Notifications_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Notifications" */
+/** on conflict condition type for table "Notifications" */
 export type Notifications_On_Conflict = {
   constraint: Notifications_Constraint;
   update_columns?: Array<Notifications_Update_Column>;
@@ -3471,7 +3444,7 @@ export type Orders_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Orders" */
 export type Orders_Arr_Rel_Insert_Input = {
   data: Array<Orders_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Orders_On_Conflict>;
 };
 
@@ -3623,11 +3596,11 @@ export type Orders_Mutation_Response = {
 /** input type for inserting object relation for remote table "Orders" */
 export type Orders_Obj_Rel_Insert_Input = {
   data: Orders_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Orders_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Orders" */
+/** on conflict condition type for table "Orders" */
 export type Orders_On_Conflict = {
   constraint: Orders_Constraint;
   update_columns?: Array<Orders_Update_Column>;
@@ -3948,7 +3921,7 @@ export type Players_Mutation_Response = {
   returning: Array<Players>;
 };
 
-/** on_conflict condition type for table "Players" */
+/** on conflict condition type for table "Players" */
 export type Players_On_Conflict = {
   constraint: Players_Constraint;
   update_columns?: Array<Players_Update_Column>;
@@ -3998,10 +3971,6 @@ export enum Players_Update_Column {
 export type Products = {
   __typename?: 'Products';
   /** An array relationship */
-  Hits: Array<Hits>;
-  /** An aggregate relationship */
-  Hits_aggregate: Hits_Aggregate;
-  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
@@ -4009,10 +3978,6 @@ export type Products = {
   available: Scalars['Boolean'];
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand: Scalars['String'];
-  /** An array relationship */
-  break_products: Array<Break_Product>;
-  /** An aggregate relationship */
-  break_products_aggregate: Break_Product_Aggregate;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category: Scalars['String'];
@@ -4040,26 +4005,6 @@ export type Products = {
 
 
 /** columns and relationships of "Products" */
-export type ProductsHitsArgs = {
-  distinct_on?: Maybe<Array<Hits_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Hits_Order_By>>;
-  where?: Maybe<Hits_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsHits_AggregateArgs = {
-  distinct_on?: Maybe<Array<Hits_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Hits_Order_By>>;
-  where?: Maybe<Hits_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
 export type ProductsInventoryArgs = {
   distinct_on?: Maybe<Array<Inventory_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4076,26 +4021,6 @@ export type ProductsInventory_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Inventory_Order_By>>;
   where?: Maybe<Inventory_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsBreak_ProductsArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsBreak_Products_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
 };
 
 /** aggregated selection of "Products" */
@@ -4146,7 +4071,7 @@ export type Products_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Products" */
 export type Products_Arr_Rel_Insert_Input = {
   data: Array<Products_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Products_On_Conflict>;
 };
 
@@ -4169,7 +4094,6 @@ export type Products_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "Products". All fields are combined with a logical 'AND'. */
 export type Products_Bool_Exp = {
-  Hits?: Maybe<Hits_Bool_Exp>;
   Inventory?: Maybe<Inventory_Bool_Exp>;
   _and?: Maybe<Array<Products_Bool_Exp>>;
   _not?: Maybe<Products_Bool_Exp>;
@@ -4178,7 +4102,6 @@ export type Products_Bool_Exp = {
   available?: Maybe<Boolean_Comparison_Exp>;
   boxes_per_case?: Maybe<Int_Comparison_Exp>;
   brand?: Maybe<String_Comparison_Exp>;
-  break_products?: Maybe<Break_Product_Bool_Exp>;
   card_number?: Maybe<String_Comparison_Exp>;
   cards_per_pack?: Maybe<Int_Comparison_Exp>;
   category?: Maybe<String_Comparison_Exp>;
@@ -4219,13 +4142,11 @@ export type Products_Inc_Input = {
 
 /** input type for inserting data into table "Products" */
 export type Products_Insert_Input = {
-  Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   autograph?: Maybe<Scalars['Boolean']>;
   available?: Maybe<Scalars['Boolean']>;
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand?: Maybe<Scalars['String']>;
-  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
@@ -4364,11 +4285,11 @@ export type Products_Mutation_Response = {
 /** input type for inserting object relation for remote table "Products" */
 export type Products_Obj_Rel_Insert_Input = {
   data: Products_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Products_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Products" */
+/** on conflict condition type for table "Products" */
 export type Products_On_Conflict = {
   constraint: Products_Constraint;
   update_columns?: Array<Products_Update_Column>;
@@ -4377,13 +4298,11 @@ export type Products_On_Conflict = {
 
 /** Ordering options when selecting data from "Products". */
 export type Products_Order_By = {
-  Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   autograph?: Maybe<Order_By>;
   available?: Maybe<Order_By>;
   boxes_per_case?: Maybe<Order_By>;
   brand?: Maybe<Order_By>;
-  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   card_number?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
   category?: Maybe<Order_By>;
@@ -4714,7 +4633,7 @@ export type SaveBreak_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveBreak" */
 export type SaveBreak_Arr_Rel_Insert_Input = {
   data: Array<SaveBreak_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<SaveBreak_On_Conflict>;
 };
 
@@ -4790,7 +4709,7 @@ export type SaveBreak_Mutation_Response = {
   returning: Array<SaveBreak>;
 };
 
-/** on_conflict condition type for table "SaveBreak" */
+/** on conflict condition type for table "SaveBreak" */
 export type SaveBreak_On_Conflict = {
   constraint: SaveBreak_Constraint;
   update_columns?: Array<SaveBreak_Update_Column>;
@@ -4890,7 +4809,7 @@ export type SaveBreaker_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveBreaker" */
 export type SaveBreaker_Arr_Rel_Insert_Input = {
   data: Array<SaveBreaker_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<SaveBreaker_On_Conflict>;
 };
 
@@ -4966,7 +4885,7 @@ export type SaveBreaker_Mutation_Response = {
   returning: Array<SaveBreaker>;
 };
 
-/** on_conflict condition type for table "SaveBreaker" */
+/** on conflict condition type for table "SaveBreaker" */
 export type SaveBreaker_On_Conflict = {
   constraint: SaveBreaker_Constraint;
   update_columns?: Array<SaveBreaker_Update_Column>;
@@ -5066,7 +4985,7 @@ export type SaveEvent_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveEvent" */
 export type SaveEvent_Arr_Rel_Insert_Input = {
   data: Array<SaveEvent_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<SaveEvent_On_Conflict>;
 };
 
@@ -5142,7 +5061,7 @@ export type SaveEvent_Mutation_Response = {
   returning: Array<SaveEvent>;
 };
 
-/** on_conflict condition type for table "SaveEvent" */
+/** on conflict condition type for table "SaveEvent" */
 export type SaveEvent_On_Conflict = {
   constraint: SaveEvent_Constraint;
   update_columns?: Array<SaveEvent_Update_Column>;
@@ -5309,11 +5228,11 @@ export type Streams_Mutation_Response = {
 /** input type for inserting object relation for remote table "Streams" */
 export type Streams_Obj_Rel_Insert_Input = {
   data: Streams_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Streams_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Streams" */
+/** on conflict condition type for table "Streams" */
 export type Streams_On_Conflict = {
   constraint: Streams_Constraint;
   update_columns?: Array<Streams_Update_Column>;
@@ -5671,7 +5590,7 @@ export type Teams_Old_Mutation_Response = {
   returning: Array<Teams_Old>;
 };
 
-/** on_conflict condition type for table "Teams_old" */
+/** on conflict condition type for table "Teams_old" */
 export type Teams_Old_On_Conflict = {
   constraint: Teams_Old_Constraint;
   update_columns?: Array<Teams_Old_Update_Column>;
@@ -5796,7 +5715,7 @@ export type Teams_Old_Variance_Fields = {
   year_start?: Maybe<Scalars['Float']>;
 };
 
-/** on_conflict condition type for table "Teams" */
+/** on conflict condition type for table "Teams" */
 export type Teams_On_Conflict = {
   constraint: Teams_Constraint;
   update_columns?: Array<Teams_Update_Column>;
@@ -6022,11 +5941,11 @@ export type UserPreferences_Mutation_Response = {
 /** input type for inserting object relation for remote table "UserPreferences" */
 export type UserPreferences_Obj_Rel_Insert_Input = {
   data: UserPreferences_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<UserPreferences_On_Conflict>;
 };
 
-/** on_conflict condition type for table "UserPreferences" */
+/** on conflict condition type for table "UserPreferences" */
 export type UserPreferences_On_Conflict = {
   constraint: UserPreferences_Constraint;
   update_columns?: Array<UserPreferences_Update_Column>;
@@ -6366,7 +6285,7 @@ export type Users_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Users" */
 export type Users_Arr_Rel_Insert_Input = {
   data: Array<Users_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
@@ -6527,11 +6446,11 @@ export type Users_Mutation_Response = {
 /** input type for inserting object relation for remote table "Users" */
 export type Users_Obj_Rel_Insert_Input = {
   data: Users_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
-/** on_conflict condition type for table "Users" */
+/** on conflict condition type for table "Users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
   update_columns?: Array<Users_Update_Column>;
@@ -6770,156 +6689,6 @@ export type Bpchar_Comparison_Exp = {
   _similar?: Maybe<Scalars['bpchar']>;
 };
 
-/** columns and relationships of "break_product" */
-export type Break_Product = {
-  __typename?: 'break_product';
-  /** An object relationship */
-  Break: Breaks;
-  /** An object relationship */
-  Product: Products;
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-/** aggregated selection of "break_product" */
-export type Break_Product_Aggregate = {
-  __typename?: 'break_product_aggregate';
-  aggregate?: Maybe<Break_Product_Aggregate_Fields>;
-  nodes: Array<Break_Product>;
-};
-
-/** aggregate fields of "break_product" */
-export type Break_Product_Aggregate_Fields = {
-  __typename?: 'break_product_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Break_Product_Max_Fields>;
-  min?: Maybe<Break_Product_Min_Fields>;
-};
-
-
-/** aggregate fields of "break_product" */
-export type Break_Product_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Break_Product_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "break_product" */
-export type Break_Product_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Break_Product_Max_Order_By>;
-  min?: Maybe<Break_Product_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "break_product" */
-export type Break_Product_Arr_Rel_Insert_Input = {
-  data: Array<Break_Product_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "break_product". All fields are combined with a logical 'AND'. */
-export type Break_Product_Bool_Exp = {
-  Break?: Maybe<Breaks_Bool_Exp>;
-  Product?: Maybe<Products_Bool_Exp>;
-  _and?: Maybe<Array<Break_Product_Bool_Exp>>;
-  _not?: Maybe<Break_Product_Bool_Exp>;
-  _or?: Maybe<Array<Break_Product_Bool_Exp>>;
-  break_id?: Maybe<Uuid_Comparison_Exp>;
-  product_id?: Maybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "break_product" */
-export enum Break_Product_Constraint {
-  /** unique or primary key constraint */
-  BreakProductPkey = 'break_product_pkey'
-}
-
-/** input type for inserting data into table "break_product" */
-export type Break_Product_Insert_Input = {
-  Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
-  Product?: Maybe<Products_Obj_Rel_Insert_Input>;
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** aggregate max on columns */
-export type Break_Product_Max_Fields = {
-  __typename?: 'break_product_max_fields';
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by max() on columns of table "break_product" */
-export type Break_Product_Max_Order_By = {
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Break_Product_Min_Fields = {
-  __typename?: 'break_product_min_fields';
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by min() on columns of table "break_product" */
-export type Break_Product_Min_Order_By = {
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "break_product" */
-export type Break_Product_Mutation_Response = {
-  __typename?: 'break_product_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Break_Product>;
-};
-
-/** on_conflict condition type for table "break_product" */
-export type Break_Product_On_Conflict = {
-  constraint: Break_Product_Constraint;
-  update_columns?: Array<Break_Product_Update_Column>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "break_product". */
-export type Break_Product_Order_By = {
-  Break?: Maybe<Breaks_Order_By>;
-  Product?: Maybe<Products_Order_By>;
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: break_product */
-export type Break_Product_Pk_Columns_Input = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-/** select columns of table "break_product" */
-export enum Break_Product_Select_Column {
-  /** column name */
-  BreakId = 'break_id',
-  /** column name */
-  ProductId = 'product_id'
-}
-
-/** input type for updating data in table "break_product" */
-export type Break_Product_Set_Input = {
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** update columns of table "break_product" */
-export enum Break_Product_Update_Column {
-  /** column name */
-  BreakId = 'break_id',
-  /** column name */
-  ProductId = 'product_id'
-}
-
 /** columns and relationships of "break_status" */
 export type Break_Status = {
   __typename?: 'break_status';
@@ -7036,11 +6805,11 @@ export type Break_Status_Mutation_Response = {
 /** input type for inserting object relation for remote table "break_status" */
 export type Break_Status_Obj_Rel_Insert_Input = {
   data: Break_Status_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Break_Status_On_Conflict>;
 };
 
-/** on_conflict condition type for table "break_status" */
+/** on conflict condition type for table "break_status" */
 export type Break_Status_On_Conflict = {
   constraint: Break_Status_Constraint;
   update_columns?: Array<Break_Status_Update_Column>;
@@ -7190,11 +6959,11 @@ export type Break_Type_Mutation_Response = {
 /** input type for inserting object relation for remote table "break_type" */
 export type Break_Type_Obj_Rel_Insert_Input = {
   data: Break_Type_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Break_Type_On_Conflict>;
 };
 
-/** on_conflict condition type for table "break_type" */
+/** on conflict condition type for table "break_type" */
 export type Break_Type_On_Conflict = {
   constraint: Break_Type_Constraint;
   update_columns?: Array<Break_Type_Update_Column>;
@@ -7342,11 +7111,11 @@ export type Event_Status_Mutation_Response = {
 /** input type for inserting object relation for remote table "event_status" */
 export type Event_Status_Obj_Rel_Insert_Input = {
   data: Event_Status_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Event_Status_On_Conflict>;
 };
 
-/** on_conflict condition type for table "event_status" */
+/** on conflict condition type for table "event_status" */
 export type Event_Status_On_Conflict = {
   constraint: Event_Status_Constraint;
   update_columns?: Array<Event_Status_Update_Column>;
@@ -7496,10 +7265,6 @@ export type Mutation_Root = {
   delete_Users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "Users" */
   delete_Users_by_pk?: Maybe<Users>;
-  /** delete data from the table: "break_product" */
-  delete_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** delete single row from the table: "break_product" */
-  delete_break_product_by_pk?: Maybe<Break_Product>;
   /** delete data from the table: "break_status" */
   delete_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** delete single row from the table: "break_status" */
@@ -7612,10 +7377,6 @@ export type Mutation_Root = {
   insert_Users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "Users" */
   insert_Users_one?: Maybe<Users>;
-  /** insert data into the table: "break_product" */
-  insert_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** insert a single row into the table: "break_product" */
-  insert_break_product_one?: Maybe<Break_Product>;
   /** insert data into the table: "break_status" */
   insert_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** insert a single row into the table: "break_status" */
@@ -7728,10 +7489,6 @@ export type Mutation_Root = {
   update_Users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "Users" */
   update_Users_by_pk?: Maybe<Users>;
-  /** update data of the table: "break_product" */
-  update_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** update single row of the table: "break_product" */
-  update_break_product_by_pk?: Maybe<Break_Product>;
   /** update data of the table: "break_status" */
   update_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** update single row of the table: "break_status" */
@@ -8027,19 +7784,6 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Break_ProductArgs = {
-  where: Break_Product_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Break_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
 };
 
 
@@ -8420,20 +8164,6 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Break_ProductArgs = {
-  objects: Array<Break_Product_Insert_Input>;
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Break_Product_OneArgs = {
-  object: Break_Product_Insert_Input;
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
 };
 
 
@@ -8858,20 +8588,6 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Break_ProductArgs = {
-  _set?: Maybe<Break_Product_Set_Input>;
-  where: Break_Product_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Break_Product_By_PkArgs = {
-  _set?: Maybe<Break_Product_Set_Input>;
-  pk_columns: Break_Product_Pk_Columns_Input;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Break_StatusArgs = {
   _set?: Maybe<Break_Status_Set_Input>;
   where: Break_Status_Bool_Exp;
@@ -9056,7 +8772,7 @@ export type Order_In_Process_Mutation_Response = {
   returning: Array<Order_In_Process>;
 };
 
-/** on_conflict condition type for table "order_in_process" */
+/** on conflict condition type for table "order_in_process" */
 export type Order_In_Process_On_Conflict = {
   constraint: Order_In_Process_Constraint;
   update_columns?: Array<Order_In_Process_Update_Column>;
@@ -9225,12 +8941,6 @@ export type Query_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "break_product" */
-  break_product: Array<Break_Product>;
-  /** fetch aggregated fields from the table: "break_product" */
-  break_product_aggregate: Break_Product_Aggregate;
-  /** fetch data from the table: "break_product" using primary key columns */
-  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -9783,30 +9493,6 @@ export type Query_RootUsers_By_PkArgs = {
 };
 
 
-export type Query_RootBreak_ProductArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Query_RootBreak_Product_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Query_RootBreak_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-
 export type Query_RootBreak_StatusArgs = {
   distinct_on?: Maybe<Array<Break_Status_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10092,12 +9778,6 @@ export type Subscription_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "break_product" */
-  break_product: Array<Break_Product>;
-  /** fetch aggregated fields from the table: "break_product" */
-  break_product_aggregate: Break_Product_Aggregate;
-  /** fetch data from the table: "break_product" using primary key columns */
-  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -10650,30 +10330,6 @@ export type Subscription_RootUsers_By_PkArgs = {
 };
 
 
-export type Subscription_RootBreak_ProductArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Subscription_RootBreak_Product_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Subscription_RootBreak_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-
 export type Subscription_RootBreak_StatusArgs = {
   distinct_on?: Maybe<Array<Break_Status_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10938,11 +10594,11 @@ export type Unit_Of_Measure_Mutation_Response = {
 /** input type for inserting object relation for remote table "unit_of_measure" */
 export type Unit_Of_Measure_Obj_Rel_Insert_Input = {
   data: Unit_Of_Measure_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<Unit_Of_Measure_On_Conflict>;
 };
 
-/** on_conflict condition type for table "unit_of_measure" */
+/** on conflict condition type for table "unit_of_measure" */
 export type Unit_Of_Measure_On_Conflict = {
   constraint: Unit_Of_Measure_Constraint;
   update_columns?: Array<Unit_Of_Measure_Update_Column>;
@@ -11090,11 +10746,11 @@ export type User_Role_Mutation_Response = {
 /** input type for inserting object relation for remote table "user_role" */
 export type User_Role_Obj_Rel_Insert_Input = {
   data: User_Role_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: Maybe<User_Role_On_Conflict>;
 };
 
-/** on_conflict condition type for table "user_role" */
+/** on conflict condition type for table "user_role" */
 export type User_Role_On_Conflict = {
   constraint: User_Role_Constraint;
   update_columns?: Array<User_Role_Update_Column>;
@@ -11225,8 +10881,8 @@ export type BreakerBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11277,8 +10933,8 @@ export type NewBreakerBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11474,8 +11130,8 @@ export type EventBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11526,8 +11182,8 @@ export type NewEventBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11783,8 +11439,8 @@ export type LiveStreamSubscription = (
     )>, Breaks: Array<(
       { __typename?: 'Breaks' }
       & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
-      & { break_products: Array<(
-        { __typename?: 'break_product' }
+      & { Inventory: Array<(
+        { __typename?: 'Inventory' }
         & { Product: (
           { __typename?: 'Products' }
           & Pick<Products, 'category'>
@@ -11851,8 +11507,8 @@ export type ScheduledBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11904,8 +11560,8 @@ export type NewScheduledBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12027,8 +11683,8 @@ export type SearchQuery = (
   )>, Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12278,8 +11934,8 @@ export type NewUserUpcomingBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12329,8 +11985,8 @@ export type UserUpcomingBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
+    & { Inventory: Array<(
+      { __typename?: 'Inventory' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12631,7 +12287,7 @@ export const BreakerBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -12709,7 +12365,7 @@ export const NewBreakerBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -13095,7 +12751,7 @@ export const EventBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -13173,7 +12829,7 @@ export const NewEventBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -13672,7 +13328,7 @@ export const LiveStreamDocument = gql`
       status
       title
       result
-      break_products {
+      Inventory(limit: 1) {
         Product {
           category
         }
@@ -13777,7 +13433,7 @@ export type LoggedUserQueryResult = Apollo.QueryResult<LoggedUserQuery, LoggedUs
 export const ScheduledBreaksDocument = gql`
     query ScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, break_products: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
     order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
@@ -13785,7 +13441,7 @@ export const ScheduledBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -13856,7 +13512,7 @@ export type ScheduledBreaksQueryResult = Apollo.QueryResult<ScheduledBreaksQuery
 export const NewScheduledBreaksDocument = gql`
     subscription NewScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, break_products: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
     order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
@@ -13864,7 +13520,7 @@ export const NewScheduledBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -13936,7 +13592,7 @@ export const ScheduledEventsDocument = gql`
     last_name
     Events(
       limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, Inventory: {Product: {category: $sportTypeFilter}}}}
     ) {
       id
       title
@@ -14003,7 +13659,7 @@ export const NewScheduledEventsDocument = gql`
     last_name
     Events(
       limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, Inventory: {Product: {category: $sportTypeFilter}}}}
     ) {
       id
       title
@@ -14083,7 +13739,7 @@ export const SearchDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -14576,7 +14232,7 @@ export const NewUserUpcomingBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
@@ -14648,7 +14304,7 @@ export const UserUpcomingBreaksDocument = gql`
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }

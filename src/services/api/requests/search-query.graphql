@@ -62,7 +62,7 @@ query Search($searchInput: String, $userId: String) {
     description
     status
     title
-    break_products {
+    Inventory(limit: 1) {
       Product {
         category
       }
