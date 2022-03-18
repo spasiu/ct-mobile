@@ -64,12 +64,12 @@ const getLink = (authUser?: AuthUser) => {
     ),
   ]);
 };
-type Refs = {
+type CacheRef = {
   __ref: string;
-  user?: string;
+  filter?: string;
 };
-type HitsObj = {
-  [key: string]: Refs;
+type CacheRefObj = {
+  [key: string]: CacheRef;
 };
 export const getClient = (
   user: AuthUser,
@@ -99,12 +99,12 @@ export const getClient = (
               read(existing = [], { args, readField }) {
                 if (args?.where?.user_id?._eq) {
                   return existing
-                    .map((hitRef: Refs) => ({
-                      user: readField('user_id', hitRef),
+                    .map((hitRef: CacheRef) => ({
+                      filter: readField('user_id', hitRef),
                       __ref: hitRef,
                     }))
-                    .filter((hit: Refs) => hit.user === args?.where.user_id._eq)
-                    .map((hit: Refs) => hit.__ref);
+                    .filter((hit: CacheRef) => hit.filter === args?.where.user_id._eq)
+                    .map((hit: CacheRef) => hit.__ref);
                 }
                 return existing;
               },
@@ -112,8 +112,8 @@ export const getClient = (
                 if (args?.where._or[0].player._ilike.length > 2) {
                   return incoming;
                 }
-                const hits: Partial<HitsObj> = {};
-                existing.concat(incoming).forEach((hitRef: Refs) => {
+                const hits: Partial<CacheRefObj> = {};
+                existing.concat(incoming).forEach((hitRef: CacheRef) => {
                   const id = readField('id', hitRef) as string;
                   if (id) {
                     hits[id] = hitRef;
