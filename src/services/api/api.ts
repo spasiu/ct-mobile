@@ -66,6 +66,7 @@ const getLink = (authUser?: AuthUser) => {
 };
 type Refs = {
   __ref: string;
+  user?: string;
 };
 type HitsObj = {
   [key: string]: Refs;
@@ -95,7 +96,16 @@ export const getClient = (
         Query: {
           fields: {
             Hits: {
-              read(existing = []) {
+              read(existing = [], { args, readField }) {
+                if (args?.where?.user_id?._eq) {
+                  return existing
+                    .map((hitRef: Refs) => ({
+                      user: readField('user_id', hitRef),
+                      __ref: hitRef,
+                    }))
+                    .filter((hit: Refs) => hit.user === args?.where.user_id._eq)
+                    .map((hit: Refs) => hit.__ref);
+                }
                 return existing;
               },
               merge(existing = [], incoming, { readField, args }) {
