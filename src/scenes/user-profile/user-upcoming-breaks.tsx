@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
+import { styles as s } from 'react-native-style-tachyons';
 
 import {
   breakIdSelector,
   breaksSelector,
   handleBreakPress,
 } from '../../common/break';
-import { BreakCard, EmptyState } from '../../components';
+import { BreakCard, EmptyState, IconButton } from '../../components';
 import { t } from '../../i18n/i18n';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
@@ -29,12 +30,13 @@ import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
 import { breakScheduleSelector } from './user-profile-screen.utils';
 import { LiveScreenNavigationProp } from '../live/live-screen.props';
+const downArrow = require('../../assets/down-arrow.png');
 
 export const UserUpcomingBreaks = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [breakId, setBreakId] = useState<string>();
-
+  const [limit, setLimit] = useState(3);
   const { data, subscribeToMore } = useUserUpcomingBreaksQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -72,7 +74,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
       {indexedMap((item, index) => {
         const breakItem = item as Breaks;
         const breakerBreakDetail = breakScheduleSelector(breakItem);
-        return (
+        return index < limit ? (
           <BreakCard
             onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
@@ -106,7 +108,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
                   });
             }}
           />
-        );
+        ) : null;
       }, breaks)}
       {breakId ? (
         <BreakDetailModal
@@ -114,6 +116,15 @@ export const UserUpcomingBreaks = (): JSX.Element => {
           isVisible={Boolean(breakId)}
           onPressClose={() => setBreakId(undefined)}
         />
+      ) : null}
+      {limit < breaks.length ? (
+        <IconButton style={[s.asc]} onPress={() => setLimit(limit + 3)}>
+          <Image
+            resizeMode={'contain'}
+            source={downArrow}
+            style={[s.tint_black, s.icon_xs]}
+          />
+        </IconButton>
       ) : null}
     </View>
   );
