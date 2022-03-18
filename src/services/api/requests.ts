@@ -11667,7 +11667,7 @@ export type FollowEventMutation = (
 
 export type HitsDetailFragment = (
   { __typename?: 'Hits' }
-  & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered'>
+  & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered' | 'user_id'>
   & { User: (
     { __typename?: 'Users' }
     & Pick<Users, 'username'>
@@ -12456,6 +12456,7 @@ export const HitsDetailFragmentDoc = gql`
   memoribillia
   autograph
   numbered
+  user_id
   User {
     username
   }

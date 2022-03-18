@@ -10,6 +10,7 @@ fragment HitsDetail on Hits {
     memoribillia
     autograph
     numbered
+    user_id
     User {
       username
       }
