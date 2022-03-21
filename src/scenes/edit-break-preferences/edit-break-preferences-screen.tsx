@@ -9,9 +9,9 @@ import {
   NavigationBar,
 } from '../../components';
 import { t } from '../../i18n/i18n';
+import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  UserPreferencesDocument,
   useUpdateUserPreferencesMutation,
 } from '../../services/api/requests';
 import { postgresStringArray } from '../../utils/array';
@@ -32,15 +32,7 @@ export const EditBreakPreferencesScreen = ({
           message: t('errors.could_not_set_preferences'),
           type: 'danger',
         }),
-      refetchQueries: [
-        {
-          query: UserPreferencesDocument,
-          variables: {
-            id: authUser?.uid,
-          },
-        },
-      ],
-      awaitRefetchQueries: true,
+      onCompleted: () => navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
     },
   );
   return (
