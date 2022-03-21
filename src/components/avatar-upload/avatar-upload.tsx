@@ -37,7 +37,7 @@ export const AvatarUpload = ({
       src={image}
       width={AVATAR_DIMENSIONS.width}
       height={AVATAR_DIMENSIONS.height}
-      fit="facearea"
+      fit="fill"
     />
   ) : (
     <Image
