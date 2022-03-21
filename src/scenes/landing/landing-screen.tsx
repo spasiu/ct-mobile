@@ -14,6 +14,8 @@ import { COLORS } from '../../theme/colors';
 import { introVideo, logo } from './landing-screen.presets';
 import { LandingScreenProps } from './landing-screen.props';
 
+const VOLUME = 0.10;
+
 export const LandingScreen = ({
   navigation,
 }: LandingScreenProps): JSX.Element => {
@@ -28,6 +30,7 @@ export const LandingScreen = ({
           resizeMode="cover"
           style={[s.absolute_fill]}
           muted={muted}
+          volume={VOLUME}
         />
       ) : null}
       <LinearGradient
