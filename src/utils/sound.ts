@@ -1,6 +1,6 @@
 import Sound from 'react-native-sound';
 
-const VOLUME = 0.1;
+const VOLUME = 0.025;
 
 export const sounds: {[key: string]: Sound} = {
   entry: new Sound('entry.wav', Sound.MAIN_BUNDLE),
