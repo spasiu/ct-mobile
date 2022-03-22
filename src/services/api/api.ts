@@ -109,7 +109,7 @@ export const getClient = (
                 return existing;
               },
               merge(existing = [], incoming, { readField, args }) {
-                if (args?.where._or[0].player._ilike.length > 2) {
+                if (args?.where?._or?.[0]?.player?._ilike?.length > 2) {
                   return incoming;
                 }
                 const hits: Partial<CacheRefObj> = {};
