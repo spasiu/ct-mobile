@@ -40,7 +40,8 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   });
 
   const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
+    nextFetchPolicy: 'network-only',
     variables: {
       ...getHitsSearchAndFilterParams(
         authUser?.uid as string,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -36,11 +36,7 @@ import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
-import {
-  Hits,
-  NewBreakerHitsDocument,
-  useBreakerHitsQuery,
-} from '../../services/api/requests';
+import { Hits, useBreakerHitsQuery } from '../../services/api/requests';
 import {
   hitImageFrontSelector,
   hitPlayerSelector,
@@ -55,28 +51,16 @@ export const BreakerDetailScreen = ({
   const { breaker, startOnEventsView = false } = route.params;
   const [eventsView, setEventsView] = useState(startOnEventsView);
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
-
   const { id, name, image, social, description, video } =
     breakerDetailScreenSelector(breaker);
 
-  const { data: hitsRequestData, subscribeToMore } = useBreakerHitsQuery({
-    fetchPolicy: 'cache-and-network',
+  const { data: hitsRequestData, fetchMore } = useBreakerHitsQuery({
+    fetchPolicy: 'network-only',
     variables: {
       breakerId: id,
+      offset: 0,
     },
   });
-
-  useEffect(() => {
-    subscribeToMore({
-      document: NewBreakerHitsDocument,
-      variables: {
-        breakerId: id,
-      },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
@@ -89,7 +73,6 @@ export const BreakerDetailScreen = ({
       </body>
     </html>
   `;
-
   const hits = hitsSelector(hitsRequestData);
   return (
     <Container
@@ -174,6 +157,8 @@ export const BreakerDetailScreen = ({
                   cardSize={ImageCardSizeTypes.small}
                 />
               )}
+              onEndReachedThreshold={0.5}
+              onEndReached={() => hits.length > 5 && fetchMore({ variables: { offset: hits.length } })}
             />
           </>
         )}

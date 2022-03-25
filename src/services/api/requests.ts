@@ -75,7 +75,7 @@ export type Addresses_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Addresses" */
 export type Addresses_Arr_Rel_Insert_Input = {
   data: Array<Addresses_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Addresses_On_Conflict>;
 };
 
@@ -199,7 +199,7 @@ export type Addresses_Mutation_Response = {
   returning: Array<Addresses>;
 };
 
-/** on conflict condition type for table "Addresses" */
+/** on_conflict condition type for table "Addresses" */
 export type Addresses_On_Conflict = {
   constraint: Addresses_Constraint;
   update_columns?: Array<Addresses_Update_Column>;
@@ -386,7 +386,7 @@ export type BreakProductItems_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "BreakProductItems" */
 export type BreakProductItems_Arr_Rel_Insert_Input = {
   data: Array<BreakProductItems_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<BreakProductItems_On_Conflict>;
 };
 
@@ -526,11 +526,11 @@ export type BreakProductItems_Mutation_Response = {
 /** input type for inserting object relation for remote table "BreakProductItems" */
 export type BreakProductItems_Obj_Rel_Insert_Input = {
   data: BreakProductItems_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<BreakProductItems_On_Conflict>;
 };
 
-/** on conflict condition type for table "BreakProductItems" */
+/** on_conflict condition type for table "BreakProductItems" */
 export type BreakProductItems_On_Conflict = {
   constraint: BreakProductItems_Constraint;
   update_columns?: Array<BreakProductItems_Update_Column>;
@@ -866,11 +866,11 @@ export type BreakerProfiles_Mutation_Response = {
 /** input type for inserting object relation for remote table "BreakerProfiles" */
 export type BreakerProfiles_Obj_Rel_Insert_Input = {
   data: BreakerProfiles_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<BreakerProfiles_On_Conflict>;
 };
 
-/** on conflict condition type for table "BreakerProfiles" */
+/** on_conflict condition type for table "BreakerProfiles" */
 export type BreakerProfiles_On_Conflict = {
   constraint: BreakerProfiles_Constraint;
   update_columns?: Array<BreakerProfiles_Update_Column>;
@@ -1161,7 +1161,7 @@ export type Breaks_Append_Input = {
 /** input type for inserting array relation for remote table "Breaks" */
 export type Breaks_Arr_Rel_Insert_Input = {
   data: Array<Breaks_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Breaks_On_Conflict>;
 };
 
@@ -1341,11 +1341,11 @@ export type Breaks_Mutation_Response = {
 /** input type for inserting object relation for remote table "Breaks" */
 export type Breaks_Obj_Rel_Insert_Input = {
   data: Breaks_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Breaks_On_Conflict>;
 };
 
-/** on conflict condition type for table "Breaks" */
+/** on_conflict condition type for table "Breaks" */
 export type Breaks_On_Conflict = {
   constraint: Breaks_Constraint;
   update_columns?: Array<Breaks_Update_Column>;
@@ -1676,7 +1676,7 @@ export type Divisions_Mutation_Response = {
   returning: Array<Divisions>;
 };
 
-/** on conflict condition type for table "Divisions" */
+/** on_conflict condition type for table "Divisions" */
 export type Divisions_On_Conflict = {
   constraint: Divisions_Constraint;
   update_columns?: Array<Divisions_Update_Column>;
@@ -1836,7 +1836,7 @@ export type Events_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Events" */
 export type Events_Arr_Rel_Insert_Input = {
   data: Array<Events_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Events_On_Conflict>;
 };
 
@@ -1959,11 +1959,11 @@ export type Events_Mutation_Response = {
 /** input type for inserting object relation for remote table "Events" */
 export type Events_Obj_Rel_Insert_Input = {
   data: Events_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Events_On_Conflict>;
 };
 
-/** on conflict condition type for table "Events" */
+/** on_conflict condition type for table "Events" */
 export type Events_On_Conflict = {
   constraint: Events_Constraint;
   update_columns?: Array<Events_Update_Column>;
@@ -2140,7 +2140,7 @@ export type ExtensibleValues_Mutation_Response = {
   returning: Array<ExtensibleValues>;
 };
 
-/** on conflict condition type for table "ExtensibleValues" */
+/** on_conflict condition type for table "ExtensibleValues" */
 export type ExtensibleValues_On_Conflict = {
   constraint: ExtensibleValues_Constraint;
   update_columns?: Array<ExtensibleValues_Update_Column>;
@@ -2194,7 +2194,7 @@ export type Hits = {
   autograph?: Maybe<Scalars['Boolean']>;
   break_id: Scalars['uuid'];
   card_number: Scalars['String'];
-  created_at: Scalars['timestamptz'];
+  created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   image_back?: Maybe<Scalars['String']>;
@@ -2207,7 +2207,7 @@ export type Hits = {
   product_id: Scalars['uuid'];
   published: Scalars['Boolean'];
   rookie_card?: Maybe<Scalars['Boolean']>;
-  updated_at: Scalars['timestamptz'];
+  updated_at?: Maybe<Scalars['timestamptz']>;
   user_id: Scalars['String'];
 };
 
@@ -2259,7 +2259,7 @@ export type Hits_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Hits" */
 export type Hits_Arr_Rel_Insert_Input = {
   data: Array<Hits_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Hits_On_Conflict>;
 };
 
@@ -2427,7 +2427,7 @@ export type Hits_Mutation_Response = {
   returning: Array<Hits>;
 };
 
-/** on conflict condition type for table "Hits" */
+/** on_conflict condition type for table "Hits" */
 export type Hits_On_Conflict = {
   constraint: Hits_Constraint;
   update_columns?: Array<Hits_Update_Column>;
@@ -2728,7 +2728,7 @@ export type Inventory_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Inventory" */
 export type Inventory_Arr_Rel_Insert_Input = {
   data: Array<Inventory_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Inventory_On_Conflict>;
 };
 
@@ -2850,7 +2850,7 @@ export type Inventory_Mutation_Response = {
   returning: Array<Inventory>;
 };
 
-/** on conflict condition type for table "Inventory" */
+/** on_conflict condition type for table "Inventory" */
 export type Inventory_On_Conflict = {
   constraint: Inventory_Constraint;
   update_columns?: Array<Inventory_Update_Column>;
@@ -3112,11 +3112,11 @@ export type NotificationSettings_Mutation_Response = {
 /** input type for inserting object relation for remote table "NotificationSettings" */
 export type NotificationSettings_Obj_Rel_Insert_Input = {
   data: NotificationSettings_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<NotificationSettings_On_Conflict>;
 };
 
-/** on conflict condition type for table "NotificationSettings" */
+/** on_conflict condition type for table "NotificationSettings" */
 export type NotificationSettings_On_Conflict = {
   constraint: NotificationSettings_Constraint;
   update_columns?: Array<NotificationSettings_Update_Column>;
@@ -3285,11 +3285,11 @@ export type Notifications_Mutation_Response = {
 /** input type for inserting object relation for remote table "Notifications" */
 export type Notifications_Obj_Rel_Insert_Input = {
   data: Notifications_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Notifications_On_Conflict>;
 };
 
-/** on conflict condition type for table "Notifications" */
+/** on_conflict condition type for table "Notifications" */
 export type Notifications_On_Conflict = {
   constraint: Notifications_Constraint;
   update_columns?: Array<Notifications_Update_Column>;
@@ -3444,7 +3444,7 @@ export type Orders_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Orders" */
 export type Orders_Arr_Rel_Insert_Input = {
   data: Array<Orders_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Orders_On_Conflict>;
 };
 
@@ -3596,11 +3596,11 @@ export type Orders_Mutation_Response = {
 /** input type for inserting object relation for remote table "Orders" */
 export type Orders_Obj_Rel_Insert_Input = {
   data: Orders_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Orders_On_Conflict>;
 };
 
-/** on conflict condition type for table "Orders" */
+/** on_conflict condition type for table "Orders" */
 export type Orders_On_Conflict = {
   constraint: Orders_Constraint;
   update_columns?: Array<Orders_Update_Column>;
@@ -3921,7 +3921,7 @@ export type Players_Mutation_Response = {
   returning: Array<Players>;
 };
 
-/** on conflict condition type for table "Players" */
+/** on_conflict condition type for table "Players" */
 export type Players_On_Conflict = {
   constraint: Players_Constraint;
   update_columns?: Array<Players_Update_Column>;
@@ -4071,7 +4071,7 @@ export type Products_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Products" */
 export type Products_Arr_Rel_Insert_Input = {
   data: Array<Products_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Products_On_Conflict>;
 };
 
@@ -4285,11 +4285,11 @@ export type Products_Mutation_Response = {
 /** input type for inserting object relation for remote table "Products" */
 export type Products_Obj_Rel_Insert_Input = {
   data: Products_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Products_On_Conflict>;
 };
 
-/** on conflict condition type for table "Products" */
+/** on_conflict condition type for table "Products" */
 export type Products_On_Conflict = {
   constraint: Products_Constraint;
   update_columns?: Array<Products_Update_Column>;
@@ -4597,6 +4597,7 @@ export type SaveBreak = {
   User: Users;
   break_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4633,7 +4634,7 @@ export type SaveBreak_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveBreak" */
 export type SaveBreak_Arr_Rel_Insert_Input = {
   data: Array<SaveBreak_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<SaveBreak_On_Conflict>;
 };
 
@@ -4646,6 +4647,7 @@ export type SaveBreak_Bool_Exp = {
   _or?: Maybe<Array<SaveBreak_Bool_Exp>>;
   break_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4662,6 +4664,7 @@ export type SaveBreak_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4671,6 +4674,7 @@ export type SaveBreak_Max_Fields = {
   __typename?: 'SaveBreak_max_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4679,6 +4683,7 @@ export type SaveBreak_Max_Fields = {
 export type SaveBreak_Max_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4688,6 +4693,7 @@ export type SaveBreak_Min_Fields = {
   __typename?: 'SaveBreak_min_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4696,6 +4702,7 @@ export type SaveBreak_Min_Fields = {
 export type SaveBreak_Min_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4709,7 +4716,7 @@ export type SaveBreak_Mutation_Response = {
   returning: Array<SaveBreak>;
 };
 
-/** on conflict condition type for table "SaveBreak" */
+/** on_conflict condition type for table "SaveBreak" */
 export type SaveBreak_On_Conflict = {
   constraint: SaveBreak_Constraint;
   update_columns?: Array<SaveBreak_Update_Column>;
@@ -4722,14 +4729,14 @@ export type SaveBreak_Order_By = {
   User?: Maybe<Users_Order_By>;
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreak */
 export type SaveBreak_Pk_Columns_Input = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveBreak" */
@@ -4738,6 +4745,8 @@ export enum SaveBreak_Select_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4748,6 +4757,7 @@ export enum SaveBreak_Select_Column {
 export type SaveBreak_Set_Input = {
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4758,6 +4768,8 @@ export enum SaveBreak_Update_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4773,6 +4785,7 @@ export type SaveBreaker = {
   User: Users;
   breaker_id: Scalars['String'];
   created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4809,7 +4822,7 @@ export type SaveBreaker_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveBreaker" */
 export type SaveBreaker_Arr_Rel_Insert_Input = {
   data: Array<SaveBreaker_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<SaveBreaker_On_Conflict>;
 };
 
@@ -4822,6 +4835,7 @@ export type SaveBreaker_Bool_Exp = {
   _or?: Maybe<Array<SaveBreaker_Bool_Exp>>;
   breaker_id?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4838,6 +4852,7 @@ export type SaveBreaker_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4847,6 +4862,7 @@ export type SaveBreaker_Max_Fields = {
   __typename?: 'SaveBreaker_max_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4855,6 +4871,7 @@ export type SaveBreaker_Max_Fields = {
 export type SaveBreaker_Max_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4864,6 +4881,7 @@ export type SaveBreaker_Min_Fields = {
   __typename?: 'SaveBreaker_min_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4872,6 +4890,7 @@ export type SaveBreaker_Min_Fields = {
 export type SaveBreaker_Min_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4885,7 +4904,7 @@ export type SaveBreaker_Mutation_Response = {
   returning: Array<SaveBreaker>;
 };
 
-/** on conflict condition type for table "SaveBreaker" */
+/** on_conflict condition type for table "SaveBreaker" */
 export type SaveBreaker_On_Conflict = {
   constraint: SaveBreaker_Constraint;
   update_columns?: Array<SaveBreaker_Update_Column>;
@@ -4898,14 +4917,14 @@ export type SaveBreaker_Order_By = {
   User?: Maybe<Users_Order_By>;
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreaker */
 export type SaveBreaker_Pk_Columns_Input = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveBreaker" */
@@ -4914,6 +4933,8 @@ export enum SaveBreaker_Select_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4924,6 +4945,7 @@ export enum SaveBreaker_Select_Column {
 export type SaveBreaker_Set_Input = {
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4934,6 +4956,8 @@ export enum SaveBreaker_Update_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4949,6 +4973,7 @@ export type SaveEvent = {
   User: Users;
   created_at: Scalars['timestamptz'];
   event_id: Scalars['uuid'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4985,7 +5010,7 @@ export type SaveEvent_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "SaveEvent" */
 export type SaveEvent_Arr_Rel_Insert_Input = {
   data: Array<SaveEvent_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<SaveEvent_On_Conflict>;
 };
 
@@ -4998,6 +5023,7 @@ export type SaveEvent_Bool_Exp = {
   _or?: Maybe<Array<SaveEvent_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -5014,6 +5040,7 @@ export type SaveEvent_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5023,6 +5050,7 @@ export type SaveEvent_Max_Fields = {
   __typename?: 'SaveEvent_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5031,6 +5059,7 @@ export type SaveEvent_Max_Fields = {
 export type SaveEvent_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5040,6 +5069,7 @@ export type SaveEvent_Min_Fields = {
   __typename?: 'SaveEvent_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5048,6 +5078,7 @@ export type SaveEvent_Min_Fields = {
 export type SaveEvent_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5061,7 +5092,7 @@ export type SaveEvent_Mutation_Response = {
   returning: Array<SaveEvent>;
 };
 
-/** on conflict condition type for table "SaveEvent" */
+/** on_conflict condition type for table "SaveEvent" */
 export type SaveEvent_On_Conflict = {
   constraint: SaveEvent_Constraint;
   update_columns?: Array<SaveEvent_Update_Column>;
@@ -5074,14 +5105,14 @@ export type SaveEvent_Order_By = {
   User?: Maybe<Users_Order_By>;
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveEvent */
 export type SaveEvent_Pk_Columns_Input = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveEvent" */
@@ -5090,6 +5121,8 @@ export enum SaveEvent_Select_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5100,6 +5133,7 @@ export enum SaveEvent_Select_Column {
 export type SaveEvent_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5110,6 +5144,8 @@ export enum SaveEvent_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5228,11 +5264,11 @@ export type Streams_Mutation_Response = {
 /** input type for inserting object relation for remote table "Streams" */
 export type Streams_Obj_Rel_Insert_Input = {
   data: Streams_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Streams_On_Conflict>;
 };
 
-/** on conflict condition type for table "Streams" */
+/** on_conflict condition type for table "Streams" */
 export type Streams_On_Conflict = {
   constraint: Streams_Constraint;
   update_columns?: Array<Streams_Update_Column>;
@@ -5349,7 +5385,7 @@ export type Teams = {
   color?: Maybe<Scalars['bpchar']>;
   color_secondary?: Maybe<Scalars['bpchar']>;
   end_year?: Maybe<Scalars['smallint']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   short_code: Scalars['String'];
   sport: Scalars['String'];
   start_year: Scalars['smallint'];
@@ -5410,7 +5446,7 @@ export type Teams_Bool_Exp = {
 /** unique or primary key constraints on table "Teams" */
 export enum Teams_Constraint {
   /** unique or primary key constraint */
-  TeamsPkey = 'teams_pkey'
+  TeamsPkey1 = 'Teams_pkey1'
 }
 
 /** input type for incrementing numeric columns in table "Teams" */
@@ -5590,7 +5626,7 @@ export type Teams_Old_Mutation_Response = {
   returning: Array<Teams_Old>;
 };
 
-/** on conflict condition type for table "Teams_old" */
+/** on_conflict condition type for table "Teams_old" */
 export type Teams_Old_On_Conflict = {
   constraint: Teams_Old_Constraint;
   update_columns?: Array<Teams_Old_Update_Column>;
@@ -5715,7 +5751,7 @@ export type Teams_Old_Variance_Fields = {
   year_start?: Maybe<Scalars['Float']>;
 };
 
-/** on conflict condition type for table "Teams" */
+/** on_conflict condition type for table "Teams" */
 export type Teams_On_Conflict = {
   constraint: Teams_Constraint;
   update_columns?: Array<Teams_Update_Column>;
@@ -5736,8 +5772,7 @@ export type Teams_Order_By = {
 
 /** primary key columns input for table: Teams */
 export type Teams_Pk_Columns_Input = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -5941,11 +5976,11 @@ export type UserPreferences_Mutation_Response = {
 /** input type for inserting object relation for remote table "UserPreferences" */
 export type UserPreferences_Obj_Rel_Insert_Input = {
   data: UserPreferences_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<UserPreferences_On_Conflict>;
 };
 
-/** on conflict condition type for table "UserPreferences" */
+/** on_conflict condition type for table "UserPreferences" */
 export type UserPreferences_On_Conflict = {
   constraint: UserPreferences_Constraint;
   update_columns?: Array<UserPreferences_Update_Column>;
@@ -6285,7 +6320,7 @@ export type Users_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "Users" */
 export type Users_Arr_Rel_Insert_Input = {
   data: Array<Users_Insert_Input>;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
@@ -6446,11 +6481,11 @@ export type Users_Mutation_Response = {
 /** input type for inserting object relation for remote table "Users" */
 export type Users_Obj_Rel_Insert_Input = {
   data: Users_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Users_On_Conflict>;
 };
 
-/** on conflict condition type for table "Users" */
+/** on_conflict condition type for table "Users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
   update_columns?: Array<Users_Update_Column>;
@@ -6805,11 +6840,11 @@ export type Break_Status_Mutation_Response = {
 /** input type for inserting object relation for remote table "break_status" */
 export type Break_Status_Obj_Rel_Insert_Input = {
   data: Break_Status_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Break_Status_On_Conflict>;
 };
 
-/** on conflict condition type for table "break_status" */
+/** on_conflict condition type for table "break_status" */
 export type Break_Status_On_Conflict = {
   constraint: Break_Status_Constraint;
   update_columns?: Array<Break_Status_Update_Column>;
@@ -6959,11 +6994,11 @@ export type Break_Type_Mutation_Response = {
 /** input type for inserting object relation for remote table "break_type" */
 export type Break_Type_Obj_Rel_Insert_Input = {
   data: Break_Type_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Break_Type_On_Conflict>;
 };
 
-/** on conflict condition type for table "break_type" */
+/** on_conflict condition type for table "break_type" */
 export type Break_Type_On_Conflict = {
   constraint: Break_Type_Constraint;
   update_columns?: Array<Break_Type_Update_Column>;
@@ -7111,11 +7146,11 @@ export type Event_Status_Mutation_Response = {
 /** input type for inserting object relation for remote table "event_status" */
 export type Event_Status_Obj_Rel_Insert_Input = {
   data: Event_Status_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Event_Status_On_Conflict>;
 };
 
-/** on conflict condition type for table "event_status" */
+/** on_conflict condition type for table "event_status" */
 export type Event_Status_On_Conflict = {
   constraint: Event_Status_Constraint;
   update_columns?: Array<Event_Status_Update_Column>;
@@ -7694,8 +7729,7 @@ export type Mutation_RootDelete_SaveBreakArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7707,8 +7741,7 @@ export type Mutation_RootDelete_SaveBreakerArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7720,8 +7753,7 @@ export type Mutation_RootDelete_SaveEventArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7745,8 +7777,7 @@ export type Mutation_RootDelete_TeamsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Teams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -8772,7 +8803,7 @@ export type Order_In_Process_Mutation_Response = {
   returning: Array<Order_In_Process>;
 };
 
-/** on conflict condition type for table "order_in_process" */
+/** on_conflict condition type for table "order_in_process" */
 export type Order_In_Process_On_Conflict = {
   constraint: Order_In_Process_Constraint;
   update_columns?: Array<Order_In_Process_Update_Column>;
@@ -9323,8 +9354,7 @@ export type Query_RootSaveBreak_AggregateArgs = {
 
 
 export type Query_RootSaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9347,8 +9377,7 @@ export type Query_RootSaveBreaker_AggregateArgs = {
 
 
 export type Query_RootSaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9371,8 +9400,7 @@ export type Query_RootSaveEvent_AggregateArgs = {
 
 
 export type Query_RootSaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9418,8 +9446,7 @@ export type Query_RootTeams_AggregateArgs = {
 
 
 export type Query_RootTeams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -10160,8 +10187,7 @@ export type Subscription_RootSaveBreak_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10184,8 +10210,7 @@ export type Subscription_RootSaveBreaker_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10208,8 +10233,7 @@ export type Subscription_RootSaveEvent_AggregateArgs = {
 
 
 export type Subscription_RootSaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10255,8 +10279,7 @@ export type Subscription_RootTeams_AggregateArgs = {
 
 
 export type Subscription_RootTeams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -10594,11 +10617,11 @@ export type Unit_Of_Measure_Mutation_Response = {
 /** input type for inserting object relation for remote table "unit_of_measure" */
 export type Unit_Of_Measure_Obj_Rel_Insert_Input = {
   data: Unit_Of_Measure_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<Unit_Of_Measure_On_Conflict>;
 };
 
-/** on conflict condition type for table "unit_of_measure" */
+/** on_conflict condition type for table "unit_of_measure" */
 export type Unit_Of_Measure_On_Conflict = {
   constraint: Unit_Of_Measure_Constraint;
   update_columns?: Array<Unit_Of_Measure_Update_Column>;
@@ -10746,11 +10769,11 @@ export type User_Role_Mutation_Response = {
 /** input type for inserting object relation for remote table "user_role" */
 export type User_Role_Obj_Rel_Insert_Input = {
   data: User_Role_Insert_Input;
-  /** on conflict condition */
+  /** upsert condition */
   on_conflict?: Maybe<User_Role_On_Conflict>;
 };
 
-/** on conflict condition type for table "user_role" */
+/** on_conflict condition type for table "user_role" */
 export type User_Role_On_Conflict = {
   constraint: User_Role_Constraint;
   update_columns?: Array<User_Role_Update_Column>;
@@ -11024,24 +11047,12 @@ export type NewBreakerEventsSubscription = (
 
 export type BreakerHitsQueryVariables = Exact<{
   breakerId?: Maybe<Scalars['String']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 
 export type BreakerHitsQuery = (
   { __typename?: 'query_root' }
-  & { Hits: Array<(
-    { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
-  )> }
-);
-
-export type NewBreakerHitsSubscriptionVariables = Exact<{
-  breakerId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type NewBreakerHitsSubscription = (
-  { __typename?: 'subscription_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
     & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
@@ -12525,9 +12536,11 @@ export function useNewBreakerEventsSubscription(baseOptions: ApolloReactHooks.Su
 export type NewBreakerEventsSubscriptionHookResult = ReturnType<typeof useNewBreakerEventsSubscription>;
 export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerEventsSubscription>;
 export const BreakerHitsDocument = gql`
-    query BreakerHits($breakerId: String) {
+    query BreakerHits($breakerId: String, $offset: Int) {
   Hits(
     where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+    limit: 4
+    offset: $offset
   ) {
     id
     image_front
@@ -12550,6 +12563,7 @@ export const BreakerHitsDocument = gql`
  * const { data, loading, error } = useBreakerHitsQuery({
  *   variables: {
  *      breakerId: // value for 'breakerId'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
@@ -12564,41 +12578,6 @@ export function useBreakerHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type BreakerHitsQueryHookResult = ReturnType<typeof useBreakerHitsQuery>;
 export type BreakerHitsLazyQueryHookResult = ReturnType<typeof useBreakerHitsLazyQuery>;
 export type BreakerHitsQueryResult = Apollo.QueryResult<BreakerHitsQuery, BreakerHitsQueryVariables>;
-export const NewBreakerHitsDocument = gql`
-    subscription NewBreakerHits($breakerId: String) {
-  Hits(
-    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
-  ) {
-    id
-    image_front
-    description
-    player
-  }
-}
-    `;
-
-/**
- * __useNewBreakerHitsSubscription__
- *
- * To run a query within a React component, call `useNewBreakerHitsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNewBreakerHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useNewBreakerHitsSubscription({
- *   variables: {
- *      breakerId: // value for 'breakerId'
- *   },
- * });
- */
-export function useNewBreakerHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewBreakerHitsSubscription, NewBreakerHitsSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useSubscription<NewBreakerHitsSubscription, NewBreakerHitsSubscriptionVariables>(NewBreakerHitsDocument, options);
-      }
-export type NewBreakerHitsSubscriptionHookResult = ReturnType<typeof useNewBreakerHitsSubscription>;
-export type NewBreakerHitsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerHitsSubscription>;
 export const BreakersDocument = gql`
     query Breakers($userId: String, $breakerFilter: Users_bool_exp) {
   Users(where: $breakerFilter) {
