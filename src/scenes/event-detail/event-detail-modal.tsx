@@ -18,6 +18,7 @@ import {
   NewEventBreaksDocument,
   useFollowBreakMutation,
   useUnfollowBreakMutation,
+  Break_Status_Enum,
 } from '../../services/api/requests';
 import { ICON_SIZE } from '../../theme/sizes';
 import { breaksSelector } from '../../common/break';
@@ -55,6 +56,7 @@ export const EventDetailModal = ({
     variables: {
       id: eventId,
       userId: authUser?.uid,
+      status: { _neq: Break_Status_Enum.Completed }
     },
   });
 

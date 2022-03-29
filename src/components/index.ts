@@ -50,3 +50,4 @@ export * from './text-link';
 export * from './title-bar';
 export * from './tooltip';
 export * from './warning-modal';
+export * from './result-card';

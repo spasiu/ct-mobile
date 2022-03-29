@@ -58,7 +58,7 @@ export const BreakerDetailScreen = ({
 
   const { id, name, image, social, description, video } =
     breakerDetailScreenSelector(breaker);
-
+  console.log(video);
   const { data: hitsRequestData, subscribeToMore } = useBreakerHitsQuery({
     fetchPolicy: 'cache-and-network',
     variables: {

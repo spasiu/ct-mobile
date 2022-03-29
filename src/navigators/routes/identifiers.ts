@@ -39,4 +39,5 @@ export const ROUTES_IDS = {
   SCHEDULE_TAB: 'tab.schedule',
   HITS_TAB: 'tab.hits',
   BREAKERS_TAB: 'tab.breakers',
+  RESULTS_SCREEN: 'stack.results',
 } as const;

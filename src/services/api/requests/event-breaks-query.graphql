@@ -1,7 +1,7 @@
-query EventBreaks($id: uuid!, $userId: String) {
+query EventBreaks($id: uuid!, $userId: String, $status: break_status_enum_comparison_exp) {
   Breaks(
     where: {
-      _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED } }, {archived: { _neq:  true}}]
+      _and: [{ status: { _neq: DRAFT } }, { status: $status }, {archived: { _neq:  true}}]
       Event: { id: { _eq: $id } }
     }
     order_by: { created_at: asc }
@@ -11,6 +11,7 @@ query EventBreaks($id: uuid!, $userId: String) {
     description
     status
     title
+    result
     Inventory(limit: 1) {
       Product {
         category
