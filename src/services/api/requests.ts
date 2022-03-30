@@ -11376,7 +11376,7 @@ export type BreakerHitsQuery = (
   { __typename?: 'query_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+    & HitsDetailFragment
   )> }
 );
 
@@ -12862,13 +12862,10 @@ export const BreakerHitsDocument = gql`
     where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
     offset: $offset
   ) {
-    id
-    image_front
-    description
-    player
+    ...HitsDetail
   }
 }
-    `;
+    ${HitsDetailFragmentDoc}`;
 
 /**
  * __useBreakerHitsQuery__

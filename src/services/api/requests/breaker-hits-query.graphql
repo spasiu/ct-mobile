@@ -5,10 +5,5 @@ query BreakerHits($breakerId: String, $offset: Int) {
       _and: [{ archived: { _eq: false } }]
     }
     offset: $offset
-  ) {
-    id
-    image_front
-    description
-    player
-  }
+  ) { ...HitsDetail }
 }

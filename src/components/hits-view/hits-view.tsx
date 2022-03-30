@@ -43,6 +43,8 @@ export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.El
         )}
         style={gridStyle}
         ListFooterComponent={() => loading ? <Loading /> : null}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => onEndReached && onEndReached(hits.length)}
         numColumns={NUMBER_OF_COLUMNS}
         data={hits.length % NUMBER_OF_COLUMNS === 0 ? hits : completeHits(hits)}
         contentContainerStyle={gridContentStyle}
@@ -61,7 +63,6 @@ export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.El
               />
             );
           }
-
           return (
             <HitCard
               onPress={() => setHitDetail(item)}
@@ -75,8 +76,6 @@ export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.El
             />
           );
         }}
-        onEndReachedThreshold={0.5}
-        onEndReached={() => onEndReached && onEndReached(hits.length)}
       />
       <HitDetailModal
         isVisible={!isEmpty(hitDetail)}
