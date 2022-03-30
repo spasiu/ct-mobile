@@ -55,7 +55,7 @@ export const BreakerDetailScreen = ({
     breakerDetailScreenSelector(breaker);
 
   const { data: hitsRequestData, fetchMore } = useBreakerHitsQuery({
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
     variables: {
       breakerId: id,
       offset: 0,

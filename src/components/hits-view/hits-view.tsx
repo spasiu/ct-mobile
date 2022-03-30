@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
 
-import { HitCard, EmptyState } from '../../components';
+import { HitCard, EmptyState, Loading } from '../../components';
 
 import { t } from '../../i18n/i18n';
 import { Hits } from '../../services/api/requests';
@@ -30,7 +30,7 @@ import {
 } from './hits-view.presets';
 import { HitsViewProps } from './hits-view.props';
 
-export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => {
+export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.Element => {
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
   return (
     <>
@@ -42,6 +42,7 @@ export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => 
           />
         )}
         style={gridStyle}
+        ListFooterComponent={() => loading ? <Loading /> : null}
         numColumns={NUMBER_OF_COLUMNS}
         data={hits.length % NUMBER_OF_COLUMNS === 0 ? hits : completeHits(hits)}
         contentContainerStyle={gridContentStyle}
@@ -60,7 +61,7 @@ export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => 
               />
             );
           }
-          
+
           return (
             <HitCard
               onPress={() => setHitDetail(item)}
@@ -74,7 +75,7 @@ export const HitsView = ({ hits, onEndReached }: HitsViewProps): JSX.Element => 
             />
           );
         }}
-        onEndReachedThreshold={.5}
+        onEndReachedThreshold={0.5}
         onEndReached={() => onEndReached && onEndReached(hits.length)}
       />
       <HitDetailModal
