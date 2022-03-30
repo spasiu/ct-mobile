@@ -1,7 +1,7 @@
-query CompletedEvents($userId: String, $breakerId: String, $date: String) {
+query CompletedEvents($breakerId: String_comparison_exp) {
   Events(
     limit: 20
-    where: { status: { _eq: COMPLETED } }
+    where: { status: { _eq: COMPLETED } user_id: $breakerId }
     order_by: { start_time: desc }
   ) {
     id

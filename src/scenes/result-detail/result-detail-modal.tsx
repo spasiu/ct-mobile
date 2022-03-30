@@ -45,7 +45,7 @@ export const ResultDetailModal = ({
 }: ResultDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [breakResults, setBreakResults] = useState<Breaks>();
-  console.log(authUser);
+
   const { loading, data } = useEventBreaksQuery({
     fetchPolicy: 'cache-and-network',
     variables: {

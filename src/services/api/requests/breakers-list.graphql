@@ -1,0 +1,7 @@
+query BreakersList {
+  Users(where: { is_breaker: { _eq: true } }) {
+    id
+    username
+    image
+  }
+}

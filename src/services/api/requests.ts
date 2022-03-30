@@ -11392,6 +11392,17 @@ export type NewBreakerHitsSubscription = (
   )> }
 );
 
+export type BreakersListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BreakersListQuery = (
+  { __typename?: 'query_root' }
+  & { Users: Array<(
+    { __typename?: 'Users' }
+    & Pick<Users, 'id' | 'username' | 'image'>
+  )> }
+);
+
 export type BreakersQueryVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
   breakerFilter?: Maybe<Users_Bool_Exp>;
@@ -11447,9 +11458,7 @@ export type NewBreakersSubscription = (
 );
 
 export type CompletedEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-  breakerId?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
+  breakerId?: Maybe<String_Comparison_Exp>;
 }>;
 
 
@@ -12963,6 +12972,42 @@ export function useNewBreakerHitsSubscription(baseOptions?: ApolloReactHooks.Sub
       }
 export type NewBreakerHitsSubscriptionHookResult = ReturnType<typeof useNewBreakerHitsSubscription>;
 export type NewBreakerHitsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerHitsSubscription>;
+export const BreakersListDocument = gql`
+    query BreakersList {
+  Users(where: {is_breaker: {_eq: true}}) {
+    id
+    username
+    image
+  }
+}
+    `;
+
+/**
+ * __useBreakersListQuery__
+ *
+ * To run a query within a React component, call `useBreakersListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBreakersListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakersListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBreakersListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<BreakersListQuery, BreakersListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<BreakersListQuery, BreakersListQueryVariables>(BreakersListDocument, options);
+      }
+export function useBreakersListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BreakersListQuery, BreakersListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<BreakersListQuery, BreakersListQueryVariables>(BreakersListDocument, options);
+        }
+export type BreakersListQueryHookResult = ReturnType<typeof useBreakersListQuery>;
+export type BreakersListLazyQueryHookResult = ReturnType<typeof useBreakersListLazyQuery>;
+export type BreakersListQueryResult = Apollo.QueryResult<BreakersListQuery, BreakersListQueryVariables>;
 export const BreakersDocument = gql`
     query Breakers($userId: String, $breakerFilter: Users_bool_exp) {
   Users(where: $breakerFilter) {
@@ -13069,10 +13114,10 @@ export function useNewBreakersSubscription(baseOptions?: ApolloReactHooks.Subscr
 export type NewBreakersSubscriptionHookResult = ReturnType<typeof useNewBreakersSubscription>;
 export type NewBreakersSubscriptionResult = Apollo.SubscriptionResult<NewBreakersSubscription>;
 export const CompletedEventsDocument = gql`
-    query CompletedEvents($userId: String, $breakerId: String, $date: String) {
+    query CompletedEvents($breakerId: String_comparison_exp) {
   Events(
     limit: 20
-    where: {status: {_eq: COMPLETED}}
+    where: {status: {_eq: COMPLETED}, user_id: $breakerId}
     order_by: {start_time: desc}
   ) {
     id
@@ -13103,9 +13148,7 @@ export const CompletedEventsDocument = gql`
  * @example
  * const { data, loading, error } = useCompletedEventsQuery({
  *   variables: {
- *      userId: // value for 'userId'
  *      breakerId: // value for 'breakerId'
- *      date: // value for 'date'
  *   },
  * });
  */

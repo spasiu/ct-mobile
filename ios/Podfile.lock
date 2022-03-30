@@ -550,6 +550,8 @@ PODS:
     - react-native-config/App (= 1.4.2)
   - react-native-config/App (1.4.2):
     - React-Core
+  - react-native-date-picker (4.2.0):
+    - React-Core
   - react-native-idle-timer (2.1.7):
     - React-Core
   - react-native-image-picker (3.3.2):
@@ -742,6 +744,7 @@ DEPENDENCIES:
   - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - react-native-blurhash (from `../node_modules/react-native-blurhash`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-idle-timer (from `../node_modules/react-native-idle-timer`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-notifications (from `../node_modules/react-native-notifications`)
@@ -852,6 +855,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-blurhash"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-date-picker:
+    :path: "../node_modules/react-native-date-picker"
   react-native-idle-timer:
     :path: "../node_modules/react-native-idle-timer"
   react-native-image-picker:
@@ -979,6 +984,7 @@ SPEC CHECKSUMS:
   react-native-appsflyer: fac6d94b40ce52dc69a07c242317b83c7b9e0cc2
   react-native-blurhash: ec98d751a9cb9075cef0b9e3188244c517d6ab22
   react-native-config: c98128a72bc2c3a1ca72caec0b021f0fa944aa29
+  react-native-date-picker: d83ab9cccbc497642a93fdca783ae76ecd6b17b6
   react-native-idle-timer: 5a71c3e74b2ff1b91a0416193e96dee9603e881d
   react-native-image-picker: b42940647478bf106ad3c491d6f5d9d40916d865
   react-native-notifications: 97c14bf84c64bd6a6eb7bdcdb916036d93d33428
