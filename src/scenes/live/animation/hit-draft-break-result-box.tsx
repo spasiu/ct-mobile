@@ -40,7 +40,7 @@ export const HitDraftBreakResultBox = ({
           />
           <View style={[s.flx_i, s.pa2, s.flx_row, s.jcfs, s.aic]}>
             <ServerImage
-              fit={'facearea'}
+              fit={'fill'}
               src={userTeam.image}
               width={ICON_SIZE.M2}
               height={ICON_SIZE.M2}

@@ -8,6 +8,6 @@ export interface ServerImageProps {
   style?: ViewStyle[];
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
   children?: React.ReactNode;
-  fit?: 'facearea' | 'fill';
+  fit?: 'fill';
   fill?: string;
 }
