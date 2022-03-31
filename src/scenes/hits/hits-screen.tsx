@@ -30,7 +30,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [numberOfHits, setNumberOfHits] = useState(0);
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -57,11 +57,11 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const hits = hitsSelector(requestData);
   const user = userSelector(users);
   const loadMore = (offset: number) => {
-    console.log(offset);
-    if(offset > hits.length) return
+    if (offset < numberOfHits) return;
     fetchMore({
       variables: { offset },
     });
+    setNumberOfHits(offset + 24);
   };
   return (
     <Container

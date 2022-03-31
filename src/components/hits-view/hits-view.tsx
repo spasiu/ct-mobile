@@ -30,7 +30,11 @@ import {
 } from './hits-view.presets';
 import { HitsViewProps } from './hits-view.props';
 
-export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.Element => {
+export const HitsView = ({
+  hits,
+  onEndReached,
+  loading,
+}: HitsViewProps): JSX.Element => {
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
   return (
     <>
@@ -42,7 +46,7 @@ export const HitsView = ({ hits, onEndReached, loading }: HitsViewProps): JSX.El
           />
         )}
         style={gridStyle}
-        ListFooterComponent={() => loading ? <Loading /> : null}
+        ListFooterComponent={() => (loading ? <Loading /> : null)}
         onEndReachedThreshold={0.5}
         onEndReached={() => onEndReached && onEndReached(hits.length)}
         numColumns={NUMBER_OF_COLUMNS}
