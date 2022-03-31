@@ -54,7 +54,7 @@ export const BreakerDetailScreen = ({
   const { id, name, image, social, description, video } =
     breakerDetailScreenSelector(breaker);
 
-  const { data: hitsRequestData, fetchMore } = useBreakerHitsQuery({
+  const { data: hitsRequestData } = useBreakerHitsQuery({
     fetchPolicy: 'no-cache',
     variables: {
       breakerId: id,
@@ -157,8 +157,8 @@ export const BreakerDetailScreen = ({
                   cardSize={ImageCardSizeTypes.small}
                 />
               )}
-              onEndReachedThreshold={0.5}
-              onEndReached={() => hits.length > 5 && fetchMore({ variables: { offset: hits.length } })}
+              // onEndReachedThreshold={0.5}
+              // onEndReached={() => hits.length > 5 && fetchMore({ variables: { offset: hits.length } })}
             />
           </>
         )}
