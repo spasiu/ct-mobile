@@ -193,14 +193,13 @@ export const LiveScreen = ({
     setLiveTermsAccepted(true);
   };
 
-  useEffect((): () => void => {
+  useEffect((): (() => void) => {
     const EnteredLiveStream = Date.now();
-    const sendEvent = () => appsFlyer.logEvent(
-      "af_content_viewed",
-      {
+    const sendEvent = () =>
+      appsFlyer.logEvent('af_content_viewed', {
         af_event_start: EnteredLiveStream,
         af_event_end: () => Date.now(),
-        af_customer_user_id: userId
+        af_customer_user_id: userId,
       });
     return sendEvent;
   }, []);
@@ -214,7 +213,6 @@ export const LiveScreen = ({
         end={{ x: 0, y: 1 }}
         style={[s.flx_i]}>
         <SafeAreaView style={[s.flx_i]}>
-
           <NavigationBar containerStyle={[s.mb1]}>
             <View style={[s.flx_row, s.flx_i, s.jcfs, s.aic]}>
               <ServerImage
@@ -273,7 +271,7 @@ export const LiveScreen = ({
                 />
               )}
               {isEmpty(upcomingBreak) ||
-                upcomingBreak === notifiedBreak ? null : (
+              upcomingBreak === notifiedBreak ? null : (
                 <UpNextBox
                   breakTitle={breakTitleSelector(upcomingBreak)}
                   spotsLeft={breakSpotsSelector(upcomingBreak)}
