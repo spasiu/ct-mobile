@@ -9,7 +9,6 @@ import {
   SearchInput,
   FilterItem,
   Avatar,
-  Loading,
   FilterItemStatusTypes,
   HitsView,
 } from '../../components';
@@ -31,7 +30,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [numberOfHits, setNumberOfHits] = useState(0);
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -39,8 +38,13 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
-  const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
+  const {
+    data: requestData,
+    loading,
+    fetchMore,
+  } = useHitsScreenQuery({
     fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
     variables: {
       ...getHitsSearchAndFilterParams(
         authUser?.uid as string,
@@ -50,13 +54,15 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
       offset: 0,
     },
   });
+  const hits = hitsSelector(requestData);
+  const user = userSelector(users);
   const loadMore = (offset: number) => {
+    if (offset < numberOfHits) return;
     fetchMore({
       variables: { offset },
     });
+    setNumberOfHits(offset + 24);
   };
-  const hits = hitsSelector(requestData);
-  const user = userSelector(users);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -89,10 +95,16 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         />
         <SearchInput
           value={searchTerm}
-          onChangeText={text => setSearchTerm(text)}
+          onChangeText={(text: string) => setSearchTerm(text)}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset: number) => hits.length > 15 ? loadMore(offset) : null} />}
+      <HitsView
+        hits={hits}
+        onEndReached={(offset: number) =>
+          hits.length > 15 ? loadMore(offset) : null
+        }
+        loading={loading}
+      />
     </Container>
   );
 };
