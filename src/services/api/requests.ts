@@ -11399,7 +11399,7 @@ export type BreakersListQuery = (
   { __typename?: 'query_root' }
   & { Users: Array<(
     { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'username' | 'image'>
+    & Pick<Users, 'id' | 'username' | 'image' | 'first_name' | 'last_name'>
   )> }
 );
 
@@ -12978,6 +12978,8 @@ export const BreakersListDocument = gql`
     id
     username
     image
+    first_name
+    last_name
   }
 }
     `;

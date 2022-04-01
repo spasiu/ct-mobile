@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
-import { styles as s, sizes } from 'react-native-style-tachyons';
+import { FlatList, ScrollView, View } from 'react-native';
+import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 import { breakerEventsSelector } from '../../common/breaker';
@@ -16,8 +16,6 @@ import {
   FilterItem,
   FilterItemTypes,
   FilterItemStatusTypes,
-  OverScreenModal,
-  ServerImage,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -30,19 +28,18 @@ import {
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { ResultDetailModal } from '../result-detail/result-detail-modal';
-
+import { BreakerList } from './breaker-list';
 import {
   eventBreakerSelector,
   eventDetailSelector,
   eventBreakerDetailSelector,
 } from './schedule-screen.utils';
-import { BorderlessButton } from 'react-native-gesture-handler';
-import { ICON_SIZE } from '../../theme/sizes';
+
 // const downArrow = require('../../assets/down-arrow.png');
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   const [showBreakersModal, setShowBreakersModal] = useState(false);
-  const [breakerIdFilter, setBreakerIdFilter] = useState('');
+  const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [filterByDate, setFilterByDate] = useState(false);
@@ -66,7 +63,7 @@ export const ResultsScreen = (): JSX.Element => {
     fetchPolicy: 'network-only',
     variables: {
       //userId: myEvents ? { _eq: authUser?.uid } : undefined,
-      breakerId: breakerIdFilter ? { _eq: breakerIdFilter } : {},
+      breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
       // date: filterByDate ? date : {},
     },
   });
@@ -120,13 +117,19 @@ export const ResultsScreen = (): JSX.Element => {
             <FilterItem
               style={[s.mr3]}
               type={FilterItemTypes.pill_alt}
-              text={t('buttons.breaker')}
+              text={
+                breakerFilter ? breakerFilter.username : t('buttons.breaker')
+              }
               status={
-                breakerIdFilter
+                breakerFilter
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() => setShowBreakersModal(true)}
+              onPress={() =>
+                breakerFilter
+                  ? setBreakerFilter(undefined)
+                  : setShowBreakersModal(true)
+              }
             />
             <FilterItem
               style={[s.mr3]}
@@ -195,7 +198,7 @@ export const ResultsScreen = (): JSX.Element => {
           open={showDatePicker}
           mode="date"
           date={date}
-          onConfirm={input => {
+          onConfirm={(input: Date) => {
             setShowDatePicker(false);
             setDate(input);
             setFilterByDate(true);
@@ -205,50 +208,14 @@ export const ResultsScreen = (): JSX.Element => {
             setFilterByDate(false);
           }}
         />
-
-        <OverScreenModal
-          isVisible={showBreakersModal}
-          onPressClose={() => setShowBreakersModal(false)}>
-          <ScrollView>
-            <Text style={[s.b, s.f2, s.tc, s.pb4]}>
-              {t('tabBar.breakersTab')}
-            </Text>
-            {breakerList?.Users?.map((breaker: any) => {
-              return (
-                <BorderlessButton
-                  key={`filter-breaker-car-${breaker.id}`}
-                  style={[
-                    { height: sizes.h3 + sizes.h1 },
-                    s.flx_i,
-                    s.pa3,
-                    s.br3,
-                    s.mb3,
-                    s.jcsb,
-                    s.bg_white,
-                    s.shadow_s,
-                    s.ml1,
-                    s.mr1,
-                  ]}
-                  onPress={() => {
-                    setBreakerIdFilter(breaker.id);
-                    setShowBreakersModal(false);
-                  }}>
-                  <View style={[s.flx_row, s.aic, s.pa2]}>
-                    <Text style={[s.f3, s.fw3, s.left_2, s.b]}>
-                      {breaker.username}
-                    </Text>
-                    <ServerImage
-                      style={[s.circle_l, s.absolute, s.right_2]}
-                      width={ICON_SIZE.L}
-                      height={ICON_SIZE.L}
-                      src={breaker.image}
-                    />
-                  </View>
-                </BorderlessButton>
-              );
-            })}
-          </ScrollView>
-        </OverScreenModal>
+        {breakerList?.Users ? (
+          <BreakerList
+            breakers={breakerList.Users as Users[]}
+            onClose={() => setShowBreakersModal(false)}
+            showModal={showBreakersModal}
+            setBreakerFilter={(breaker: Users) => setBreakerFilter(breaker)}
+          />
+        ) : null}
         {!isEmpty(result) ? (
           <ResultDetailModal
             isVisible={!isEmpty(result)}

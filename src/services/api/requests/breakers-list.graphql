@@ -3,5 +3,7 @@ query BreakersList {
     id
     username
     image
+    first_name
+    last_name
   }
 }
