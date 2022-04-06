@@ -1,6 +1,6 @@
 subscription FeaturedHits {
   Hits(limit: 6
     where:{ _and: [{ archived: { _eq: false } },{ published: { _eq: true } }] }
-    order_by: { created_at: desc }
+    order_by: { created_at: desc, id: desc }
   ) { ...HitsDetail }
 }

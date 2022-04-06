@@ -12961,7 +12961,7 @@ export const FeaturedHitsDocument = gql`
   Hits(
     limit: 6
     where: {_and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    order_by: {created_at: desc, id: desc}
   ) {
     ...HitsDetail
   }
@@ -13107,7 +13107,7 @@ export const HitsDocument = gql`
     query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    order_by: {created_at: desc, id: desc}
   ) {
     ...HitsDetail
   }
