@@ -987,10 +987,6 @@ export type Breaks = {
   /** An aggregate relationship */
   Saves_aggregate: SaveBreak_Aggregate;
   archived: Scalars['Boolean'];
-  /** An array relationship */
-  break_products: Array<Break_Product>;
-  /** An aggregate relationship */
-  break_products_aggregate: Break_Product_Aggregate;
   /** An object relationship */
   break_status: Break_Status;
   break_type: Break_Type_Enum;
@@ -1090,26 +1086,6 @@ export type BreaksSaves_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<SaveBreak_Order_By>>;
   where?: Maybe<SaveBreak_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Breaks" */
-export type BreaksBreak_ProductsArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Breaks" */
-export type BreaksBreak_Products_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
 };
 
 
@@ -1215,7 +1191,6 @@ export type Breaks_Bool_Exp = {
   _not?: Maybe<Breaks_Bool_Exp>;
   _or?: Maybe<Array<Breaks_Bool_Exp>>;
   archived?: Maybe<Boolean_Comparison_Exp>;
-  break_products?: Maybe<Break_Product_Bool_Exp>;
   break_status?: Maybe<Break_Status_Bool_Exp>;
   break_type?: Maybe<Break_Type_Enum_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -1277,7 +1252,6 @@ export type Breaks_Insert_Input = {
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   Saves?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
   archived?: Maybe<Scalars['Boolean']>;
-  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -1386,7 +1360,6 @@ export type Breaks_Order_By = {
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   Saves_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
   archived?: Maybe<Order_By>;
-  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -3998,10 +3971,6 @@ export enum Players_Update_Column {
 export type Products = {
   __typename?: 'Products';
   /** An array relationship */
-  Hits: Array<Hits>;
-  /** An aggregate relationship */
-  Hits_aggregate: Hits_Aggregate;
-  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
@@ -4009,10 +3978,6 @@ export type Products = {
   available: Scalars['Boolean'];
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand: Scalars['String'];
-  /** An array relationship */
-  break_products: Array<Break_Product>;
-  /** An aggregate relationship */
-  break_products_aggregate: Break_Product_Aggregate;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category: Scalars['String'];
@@ -4040,26 +4005,6 @@ export type Products = {
 
 
 /** columns and relationships of "Products" */
-export type ProductsHitsArgs = {
-  distinct_on?: Maybe<Array<Hits_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Hits_Order_By>>;
-  where?: Maybe<Hits_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsHits_AggregateArgs = {
-  distinct_on?: Maybe<Array<Hits_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Hits_Order_By>>;
-  where?: Maybe<Hits_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
 export type ProductsInventoryArgs = {
   distinct_on?: Maybe<Array<Inventory_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4076,26 +4021,6 @@ export type ProductsInventory_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Inventory_Order_By>>;
   where?: Maybe<Inventory_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsBreak_ProductsArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-/** columns and relationships of "Products" */
-export type ProductsBreak_Products_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
 };
 
 /** aggregated selection of "Products" */
@@ -4169,7 +4094,6 @@ export type Products_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "Products". All fields are combined with a logical 'AND'. */
 export type Products_Bool_Exp = {
-  Hits?: Maybe<Hits_Bool_Exp>;
   Inventory?: Maybe<Inventory_Bool_Exp>;
   _and?: Maybe<Array<Products_Bool_Exp>>;
   _not?: Maybe<Products_Bool_Exp>;
@@ -4178,7 +4102,6 @@ export type Products_Bool_Exp = {
   available?: Maybe<Boolean_Comparison_Exp>;
   boxes_per_case?: Maybe<Int_Comparison_Exp>;
   brand?: Maybe<String_Comparison_Exp>;
-  break_products?: Maybe<Break_Product_Bool_Exp>;
   card_number?: Maybe<String_Comparison_Exp>;
   cards_per_pack?: Maybe<Int_Comparison_Exp>;
   category?: Maybe<String_Comparison_Exp>;
@@ -4219,13 +4142,11 @@ export type Products_Inc_Input = {
 
 /** input type for inserting data into table "Products" */
 export type Products_Insert_Input = {
-  Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   autograph?: Maybe<Scalars['Boolean']>;
   available?: Maybe<Scalars['Boolean']>;
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand?: Maybe<Scalars['String']>;
-  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
@@ -4377,13 +4298,11 @@ export type Products_On_Conflict = {
 
 /** Ordering options when selecting data from "Products". */
 export type Products_Order_By = {
-  Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   autograph?: Maybe<Order_By>;
   available?: Maybe<Order_By>;
   boxes_per_case?: Maybe<Order_By>;
   brand?: Maybe<Order_By>;
-  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   card_number?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
   category?: Maybe<Order_By>;
@@ -4678,6 +4597,7 @@ export type SaveBreak = {
   User: Users;
   break_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4727,6 +4647,7 @@ export type SaveBreak_Bool_Exp = {
   _or?: Maybe<Array<SaveBreak_Bool_Exp>>;
   break_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4743,6 +4664,7 @@ export type SaveBreak_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4752,6 +4674,7 @@ export type SaveBreak_Max_Fields = {
   __typename?: 'SaveBreak_max_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4760,6 +4683,7 @@ export type SaveBreak_Max_Fields = {
 export type SaveBreak_Max_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4769,6 +4693,7 @@ export type SaveBreak_Min_Fields = {
   __typename?: 'SaveBreak_min_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4777,6 +4702,7 @@ export type SaveBreak_Min_Fields = {
 export type SaveBreak_Min_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4803,14 +4729,14 @@ export type SaveBreak_Order_By = {
   User?: Maybe<Users_Order_By>;
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreak */
 export type SaveBreak_Pk_Columns_Input = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveBreak" */
@@ -4819,6 +4745,8 @@ export enum SaveBreak_Select_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4829,6 +4757,7 @@ export enum SaveBreak_Select_Column {
 export type SaveBreak_Set_Input = {
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4839,6 +4768,8 @@ export enum SaveBreak_Update_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4854,6 +4785,7 @@ export type SaveBreaker = {
   User: Users;
   breaker_id: Scalars['String'];
   created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4903,6 +4835,7 @@ export type SaveBreaker_Bool_Exp = {
   _or?: Maybe<Array<SaveBreaker_Bool_Exp>>;
   breaker_id?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4919,6 +4852,7 @@ export type SaveBreaker_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4928,6 +4862,7 @@ export type SaveBreaker_Max_Fields = {
   __typename?: 'SaveBreaker_max_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4936,6 +4871,7 @@ export type SaveBreaker_Max_Fields = {
 export type SaveBreaker_Max_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4945,6 +4881,7 @@ export type SaveBreaker_Min_Fields = {
   __typename?: 'SaveBreaker_min_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4953,6 +4890,7 @@ export type SaveBreaker_Min_Fields = {
 export type SaveBreaker_Min_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4979,14 +4917,14 @@ export type SaveBreaker_Order_By = {
   User?: Maybe<Users_Order_By>;
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreaker */
 export type SaveBreaker_Pk_Columns_Input = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveBreaker" */
@@ -4995,6 +4933,8 @@ export enum SaveBreaker_Select_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5005,6 +4945,7 @@ export enum SaveBreaker_Select_Column {
 export type SaveBreaker_Set_Input = {
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5015,6 +4956,8 @@ export enum SaveBreaker_Update_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5030,6 +4973,7 @@ export type SaveEvent = {
   User: Users;
   created_at: Scalars['timestamptz'];
   event_id: Scalars['uuid'];
+  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -5079,6 +5023,7 @@ export type SaveEvent_Bool_Exp = {
   _or?: Maybe<Array<SaveEvent_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -5095,6 +5040,7 @@ export type SaveEvent_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5104,6 +5050,7 @@ export type SaveEvent_Max_Fields = {
   __typename?: 'SaveEvent_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5112,6 +5059,7 @@ export type SaveEvent_Max_Fields = {
 export type SaveEvent_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5121,6 +5069,7 @@ export type SaveEvent_Min_Fields = {
   __typename?: 'SaveEvent_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5129,6 +5078,7 @@ export type SaveEvent_Min_Fields = {
 export type SaveEvent_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5155,14 +5105,14 @@ export type SaveEvent_Order_By = {
   User?: Maybe<Users_Order_By>;
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveEvent */
 export type SaveEvent_Pk_Columns_Input = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 /** select columns of table "SaveEvent" */
@@ -5171,6 +5121,8 @@ export enum SaveEvent_Select_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5181,6 +5133,7 @@ export enum SaveEvent_Select_Column {
 export type SaveEvent_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5191,6 +5144,8 @@ export enum SaveEvent_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
+  /** column name */
+  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5430,7 +5385,7 @@ export type Teams = {
   color?: Maybe<Scalars['bpchar']>;
   color_secondary?: Maybe<Scalars['bpchar']>;
   end_year?: Maybe<Scalars['smallint']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   short_code: Scalars['String'];
   sport: Scalars['String'];
   start_year: Scalars['smallint'];
@@ -5491,7 +5446,7 @@ export type Teams_Bool_Exp = {
 /** unique or primary key constraints on table "Teams" */
 export enum Teams_Constraint {
   /** unique or primary key constraint */
-  TeamsPkey = 'teams_pkey'
+  TeamsPkey1 = 'Teams_pkey1'
 }
 
 /** input type for incrementing numeric columns in table "Teams" */
@@ -5817,8 +5772,7 @@ export type Teams_Order_By = {
 
 /** primary key columns input for table: Teams */
 export type Teams_Pk_Columns_Input = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -6770,156 +6724,6 @@ export type Bpchar_Comparison_Exp = {
   _similar?: Maybe<Scalars['bpchar']>;
 };
 
-/** columns and relationships of "break_product" */
-export type Break_Product = {
-  __typename?: 'break_product';
-  /** An object relationship */
-  Break: Breaks;
-  /** An object relationship */
-  Product: Products;
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-/** aggregated selection of "break_product" */
-export type Break_Product_Aggregate = {
-  __typename?: 'break_product_aggregate';
-  aggregate?: Maybe<Break_Product_Aggregate_Fields>;
-  nodes: Array<Break_Product>;
-};
-
-/** aggregate fields of "break_product" */
-export type Break_Product_Aggregate_Fields = {
-  __typename?: 'break_product_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Break_Product_Max_Fields>;
-  min?: Maybe<Break_Product_Min_Fields>;
-};
-
-
-/** aggregate fields of "break_product" */
-export type Break_Product_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Break_Product_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "break_product" */
-export type Break_Product_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Break_Product_Max_Order_By>;
-  min?: Maybe<Break_Product_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "break_product" */
-export type Break_Product_Arr_Rel_Insert_Input = {
-  data: Array<Break_Product_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "break_product". All fields are combined with a logical 'AND'. */
-export type Break_Product_Bool_Exp = {
-  Break?: Maybe<Breaks_Bool_Exp>;
-  Product?: Maybe<Products_Bool_Exp>;
-  _and?: Maybe<Array<Break_Product_Bool_Exp>>;
-  _not?: Maybe<Break_Product_Bool_Exp>;
-  _or?: Maybe<Array<Break_Product_Bool_Exp>>;
-  break_id?: Maybe<Uuid_Comparison_Exp>;
-  product_id?: Maybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "break_product" */
-export enum Break_Product_Constraint {
-  /** unique or primary key constraint */
-  BreakProductPkey = 'break_product_pkey'
-}
-
-/** input type for inserting data into table "break_product" */
-export type Break_Product_Insert_Input = {
-  Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
-  Product?: Maybe<Products_Obj_Rel_Insert_Input>;
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** aggregate max on columns */
-export type Break_Product_Max_Fields = {
-  __typename?: 'break_product_max_fields';
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by max() on columns of table "break_product" */
-export type Break_Product_Max_Order_By = {
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Break_Product_Min_Fields = {
-  __typename?: 'break_product_min_fields';
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by min() on columns of table "break_product" */
-export type Break_Product_Min_Order_By = {
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "break_product" */
-export type Break_Product_Mutation_Response = {
-  __typename?: 'break_product_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Break_Product>;
-};
-
-/** on_conflict condition type for table "break_product" */
-export type Break_Product_On_Conflict = {
-  constraint: Break_Product_Constraint;
-  update_columns?: Array<Break_Product_Update_Column>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "break_product". */
-export type Break_Product_Order_By = {
-  Break?: Maybe<Breaks_Order_By>;
-  Product?: Maybe<Products_Order_By>;
-  break_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: break_product */
-export type Break_Product_Pk_Columns_Input = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
-};
-
-/** select columns of table "break_product" */
-export enum Break_Product_Select_Column {
-  /** column name */
-  BreakId = 'break_id',
-  /** column name */
-  ProductId = 'product_id'
-}
-
-/** input type for updating data in table "break_product" */
-export type Break_Product_Set_Input = {
-  break_id?: Maybe<Scalars['uuid']>;
-  product_id?: Maybe<Scalars['uuid']>;
-};
-
-/** update columns of table "break_product" */
-export enum Break_Product_Update_Column {
-  /** column name */
-  BreakId = 'break_id',
-  /** column name */
-  ProductId = 'product_id'
-}
-
 /** columns and relationships of "break_status" */
 export type Break_Status = {
   __typename?: 'break_status';
@@ -7496,10 +7300,6 @@ export type Mutation_Root = {
   delete_Users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "Users" */
   delete_Users_by_pk?: Maybe<Users>;
-  /** delete data from the table: "break_product" */
-  delete_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** delete single row from the table: "break_product" */
-  delete_break_product_by_pk?: Maybe<Break_Product>;
   /** delete data from the table: "break_status" */
   delete_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** delete single row from the table: "break_status" */
@@ -7612,10 +7412,6 @@ export type Mutation_Root = {
   insert_Users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "Users" */
   insert_Users_one?: Maybe<Users>;
-  /** insert data into the table: "break_product" */
-  insert_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** insert a single row into the table: "break_product" */
-  insert_break_product_one?: Maybe<Break_Product>;
   /** insert data into the table: "break_status" */
   insert_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** insert a single row into the table: "break_status" */
@@ -7728,10 +7524,6 @@ export type Mutation_Root = {
   update_Users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "Users" */
   update_Users_by_pk?: Maybe<Users>;
-  /** update data of the table: "break_product" */
-  update_break_product?: Maybe<Break_Product_Mutation_Response>;
-  /** update single row of the table: "break_product" */
-  update_break_product_by_pk?: Maybe<Break_Product>;
   /** update data of the table: "break_status" */
   update_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** update single row of the table: "break_status" */
@@ -7937,8 +7729,7 @@ export type Mutation_RootDelete_SaveBreakArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7950,8 +7741,7 @@ export type Mutation_RootDelete_SaveBreakerArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7963,8 +7753,7 @@ export type Mutation_RootDelete_SaveEventArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -7988,8 +7777,7 @@ export type Mutation_RootDelete_TeamsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Teams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -8027,19 +7815,6 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Break_ProductArgs = {
-  where: Break_Product_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Break_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
 };
 
 
@@ -8420,20 +8195,6 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Break_ProductArgs = {
-  objects: Array<Break_Product_Insert_Input>;
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Break_Product_OneArgs = {
-  object: Break_Product_Insert_Input;
-  on_conflict?: Maybe<Break_Product_On_Conflict>;
 };
 
 
@@ -8858,20 +8619,6 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Break_ProductArgs = {
-  _set?: Maybe<Break_Product_Set_Input>;
-  where: Break_Product_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Break_Product_By_PkArgs = {
-  _set?: Maybe<Break_Product_Set_Input>;
-  pk_columns: Break_Product_Pk_Columns_Input;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Break_StatusArgs = {
   _set?: Maybe<Break_Status_Set_Input>;
   where: Break_Status_Bool_Exp;
@@ -9225,12 +8972,6 @@ export type Query_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "break_product" */
-  break_product: Array<Break_Product>;
-  /** fetch aggregated fields from the table: "break_product" */
-  break_product_aggregate: Break_Product_Aggregate;
-  /** fetch data from the table: "break_product" using primary key columns */
-  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -9613,8 +9354,7 @@ export type Query_RootSaveBreak_AggregateArgs = {
 
 
 export type Query_RootSaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9637,8 +9377,7 @@ export type Query_RootSaveBreaker_AggregateArgs = {
 
 
 export type Query_RootSaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9661,8 +9400,7 @@ export type Query_RootSaveEvent_AggregateArgs = {
 
 
 export type Query_RootSaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -9708,8 +9446,7 @@ export type Query_RootTeams_AggregateArgs = {
 
 
 export type Query_RootTeams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -9780,30 +9517,6 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   id: Scalars['String'];
-};
-
-
-export type Query_RootBreak_ProductArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Query_RootBreak_Product_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Query_RootBreak_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
 };
 
 
@@ -10092,12 +9805,6 @@ export type Subscription_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "break_product" */
-  break_product: Array<Break_Product>;
-  /** fetch aggregated fields from the table: "break_product" */
-  break_product_aggregate: Break_Product_Aggregate;
-  /** fetch data from the table: "break_product" using primary key columns */
-  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -10480,8 +10187,7 @@ export type Subscription_RootSaveBreak_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreak_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10504,8 +10210,7 @@ export type Subscription_RootSaveBreaker_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreaker_By_PkArgs = {
-  breaker_id: Scalars['String'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10528,8 +10233,7 @@ export type Subscription_RootSaveEvent_AggregateArgs = {
 
 
 export type Subscription_RootSaveEvent_By_PkArgs = {
-  event_id: Scalars['uuid'];
-  user_id: Scalars['String'];
+  id: Scalars['uuid'];
 };
 
 
@@ -10575,8 +10279,7 @@ export type Subscription_RootTeams_AggregateArgs = {
 
 
 export type Subscription_RootTeams_By_PkArgs = {
-  short_code: Scalars['String'];
-  sport: Scalars['String'];
+  name: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -10647,30 +10350,6 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
-};
-
-
-export type Subscription_RootBreak_ProductArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Subscription_RootBreak_Product_AggregateArgs = {
-  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Break_Product_Order_By>>;
-  where?: Maybe<Break_Product_Bool_Exp>;
-};
-
-
-export type Subscription_RootBreak_Product_By_PkArgs = {
-  break_id: Scalars['uuid'];
-  product_id: Scalars['uuid'];
 };
 
 
@@ -11692,6 +11371,7 @@ export type HitsScreenQueryVariables = Exact<{
   userHitsFilter?: Maybe<String_Comparison_Exp>;
   searchInput?: Maybe<Scalars['String']>;
   offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -13463,12 +13143,12 @@ export type HitsQueryHookResult = ReturnType<typeof useHitsQuery>;
 export type HitsLazyQueryHookResult = ReturnType<typeof useHitsLazyQuery>;
 export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
 export const HitsScreenDocument = gql`
-    query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int) {
+    query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int, $limit: Int) {
   Hits(
-    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    where: {user_id: $userHitsFilter, archived: {_eq: false}, published: {_eq: true}, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}]}
+    order_by: [{created_at: desc}, {id: desc}]
     offset: $offset
-    limit: 24
+    limit: $limit
   ) {
     ...HitsDetail
   }
@@ -13490,6 +13170,7 @@ export const HitsScreenDocument = gql`
  *      userHitsFilter: // value for 'userHitsFilter'
  *      searchInput: // value for 'searchInput'
  *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
