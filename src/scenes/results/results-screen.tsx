@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, ScrollView, View } from 'react-native';
+import { FlatList, Image, ScrollView, Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
@@ -34,8 +34,23 @@ import {
   eventDetailSelector,
   eventBreakerDetailSelector,
 } from './schedule-screen.utils';
+// import { COLORS } from '../../theme/colors';
+const closeIcon = require('../../assets/close-icon.png');
 
-// const downArrow = require('../../assets/down-arrow.png');
+// const formatEvents = (events: any | undefined) => {
+//   if (!events) return [];
+//   const breakersObj: any = {};
+//   events.forEach((e: any) => {
+//     const id = e.User.id;
+//     if (!breakersObj[id]) {
+//       breakersObj[id] = { ...e.User, Events: [] };
+//     }
+//     const { User, ...rest } = e;
+//     breakersObj[id].Events.push(rest);
+//   });
+//   return Object.keys(breakersObj).map(b => breakersObj[b]);
+// };
+
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   const [showBreakersModal, setShowBreakersModal] = useState(false);
@@ -43,8 +58,7 @@ export const ResultsScreen = (): JSX.Element => {
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [filterByDate, setFilterByDate] = useState(false);
-
-  const [myEvents, setMyEvents] = useState(false);
+  const [myEventsFilter, setMyEventsFilter] = useState(false);
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const navigation = useNavigation();
 
@@ -59,25 +73,23 @@ export const ResultsScreen = (): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const { loading, data } = useCompletedEventsQuery({
+  const { loading, data, error } = useCompletedEventsQuery({
     fetchPolicy: 'network-only',
     variables: {
-      //userId: myEvents ? { _eq: authUser?.uid } : undefined,
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
+      userId: myEventsFilter ? {Order: {user_id: { _eq: authUser?.uid }}} : {}, // myEventsFilter ? { _eq: authUser?.uid } : {},
       // date: filterByDate ? date : {},
+      limit: 20,
     },
   });
-  const breakersObj: any = {};
-  data?.Events.forEach((e: any) => {
-    const id = e.User.id;
-    if (!breakersObj[id]) {
-      breakersObj[id] = { ...e.User, Events: [] };
-    }
-    const { User, ...rest } = e;
-    breakersObj[id].Events.push(rest);
+  console.log(error);
+  console.log(JSON.stringify(data, null, 2));
+  console.log({
+    breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
+    userId: myEventsFilter ? { _eq: authUser?.uid } : {},
+    limit: 20,
   });
-  const breakers = Object.keys(breakersObj).map(b => breakersObj[b]);
-
+  const breakers = data?.Users;
   if (loading && !data) {
     return <Loading />;
   }
@@ -108,17 +120,40 @@ export const ResultsScreen = (): JSX.Element => {
               type={FilterItemTypes.pill_alt}
               text={t('buttons.myBreaks')}
               status={
-                myEvents
+                myEventsFilter
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() => setMyEvents(!myEvents)}
+              onPress={() => setMyEventsFilter(!myEventsFilter)}
             />
             <FilterItem
               style={[s.mr3]}
               type={FilterItemTypes.pill_alt}
               text={
-                breakerFilter ? breakerFilter.username : t('buttons.breaker')
+                breakerFilter ? (
+                  <View style={[s.flx_row, s.aic, s.jcc]}>
+                    <Text
+                      style={[
+                        s.b,
+                        s.white,
+                        s.ff_alt_sb,
+                        s.f6,
+                        s.ph3,
+                      ]}>{`${breakerFilter.username} `}</Text>
+                    <Image
+                      source={closeIcon}
+                      style={[
+                        {
+                          width: 8,
+                          height: 8,
+                          tintColor: 'black',
+                        },
+                        s.bg_white,
+                        s.br3,
+                      ]}
+                    />
+                  </View>
+                ) : t('buttons.breaker')
               }
               status={
                 breakerFilter
@@ -147,7 +182,7 @@ export const ResultsScreen = (): JSX.Element => {
           </View>
         </View>
         <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
-          {breakers.map((user, index) => {
+          {breakers?.map((user: any, index: number) => {
             const breaker = user as Users;
             const breakerEvents = breakerEventsSelector(breaker);
             if (isEmpty(breakerEvents)) {
@@ -173,7 +208,6 @@ export const ResultsScreen = (): JSX.Element => {
                   data={breaker.Events}
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => {
-                    //const eventData = scheduleEventSelector(item);
                     return (
                       <EventCard
                         title={item.title}

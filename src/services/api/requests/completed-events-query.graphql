@@ -1,20 +1,16 @@
-query CompletedEvents($breakerId: String_comparison_exp) {
-  Events(
-    limit: 20
-    where: { status: { _eq: COMPLETED } user_id: $breakerId }
-    order_by: { start_time: desc }
-  ) {
+query CompletedEvents($limit: Int, $breakerId: String_comparison_exp, $userId: BreakProductItems_bool_exp) {
+  Users(where: {is_breaker: {_eq: true}, Events: {User: {id: $breakerId}, Breaks: {BreakProductItems: $userId}}}, limit: $limit) {
     id
-    title
-    description
-    start_time
+    first_name
+    last_name
     image
-    User {
+    username
+    Events(where: {archived: {_eq: false}, status: {_eq: COMPLETED}}, limit: $limit) {
       id
       image
-      first_name
-      last_name
-      username
+      start_time
+      title
+      description
     }
   }
 }
