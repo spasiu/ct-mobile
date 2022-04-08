@@ -34,29 +34,16 @@ import {
   eventDetailSelector,
   eventBreakerDetailSelector,
 } from './schedule-screen.utils';
-// import { COLORS } from '../../theme/colors';
 const closeIcon = require('../../assets/close-icon.png');
-
-// const formatEvents = (events: any | undefined) => {
-//   if (!events) return [];
-//   const breakersObj: any = {};
-//   events.forEach((e: any) => {
-//     const id = e.User.id;
-//     if (!breakersObj[id]) {
-//       breakersObj[id] = { ...e.User, Events: [] };
-//     }
-//     const { User, ...rest } = e;
-//     breakersObj[id].Events.push(rest);
-//   });
-//   return Object.keys(breakersObj).map(b => breakersObj[b]);
-// };
 
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   const [showBreakersModal, setShowBreakersModal] = useState(false);
   const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
-  const [date, setDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [filterByDate, setFilterByDate] = useState(false);
   const [myEventsFilter, setMyEventsFilter] = useState(false);
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -73,21 +60,15 @@ export const ResultsScreen = (): JSX.Element => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const { loading, data, error } = useCompletedEventsQuery({
+  const { loading, data } = useCompletedEventsQuery({
     fetchPolicy: 'network-only',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      userId: myEventsFilter ? {Order: {user_id: { _eq: authUser?.uid }}} : {}, // myEventsFilter ? { _eq: authUser?.uid } : {},
-      // date: filterByDate ? date : {},
+      userId: myEventsFilter ? { Order: { user_id: { _eq: authUser?.uid } } } : {},
+      startDate: filterByDate ? { _gte: startDate } : {},
+      endDate: filterByDate ? { start_time: { _lte: endDate } } : {},
       limit: 20,
     },
-  });
-  console.log(error);
-  console.log(JSON.stringify(data, null, 2));
-  console.log({
-    breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-    userId: myEventsFilter ? { _eq: authUser?.uid } : {},
-    limit: 20,
   });
   const breakers = data?.Users;
   if (loading && !data) {
@@ -175,9 +156,15 @@ export const ResultsScreen = (): JSX.Element => {
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() =>
-                filterByDate ? setFilterByDate(false) : setShowDatePicker(true)
-              }
+              onPress={() => {
+                if (filterByDate) {
+                  setFilterByDate(false);
+                  setStartDate(new Date(Date.now()));
+                  setEndDate(new Date(Date.now()));
+                } else {
+                  setShowDatePicker(true);
+                }
+              }}
             />
           </View>
         </View>
@@ -229,17 +216,37 @@ export const ResultsScreen = (): JSX.Element => {
         </ScrollView>
         <DatePicker
           modal
+          title={t('dates.start')}
           open={showDatePicker}
           mode="date"
-          date={date}
+          date={startDate}
+          maximumDate={new Date(Date.now())}
           onConfirm={(input: Date) => {
-            setShowDatePicker(false);
-            setDate(input);
-            setFilterByDate(true);
+            setStartDate(input);
+            setShowEndDatePicker(true);
           }}
           onCancel={() => {
             setShowDatePicker(false);
-            setFilterByDate(false);
+            setStartDate(new Date(Date.now()));
+            setEndDate(new Date(Date.now()));
+          }}
+        />
+        <DatePicker
+          modal
+          title={t('dates.end')}
+          open={showEndDatePicker}
+          mode="date"
+          date={endDate}
+          maximumDate={new Date(Date.now())}
+          onConfirm={(input: Date) => {
+            setEndDate(input);
+            setFilterByDate(true);
+            setShowEndDatePicker(false);
+          }}
+          onCancel={() => {
+            setShowEndDatePicker(false);
+            setStartDate(new Date(Date.now()));
+            setEndDate(new Date(Date.now()));
           }}
         />
         {breakerList?.Users ? (

@@ -386,5 +386,9 @@
   },
   "results": {
     "title": "Completed Breaks"
+  },
+  "dates": {
+    "start": "Start Date",
+    "end": "End Date"
   }
 }

@@ -11645,6 +11645,8 @@ export type CompletedEventsQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   breakerId?: Maybe<String_Comparison_Exp>;
   userId?: Maybe<BreakProductItems_Bool_Exp>;
+  startDate?: Maybe<Timestamptz_Comparison_Exp>;
+  endDate?: Maybe<Array<Events_Bool_Exp> | Events_Bool_Exp>;
 }>;
 
 
@@ -13328,9 +13330,9 @@ export function useNewBreakersSubscription(baseOptions?: ApolloReactHooks.Subscr
 export type NewBreakersSubscriptionHookResult = ReturnType<typeof useNewBreakersSubscription>;
 export type NewBreakersSubscriptionResult = Apollo.SubscriptionResult<NewBreakersSubscription>;
 export const CompletedEventsDocument = gql`
-    query CompletedEvents($limit: Int, $breakerId: String_comparison_exp, $userId: BreakProductItems_bool_exp) {
+    query CompletedEvents($limit: Int, $breakerId: String_comparison_exp, $userId: BreakProductItems_bool_exp, $startDate: timestamptz_comparison_exp, $endDate: [Events_bool_exp!]) {
   Users(
-    where: {is_breaker: {_eq: true}, Events: {User: {id: $breakerId}, Breaks: {BreakProductItems: $userId}}}
+    where: {is_breaker: {_eq: true}, Events: {User: {id: $breakerId}, Breaks: {BreakProductItems: $userId}, start_time: $startDate, _and: $endDate}}
     limit: $limit
   ) {
     id
@@ -13364,6 +13366,8 @@ export const CompletedEventsDocument = gql`
  *      limit: // value for 'limit'
  *      breakerId: // value for 'breakerId'
  *      userId: // value for 'userId'
+ *      startDate: // value for 'startDate'
+ *      endDate: // value for 'endDate'
  *   },
  * });
  */
