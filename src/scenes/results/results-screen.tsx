@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { FlatList, ScrollView, Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
@@ -32,9 +32,9 @@ import { BreakerList } from './breaker-list';
 import {
   eventBreakerSelector,
   eventDetailSelector,
-  eventBreakerDetailSelector,
-} from './schedule-screen.utils';
-const closeIcon = require('../../assets/close-icon.png');
+} from './results-screen.utils';
+import { formatScheduledStatus } from '../../utils/date';
+import { eventTimeSelector } from '../../common/event';
 
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
@@ -64,17 +64,18 @@ export const ResultsScreen = (): JSX.Element => {
     fetchPolicy: 'network-only',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      userId: myEventsFilter ? { Order: { user_id: { _eq: authUser?.uid } } } : {},
       startDate: filterByDate ? { _gte: startDate } : {},
       endDate: filterByDate ? { start_time: { _lte: endDate } } : {},
       limit: 20,
+      userId: myEventsFilter
+        ? { Order: { user_id: { _eq: authUser?.uid } } }
+        : {},
     },
   });
   const breakers = data?.Users;
   if (loading && !data) {
     return <Loading />;
   }
-
   return (
     <>
       <Container
@@ -95,7 +96,7 @@ export const ResultsScreen = (): JSX.Element => {
               </View>
             }
           />
-          <View style={[s.flx_row]}>
+          <View style={[s.flx_row, s.aic, s.jcc]}>
             <FilterItem
               style={[s.mr3]}
               type={FilterItemTypes.pill_alt}
@@ -112,29 +113,17 @@ export const ResultsScreen = (): JSX.Element => {
               type={FilterItemTypes.pill_alt}
               text={
                 breakerFilter ? (
-                  <View style={[s.flx_row, s.aic, s.jcc]}>
-                    <Text
-                      style={[
-                        s.b,
-                        s.white,
-                        s.ff_alt_sb,
-                        s.f6,
-                        s.ph3,
-                      ]}>{`${breakerFilter.username} `}</Text>
-                    <Image
-                      source={closeIcon}
-                      style={[
-                        {
-                          width: 8,
-                          height: 8,
-                          tintColor: 'black',
-                        },
-                        s.bg_white,
-                        s.br3,
-                      ]}
-                    />
-                  </View>
-                ) : t('buttons.breaker')
+                  <Text
+                    style={[
+                      s.b,
+                      s.white,
+                      s.ff_alt_sb,
+                      s.f5,
+                      s.ph3,
+                    ]}>{`${breakerFilter.username} `}</Text>
+                ) : (
+                  t('buttons.breaker')
+                )
               }
               status={
                 breakerFilter
@@ -179,15 +168,7 @@ export const ResultsScreen = (): JSX.Element => {
               <View key={`breaker-${index}`}>
                 <SectionHeader
                   {...eventBreakerSelector(breaker)}
-                  actionText={t('buttons.seeAll')}
                   containerStyle={[s.mr3]}
-                  onActionPressed={() =>
-                    navigation.navigate(ROUTES_IDS.BREAKERS_TAB, {
-                      screen: ROUTES_IDS.BREAKER_DETAIL_SCREEN,
-                      initial: false,
-                      params: eventBreakerDetailSelector(breaker),
-                    })
-                  }
                 />
                 <FlatList
                   keyExtractor={item => item.id}
@@ -201,7 +182,7 @@ export const ResultsScreen = (): JSX.Element => {
                         status="completed"
                         image={item.image}
                         eventId={item.id}
-                        eventDate={item.start_time}
+                        eventDate={formatScheduledStatus(eventTimeSelector(item))}
                         onPress={() => {
                           setResult(eventDetailSelector(item, breaker));
                         }}
@@ -224,6 +205,7 @@ export const ResultsScreen = (): JSX.Element => {
           onConfirm={(input: Date) => {
             setStartDate(input);
             setShowEndDatePicker(true);
+            setShowDatePicker(false);
           }}
           onCancel={() => {
             setShowDatePicker(false);

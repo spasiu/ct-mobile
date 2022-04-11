@@ -1789,6 +1789,7 @@ export type Events = {
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
+  video_url?: Maybe<Scalars['String']>;
 };
 
 
@@ -1888,6 +1889,7 @@ export type Events_Bool_Exp = {
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
+  video_url?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "Events" */
@@ -1914,6 +1916,7 @@ export type Events_Insert_Input = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -1929,6 +1932,7 @@ export type Events_Max_Fields = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "Events" */
@@ -1943,6 +1947,7 @@ export type Events_Max_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1958,6 +1963,7 @@ export type Events_Min_Fields = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "Events" */
@@ -1972,6 +1978,7 @@ export type Events_Min_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "Events" */
@@ -2015,6 +2022,7 @@ export type Events_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: Events */
@@ -2047,7 +2055,9 @@ export enum Events_Select_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  VideoUrl = 'video_url'
 }
 
 /** input type for updating data in table "Events" */
@@ -2064,6 +2074,7 @@ export type Events_Set_Input = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "Events" */
@@ -2091,7 +2102,9 @@ export enum Events_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  VideoUrl = 'video_url'
 }
 
 /** columns and relationships of "ExtensibleValues" */
@@ -11657,7 +11670,7 @@ export type CompletedEventsQuery = (
     & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image' | 'username'>
     & { Events: Array<(
       { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'image' | 'start_time' | 'title' | 'description'>
+      & Pick<Events, 'id' | 'image' | 'start_time' | 'title' | 'description' | 'video_url'>
     )> }
   )> }
 );
@@ -13340,12 +13353,16 @@ export const CompletedEventsDocument = gql`
     last_name
     image
     username
-    Events(where: {archived: {_eq: false}, status: {_eq: COMPLETED}}, limit: $limit) {
+    Events(
+      where: {archived: {_eq: false}, status: {_eq: COMPLETED}, start_time: $startDate, _and: $endDate}
+      limit: $limit
+    ) {
       id
       image
       start_time
       title
       description
+      video_url
     }
   }
 }

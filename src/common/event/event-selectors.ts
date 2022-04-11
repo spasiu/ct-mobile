@@ -49,6 +49,9 @@ export const eventIdSelector = (event: Partial<Events>): string =>
 export const eventDescriptionSelector = (event: Partial<Events>): string =>
   pathOr('', ['description'], event);
 
+export const eventVideoSelector = (event: Partial<Events>): string =>
+  pathOr('', ['video_url'], event);
+
 export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
   pathOr({}, ['User'], event);
 

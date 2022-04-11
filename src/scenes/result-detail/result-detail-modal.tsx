@@ -8,9 +8,9 @@ import {
   ResultCard,
   ReadMore,
   ServerImage,
-  StatusBadge,
   Loading,
   OverScreenModal,
+  Badge,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { SeeAllTeamsModal } from '../live/see-all-teams-modal';
@@ -29,18 +29,16 @@ import { ResultDetailModalProps } from './result-detail-modal.props';
 import { COLORS } from '../../theme/colors';
 
 export const ResultDetailModal = ({
-  modalTitle = '',
   isVisible,
   showHeader = true,
   title,
   image,
-  status,
   eventDate,
   eventId,
   breaker,
   description = '',
   onPressClose = () => undefined,
-  video = 'https://player.vimeo.com/video/631377208',
+  videoUrl,
   ...modalProps
 }: ResultDetailModalProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -54,7 +52,6 @@ export const ResultDetailModal = ({
       status: { _eq: Break_Status_Enum.Completed },
     },
   });
-
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
   const iframeHeight = (videoWidth * pixelRatio) / 2;
@@ -63,7 +60,7 @@ export const ResultDetailModal = ({
   const videoHtml = `
   <html>
     <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
-    <iframe style="border-radius:${sizes.br5}px;" src="${video}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    <iframe style="border-radius:${sizes.br5}px;" src="${videoUrl}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </body>
   </html>
 `;
@@ -85,12 +82,10 @@ export const ResultDetailModal = ({
                   width={ICON_SIZE.XS}
                   height={ICON_SIZE.XS}
                 />
-                <Text style={[s.ff_b, s.black, s.f5]}>
-                  {breaker.name as string}
-                </Text>
+                <Text style={[s.ff_b, s.black, s.f5]}>{breaker.name}</Text>
               </View>
               <View style={[s.flx_ratio(0.35), s.flx_row, s.jcfe]}>
-                <StatusBadge status={status} text={eventDate} />
+                <Badge containerStyle={[s.bg_black_40]} text={eventDate} />
               </View>
             </View>
             <ReadMore mainTextStyle={[s.f7, s.lh_medium]} numberOfLines={3}>

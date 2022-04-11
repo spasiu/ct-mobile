@@ -23,7 +23,7 @@ query CompletedEvents(
     image
     username
     Events(
-      where: { archived: { _eq: false }, status: { _eq: COMPLETED } }
+      where: { archived: { _eq: false }, status: { _eq: COMPLETED }, start_time: $startDate, _and: $endDate}
       limit: $limit
     ) {
       id
@@ -31,6 +31,7 @@ query CompletedEvents(
       start_time
       title
       description
+      video_url
     }
   }
 }

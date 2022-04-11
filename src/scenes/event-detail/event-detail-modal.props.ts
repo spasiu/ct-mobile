@@ -10,4 +10,5 @@ export interface EventDetailModalProps extends OverScreenModalProps {
   breaker: { name: string; image: string };
   description?: string;
   eventId: string;
+  videoUrl?: string;
 }
