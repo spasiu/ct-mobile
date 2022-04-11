@@ -25,12 +25,12 @@ import { hitsSelector } from '../../common/hit';
 
 import { HitsScreenProps } from './hits-screen.props';
 import { getHitsSearchAndFilterParams } from './hits-screen.utils';
-
+const PAGE_SIZE = 99;
 export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [numberOfHits, setNumberOfHits] = useState(0);
+  const [offset, setOffset] = useState(PAGE_SIZE);
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -52,16 +52,17 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         userHitsFilterActive,
       ),
       offset: 0,
+      limit: PAGE_SIZE,
     },
   });
   const hits = hitsSelector(requestData);
   const user = userSelector(users);
-  const loadMore = (offset: number) => {
-    if (offset < numberOfHits) return;
+  const loadMore = () => {
+    if (offset - PAGE_SIZE > hits.length) return;
     fetchMore({
       variables: { offset },
     });
-    setNumberOfHits(offset + 24);
+    setOffset(offset + PAGE_SIZE);
   };
   return (
     <Container
@@ -95,14 +96,15 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         />
         <SearchInput
           value={searchTerm}
-          onChangeText={(text: string) => setSearchTerm(text)}
+          onChangeText={(text: string) => {
+            setSearchTerm(text);
+            setOffset(PAGE_SIZE);
+          }}
         />
       </View>
       <HitsView
         hits={hits}
-        onEndReached={(offset: number) =>
-          hits.length > 15 ? loadMore(offset) : null
-        }
+        onEndReached={() => (hits.length > 15 ? loadMore() : null)}
         loading={loading}
       />
     </Container>

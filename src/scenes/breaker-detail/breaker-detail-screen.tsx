@@ -157,9 +157,6 @@ export const BreakerDetailScreen = ({
                   cardSize={ImageCardSizeTypes.small}
                 />
               )}
-              // TODO: add pagination for hits
-              // onEndReachedThreshold={0.5}
-              // onEndReached={() => hits.length > 5 && fetchMore({ variables: { offset: hits.length } })}
             />
           </>
         )}

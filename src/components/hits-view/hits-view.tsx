@@ -48,7 +48,7 @@ export const HitsView = ({
         style={gridStyle}
         ListFooterComponent={() => (loading ? <Loading /> : null)}
         onEndReachedThreshold={0.5}
-        onEndReached={() => onEndReached && onEndReached(hits.length)}
+        onEndReached={() => !loading && onEndReached && onEndReached()}
         numColumns={NUMBER_OF_COLUMNS}
         data={hits.length % NUMBER_OF_COLUMNS === 0 ? hits : completeHits(hits)}
         contentContainerStyle={gridContentStyle}

@@ -2,10 +2,13 @@ query HitsScreen(
   $userHitsFilter: String_comparison_exp
   $searchInput: String
   $offset: Int
+  $limit: Int
 ) {
   Hits(
     where: {
       user_id: $userHitsFilter
+      archived: { _eq: false }
+      published: { _eq: true }
       _or: [
         { player: { _ilike: $searchInput } }
         { memoribillia: { _ilike: $searchInput } }
@@ -23,10 +26,9 @@ query HitsScreen(
           }
         }
       ]
-      _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
-    order_by: { created_at: desc }
+    order_by: [{created_at: desc }, { id: desc }]
     offset: $offset
-    limit: 24
+    limit: $limit
   ) { ...HitsDetail }
 }
