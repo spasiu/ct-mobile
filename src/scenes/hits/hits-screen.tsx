@@ -96,7 +96,10 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         />
         <SearchInput
           value={searchTerm}
-          onChangeText={(text: string) => setSearchTerm(text)}
+          onChangeText={(text: string) => {
+            setSearchTerm(text);
+            setOffset(PAGE_SIZE);
+          }}
         />
       </View>
       <HitsView
