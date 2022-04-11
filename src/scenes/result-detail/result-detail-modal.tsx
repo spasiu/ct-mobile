@@ -93,17 +93,19 @@ export const ResultDetailModal = ({
             </ReadMore>
           </View>
         ) : null}
-        <View style={[s.h5, s.w_100, s.jcc, s.aic]}>
-          <WebView
-            scrollEnabled={false}
-            style={[
-              {
-                width: videoWidth,
-              },
-            ]}
-            source={{ html: videoHtml }}
-          />
-        </View>
+        {videoUrl ? (
+          <View style={[s.h5, s.w_100, s.jcc, s.aic]}>
+            <WebView
+              scrollEnabled={false}
+              style={[
+                {
+                  width: videoWidth,
+                },
+              ]}
+              source={{ html: videoHtml }}
+            />
+          </View>
+        ) : null}
         {breaks && breaks.length === 0 ? null : (
           <Text style={[s.ff_b, s.f5, s.mb2, s.mt3, s.ph3]}>
             {t('event.breakLineupTitle')}

@@ -61,7 +61,7 @@ export const ResultsScreen = (): JSX.Element => {
   });
 
   const { loading, data } = useCompletedEventsQuery({
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
       startDate: filterByDate ? { _gte: startDate } : {},
