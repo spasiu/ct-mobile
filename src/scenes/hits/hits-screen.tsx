@@ -25,7 +25,7 @@ import { hitsSelector } from '../../common/hit';
 
 import { HitsScreenProps } from './hits-screen.props';
 import { getHitsSearchAndFilterParams } from './hits-screen.utils';
-const PAGE_SIZE = 30;
+const PAGE_SIZE = 99;
 export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
