@@ -78,7 +78,7 @@ export const ResultDetailModal = ({
               <View style={[s.flx_row, s.flx_ratio(0.65)]}>
                 <ServerImage
                   style={[s.circle_xs, s.mr2]}
-                  src={breaker.image as string}
+                  src={breaker.image}
                   width={ICON_SIZE.XS}
                   height={ICON_SIZE.XS}
                 />

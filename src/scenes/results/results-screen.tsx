@@ -106,7 +106,10 @@ export const ResultsScreen = (): JSX.Element => {
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() => setMyEventsFilter(!myEventsFilter)}
+              onPress={() => {
+                if (breakerFilter && !myEventsFilter) setBreakerFilter(undefined);
+                setMyEventsFilter(!myEventsFilter);
+              }}
             />
             <FilterItem
               style={[s.mr3]}
@@ -236,7 +239,10 @@ export const ResultsScreen = (): JSX.Element => {
             breakers={breakerList.Users as Users[]}
             onClose={() => setShowBreakersModal(false)}
             showModal={showBreakersModal}
-            setBreakerFilter={(breaker: Users) => setBreakerFilter(breaker)}
+            setBreakerFilter={(breaker: Users) => {
+              setBreakerFilter(breaker);
+              if (myEventsFilter) setMyEventsFilter(false);
+            }}
           />
         ) : null}
         {!isEmpty(result) ? (
