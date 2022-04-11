@@ -8,6 +8,6 @@ query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
       ]
       _and: [{ archived: { _eq: false } }, { published: { _eq: true } }]
     }
-    order_by: { created_at: desc }
+    order_by: { created_at: desc, id: desc }
   ) { ...HitsDetail }
 }

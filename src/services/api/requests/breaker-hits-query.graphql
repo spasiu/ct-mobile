@@ -1,13 +1,9 @@
-query BreakerHits($breakerId: String) {
+query BreakerHits($breakerId: String, $offset: Int) {
   Hits(
     where: {
       Break: { Event: { user_id: { _eq: $breakerId } } }
       _and: [{ archived: { _eq: false } }]
     }
-  ) {
-    id
-    image_front
-    description
-    player
-  }
+    offset: $offset
+  ) { ...HitsDetail }
 }

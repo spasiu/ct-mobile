@@ -21,7 +21,7 @@ export const Avatar = ({
           width={ICON_SIZE.M}
           height={ICON_SIZE.M}
           style={avatarStyle}
-          fit="facearea"
+          fit="fill"
         />
       ) : (
         <Image

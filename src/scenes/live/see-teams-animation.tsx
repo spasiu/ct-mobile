@@ -9,12 +9,13 @@ import { BreakResultSummary } from './animation/break-result-summary';
 import { RandomTeamUserRows } from './animation/random-team-user-rows';
 import { Break_Type_Enum } from '../../services/api/requests';
 import { HitDraftUserRows } from './animation/hit-draft-user-rows';
+const CLOSE_ANIMATION_AFTER_MS = 7000;
 
 export const SeeTeamsAnimation = ({
   userId,
   result,
   onPressClose,
-  breakType
+  breakType,
 }: SeeTeamsAnimationProps): JSX.Element => {
   const [summaryAnimationEnded, setSummaryAnimationEnded] = useState(false);
   const [teamAnimationEnded, setTeamAnimationEnded] = useState(false);
@@ -42,6 +43,10 @@ export const SeeTeamsAnimation = ({
               userId={userId}
               onEnd={() => {
                 setTeamAnimationEnded(true);
+                setTimeout(
+                  () => onPressClose && onPressClose(),
+                  CLOSE_ANIMATION_AFTER_MS,
+                );
               }}
             />
           </ScrollView>
@@ -63,10 +68,13 @@ export const SeeTeamsAnimation = ({
           )}
         </View>
       </View>
-    )
+    );
   }
 
-  if (breakType == Break_Type_Enum.RandomTeam || breakType == Break_Type_Enum.RandomDivision) {
+  if (
+    breakType == Break_Type_Enum.RandomTeam ||
+    breakType == Break_Type_Enum.RandomDivision
+  ) {
     return (
       <View style={teamsAnimationContainerStyle}>
         {!summaryAnimationEnded && (
@@ -90,6 +98,10 @@ export const SeeTeamsAnimation = ({
               userId={userId}
               onEnd={() => {
                 setTeamAnimationEnded(true);
+                setTimeout(
+                  () => onPressClose && onPressClose(),
+                  CLOSE_ANIMATION_AFTER_MS,
+                );
               }}
             />
           </ScrollView>

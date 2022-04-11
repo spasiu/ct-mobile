@@ -11565,6 +11565,7 @@ export type NewBreakerEventsSubscription = (
 
 export type BreakerHitsQueryVariables = Exact<{
   breakerId?: Maybe<Scalars['String']>;
+  offset?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -11572,20 +11573,7 @@ export type BreakerHitsQuery = (
   { __typename?: 'query_root' }
   & { Hits: Array<(
     { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
-  )> }
-);
-
-export type NewBreakerHitsSubscriptionVariables = Exact<{
-  breakerId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type NewBreakerHitsSubscription = (
-  { __typename?: 'subscription_root' }
-  & { Hits: Array<(
-    { __typename?: 'Hits' }
-    & Pick<Hits, 'id' | 'image_front' | 'description' | 'player'>
+    & HitsDetailFragment
   )> }
 );
 
@@ -11934,6 +11922,7 @@ export type HitsScreenQueryVariables = Exact<{
   userHitsFilter?: Maybe<String_Comparison_Exp>;
   searchInput?: Maybe<Scalars['String']>;
   offset?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -13125,17 +13114,15 @@ export function useNewBreakerEventsSubscription(baseOptions: ApolloReactHooks.Su
 export type NewBreakerEventsSubscriptionHookResult = ReturnType<typeof useNewBreakerEventsSubscription>;
 export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerEventsSubscription>;
 export const BreakerHitsDocument = gql`
-    query BreakerHits($breakerId: String) {
+    query BreakerHits($breakerId: String, $offset: Int) {
   Hits(
     where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+    offset: $offset
   ) {
-    id
-    image_front
-    description
-    player
+    ...HitsDetail
   }
 }
-    `;
+    ${HitsDetailFragmentDoc}`;
 
 /**
  * __useBreakerHitsQuery__
@@ -13150,6 +13137,7 @@ export const BreakerHitsDocument = gql`
  * const { data, loading, error } = useBreakerHitsQuery({
  *   variables: {
  *      breakerId: // value for 'breakerId'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
@@ -13164,41 +13152,6 @@ export function useBreakerHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type BreakerHitsQueryHookResult = ReturnType<typeof useBreakerHitsQuery>;
 export type BreakerHitsLazyQueryHookResult = ReturnType<typeof useBreakerHitsLazyQuery>;
 export type BreakerHitsQueryResult = Apollo.QueryResult<BreakerHitsQuery, BreakerHitsQueryVariables>;
-export const NewBreakerHitsDocument = gql`
-    subscription NewBreakerHits($breakerId: String) {
-  Hits(
-    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
-  ) {
-    id
-    image_front
-    description
-    player
-  }
-}
-    `;
-
-/**
- * __useNewBreakerHitsSubscription__
- *
- * To run a query within a React component, call `useNewBreakerHitsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useNewBreakerHitsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useNewBreakerHitsSubscription({
- *   variables: {
- *      breakerId: // value for 'breakerId'
- *   },
- * });
- */
-export function useNewBreakerHitsSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<NewBreakerHitsSubscription, NewBreakerHitsSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useSubscription<NewBreakerHitsSubscription, NewBreakerHitsSubscriptionVariables>(NewBreakerHitsDocument, options);
-      }
-export type NewBreakerHitsSubscriptionHookResult = ReturnType<typeof useNewBreakerHitsSubscription>;
-export type NewBreakerHitsSubscriptionResult = Apollo.SubscriptionResult<NewBreakerHitsSubscription>;
 export const BreakersListDocument = gql`
     query BreakersList {
   Users(where: {is_breaker: {_eq: true}}) {
@@ -13682,7 +13635,7 @@ export const FeaturedHitsDocument = gql`
   Hits(
     limit: 6
     where: {_and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    order_by: {created_at: desc, id: desc}
   ) {
     ...HitsDetail
   }
@@ -13828,7 +13781,7 @@ export const HitsDocument = gql`
     query Hits($userHitsFilter: String_comparison_exp, $searchInput: String) {
   Hits(
     where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {description: {_ilike: $searchInput}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    order_by: {created_at: desc, id: desc}
   ) {
     ...HitsDetail
   }
@@ -13864,12 +13817,12 @@ export type HitsQueryHookResult = ReturnType<typeof useHitsQuery>;
 export type HitsLazyQueryHookResult = ReturnType<typeof useHitsLazyQuery>;
 export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
 export const HitsScreenDocument = gql`
-    query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int) {
+    query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int, $limit: Int) {
   Hits(
-    where: {user_id: $userHitsFilter, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}], _and: [{archived: {_eq: false}}, {published: {_eq: true}}]}
-    order_by: {created_at: desc}
+    where: {user_id: $userHitsFilter, archived: {_eq: false}, published: {_eq: true}, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}]}
+    order_by: [{created_at: desc}, {id: desc}]
     offset: $offset
-    limit: 24
+    limit: $limit
   ) {
     ...HitsDetail
   }
@@ -13891,6 +13844,7 @@ export const HitsScreenDocument = gql`
  *      userHitsFilter: // value for 'userHitsFilter'
  *      searchInput: // value for 'searchInput'
  *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

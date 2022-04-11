@@ -9,7 +9,6 @@ import {
   SearchInput,
   FilterItem,
   Avatar,
-  Loading,
   FilterItemStatusTypes,
   HitsView,
 } from '../../components';
@@ -26,12 +25,12 @@ import { hitsSelector } from '../../common/hit';
 
 import { HitsScreenProps } from './hits-screen.props';
 import { getHitsSearchAndFilterParams } from './hits-screen.utils';
-
+const PAGE_SIZE = 16;
 export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [offset, setOffset] = useState(PAGE_SIZE);
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -39,8 +38,13 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
     },
   });
 
-  const { data: requestData, loading, fetchMore } = useHitsScreenQuery({
+  const {
+    data: requestData,
+    loading,
+    fetchMore,
+  } = useHitsScreenQuery({
     fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
     variables: {
       ...getHitsSearchAndFilterParams(
         authUser?.uid as string,
@@ -48,15 +52,18 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         userHitsFilterActive,
       ),
       offset: 0,
+      limit: PAGE_SIZE,
     },
   });
-  const loadMore = (offset: number) => {
+  const hits = hitsSelector(requestData);
+  const user = userSelector(users);
+  const loadMore = () => {
+    if (offset - PAGE_SIZE > hits.length) return;
     fetchMore({
       variables: { offset },
     });
+    setOffset(offset + PAGE_SIZE);
   };
-  const hits = hitsSelector(requestData);
-  const user = userSelector(users);
   return (
     <Container
       containerType={ContainerTypes.fixed}
@@ -89,10 +96,17 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         />
         <SearchInput
           value={searchTerm}
-          onChangeText={text => setSearchTerm(text)}
+          onChangeText={(text: string) => {
+            setSearchTerm(text);
+            setOffset(PAGE_SIZE);
+          }}
         />
       </View>
-      {loading ? <Loading /> : <HitsView hits={hits} onEndReached={(offset: number) => hits.length > 15 ? loadMore(offset) : null} />}
+      <HitsView
+        hits={hits}
+        onEndReached={() => (hits.length > 15 ? loadMore() : null)}
+        loading={loading}
+      />
     </Container>
   );
 };

@@ -23,7 +23,7 @@
         "buildclean": "yarn clean:js && yarn clean:ios && yarn install"
     },
     "dependencies": {
-        "@apollo/client": "3.3.15",
+        "@apollo/client": "3.5.10",
         "@fawazahmed/react-native-read-more": "2.0.1",
         "@intercom/intercom-react-native": "2.1.0",
         "@invertase/react-native-apple-authentication": "2.1.1",

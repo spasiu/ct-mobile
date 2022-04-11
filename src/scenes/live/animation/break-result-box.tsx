@@ -58,7 +58,7 @@ export const BreakResultBox = ({
           },
         ]}>
         <ServerImage
-          fit={'facearea'}
+          fit={'fill'}
           src={userTeam.image}
           width={ICON_SIZE.M2}
           height={ICON_SIZE.M2}

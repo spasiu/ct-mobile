@@ -54,7 +54,7 @@ export const TeamUserRow = ({
     w: avatarSize,
     h: avatarSize,
     fill: 'blur',
-    fit: 'facearea',
+    fit: 'fill',
   };
 
   const getFullImageUrl = (src: string) => {
