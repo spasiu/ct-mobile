@@ -10,3 +10,4 @@ export type { PublicStackParamList } from './stacks/public-stack';
 export type { ScheduleStackParamList } from './stacks/schedule-stack';
 export type { PaymentStackParamList } from './stacks/payment-stack';
 export type { UserProfileStackParamList } from './stacks/user-profile-stack';
+export type { ResultsStackParamList } from './stacks/results-stack';

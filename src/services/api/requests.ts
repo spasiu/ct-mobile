@@ -987,6 +987,10 @@ export type Breaks = {
   /** An aggregate relationship */
   Saves_aggregate: SaveBreak_Aggregate;
   archived: Scalars['Boolean'];
+  /** An array relationship */
+  break_products: Array<Break_Product>;
+  /** An aggregate relationship */
+  break_products_aggregate: Break_Product_Aggregate;
   /** An object relationship */
   break_status: Break_Status;
   break_type: Break_Type_Enum;
@@ -1086,6 +1090,26 @@ export type BreaksSaves_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<SaveBreak_Order_By>>;
   where?: Maybe<SaveBreak_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksBreak_ProductsArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Breaks" */
+export type BreaksBreak_Products_AggregateArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
 };
 
 
@@ -1191,6 +1215,7 @@ export type Breaks_Bool_Exp = {
   _not?: Maybe<Breaks_Bool_Exp>;
   _or?: Maybe<Array<Breaks_Bool_Exp>>;
   archived?: Maybe<Boolean_Comparison_Exp>;
+  break_products?: Maybe<Break_Product_Bool_Exp>;
   break_status?: Maybe<Break_Status_Bool_Exp>;
   break_type?: Maybe<Break_Type_Enum_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -1252,6 +1277,7 @@ export type Breaks_Insert_Input = {
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   Saves?: Maybe<SaveBreak_Arr_Rel_Insert_Input>;
   archived?: Maybe<Scalars['Boolean']>;
+  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   break_status?: Maybe<Break_Status_Obj_Rel_Insert_Input>;
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -1360,6 +1386,7 @@ export type Breaks_Order_By = {
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   Saves_aggregate?: Maybe<SaveBreak_Aggregate_Order_By>;
   archived?: Maybe<Order_By>;
+  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   break_status?: Maybe<Break_Status_Order_By>;
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -1762,6 +1789,7 @@ export type Events = {
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
+  video_url?: Maybe<Scalars['String']>;
 };
 
 
@@ -1861,6 +1889,7 @@ export type Events_Bool_Exp = {
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
+  video_url?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "Events" */
@@ -1887,6 +1916,7 @@ export type Events_Insert_Input = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -1902,6 +1932,7 @@ export type Events_Max_Fields = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "Events" */
@@ -1916,6 +1947,7 @@ export type Events_Max_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1931,6 +1963,7 @@ export type Events_Min_Fields = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "Events" */
@@ -1945,6 +1978,7 @@ export type Events_Min_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "Events" */
@@ -1988,6 +2022,7 @@ export type Events_Order_By = {
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
+  video_url?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: Events */
@@ -2020,7 +2055,9 @@ export enum Events_Select_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  VideoUrl = 'video_url'
 }
 
 /** input type for updating data in table "Events" */
@@ -2037,6 +2074,7 @@ export type Events_Set_Input = {
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
+  video_url?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "Events" */
@@ -2064,7 +2102,9 @@ export enum Events_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  VideoUrl = 'video_url'
 }
 
 /** columns and relationships of "ExtensibleValues" */
@@ -3971,6 +4011,10 @@ export enum Players_Update_Column {
 export type Products = {
   __typename?: 'Products';
   /** An array relationship */
+  Hits: Array<Hits>;
+  /** An aggregate relationship */
+  Hits_aggregate: Hits_Aggregate;
+  /** An array relationship */
   Inventory: Array<Inventory>;
   /** An aggregate relationship */
   Inventory_aggregate: Inventory_Aggregate;
@@ -3978,6 +4022,10 @@ export type Products = {
   available: Scalars['Boolean'];
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand: Scalars['String'];
+  /** An array relationship */
+  break_products: Array<Break_Product>;
+  /** An aggregate relationship */
+  break_products_aggregate: Break_Product_Aggregate;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category: Scalars['String'];
@@ -3995,12 +4043,33 @@ export type Products = {
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
+  subcategory?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   /** An object relationship */
   unit: Unit_Of_Measure;
   unit_of_measure: Unit_Of_Measure_Enum;
   updated_at: Scalars['timestamptz'];
   year: Scalars['String'];
+};
+
+
+/** columns and relationships of "Products" */
+export type ProductsHitsArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Products" */
+export type ProductsHits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Hits_Order_By>>;
+  where?: Maybe<Hits_Bool_Exp>;
 };
 
 
@@ -4021,6 +4090,26 @@ export type ProductsInventory_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Inventory_Order_By>>;
   where?: Maybe<Inventory_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Products" */
+export type ProductsBreak_ProductsArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+/** columns and relationships of "Products" */
+export type ProductsBreak_Products_AggregateArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
 };
 
 /** aggregated selection of "Products" */
@@ -4094,6 +4183,7 @@ export type Products_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "Products". All fields are combined with a logical 'AND'. */
 export type Products_Bool_Exp = {
+  Hits?: Maybe<Hits_Bool_Exp>;
   Inventory?: Maybe<Inventory_Bool_Exp>;
   _and?: Maybe<Array<Products_Bool_Exp>>;
   _not?: Maybe<Products_Bool_Exp>;
@@ -4102,6 +4192,7 @@ export type Products_Bool_Exp = {
   available?: Maybe<Boolean_Comparison_Exp>;
   boxes_per_case?: Maybe<Int_Comparison_Exp>;
   brand?: Maybe<String_Comparison_Exp>;
+  break_products?: Maybe<Break_Product_Bool_Exp>;
   card_number?: Maybe<String_Comparison_Exp>;
   cards_per_pack?: Maybe<Int_Comparison_Exp>;
   category?: Maybe<String_Comparison_Exp>;
@@ -4119,6 +4210,7 @@ export type Products_Bool_Exp = {
   player?: Maybe<String_Comparison_Exp>;
   rookie_card?: Maybe<Boolean_Comparison_Exp>;
   series?: Maybe<String_Comparison_Exp>;
+  subcategory?: Maybe<String_Comparison_Exp>;
   type?: Maybe<String_Comparison_Exp>;
   unit?: Maybe<Unit_Of_Measure_Bool_Exp>;
   unit_of_measure?: Maybe<Unit_Of_Measure_Enum_Comparison_Exp>;
@@ -4142,11 +4234,13 @@ export type Products_Inc_Input = {
 
 /** input type for inserting data into table "Products" */
 export type Products_Insert_Input = {
+  Hits?: Maybe<Hits_Arr_Rel_Insert_Input>;
   Inventory?: Maybe<Inventory_Arr_Rel_Insert_Input>;
   autograph?: Maybe<Scalars['Boolean']>;
   available?: Maybe<Scalars['Boolean']>;
   boxes_per_case?: Maybe<Scalars['Int']>;
   brand?: Maybe<Scalars['String']>;
+  break_products?: Maybe<Break_Product_Arr_Rel_Insert_Input>;
   card_number?: Maybe<Scalars['String']>;
   cards_per_pack?: Maybe<Scalars['Int']>;
   category?: Maybe<Scalars['String']>;
@@ -4164,6 +4258,7 @@ export type Products_Insert_Input = {
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
+  subcategory?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   unit?: Maybe<Unit_Of_Measure_Obj_Rel_Insert_Input>;
   unit_of_measure?: Maybe<Unit_Of_Measure_Enum>;
@@ -4192,6 +4287,7 @@ export type Products_Max_Fields = {
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   series?: Maybe<Scalars['String']>;
+  subcategory?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year?: Maybe<Scalars['String']>;
@@ -4217,6 +4313,7 @@ export type Products_Max_Order_By = {
   parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
+  subcategory?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
@@ -4243,6 +4340,7 @@ export type Products_Min_Fields = {
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
   series?: Maybe<Scalars['String']>;
+  subcategory?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   year?: Maybe<Scalars['String']>;
@@ -4268,6 +4366,7 @@ export type Products_Min_Order_By = {
   parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
+  subcategory?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
@@ -4298,11 +4397,13 @@ export type Products_On_Conflict = {
 
 /** Ordering options when selecting data from "Products". */
 export type Products_Order_By = {
+  Hits_aggregate?: Maybe<Hits_Aggregate_Order_By>;
   Inventory_aggregate?: Maybe<Inventory_Aggregate_Order_By>;
   autograph?: Maybe<Order_By>;
   available?: Maybe<Order_By>;
   boxes_per_case?: Maybe<Order_By>;
   brand?: Maybe<Order_By>;
+  break_products_aggregate?: Maybe<Break_Product_Aggregate_Order_By>;
   card_number?: Maybe<Order_By>;
   cards_per_pack?: Maybe<Order_By>;
   category?: Maybe<Order_By>;
@@ -4320,6 +4421,7 @@ export type Products_Order_By = {
   player?: Maybe<Order_By>;
   rookie_card?: Maybe<Order_By>;
   series?: Maybe<Order_By>;
+  subcategory?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   unit?: Maybe<Unit_Of_Measure_Order_By>;
   unit_of_measure?: Maybe<Order_By>;
@@ -4377,6 +4479,8 @@ export enum Products_Select_Column {
   /** column name */
   Series = 'series',
   /** column name */
+  Subcategory = 'subcategory',
+  /** column name */
   Type = 'type',
   /** column name */
   UnitOfMeasure = 'unit_of_measure',
@@ -4409,6 +4513,7 @@ export type Products_Set_Input = {
   player?: Maybe<Scalars['String']>;
   rookie_card?: Maybe<Scalars['Boolean']>;
   series?: Maybe<Scalars['String']>;
+  subcategory?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   unit_of_measure?: Maybe<Unit_Of_Measure_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -4528,6 +4633,8 @@ export enum Products_Update_Column {
   /** column name */
   Series = 'series',
   /** column name */
+  Subcategory = 'subcategory',
+  /** column name */
   Type = 'type',
   /** column name */
   UnitOfMeasure = 'unit_of_measure',
@@ -4597,7 +4704,6 @@ export type SaveBreak = {
   User: Users;
   break_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4647,7 +4753,6 @@ export type SaveBreak_Bool_Exp = {
   _or?: Maybe<Array<SaveBreak_Bool_Exp>>;
   break_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4664,7 +4769,6 @@ export type SaveBreak_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4674,7 +4778,6 @@ export type SaveBreak_Max_Fields = {
   __typename?: 'SaveBreak_max_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4683,7 +4786,6 @@ export type SaveBreak_Max_Fields = {
 export type SaveBreak_Max_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4693,7 +4795,6 @@ export type SaveBreak_Min_Fields = {
   __typename?: 'SaveBreak_min_fields';
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4702,7 +4803,6 @@ export type SaveBreak_Min_Fields = {
 export type SaveBreak_Min_Order_By = {
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4729,14 +4829,14 @@ export type SaveBreak_Order_By = {
   User?: Maybe<Users_Order_By>;
   break_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreak */
 export type SaveBreak_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveBreak" */
@@ -4745,8 +4845,6 @@ export enum SaveBreak_Select_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4757,7 +4855,6 @@ export enum SaveBreak_Select_Column {
 export type SaveBreak_Set_Input = {
   break_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4768,8 +4865,6 @@ export enum SaveBreak_Update_Column {
   BreakId = 'break_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4785,7 +4880,6 @@ export type SaveBreaker = {
   User: Users;
   breaker_id: Scalars['String'];
   created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -4835,7 +4929,6 @@ export type SaveBreaker_Bool_Exp = {
   _or?: Maybe<Array<SaveBreaker_Bool_Exp>>;
   breaker_id?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -4852,7 +4945,6 @@ export type SaveBreaker_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4862,7 +4954,6 @@ export type SaveBreaker_Max_Fields = {
   __typename?: 'SaveBreaker_max_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4871,7 +4962,6 @@ export type SaveBreaker_Max_Fields = {
 export type SaveBreaker_Max_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4881,7 +4971,6 @@ export type SaveBreaker_Min_Fields = {
   __typename?: 'SaveBreaker_min_fields';
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4890,7 +4979,6 @@ export type SaveBreaker_Min_Fields = {
 export type SaveBreaker_Min_Order_By = {
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -4917,14 +5005,14 @@ export type SaveBreaker_Order_By = {
   User?: Maybe<Users_Order_By>;
   breaker_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveBreaker */
 export type SaveBreaker_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveBreaker" */
@@ -4933,8 +5021,6 @@ export enum SaveBreaker_Select_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4945,7 +5031,6 @@ export enum SaveBreaker_Select_Column {
 export type SaveBreaker_Set_Input = {
   breaker_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4956,8 +5041,6 @@ export enum SaveBreaker_Update_Column {
   BreakerId = 'breaker_id',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -4973,7 +5056,6 @@ export type SaveEvent = {
   User: Users;
   created_at: Scalars['timestamptz'];
   event_id: Scalars['uuid'];
-  id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   user_id: Scalars['String'];
 };
@@ -5023,7 +5105,6 @@ export type SaveEvent_Bool_Exp = {
   _or?: Maybe<Array<SaveEvent_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   user_id?: Maybe<String_Comparison_Exp>;
 };
@@ -5040,7 +5121,6 @@ export type SaveEvent_Insert_Input = {
   User?: Maybe<Users_Obj_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5050,7 +5130,6 @@ export type SaveEvent_Max_Fields = {
   __typename?: 'SaveEvent_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5059,7 +5138,6 @@ export type SaveEvent_Max_Fields = {
 export type SaveEvent_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5069,7 +5147,6 @@ export type SaveEvent_Min_Fields = {
   __typename?: 'SaveEvent_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5078,7 +5155,6 @@ export type SaveEvent_Min_Fields = {
 export type SaveEvent_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
@@ -5105,14 +5181,14 @@ export type SaveEvent_Order_By = {
   User?: Maybe<Users_Order_By>;
   created_at?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: SaveEvent */
 export type SaveEvent_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 /** select columns of table "SaveEvent" */
@@ -5121,8 +5197,6 @@ export enum SaveEvent_Select_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5133,7 +5207,6 @@ export enum SaveEvent_Select_Column {
 export type SaveEvent_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   event_id?: Maybe<Scalars['uuid']>;
-  id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -5144,8 +5217,6 @@ export enum SaveEvent_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EventId = 'event_id',
-  /** column name */
-  Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5385,7 +5456,7 @@ export type Teams = {
   color?: Maybe<Scalars['bpchar']>;
   color_secondary?: Maybe<Scalars['bpchar']>;
   end_year?: Maybe<Scalars['smallint']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   short_code: Scalars['String'];
   sport: Scalars['String'];
   start_year: Scalars['smallint'];
@@ -5446,7 +5517,7 @@ export type Teams_Bool_Exp = {
 /** unique or primary key constraints on table "Teams" */
 export enum Teams_Constraint {
   /** unique or primary key constraint */
-  TeamsPkey1 = 'Teams_pkey1'
+  TeamsPkey = 'teams_pkey'
 }
 
 /** input type for incrementing numeric columns in table "Teams" */
@@ -5502,255 +5573,6 @@ export type Teams_Mutation_Response = {
   returning: Array<Teams>;
 };
 
-/** columns and relationships of "Teams_old" */
-export type Teams_Old = {
-  __typename?: 'Teams_old';
-  color: Scalars['String'];
-  color_secondary: Scalars['String'];
-  id: Scalars['uuid'];
-  name: Scalars['String'];
-  short_name: Scalars['String'];
-  sport: Scalars['String'];
-  year_end: Scalars['Int'];
-  year_start: Scalars['Int'];
-};
-
-/** aggregated selection of "Teams_old" */
-export type Teams_Old_Aggregate = {
-  __typename?: 'Teams_old_aggregate';
-  aggregate?: Maybe<Teams_Old_Aggregate_Fields>;
-  nodes: Array<Teams_Old>;
-};
-
-/** aggregate fields of "Teams_old" */
-export type Teams_Old_Aggregate_Fields = {
-  __typename?: 'Teams_old_aggregate_fields';
-  avg?: Maybe<Teams_Old_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Teams_Old_Max_Fields>;
-  min?: Maybe<Teams_Old_Min_Fields>;
-  stddev?: Maybe<Teams_Old_Stddev_Fields>;
-  stddev_pop?: Maybe<Teams_Old_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Teams_Old_Stddev_Samp_Fields>;
-  sum?: Maybe<Teams_Old_Sum_Fields>;
-  var_pop?: Maybe<Teams_Old_Var_Pop_Fields>;
-  var_samp?: Maybe<Teams_Old_Var_Samp_Fields>;
-  variance?: Maybe<Teams_Old_Variance_Fields>;
-};
-
-
-/** aggregate fields of "Teams_old" */
-export type Teams_Old_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Teams_Old_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** aggregate avg on columns */
-export type Teams_Old_Avg_Fields = {
-  __typename?: 'Teams_old_avg_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "Teams_old". All fields are combined with a logical 'AND'. */
-export type Teams_Old_Bool_Exp = {
-  _and?: Maybe<Array<Teams_Old_Bool_Exp>>;
-  _not?: Maybe<Teams_Old_Bool_Exp>;
-  _or?: Maybe<Array<Teams_Old_Bool_Exp>>;
-  color?: Maybe<String_Comparison_Exp>;
-  color_secondary?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  short_name?: Maybe<String_Comparison_Exp>;
-  sport?: Maybe<String_Comparison_Exp>;
-  year_end?: Maybe<Int_Comparison_Exp>;
-  year_start?: Maybe<Int_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "Teams_old" */
-export enum Teams_Old_Constraint {
-  /** unique or primary key constraint */
-  TeamsPkey = 'Teams_pkey'
-}
-
-/** input type for incrementing numeric columns in table "Teams_old" */
-export type Teams_Old_Inc_Input = {
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "Teams_old" */
-export type Teams_Old_Insert_Input = {
-  color?: Maybe<Scalars['String']>;
-  color_secondary?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
-  short_name?: Maybe<Scalars['String']>;
-  sport?: Maybe<Scalars['String']>;
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** aggregate max on columns */
-export type Teams_Old_Max_Fields = {
-  __typename?: 'Teams_old_max_fields';
-  color?: Maybe<Scalars['String']>;
-  color_secondary?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
-  short_name?: Maybe<Scalars['String']>;
-  sport?: Maybe<Scalars['String']>;
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** aggregate min on columns */
-export type Teams_Old_Min_Fields = {
-  __typename?: 'Teams_old_min_fields';
-  color?: Maybe<Scalars['String']>;
-  color_secondary?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
-  short_name?: Maybe<Scalars['String']>;
-  sport?: Maybe<Scalars['String']>;
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** response of any mutation on the table "Teams_old" */
-export type Teams_Old_Mutation_Response = {
-  __typename?: 'Teams_old_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Teams_Old>;
-};
-
-/** on_conflict condition type for table "Teams_old" */
-export type Teams_Old_On_Conflict = {
-  constraint: Teams_Old_Constraint;
-  update_columns?: Array<Teams_Old_Update_Column>;
-  where?: Maybe<Teams_Old_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "Teams_old". */
-export type Teams_Old_Order_By = {
-  color?: Maybe<Order_By>;
-  color_secondary?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  short_name?: Maybe<Order_By>;
-  sport?: Maybe<Order_By>;
-  year_end?: Maybe<Order_By>;
-  year_start?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: Teams_old */
-export type Teams_Old_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** select columns of table "Teams_old" */
-export enum Teams_Old_Select_Column {
-  /** column name */
-  Color = 'color',
-  /** column name */
-  ColorSecondary = 'color_secondary',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  ShortName = 'short_name',
-  /** column name */
-  Sport = 'sport',
-  /** column name */
-  YearEnd = 'year_end',
-  /** column name */
-  YearStart = 'year_start'
-}
-
-/** input type for updating data in table "Teams_old" */
-export type Teams_Old_Set_Input = {
-  color?: Maybe<Scalars['String']>;
-  color_secondary?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
-  name?: Maybe<Scalars['String']>;
-  short_name?: Maybe<Scalars['String']>;
-  sport?: Maybe<Scalars['String']>;
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** aggregate stddev on columns */
-export type Teams_Old_Stddev_Fields = {
-  __typename?: 'Teams_old_stddev_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Teams_Old_Stddev_Pop_Fields = {
-  __typename?: 'Teams_old_stddev_pop_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Teams_Old_Stddev_Samp_Fields = {
-  __typename?: 'Teams_old_stddev_samp_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate sum on columns */
-export type Teams_Old_Sum_Fields = {
-  __typename?: 'Teams_old_sum_fields';
-  year_end?: Maybe<Scalars['Int']>;
-  year_start?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "Teams_old" */
-export enum Teams_Old_Update_Column {
-  /** column name */
-  Color = 'color',
-  /** column name */
-  ColorSecondary = 'color_secondary',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  ShortName = 'short_name',
-  /** column name */
-  Sport = 'sport',
-  /** column name */
-  YearEnd = 'year_end',
-  /** column name */
-  YearStart = 'year_start'
-}
-
-/** aggregate var_pop on columns */
-export type Teams_Old_Var_Pop_Fields = {
-  __typename?: 'Teams_old_var_pop_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Teams_Old_Var_Samp_Fields = {
-  __typename?: 'Teams_old_var_samp_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Teams_Old_Variance_Fields = {
-  __typename?: 'Teams_old_variance_fields';
-  year_end?: Maybe<Scalars['Float']>;
-  year_start?: Maybe<Scalars['Float']>;
-};
-
 /** on_conflict condition type for table "Teams" */
 export type Teams_On_Conflict = {
   constraint: Teams_Constraint;
@@ -5772,7 +5594,8 @@ export type Teams_Order_By = {
 
 /** primary key columns input for table: Teams */
 export type Teams_Pk_Columns_Input = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
 };
 
@@ -6724,6 +6547,156 @@ export type Bpchar_Comparison_Exp = {
   _similar?: Maybe<Scalars['bpchar']>;
 };
 
+/** columns and relationships of "break_product" */
+export type Break_Product = {
+  __typename?: 'break_product';
+  /** An object relationship */
+  Break: Breaks;
+  /** An object relationship */
+  Product: Products;
+  break_id: Scalars['uuid'];
+  product_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "break_product" */
+export type Break_Product_Aggregate = {
+  __typename?: 'break_product_aggregate';
+  aggregate?: Maybe<Break_Product_Aggregate_Fields>;
+  nodes: Array<Break_Product>;
+};
+
+/** aggregate fields of "break_product" */
+export type Break_Product_Aggregate_Fields = {
+  __typename?: 'break_product_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Break_Product_Max_Fields>;
+  min?: Maybe<Break_Product_Min_Fields>;
+};
+
+
+/** aggregate fields of "break_product" */
+export type Break_Product_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Break_Product_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "break_product" */
+export type Break_Product_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Break_Product_Max_Order_By>;
+  min?: Maybe<Break_Product_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "break_product" */
+export type Break_Product_Arr_Rel_Insert_Input = {
+  data: Array<Break_Product_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: Maybe<Break_Product_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "break_product". All fields are combined with a logical 'AND'. */
+export type Break_Product_Bool_Exp = {
+  Break?: Maybe<Breaks_Bool_Exp>;
+  Product?: Maybe<Products_Bool_Exp>;
+  _and?: Maybe<Array<Break_Product_Bool_Exp>>;
+  _not?: Maybe<Break_Product_Bool_Exp>;
+  _or?: Maybe<Array<Break_Product_Bool_Exp>>;
+  break_id?: Maybe<Uuid_Comparison_Exp>;
+  product_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "break_product" */
+export enum Break_Product_Constraint {
+  /** unique or primary key constraint */
+  BreakProductPkey = 'break_product_pkey'
+}
+
+/** input type for inserting data into table "break_product" */
+export type Break_Product_Insert_Input = {
+  Break?: Maybe<Breaks_Obj_Rel_Insert_Input>;
+  Product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  break_id?: Maybe<Scalars['uuid']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Break_Product_Max_Fields = {
+  __typename?: 'break_product_max_fields';
+  break_id?: Maybe<Scalars['uuid']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "break_product" */
+export type Break_Product_Max_Order_By = {
+  break_id?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Break_Product_Min_Fields = {
+  __typename?: 'break_product_min_fields';
+  break_id?: Maybe<Scalars['uuid']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "break_product" */
+export type Break_Product_Min_Order_By = {
+  break_id?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "break_product" */
+export type Break_Product_Mutation_Response = {
+  __typename?: 'break_product_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Break_Product>;
+};
+
+/** on_conflict condition type for table "break_product" */
+export type Break_Product_On_Conflict = {
+  constraint: Break_Product_Constraint;
+  update_columns?: Array<Break_Product_Update_Column>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "break_product". */
+export type Break_Product_Order_By = {
+  Break?: Maybe<Breaks_Order_By>;
+  Product?: Maybe<Products_Order_By>;
+  break_id?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: break_product */
+export type Break_Product_Pk_Columns_Input = {
+  break_id: Scalars['uuid'];
+  product_id: Scalars['uuid'];
+};
+
+/** select columns of table "break_product" */
+export enum Break_Product_Select_Column {
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  ProductId = 'product_id'
+}
+
+/** input type for updating data in table "break_product" */
+export type Break_Product_Set_Input = {
+  break_id?: Maybe<Scalars['uuid']>;
+  product_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "break_product" */
+export enum Break_Product_Update_Column {
+  /** column name */
+  BreakId = 'break_id',
+  /** column name */
+  ProductId = 'product_id'
+}
+
 /** columns and relationships of "break_status" */
 export type Break_Status = {
   __typename?: 'break_status';
@@ -7033,6 +7006,339 @@ export enum Break_Type_Update_Column {
   Value = 'value'
 }
 
+/** columns and relationships of "dataset_type" */
+export type Dataset_Type = {
+  __typename?: 'dataset_type';
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "dataset_type" */
+export type Dataset_Type_Aggregate = {
+  __typename?: 'dataset_type_aggregate';
+  aggregate?: Maybe<Dataset_Type_Aggregate_Fields>;
+  nodes: Array<Dataset_Type>;
+};
+
+/** aggregate fields of "dataset_type" */
+export type Dataset_Type_Aggregate_Fields = {
+  __typename?: 'dataset_type_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Dataset_Type_Max_Fields>;
+  min?: Maybe<Dataset_Type_Min_Fields>;
+};
+
+
+/** aggregate fields of "dataset_type" */
+export type Dataset_Type_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Dataset_Type_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "dataset_type". All fields are combined with a logical 'AND'. */
+export type Dataset_Type_Bool_Exp = {
+  _and?: Maybe<Array<Dataset_Type_Bool_Exp>>;
+  _not?: Maybe<Dataset_Type_Bool_Exp>;
+  _or?: Maybe<Array<Dataset_Type_Bool_Exp>>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "dataset_type" */
+export type Dataset_Type_Insert_Input = {
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Dataset_Type_Max_Fields = {
+  __typename?: 'dataset_type_max_fields';
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Dataset_Type_Min_Fields = {
+  __typename?: 'dataset_type_min_fields';
+  value?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "dataset_type" */
+export type Dataset_Type_Mutation_Response = {
+  __typename?: 'dataset_type_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Dataset_Type>;
+};
+
+/** Ordering options when selecting data from "dataset_type". */
+export type Dataset_Type_Order_By = {
+  value?: Maybe<Order_By>;
+};
+
+/** select columns of table "dataset_type" */
+export enum Dataset_Type_Select_Column {
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "dataset_type" */
+export type Dataset_Type_Set_Input = {
+  value?: Maybe<Scalars['String']>;
+};
+
+/** columns and relationships of "datasets" */
+export type Datasets = {
+  __typename?: 'datasets';
+  category: Scalars['String'];
+  data?: Maybe<Scalars['jsonb']>;
+  id: Scalars['uuid'];
+  subcategory?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  year: Scalars['smallint'];
+};
+
+
+/** columns and relationships of "datasets" */
+export type DatasetsDataArgs = {
+  path?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "datasets" */
+export type Datasets_Aggregate = {
+  __typename?: 'datasets_aggregate';
+  aggregate?: Maybe<Datasets_Aggregate_Fields>;
+  nodes: Array<Datasets>;
+};
+
+/** aggregate fields of "datasets" */
+export type Datasets_Aggregate_Fields = {
+  __typename?: 'datasets_aggregate_fields';
+  avg?: Maybe<Datasets_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Datasets_Max_Fields>;
+  min?: Maybe<Datasets_Min_Fields>;
+  stddev?: Maybe<Datasets_Stddev_Fields>;
+  stddev_pop?: Maybe<Datasets_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Datasets_Stddev_Samp_Fields>;
+  sum?: Maybe<Datasets_Sum_Fields>;
+  var_pop?: Maybe<Datasets_Var_Pop_Fields>;
+  var_samp?: Maybe<Datasets_Var_Samp_Fields>;
+  variance?: Maybe<Datasets_Variance_Fields>;
+};
+
+
+/** aggregate fields of "datasets" */
+export type Datasets_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Datasets_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Datasets_Append_Input = {
+  data?: Maybe<Scalars['jsonb']>;
+};
+
+/** aggregate avg on columns */
+export type Datasets_Avg_Fields = {
+  __typename?: 'datasets_avg_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "datasets". All fields are combined with a logical 'AND'. */
+export type Datasets_Bool_Exp = {
+  _and?: Maybe<Array<Datasets_Bool_Exp>>;
+  _not?: Maybe<Datasets_Bool_Exp>;
+  _or?: Maybe<Array<Datasets_Bool_Exp>>;
+  category?: Maybe<String_Comparison_Exp>;
+  data?: Maybe<Jsonb_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  subcategory?: Maybe<String_Comparison_Exp>;
+  type?: Maybe<String_Comparison_Exp>;
+  year?: Maybe<Smallint_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "datasets" */
+export enum Datasets_Constraint {
+  /** unique or primary key constraint */
+  DatasetsPkey = 'datasets_pkey',
+  /** unique or primary key constraint */
+  YearCat = 'year_cat',
+  /** unique or primary key constraint */
+  YearCatSubcat = 'year_cat_subcat',
+  /** unique or primary key constraint */
+  YearCatSubcatType = 'year_cat_subcat_type',
+  /** unique or primary key constraint */
+  YearCatType = 'year_cat_type'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Datasets_Delete_At_Path_Input = {
+  data?: Maybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Datasets_Delete_Elem_Input = {
+  data?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Datasets_Delete_Key_Input = {
+  data?: Maybe<Scalars['String']>;
+};
+
+/** input type for incrementing numeric columns in table "datasets" */
+export type Datasets_Inc_Input = {
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** input type for inserting data into table "datasets" */
+export type Datasets_Insert_Input = {
+  category?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['jsonb']>;
+  id?: Maybe<Scalars['uuid']>;
+  subcategory?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** aggregate max on columns */
+export type Datasets_Max_Fields = {
+  __typename?: 'datasets_max_fields';
+  category?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  subcategory?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** aggregate min on columns */
+export type Datasets_Min_Fields = {
+  __typename?: 'datasets_min_fields';
+  category?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  subcategory?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** response of any mutation on the table "datasets" */
+export type Datasets_Mutation_Response = {
+  __typename?: 'datasets_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Datasets>;
+};
+
+/** on_conflict condition type for table "datasets" */
+export type Datasets_On_Conflict = {
+  constraint: Datasets_Constraint;
+  update_columns?: Array<Datasets_Update_Column>;
+  where?: Maybe<Datasets_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "datasets". */
+export type Datasets_Order_By = {
+  category?: Maybe<Order_By>;
+  data?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  subcategory?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
+  year?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: datasets */
+export type Datasets_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Datasets_Prepend_Input = {
+  data?: Maybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "datasets" */
+export enum Datasets_Select_Column {
+  /** column name */
+  Category = 'category',
+  /** column name */
+  Data = 'data',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Subcategory = 'subcategory',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  Year = 'year'
+}
+
+/** input type for updating data in table "datasets" */
+export type Datasets_Set_Input = {
+  category?: Maybe<Scalars['String']>;
+  data?: Maybe<Scalars['jsonb']>;
+  id?: Maybe<Scalars['uuid']>;
+  subcategory?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** aggregate stddev on columns */
+export type Datasets_Stddev_Fields = {
+  __typename?: 'datasets_stddev_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Datasets_Stddev_Pop_Fields = {
+  __typename?: 'datasets_stddev_pop_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Datasets_Stddev_Samp_Fields = {
+  __typename?: 'datasets_stddev_samp_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Datasets_Sum_Fields = {
+  __typename?: 'datasets_sum_fields';
+  year?: Maybe<Scalars['smallint']>;
+};
+
+/** update columns of table "datasets" */
+export enum Datasets_Update_Column {
+  /** column name */
+  Category = 'category',
+  /** column name */
+  Data = 'data',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Subcategory = 'subcategory',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  Year = 'year'
+}
+
+/** aggregate var_pop on columns */
+export type Datasets_Var_Pop_Fields = {
+  __typename?: 'datasets_var_pop_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Datasets_Var_Samp_Fields = {
+  __typename?: 'datasets_var_samp_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Datasets_Variance_Fields = {
+  __typename?: 'datasets_variance_fields';
+  year?: Maybe<Scalars['Float']>;
+};
+
 /** columns and relationships of "event_status" */
 export type Event_Status = {
   __typename?: 'event_status';
@@ -7288,10 +7594,6 @@ export type Mutation_Root = {
   delete_Teams?: Maybe<Teams_Mutation_Response>;
   /** delete single row from the table: "Teams" */
   delete_Teams_by_pk?: Maybe<Teams>;
-  /** delete data from the table: "Teams_old" */
-  delete_Teams_old?: Maybe<Teams_Old_Mutation_Response>;
-  /** delete single row from the table: "Teams_old" */
-  delete_Teams_old_by_pk?: Maybe<Teams_Old>;
   /** delete data from the table: "UserPreferences" */
   delete_UserPreferences?: Maybe<UserPreferences_Mutation_Response>;
   /** delete single row from the table: "UserPreferences" */
@@ -7300,6 +7602,10 @@ export type Mutation_Root = {
   delete_Users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "Users" */
   delete_Users_by_pk?: Maybe<Users>;
+  /** delete data from the table: "break_product" */
+  delete_break_product?: Maybe<Break_Product_Mutation_Response>;
+  /** delete single row from the table: "break_product" */
+  delete_break_product_by_pk?: Maybe<Break_Product>;
   /** delete data from the table: "break_status" */
   delete_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** delete single row from the table: "break_status" */
@@ -7308,6 +7614,12 @@ export type Mutation_Root = {
   delete_break_type?: Maybe<Break_Type_Mutation_Response>;
   /** delete single row from the table: "break_type" */
   delete_break_type_by_pk?: Maybe<Break_Type>;
+  /** delete data from the table: "dataset_type" */
+  delete_dataset_type?: Maybe<Dataset_Type_Mutation_Response>;
+  /** delete data from the table: "datasets" */
+  delete_datasets?: Maybe<Datasets_Mutation_Response>;
+  /** delete single row from the table: "datasets" */
+  delete_datasets_by_pk?: Maybe<Datasets>;
   /** delete data from the table: "event_status" */
   delete_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** delete single row from the table: "event_status" */
@@ -7398,10 +7710,6 @@ export type Mutation_Root = {
   insert_Streams_one?: Maybe<Streams>;
   /** insert data into the table: "Teams" */
   insert_Teams?: Maybe<Teams_Mutation_Response>;
-  /** insert data into the table: "Teams_old" */
-  insert_Teams_old?: Maybe<Teams_Old_Mutation_Response>;
-  /** insert a single row into the table: "Teams_old" */
-  insert_Teams_old_one?: Maybe<Teams_Old>;
   /** insert a single row into the table: "Teams" */
   insert_Teams_one?: Maybe<Teams>;
   /** insert data into the table: "UserPreferences" */
@@ -7412,6 +7720,10 @@ export type Mutation_Root = {
   insert_Users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "Users" */
   insert_Users_one?: Maybe<Users>;
+  /** insert data into the table: "break_product" */
+  insert_break_product?: Maybe<Break_Product_Mutation_Response>;
+  /** insert a single row into the table: "break_product" */
+  insert_break_product_one?: Maybe<Break_Product>;
   /** insert data into the table: "break_status" */
   insert_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** insert a single row into the table: "break_status" */
@@ -7420,6 +7732,14 @@ export type Mutation_Root = {
   insert_break_type?: Maybe<Break_Type_Mutation_Response>;
   /** insert a single row into the table: "break_type" */
   insert_break_type_one?: Maybe<Break_Type>;
+  /** insert data into the table: "dataset_type" */
+  insert_dataset_type?: Maybe<Dataset_Type_Mutation_Response>;
+  /** insert a single row into the table: "dataset_type" */
+  insert_dataset_type_one?: Maybe<Dataset_Type>;
+  /** insert data into the table: "datasets" */
+  insert_datasets?: Maybe<Datasets_Mutation_Response>;
+  /** insert a single row into the table: "datasets" */
+  insert_datasets_one?: Maybe<Datasets>;
   /** insert data into the table: "event_status" */
   insert_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** insert a single row into the table: "event_status" */
@@ -7512,10 +7832,6 @@ export type Mutation_Root = {
   update_Teams?: Maybe<Teams_Mutation_Response>;
   /** update single row of the table: "Teams" */
   update_Teams_by_pk?: Maybe<Teams>;
-  /** update data of the table: "Teams_old" */
-  update_Teams_old?: Maybe<Teams_Old_Mutation_Response>;
-  /** update single row of the table: "Teams_old" */
-  update_Teams_old_by_pk?: Maybe<Teams_Old>;
   /** update data of the table: "UserPreferences" */
   update_UserPreferences?: Maybe<UserPreferences_Mutation_Response>;
   /** update single row of the table: "UserPreferences" */
@@ -7524,6 +7840,10 @@ export type Mutation_Root = {
   update_Users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "Users" */
   update_Users_by_pk?: Maybe<Users>;
+  /** update data of the table: "break_product" */
+  update_break_product?: Maybe<Break_Product_Mutation_Response>;
+  /** update single row of the table: "break_product" */
+  update_break_product_by_pk?: Maybe<Break_Product>;
   /** update data of the table: "break_status" */
   update_break_status?: Maybe<Break_Status_Mutation_Response>;
   /** update single row of the table: "break_status" */
@@ -7532,6 +7852,12 @@ export type Mutation_Root = {
   update_break_type?: Maybe<Break_Type_Mutation_Response>;
   /** update single row of the table: "break_type" */
   update_break_type_by_pk?: Maybe<Break_Type>;
+  /** update data of the table: "dataset_type" */
+  update_dataset_type?: Maybe<Dataset_Type_Mutation_Response>;
+  /** update data of the table: "datasets" */
+  update_datasets?: Maybe<Datasets_Mutation_Response>;
+  /** update single row of the table: "datasets" */
+  update_datasets_by_pk?: Maybe<Datasets>;
   /** update data of the table: "event_status" */
   update_event_status?: Maybe<Event_Status_Mutation_Response>;
   /** update single row of the table: "event_status" */
@@ -7729,7 +8055,8 @@ export type Mutation_RootDelete_SaveBreakArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -7741,7 +8068,8 @@ export type Mutation_RootDelete_SaveBreakerArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -7753,7 +8081,8 @@ export type Mutation_RootDelete_SaveEventArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_SaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -7777,20 +8106,9 @@ export type Mutation_RootDelete_TeamsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Teams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Teams_OldArgs = {
-  where: Teams_Old_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Teams_Old_By_PkArgs = {
-  id: Scalars['uuid'];
 };
 
 
@@ -7819,6 +8137,19 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Break_ProductArgs = {
+  where: Break_Product_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Break_Product_By_PkArgs = {
+  break_id: Scalars['uuid'];
+  product_id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Break_StatusArgs = {
   where: Break_Status_Bool_Exp;
 };
@@ -7839,6 +8170,24 @@ export type Mutation_RootDelete_Break_TypeArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Break_Type_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Dataset_TypeArgs = {
+  where: Dataset_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_DatasetsArgs = {
+  where: Datasets_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Datasets_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -8150,20 +8499,6 @@ export type Mutation_RootInsert_TeamsArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Teams_OldArgs = {
-  objects: Array<Teams_Old_Insert_Input>;
-  on_conflict?: Maybe<Teams_Old_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Teams_Old_OneArgs = {
-  object: Teams_Old_Insert_Input;
-  on_conflict?: Maybe<Teams_Old_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Teams_OneArgs = {
   object: Teams_Insert_Input;
   on_conflict?: Maybe<Teams_On_Conflict>;
@@ -8199,6 +8534,20 @@ export type Mutation_RootInsert_Users_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Break_ProductArgs = {
+  objects: Array<Break_Product_Insert_Input>;
+  on_conflict?: Maybe<Break_Product_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Break_Product_OneArgs = {
+  object: Break_Product_Insert_Input;
+  on_conflict?: Maybe<Break_Product_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Break_StatusArgs = {
   objects: Array<Break_Status_Insert_Input>;
   on_conflict?: Maybe<Break_Status_On_Conflict>;
@@ -8223,6 +8572,32 @@ export type Mutation_RootInsert_Break_TypeArgs = {
 export type Mutation_RootInsert_Break_Type_OneArgs = {
   object: Break_Type_Insert_Input;
   on_conflict?: Maybe<Break_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Dataset_TypeArgs = {
+  objects: Array<Dataset_Type_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Dataset_Type_OneArgs = {
+  object: Dataset_Type_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_DatasetsArgs = {
+  objects: Array<Datasets_Insert_Input>;
+  on_conflict?: Maybe<Datasets_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Datasets_OneArgs = {
+  object: Datasets_Insert_Input;
+  on_conflict?: Maybe<Datasets_On_Conflict>;
 };
 
 
@@ -8573,22 +8948,6 @@ export type Mutation_RootUpdate_Teams_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Teams_OldArgs = {
-  _inc?: Maybe<Teams_Old_Inc_Input>;
-  _set?: Maybe<Teams_Old_Set_Input>;
-  where: Teams_Old_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Teams_Old_By_PkArgs = {
-  _inc?: Maybe<Teams_Old_Inc_Input>;
-  _set?: Maybe<Teams_Old_Set_Input>;
-  pk_columns: Teams_Old_Pk_Columns_Input;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_UserPreferencesArgs = {
   _set?: Maybe<UserPreferences_Set_Input>;
   where: UserPreferences_Bool_Exp;
@@ -8619,6 +8978,20 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Break_ProductArgs = {
+  _set?: Maybe<Break_Product_Set_Input>;
+  where: Break_Product_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Break_Product_By_PkArgs = {
+  _set?: Maybe<Break_Product_Set_Input>;
+  pk_columns: Break_Product_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Break_StatusArgs = {
   _set?: Maybe<Break_Status_Set_Input>;
   where: Break_Status_Bool_Exp;
@@ -8643,6 +9016,39 @@ export type Mutation_RootUpdate_Break_TypeArgs = {
 export type Mutation_RootUpdate_Break_Type_By_PkArgs = {
   _set?: Maybe<Break_Type_Set_Input>;
   pk_columns: Break_Type_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Dataset_TypeArgs = {
+  _set?: Maybe<Dataset_Type_Set_Input>;
+  where: Dataset_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_DatasetsArgs = {
+  _append?: Maybe<Datasets_Append_Input>;
+  _delete_at_path?: Maybe<Datasets_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Datasets_Delete_Elem_Input>;
+  _delete_key?: Maybe<Datasets_Delete_Key_Input>;
+  _inc?: Maybe<Datasets_Inc_Input>;
+  _prepend?: Maybe<Datasets_Prepend_Input>;
+  _set?: Maybe<Datasets_Set_Input>;
+  where: Datasets_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Datasets_By_PkArgs = {
+  _append?: Maybe<Datasets_Append_Input>;
+  _delete_at_path?: Maybe<Datasets_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Datasets_Delete_Elem_Input>;
+  _delete_key?: Maybe<Datasets_Delete_Key_Input>;
+  _inc?: Maybe<Datasets_Inc_Input>;
+  _prepend?: Maybe<Datasets_Prepend_Input>;
+  _set?: Maybe<Datasets_Set_Input>;
+  pk_columns: Datasets_Pk_Columns_Input;
 };
 
 
@@ -8954,12 +9360,6 @@ export type Query_Root = {
   Teams_aggregate: Teams_Aggregate;
   /** fetch data from the table: "Teams" using primary key columns */
   Teams_by_pk?: Maybe<Teams>;
-  /** fetch data from the table: "Teams_old" */
-  Teams_old: Array<Teams_Old>;
-  /** fetch aggregated fields from the table: "Teams_old" */
-  Teams_old_aggregate: Teams_Old_Aggregate;
-  /** fetch data from the table: "Teams_old" using primary key columns */
-  Teams_old_by_pk?: Maybe<Teams_Old>;
   /** fetch data from the table: "UserPreferences" */
   UserPreferences: Array<UserPreferences>;
   /** fetch aggregated fields from the table: "UserPreferences" */
@@ -8972,6 +9372,12 @@ export type Query_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "break_product" */
+  break_product: Array<Break_Product>;
+  /** fetch aggregated fields from the table: "break_product" */
+  break_product_aggregate: Break_Product_Aggregate;
+  /** fetch data from the table: "break_product" using primary key columns */
+  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -8984,6 +9390,16 @@ export type Query_Root = {
   break_type_aggregate: Break_Type_Aggregate;
   /** fetch data from the table: "break_type" using primary key columns */
   break_type_by_pk?: Maybe<Break_Type>;
+  /** fetch data from the table: "dataset_type" */
+  dataset_type: Array<Dataset_Type>;
+  /** fetch aggregated fields from the table: "dataset_type" */
+  dataset_type_aggregate: Dataset_Type_Aggregate;
+  /** fetch data from the table: "datasets" */
+  datasets: Array<Datasets>;
+  /** fetch aggregated fields from the table: "datasets" */
+  datasets_aggregate: Datasets_Aggregate;
+  /** fetch data from the table: "datasets" using primary key columns */
+  datasets_by_pk?: Maybe<Datasets>;
   /** fetch data from the table: "event_status" */
   event_status: Array<Event_Status>;
   /** fetch aggregated fields from the table: "event_status" */
@@ -9354,7 +9770,8 @@ export type Query_RootSaveBreak_AggregateArgs = {
 
 
 export type Query_RootSaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9377,7 +9794,8 @@ export type Query_RootSaveBreaker_AggregateArgs = {
 
 
 export type Query_RootSaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9400,7 +9818,8 @@ export type Query_RootSaveEvent_AggregateArgs = {
 
 
 export type Query_RootSaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -9446,31 +9865,9 @@ export type Query_RootTeams_AggregateArgs = {
 
 
 export type Query_RootTeams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
-};
-
-
-export type Query_RootTeams_OldArgs = {
-  distinct_on?: Maybe<Array<Teams_Old_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Teams_Old_Order_By>>;
-  where?: Maybe<Teams_Old_Bool_Exp>;
-};
-
-
-export type Query_RootTeams_Old_AggregateArgs = {
-  distinct_on?: Maybe<Array<Teams_Old_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Teams_Old_Order_By>>;
-  where?: Maybe<Teams_Old_Bool_Exp>;
-};
-
-
-export type Query_RootTeams_Old_By_PkArgs = {
-  id: Scalars['uuid'];
 };
 
 
@@ -9520,6 +9917,30 @@ export type Query_RootUsers_By_PkArgs = {
 };
 
 
+export type Query_RootBreak_ProductArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+export type Query_RootBreak_Product_AggregateArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+export type Query_RootBreak_Product_By_PkArgs = {
+  break_id: Scalars['uuid'];
+  product_id: Scalars['uuid'];
+};
+
+
 export type Query_RootBreak_StatusArgs = {
   distinct_on?: Maybe<Array<Break_Status_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9563,6 +9984,47 @@ export type Query_RootBreak_Type_AggregateArgs = {
 
 export type Query_RootBreak_Type_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+export type Query_RootDataset_TypeArgs = {
+  distinct_on?: Maybe<Array<Dataset_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Dataset_Type_Order_By>>;
+  where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
+
+export type Query_RootDataset_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Dataset_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Dataset_Type_Order_By>>;
+  where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
+
+export type Query_RootDatasetsArgs = {
+  distinct_on?: Maybe<Array<Datasets_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Datasets_Order_By>>;
+  where?: Maybe<Datasets_Bool_Exp>;
+};
+
+
+export type Query_RootDatasets_AggregateArgs = {
+  distinct_on?: Maybe<Array<Datasets_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Datasets_Order_By>>;
+  where?: Maybe<Datasets_Bool_Exp>;
+};
+
+
+export type Query_RootDatasets_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -9787,12 +10249,6 @@ export type Subscription_Root = {
   Teams_aggregate: Teams_Aggregate;
   /** fetch data from the table: "Teams" using primary key columns */
   Teams_by_pk?: Maybe<Teams>;
-  /** fetch data from the table: "Teams_old" */
-  Teams_old: Array<Teams_Old>;
-  /** fetch aggregated fields from the table: "Teams_old" */
-  Teams_old_aggregate: Teams_Old_Aggregate;
-  /** fetch data from the table: "Teams_old" using primary key columns */
-  Teams_old_by_pk?: Maybe<Teams_Old>;
   /** fetch data from the table: "UserPreferences" */
   UserPreferences: Array<UserPreferences>;
   /** fetch aggregated fields from the table: "UserPreferences" */
@@ -9805,6 +10261,12 @@ export type Subscription_Root = {
   Users_aggregate: Users_Aggregate;
   /** fetch data from the table: "Users" using primary key columns */
   Users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "break_product" */
+  break_product: Array<Break_Product>;
+  /** fetch aggregated fields from the table: "break_product" */
+  break_product_aggregate: Break_Product_Aggregate;
+  /** fetch data from the table: "break_product" using primary key columns */
+  break_product_by_pk?: Maybe<Break_Product>;
   /** fetch data from the table: "break_status" */
   break_status: Array<Break_Status>;
   /** fetch aggregated fields from the table: "break_status" */
@@ -9817,6 +10279,16 @@ export type Subscription_Root = {
   break_type_aggregate: Break_Type_Aggregate;
   /** fetch data from the table: "break_type" using primary key columns */
   break_type_by_pk?: Maybe<Break_Type>;
+  /** fetch data from the table: "dataset_type" */
+  dataset_type: Array<Dataset_Type>;
+  /** fetch aggregated fields from the table: "dataset_type" */
+  dataset_type_aggregate: Dataset_Type_Aggregate;
+  /** fetch data from the table: "datasets" */
+  datasets: Array<Datasets>;
+  /** fetch aggregated fields from the table: "datasets" */
+  datasets_aggregate: Datasets_Aggregate;
+  /** fetch data from the table: "datasets" using primary key columns */
+  datasets_by_pk?: Maybe<Datasets>;
   /** fetch data from the table: "event_status" */
   event_status: Array<Event_Status>;
   /** fetch aggregated fields from the table: "event_status" */
@@ -10187,7 +10659,8 @@ export type Subscription_RootSaveBreak_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreak_By_PkArgs = {
-  id: Scalars['uuid'];
+  break_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10210,7 +10683,8 @@ export type Subscription_RootSaveBreaker_AggregateArgs = {
 
 
 export type Subscription_RootSaveBreaker_By_PkArgs = {
-  id: Scalars['uuid'];
+  breaker_id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10233,7 +10707,8 @@ export type Subscription_RootSaveEvent_AggregateArgs = {
 
 
 export type Subscription_RootSaveEvent_By_PkArgs = {
-  id: Scalars['uuid'];
+  event_id: Scalars['uuid'];
+  user_id: Scalars['String'];
 };
 
 
@@ -10279,31 +10754,9 @@ export type Subscription_RootTeams_AggregateArgs = {
 
 
 export type Subscription_RootTeams_By_PkArgs = {
-  name: Scalars['String'];
+  short_code: Scalars['String'];
+  sport: Scalars['String'];
   start_year: Scalars['smallint'];
-};
-
-
-export type Subscription_RootTeams_OldArgs = {
-  distinct_on?: Maybe<Array<Teams_Old_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Teams_Old_Order_By>>;
-  where?: Maybe<Teams_Old_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeams_Old_AggregateArgs = {
-  distinct_on?: Maybe<Array<Teams_Old_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Teams_Old_Order_By>>;
-  where?: Maybe<Teams_Old_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeams_Old_By_PkArgs = {
-  id: Scalars['uuid'];
 };
 
 
@@ -10353,6 +10806,30 @@ export type Subscription_RootUsers_By_PkArgs = {
 };
 
 
+export type Subscription_RootBreak_ProductArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+export type Subscription_RootBreak_Product_AggregateArgs = {
+  distinct_on?: Maybe<Array<Break_Product_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Break_Product_Order_By>>;
+  where?: Maybe<Break_Product_Bool_Exp>;
+};
+
+
+export type Subscription_RootBreak_Product_By_PkArgs = {
+  break_id: Scalars['uuid'];
+  product_id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootBreak_StatusArgs = {
   distinct_on?: Maybe<Array<Break_Status_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10396,6 +10873,47 @@ export type Subscription_RootBreak_Type_AggregateArgs = {
 
 export type Subscription_RootBreak_Type_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+export type Subscription_RootDataset_TypeArgs = {
+  distinct_on?: Maybe<Array<Dataset_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Dataset_Type_Order_By>>;
+  where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootDataset_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Dataset_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Dataset_Type_Order_By>>;
+  where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootDatasetsArgs = {
+  distinct_on?: Maybe<Array<Datasets_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Datasets_Order_By>>;
+  where?: Maybe<Datasets_Bool_Exp>;
+};
+
+
+export type Subscription_RootDatasets_AggregateArgs = {
+  distinct_on?: Maybe<Array<Datasets_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Datasets_Order_By>>;
+  where?: Maybe<Datasets_Bool_Exp>;
+};
+
+
+export type Subscription_RootDatasets_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -11059,6 +11577,17 @@ export type BreakerHitsQuery = (
   )> }
 );
 
+export type BreakersListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BreakersListQuery = (
+  { __typename?: 'query_root' }
+  & { Users: Array<(
+    { __typename?: 'Users' }
+    & Pick<Users, 'id' | 'username' | 'image' | 'first_name' | 'last_name'>
+  )> }
+);
+
 export type BreakersQueryVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
   breakerFilter?: Maybe<Users_Bool_Exp>;
@@ -11113,6 +11642,27 @@ export type NewBreakersSubscription = (
   )> }
 );
 
+export type CompletedEventsQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+  breakerId?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<BreakProductItems_Bool_Exp>;
+  startDate?: Maybe<Timestamptz_Comparison_Exp>;
+  endDate?: Maybe<Array<Events_Bool_Exp> | Events_Bool_Exp>;
+}>;
+
+
+export type CompletedEventsQuery = (
+  { __typename?: 'query_root' }
+  & { Users: Array<(
+    { __typename?: 'Users' }
+    & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image' | 'username'>
+    & { Events: Array<(
+      { __typename?: 'Events' }
+      & Pick<Events, 'id' | 'image' | 'start_time' | 'title' | 'description' | 'video_url'>
+    )> }
+  )> }
+);
+
 export type DeleteUserAddressMutationVariables = Exact<{
   addressId: Scalars['uuid'];
 }>;
@@ -11133,6 +11683,7 @@ export type DeleteUserAddressMutation = (
 export type EventBreaksQueryVariables = Exact<{
   id: Scalars['uuid'];
   userId?: Maybe<Scalars['String']>;
+  status?: Maybe<Break_Status_Enum_Comparison_Exp>;
 }>;
 
 
@@ -11140,7 +11691,7 @@ export type EventBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
     & { Inventory: Array<(
       { __typename?: 'Inventory' }
       & { Product: (
@@ -11902,6 +12453,32 @@ export type UserAddressesQuery = (
   )> }
 );
 
+export type CompletedUserEventsQueryVariables = Exact<{
+  userId?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CompletedUserEventsQuery = (
+  { __typename?: 'query_root' }
+  & { Orders: Array<(
+    { __typename?: 'Orders' }
+    & { BreakProductItems: Array<(
+      { __typename?: 'BreakProductItems' }
+      & { Break: (
+        { __typename?: 'Breaks' }
+        & { Event: (
+          { __typename?: 'Events' }
+          & Pick<Events, 'id' | 'title' | 'description' | 'start_time' | 'image'>
+          & { User: (
+            { __typename?: 'Users' }
+            & Pick<Users, 'id' | 'first_name' | 'last_name' | 'username' | 'image'>
+          ) }
+        ) }
+      ) }
+    )> }
+  )> }
+);
+
 export type UserMinimalInformationQueryVariables = Exact<{
   id?: Maybe<Scalars['String']>;
 }>;
@@ -12575,6 +13152,44 @@ export function useBreakerHitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type BreakerHitsQueryHookResult = ReturnType<typeof useBreakerHitsQuery>;
 export type BreakerHitsLazyQueryHookResult = ReturnType<typeof useBreakerHitsLazyQuery>;
 export type BreakerHitsQueryResult = Apollo.QueryResult<BreakerHitsQuery, BreakerHitsQueryVariables>;
+export const BreakersListDocument = gql`
+    query BreakersList {
+  Users(where: {is_breaker: {_eq: true}}) {
+    id
+    username
+    image
+    first_name
+    last_name
+  }
+}
+    `;
+
+/**
+ * __useBreakersListQuery__
+ *
+ * To run a query within a React component, call `useBreakersListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBreakersListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBreakersListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBreakersListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<BreakersListQuery, BreakersListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<BreakersListQuery, BreakersListQueryVariables>(BreakersListDocument, options);
+      }
+export function useBreakersListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BreakersListQuery, BreakersListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<BreakersListQuery, BreakersListQueryVariables>(BreakersListDocument, options);
+        }
+export type BreakersListQueryHookResult = ReturnType<typeof useBreakersListQuery>;
+export type BreakersListLazyQueryHookResult = ReturnType<typeof useBreakersListLazyQuery>;
+export type BreakersListQueryResult = Apollo.QueryResult<BreakersListQuery, BreakersListQueryVariables>;
 export const BreakersDocument = gql`
     query Breakers($userId: String, $breakerFilter: Users_bool_exp) {
   Users(where: $breakerFilter) {
@@ -12680,6 +13295,63 @@ export function useNewBreakersSubscription(baseOptions?: ApolloReactHooks.Subscr
       }
 export type NewBreakersSubscriptionHookResult = ReturnType<typeof useNewBreakersSubscription>;
 export type NewBreakersSubscriptionResult = Apollo.SubscriptionResult<NewBreakersSubscription>;
+export const CompletedEventsDocument = gql`
+    query CompletedEvents($limit: Int, $breakerId: String_comparison_exp, $userId: BreakProductItems_bool_exp, $startDate: timestamptz_comparison_exp, $endDate: [Events_bool_exp!]) {
+  Users(
+    where: {is_breaker: {_eq: true}, Events: {User: {id: $breakerId}, Breaks: {BreakProductItems: $userId}, start_time: $startDate, _and: $endDate}}
+    limit: $limit
+  ) {
+    id
+    first_name
+    last_name
+    image
+    username
+    Events(
+      where: {archived: {_eq: false}, status: {_eq: COMPLETED}, start_time: $startDate, _and: $endDate}
+      limit: $limit
+    ) {
+      id
+      image
+      start_time
+      title
+      description
+      video_url
+    }
+  }
+}
+    `;
+
+/**
+ * __useCompletedEventsQuery__
+ *
+ * To run a query within a React component, call `useCompletedEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCompletedEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCompletedEventsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      breakerId: // value for 'breakerId'
+ *      userId: // value for 'userId'
+ *      startDate: // value for 'startDate'
+ *      endDate: // value for 'endDate'
+ *   },
+ * });
+ */
+export function useCompletedEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CompletedEventsQuery, CompletedEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<CompletedEventsQuery, CompletedEventsQueryVariables>(CompletedEventsDocument, options);
+      }
+export function useCompletedEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CompletedEventsQuery, CompletedEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<CompletedEventsQuery, CompletedEventsQueryVariables>(CompletedEventsDocument, options);
+        }
+export type CompletedEventsQueryHookResult = ReturnType<typeof useCompletedEventsQuery>;
+export type CompletedEventsLazyQueryHookResult = ReturnType<typeof useCompletedEventsLazyQuery>;
+export type CompletedEventsQueryResult = Apollo.QueryResult<CompletedEventsQuery, CompletedEventsQueryVariables>;
 export const DeleteUserAddressDocument = gql`
     mutation DeleteUserAddress($addressId: uuid!) {
   delete_Addresses_by_pk(id: $addressId) {
@@ -12717,9 +13389,9 @@ export type DeleteUserAddressMutationHookResult = ReturnType<typeof useDeleteUse
 export type DeleteUserAddressMutationResult = Apollo.MutationResult<DeleteUserAddressMutation>;
 export type DeleteUserAddressMutationOptions = Apollo.BaseMutationOptions<DeleteUserAddressMutation, DeleteUserAddressMutationVariables>;
 export const EventBreaksDocument = gql`
-    query EventBreaks($id: uuid!, $userId: String) {
+    query EventBreaks($id: uuid!, $userId: String, $status: break_status_enum_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: $status}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
     order_by: {created_at: asc}
   ) {
     id
@@ -12727,6 +13399,7 @@ export const EventBreaksDocument = gql`
     description
     status
     title
+    result
     Inventory(limit: 1) {
       Product {
         category
@@ -12780,6 +13453,7 @@ export const EventBreaksDocument = gql`
  *   variables: {
  *      id: // value for 'id'
  *      userId: // value for 'userId'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -14116,6 +14790,58 @@ export function useUserAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type UserAddressesQueryHookResult = ReturnType<typeof useUserAddressesQuery>;
 export type UserAddressesLazyQueryHookResult = ReturnType<typeof useUserAddressesLazyQuery>;
 export type UserAddressesQueryResult = Apollo.QueryResult<UserAddressesQuery, UserAddressesQueryVariables>;
+export const CompletedUserEventsDocument = gql`
+    query CompletedUserEvents($userId: String) {
+  Orders(where: {user_id: {_eq: $userId}}, order_by: {created_at: desc}) {
+    BreakProductItems {
+      Break {
+        Event {
+          id
+          title
+          description
+          start_time
+          image
+          User {
+            id
+            first_name
+            last_name
+            username
+            image
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCompletedUserEventsQuery__
+ *
+ * To run a query within a React component, call `useCompletedUserEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCompletedUserEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCompletedUserEventsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useCompletedUserEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>(CompletedUserEventsDocument, options);
+      }
+export function useCompletedUserEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>(CompletedUserEventsDocument, options);
+        }
+export type CompletedUserEventsQueryHookResult = ReturnType<typeof useCompletedUserEventsQuery>;
+export type CompletedUserEventsLazyQueryHookResult = ReturnType<typeof useCompletedUserEventsLazyQuery>;
+export type CompletedUserEventsQueryResult = Apollo.QueryResult<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>;
 export const UserMinimalInformationDocument = gql`
     query UserMinimalInformation($id: String) {
   Users(where: {id: {_eq: $id}}) {

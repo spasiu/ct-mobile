@@ -53,7 +53,6 @@ export const BreakerDetailScreen = ({
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
   const { id, name, image, social, description, video } =
     breakerDetailScreenSelector(breaker);
-
   const { data: hitsRequestData } = useBreakerHitsQuery({
     fetchPolicy: 'no-cache',
     variables: {

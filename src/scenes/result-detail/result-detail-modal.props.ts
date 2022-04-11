@@ -1,6 +1,5 @@
 import { OverScreenModalProps, StatusBadgeTypes } from '../../components';
-
-export interface EventDetailModalProps extends OverScreenModalProps {
+export interface ResultDetailModalProps extends OverScreenModalProps {
   modalTitle?: string;
   showHeader?: boolean;
   title: string;
@@ -11,4 +10,5 @@ export interface EventDetailModalProps extends OverScreenModalProps {
   description?: string;
   eventId: string;
   videoUrl?: string;
+  breaks?: [];
 }

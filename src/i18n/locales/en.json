@@ -18,6 +18,9 @@
     "seeMore": "See More",
     "seeLess": "See Less",
     "myHits": "My Hits",
+    "myBreaks": "My Breaks",
+    "date": "Date",
+    "breaker": "Breaker",
     "showFollowing": "My Follows",
     "logout": "Logout",
     "save": "Save",
@@ -52,7 +55,8 @@
     "homeTab": "Home",
     "scheduleTab": "Schedule",
     "hitsTab": "Hits",
-    "breakersTab": "Breakers"
+    "breakersTab": "Breakers",
+    "results": "Results"
   },
   "forms": {
     "noPhoto": "A profile image is required",
@@ -379,5 +383,12 @@
     "termsOfServiceCheck": "All purchases are final and subject to our {{link}}.",
     "termsOfServiceLink": "Terms of Service",
     "rulesOfPlayLink": "Rules of Play"
+  },
+  "results": {
+    "title": "Completed Breaks"
+  },
+  "dates": {
+    "start": "Start Date",
+    "end": "End Date"
   }
 }
