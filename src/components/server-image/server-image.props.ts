@@ -10,4 +10,5 @@ export interface ServerImageProps {
   children?: React.ReactNode;
   fit?: 'fill';
   fill?: string;
+  compress?: boolean;
 }

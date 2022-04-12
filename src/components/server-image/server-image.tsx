@@ -25,7 +25,8 @@ export const ServerImage = ({
   children,
   resizeMode = 'contain',
   fit = 'fill',
-  fill = 'blur'
+  fill = 'blur',
+  compress = true,
 }: ServerImageProps): JSX.Element => {
   const opacity = useSharedValue(1);
   const opacityStyle = useAnimatedStyle(() => {
@@ -38,7 +39,7 @@ export const ServerImage = ({
   const [showOriginal, setShowOriginal] = useState(false);
 
   const imgixQueryParamsConfig = {
-    auto: 'compress',
+    auto: compress ? 'compress' : '',
     q: quality,
     w: width,
     h: height,
