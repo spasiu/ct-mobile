@@ -21,7 +21,7 @@ export const shareHit = (
   dimensions: { width: number; height: number },
 ): void => {
   const imageExtension = 'png';
-  const fileUrl = `${Config.IMAGE_SERVICE_URL}${filePath}?auto=compress&fm=${imageExtension}&w=${dimensions.width}&h=${dimensions.height}&fit=fill`;
+  const fileUrl = `${Config.IMAGE_SERVICE_URL}${filePath}?fm=${imageExtension}&w=${dimensions.width}&h=${dimensions.height}&fit=fill&mark=${Config.IMAGE_SERVICE_URL}/assets/watermark_v.2.png&mark-scale=20&mark-pad=10&mark-align=top,right`;
   RNFetchBlob.config({
     fileCache: true,
     appendExt: imageExtension,
