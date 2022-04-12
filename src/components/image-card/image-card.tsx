@@ -21,7 +21,8 @@ export const ImageCard = ({
   onPress = () => undefined,
   touchable = true,
   containerStyle = [],
-  fill= 'blur'
+  fill = 'blur',
+  compress = true,
 }: ImageCardProps): JSX.Element => {
   const cardDimensions = {
     width: cardWidth || CARD_SIZES[cardSize].width,
@@ -40,7 +41,8 @@ export const ImageCard = ({
           src={image}
           fill={fill}
           style={imageBackgroundPreset}
-          resizeMode={'contain'}>
+          resizeMode={'contain'}
+          compress={compress}>
           {children}
         </ServerImage>
       </View>

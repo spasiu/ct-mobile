@@ -17,4 +17,5 @@ export interface ImageCardProps extends BorderlessButtonProps {
   containerStyle?: ViewStyle[];
   onPress?: () => void;
   fill?: string;
+  compress?: boolean;
 }

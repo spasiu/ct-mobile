@@ -24,21 +24,37 @@ export const HitDetailModal = ({
   const [zoom, setZoom] = useState(false);
 
   return (
-    <OverScreenModal onPressClose={zoom ? () => setZoom(false) : onPressClose} isVisible={isVisible}>
-      {image_back && !zoom ?
-        <View style={[s.absolute, s.icon_xs, s.right_2, s.mr3, s.mt8, { zIndex: 1, elevation: 1 }]}>
-          <IconButton
-            onPress={() => setShowBack(!showBack)}>
+    <OverScreenModal
+      onPressClose={zoom ? () => setZoom(false) : onPressClose}
+      isVisible={isVisible}>
+      {image_back && !zoom ? (
+        <View
+          style={[
+            s.absolute,
+            s.icon_xs,
+            s.right_2,
+            s.mr3,
+            s.mt8,
+            { zIndex: 1, elevation: 1 },
+          ]}>
+          <IconButton onPress={() => setShowBack(!showBack)}>
             <Image
               resizeMode={'contain'}
               source={flipIcon}
               style={[s.tint_black, s.icon_xs]}
             />
           </IconButton>
-        </View> : null}
-      {!zoom ?
+        </View>
+      ) : null}
+      {!zoom ? (
         <View
-          style={[s.absolute, s.icon_xs, s.right_2, s.mr3, { marginTop: sizes.mr3 - sizes.mr1 / 2 }]}>
+          style={[
+            s.absolute,
+            s.icon_xs,
+            s.right_2,
+            s.mr3,
+            { marginTop: sizes.mr3 - sizes.mr1 / 2 },
+          ]}>
           <IconButton
             onPress={() => shareHit(player, image_front, CARD_SIZES.large)}>
             <Image
@@ -47,16 +63,18 @@ export const HitDetailModal = ({
               style={[s.tint_black, s.icon_xs]}
             />
           </IconButton>
-        </View> : null}
+        </View>
+      ) : null}
       <ScrollView
         style={[s.flx_i, s.mb3, s.mt4]}
         contentContainerStyle={[s.aic]}>
         <View>
-          {zoom ?
+          {zoom ? (
             <ImageZoom
               cropWidth={Dimensions.get('window').width}
               cropHeight={Dimensions.get('window').height}
-              imageWidth={Dimensions.get('window').width} imageHeight={Dimensions.get('window').height}
+              imageWidth={Dimensions.get('window').width}
+              imageHeight={Dimensions.get('window').height}
               pinchToZoom={true}>
               <ImageCard
                 onPress={() => setZoom(false)}
@@ -64,33 +82,41 @@ export const HitDetailModal = ({
                 cardHeight={Dimensions.get('window').height}
                 containerStyle={[s.br0]}
                 image={showBack ? image_back : image_front}
-                fill='' />
+                fill=""
+                compress={false}
+              />
             </ImageZoom>
-            : <ImageCard
+          ) : (
+            <ImageCard
               onPress={() => setZoom(true)}
-              cardSize='large'
+              cardSize="large"
               containerStyle={[s.br0]}
-              image={showBack ? image_back : image_front} />}
+              image={showBack ? image_back : image_front}
+            />
+          )}
         </View>
-        {!zoom ?
+        {!zoom ? (
           <View style={[s.flx_i, s.mh5]}>
             <Text style={[s.ff_b, s.f3, s.black, s.mt4, s.mb2]}>{player}</Text>
-            <Text
-              style={[s.ff_alt_r, s.f5, s.black]}
-              ellipsizeMode={'tail'}>
+            <Text style={[s.ff_alt_r, s.f5, s.black]} ellipsizeMode={'tail'}>
               {description}
             </Text>
-            <Text
-              style={[s.ff_alt_r, s.f5, s.black]}
-              ellipsizeMode={'tail'}>
-              <Text style={[{ textDecorationLine: 'underline' }]}>{`\nPulled for:`}</Text> {user}
+            <Text style={[s.ff_alt_r, s.f5, s.black]} ellipsizeMode={'tail'}>
+              <Text
+                style={[
+                  { textDecorationLine: 'underline' },
+                ]}>{`\nPulled for:`}</Text>{' '}
+              {user}
             </Text>
-            <Text
-              style={[s.ff_alt_r, s.f5, s.black]}
-              ellipsizeMode={'tail'}>
-              <Text style={[{ textDecorationLine: 'underline' }]}>{`\nPulled by:`}</Text> {breaker}
+            <Text style={[s.ff_alt_r, s.f5, s.black]} ellipsizeMode={'tail'}>
+              <Text
+                style={[
+                  { textDecorationLine: 'underline' },
+                ]}>{`\nPulled by:`}</Text>{' '}
+              {breaker}
             </Text>
-          </View> : null}
+          </View>
+        ) : null}
       </ScrollView>
     </OverScreenModal>
   );
