@@ -13309,6 +13309,7 @@ export const CompletedEventsDocument = gql`
     Events(
       where: {archived: {_eq: false}, status: {_eq: COMPLETED}, start_time: $startDate, _and: $endDate}
       limit: $limit
+      order_by: {start_time: desc}
     ) {
       id
       image
