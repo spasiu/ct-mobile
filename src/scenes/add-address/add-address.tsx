@@ -81,21 +81,21 @@ export const AddAddress = ({
       validationSchema={ADDRESS_FORM_SCHEMA}
       initialValues={ADD_ADDRESS_FORM_INITIAL_VALUES}
       onSubmit={values => {
-        values.country === "CA" || values.country === "US" ?
-          insertUserAddressMutation({
-            variables: {
-              address: {
-                ...values,
-                is_default: false,
-                user_id: authUser?.uid,
+        values.country === 'CA' || values.country === 'US'
+          ? insertUserAddressMutation({
+              variables: {
+                address: {
+                  ...values,
+                  is_default: false,
+                  user_id: authUser?.uid,
+                },
               },
-            },
-          }) : showMessage({
-            message: t('errors.only_us_or_ca_address'),
-            type: 'danger',
-          });
-      }
-      }>
+            })
+          : showMessage({
+              message: t('errors.only_us_or_ca_address'),
+              type: 'danger',
+            });
+      }}>
       {({
         handleChange,
         handleBlur,

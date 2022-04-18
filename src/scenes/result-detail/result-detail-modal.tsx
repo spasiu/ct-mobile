@@ -59,7 +59,7 @@ export const ResultDetailModal = ({
 
   const videoHtml = `
   <html>
-    <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}";>
+    <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
     <iframe style="border-radius:${sizes.br5}px;" src="${videoUrl}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </body>
   </html>
