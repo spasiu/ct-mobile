@@ -40,10 +40,8 @@ export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   const [showBreakersModal, setShowBreakersModal] = useState(false);
   const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [filterByDate, setFilterByDate] = useState(false);
   const [myEventsFilter, setMyEventsFilter] = useState(false);
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -64,8 +62,10 @@ export const ResultsScreen = (): JSX.Element => {
     fetchPolicy: 'cache-and-network',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      startDate: filterByDate ? { _gte: startDate } : {},
-      endDate: filterByDate ? { start_time: { _lte: endDate } } : {},
+      startDate: filterByDate ? { _gte: new Date(date.setUTCHours(0, 0)) } : {},
+      endDate: filterByDate
+        ? { start_time: { _lte: new Date(date.setUTCHours(23, 59)) } }
+        : {},
       limit: 20,
       userId: myEventsFilter
         ? { Order: { user_id: { _eq: authUser?.uid } } }
@@ -96,7 +96,7 @@ export const ResultsScreen = (): JSX.Element => {
               </View>
             }
           />
-          <View style={[s.flx_row, s.aic, s.jcc]}>
+          <View style={[s.flx_row]}>
             <FilterItem
               style={[s.mr3]}
               type={FilterItemTypes.pill_alt}
@@ -123,7 +123,7 @@ export const ResultsScreen = (): JSX.Element => {
                       s.ff_alt_sb,
                       s.f5,
                       s.ph3,
-                    ]}>{`${breakerFilter.username} `}</Text>
+                    ]}>{`${breakerFilter.first_name} ${breakerFilter.last_name} `}</Text>
                 ) : (
                   t('buttons.breaker')
                 )
@@ -151,8 +151,7 @@ export const ResultsScreen = (): JSX.Element => {
               onPress={() => {
                 if (filterByDate) {
                   setFilterByDate(false);
-                  setStartDate(new Date(Date.now()));
-                  setEndDate(new Date(Date.now()));
+                  setDate(new Date(Date.now()));
                 } else {
                   setShowDatePicker(true);
                 }
@@ -190,6 +189,7 @@ export const ResultsScreen = (): JSX.Element => {
                           setResult(eventDetailSelector(item, breaker));
                         }}
                         containerStyle={[s.mr3]}
+                        result={true}
                       />
                     );
                   }}
@@ -203,35 +203,16 @@ export const ResultsScreen = (): JSX.Element => {
           title={t('dates.start')}
           open={showDatePicker}
           mode="date"
-          date={startDate}
+          date={date}
           maximumDate={new Date(Date.now())}
           onConfirm={(input: Date) => {
-            setStartDate(input);
-            setShowEndDatePicker(true);
+            setDate(input);
             setShowDatePicker(false);
-          }}
-          onCancel={() => {
-            setShowDatePicker(false);
-            setStartDate(new Date(Date.now()));
-            setEndDate(new Date(Date.now()));
-          }}
-        />
-        <DatePicker
-          modal
-          title={t('dates.end')}
-          open={showEndDatePicker}
-          mode="date"
-          date={endDate}
-          maximumDate={new Date(Date.now())}
-          onConfirm={(input: Date) => {
-            setEndDate(input);
             setFilterByDate(true);
-            setShowEndDatePicker(false);
           }}
           onCancel={() => {
-            setShowEndDatePicker(false);
-            setStartDate(new Date(Date.now()));
-            setEndDate(new Date(Date.now()));
+            setShowDatePicker(false);
+            setDate(new Date(Date.now()));
           }}
         />
         {breakerList?.Users ? (

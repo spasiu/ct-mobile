@@ -10,4 +10,5 @@ export interface EventCardProps extends ImageCardProps {
   status: keyof typeof StatusBadgeTypes;
   onPressFollow?: () => void;
   userFollows?: boolean;
+  result?: boolean,
 }

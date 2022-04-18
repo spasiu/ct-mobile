@@ -12,4 +12,5 @@ export interface ResultCardProps extends BorderlessButtonProps {
   eventDate?: string;
   containerStyle?: ViewStyle[];
   setResult: () => void;
+  price?: string;
 }

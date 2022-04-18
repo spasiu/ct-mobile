@@ -32,7 +32,7 @@ export const breakTitleStyle = [
   s.ff_b,
   s.f5,
   s.black,
-  s.bottom_2,
+  s.bottom_3,
 ] as TextStyle[];
 
 export const actionsContainerStyle = [
@@ -50,3 +50,12 @@ export const buyButtonStyle = [
   { width: sizes.w3 + sizes.w1, height: sizes.h2 },
   s.ml2,
 ] as ViewStyle[];
+
+export const priceTextStyle = [
+  s.ff_alt_sb,
+  s.f5,
+  s.black,
+  s.mb1,
+] as TextStyle[];
+
+export const breakDetailsWrapper = [s.jcfe, s.aifs] as ViewStyle[];

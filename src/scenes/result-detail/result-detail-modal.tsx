@@ -59,7 +59,7 @@ export const ResultDetailModal = ({
 
   const videoHtml = `
   <html>
-    <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
+    <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}";>
     <iframe style="border-radius:${sizes.br5}px;" src="${videoUrl}" width="100%" height="${iframeHeight}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </body>
   </html>
@@ -85,7 +85,7 @@ export const ResultDetailModal = ({
                 <Text style={[s.ff_b, s.black, s.f5]}>{breaker.name}</Text>
               </View>
               <View style={[s.flx_ratio(0.35), s.flx_row, s.jcfe]}>
-                <Badge containerStyle={[s.bg_black_40]} text={eventDate} />
+                <Badge containerStyle={[s.bg_primary]} text={eventDate} />
               </View>
             </View>
             <ReadMore mainTextStyle={[s.f7, s.lh_medium]} numberOfLines={3}>
@@ -94,7 +94,7 @@ export const ResultDetailModal = ({
           </View>
         ) : null}
         {videoUrl ? (
-          <View style={[s.h5, s.w_100, s.jcc, s.aic]}>
+          <View style={[s.h5, s.w_100, s.aic]}>
             <WebView
               scrollEnabled={false}
               style={[
