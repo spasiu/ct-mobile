@@ -68,6 +68,7 @@ export const ResultDetailModal = ({
     <OverScreenModal
       isVisible={isVisible}
       onPressClose={onPressClose}
+      containerStyle={[{ backgroundColor: 'rgba(249, 249, 249, 1)' }]}
       {...modalProps}>
       <ScrollView>
         {showHeader ? (
