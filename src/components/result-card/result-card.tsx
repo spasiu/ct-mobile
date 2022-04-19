@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
-import { StatusBadge } from '../status-badge';
 import { LeagueIcon } from '../league-icon/league-icon';
 import { ActionButton } from '../action-button';
 import { BreakTypeBadge } from '../break-type-badge';
@@ -17,10 +16,13 @@ import {
   breakTitleStyle,
   actionsContainerStyle,
   buyButtonStyle,
+  priceTextStyle,
+  breakDetailsWrapper,
 } from './result-card.presets';
 import { ResultCardProps } from './result-card.props';
 import { ICON_SIZE } from '../../theme/sizes';
 import { t } from 'i18n-js';
+import { Badge } from '../badge';
 
 export const ResultCard = ({
   title = '',
@@ -29,6 +31,7 @@ export const ResultCard = ({
   breakType,
   eventDate,
   setResult,
+  price,
   containerStyle = [],
   ...borderlessButtonProps
 }: ResultCardProps): JSX.Element => {
@@ -38,7 +41,7 @@ export const ResultCard = ({
       {...borderlessButtonProps}>
       <View style={informationBarWrapperStyle}>
         <View>
-          <StatusBadge status="completed" text={eventDate} />
+          <Badge containerStyle={[s.bg_primary]} text={eventDate} />
         </View>
         <View style={breakDetailWrapperStyle}>
           <LeagueIcon league={league} />
@@ -56,6 +59,11 @@ export const ResultCard = ({
           {title}
         </Text>
       </View>
+      {price ? (
+        <View style={breakDetailsWrapper}>
+          <Text style={priceTextStyle}>{price}</Text>
+        </View>
+      ) : null}
       <View style={actionsContainerStyle}>
         <ActionButton
           style={buyButtonStyle}

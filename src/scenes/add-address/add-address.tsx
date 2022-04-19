@@ -21,6 +21,7 @@ import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   useInsertUserAddressMutation,
   UserAddressesDocument,
+  LoggedUserDocument,
 } from '../../services/api/requests';
 import { getPredictions, PredictionType } from '../../services/places-api';
 
@@ -57,6 +58,12 @@ export const AddAddress = ({
             id: authUser?.uid,
           },
         },
+        {
+          query: LoggedUserDocument,
+          variables: {
+            id: authUser?.uid,
+          },
+        },
       ],
       awaitRefetchQueries: true,
     },
@@ -74,21 +81,21 @@ export const AddAddress = ({
       validationSchema={ADDRESS_FORM_SCHEMA}
       initialValues={ADD_ADDRESS_FORM_INITIAL_VALUES}
       onSubmit={values => {
-        values.country === "CA" || values.country === "US" ?
-        insertUserAddressMutation({
-          variables: {
-            address: {
-              ...values,
-              is_default: false,
-              user_id: authUser?.uid,
-            },
-          },
-        }) : showMessage({
-          message: t('errors.only_us_or_ca_address'),
-          type: 'danger',
-        });
-      }
-      }>
+        values.country === 'CA' || values.country === 'US'
+          ? insertUserAddressMutation({
+              variables: {
+                address: {
+                  ...values,
+                  is_default: false,
+                  user_id: authUser?.uid,
+                },
+              },
+            })
+          : showMessage({
+              message: t('errors.only_us_or_ca_address'),
+              type: 'danger',
+            });
+      }}>
       {({
         handleChange,
         handleBlur,

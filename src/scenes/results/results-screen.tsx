@@ -16,6 +16,7 @@ import {
   FilterItem,
   FilterItemTypes,
   FilterItemStatusTypes,
+  EmptyState,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -35,15 +36,15 @@ import {
 } from './results-screen.utils';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
+import dayjs from 'dayjs';
+import { userNameSelector } from '../../common/user-profile';
 
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   const [showBreakersModal, setShowBreakersModal] = useState(false);
   const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [filterByDate, setFilterByDate] = useState(false);
   const [myEventsFilter, setMyEventsFilter] = useState(false);
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
@@ -59,14 +60,19 @@ export const ResultsScreen = (): JSX.Element => {
   const { data: breakerList } = useBreakersListQuery({
     fetchPolicy: 'cache-and-network',
   });
-
   const { loading, data } = useCompletedEventsQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      startDate: filterByDate ? { _gte: startDate } : {},
-      endDate: filterByDate ? { start_time: { _lte: endDate } } : {},
-      limit: 20,
+      startDate: filterByDate ? { _gte: date } : {},
+      endDate: filterByDate
+        ? {
+          start_time: {
+            _lte: dayjs(date).add(1, 'day').subtract(1, 'second').toDate(),
+          },
+        }
+        : {},
+      limit: filterByDate || myEventsFilter || breakerFilter ? 100 : 20,
       userId: myEventsFilter
         ? { Order: { user_id: { _eq: authUser?.uid } } }
         : {},
@@ -96,7 +102,7 @@ export const ResultsScreen = (): JSX.Element => {
               </View>
             }
           />
-          <View style={[s.flx_row, s.aic, s.jcc]}>
+          <View style={[s.flx_row]}>
             <FilterItem
               style={[s.mr3]}
               type={FilterItemTypes.pill_alt}
@@ -116,14 +122,9 @@ export const ResultsScreen = (): JSX.Element => {
               type={FilterItemTypes.pill_alt}
               text={
                 breakerFilter ? (
-                  <Text
-                    style={[
-                      s.b,
-                      s.white,
-                      s.ff_alt_sb,
-                      s.f5,
-                      s.ph3,
-                    ]}>{`${breakerFilter.username} `}</Text>
+                  <Text style={[s.b, s.white, s.ff_alt_sb, s.f5, s.ph3]}>
+                    {userNameSelector(breakerFilter)}
+                  </Text>
                 ) : (
                   t('buttons.breaker')
                 )
@@ -151,8 +152,7 @@ export const ResultsScreen = (): JSX.Element => {
               onPress={() => {
                 if (filterByDate) {
                   setFilterByDate(false);
-                  setStartDate(new Date(Date.now()));
-                  setEndDate(new Date(Date.now()));
+                  setDate(new Date(Date.now()));
                 } else {
                   setShowDatePicker(true);
                 }
@@ -161,77 +161,69 @@ export const ResultsScreen = (): JSX.Element => {
           </View>
         </View>
         <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
-          {breakers?.map((user: any, index: number) => {
-            const breaker = user as Users;
-            const breakerEvents = breakerEventsSelector(breaker);
-            if (isEmpty(breakerEvents)) {
-              return null;
-            }
-            return (
-              <View key={`breaker-${index}`}>
-                <SectionHeader
-                  {...eventBreakerSelector(breaker)}
-                  containerStyle={[s.mr3]}
-                />
-                <FlatList
-                  keyExtractor={item => item.id}
-                  horizontal
-                  data={breaker.Events}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item }) => {
-                    return (
-                      <EventCard
-                        title={item.title}
-                        status="completed"
-                        image={item.image}
-                        eventId={item.id}
-                        eventDate={formatScheduledStatus(eventTimeSelector(item))}
-                        onPress={() => {
-                          setResult(eventDetailSelector(item, breaker));
-                        }}
-                        containerStyle={[s.mr3]}
-                      />
-                    );
-                  }}
-                />
-              </View>
-            );
-          })}
+          {breakers?.length === 0 ||
+          (breakerFilter && breakers && breakers[0].Events.length === 0) ? (
+            <EmptyState
+              title={t('emptyResults.noEventsTitle')}
+              description={t('emptyResults.noEventsDescription')}
+            />
+          ) : (
+            breakers?.map((user: any, index: number) => {
+              const breaker = user as Users;
+              const breakerEvents = breakerEventsSelector(breaker);
+              if (isEmpty(breakerEvents)) {
+                return null;
+              }
+              return (
+                <View key={`breaker-${index}`}>
+                  <SectionHeader
+                    {...eventBreakerSelector(breaker)}
+                    containerStyle={[s.mr3]}
+                  />
+                  <FlatList
+                    keyExtractor={item => item.id}
+                    horizontal
+                    data={breaker.Events}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => {
+                      return (
+                        <EventCard
+                          title={item.title}
+                          status="completed"
+                          image={item.image}
+                          eventId={item.id}
+                          eventDate={formatScheduledStatus(
+                            eventTimeSelector(item),
+                          )}
+                          onPress={() => {
+                            setResult(eventDetailSelector(item, breaker));
+                          }}
+                          containerStyle={[s.mr3]}
+                          result={true}
+                        />
+                      );
+                    }}
+                  />
+                </View>
+              );
+            })
+          )}
         </ScrollView>
         <DatePicker
           modal
           title={t('dates.start')}
           open={showDatePicker}
           mode="date"
-          date={startDate}
+          date={date}
           maximumDate={new Date(Date.now())}
           onConfirm={(input: Date) => {
-            setStartDate(input);
-            setShowEndDatePicker(true);
+            setDate(input);
             setShowDatePicker(false);
-          }}
-          onCancel={() => {
-            setShowDatePicker(false);
-            setStartDate(new Date(Date.now()));
-            setEndDate(new Date(Date.now()));
-          }}
-        />
-        <DatePicker
-          modal
-          title={t('dates.end')}
-          open={showEndDatePicker}
-          mode="date"
-          date={endDate}
-          maximumDate={new Date(Date.now())}
-          onConfirm={(input: Date) => {
-            setEndDate(input);
             setFilterByDate(true);
-            setShowEndDatePicker(false);
           }}
           onCancel={() => {
-            setShowEndDatePicker(false);
-            setStartDate(new Date(Date.now()));
-            setEndDate(new Date(Date.now()));
+            setShowDatePicker(false);
+            setDate(new Date(Date.now()));
           }}
         />
         {breakerList?.Users ? (

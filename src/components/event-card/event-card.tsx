@@ -33,6 +33,7 @@ export const EventCard = ({
   contentContainerStyle = [],
   onPressFollow = () => undefined,
   userFollows = false,
+  result = false,
   ...imageCardProps
 }: EventCardProps): JSX.Element => (
   <View>
@@ -41,10 +42,13 @@ export const EventCard = ({
         <View
           style={[...contentContainerStylePreset, ...contentContainerStyle]}>
           <View style={infoWrapperStylePreset}>
-            {status === 'completed' ? (
+            {status === 'completed' && result === false ? (
               <Badge containerStyle={[s.bg_black_40]} text={eventDate} />
             ) : (
-              <StatusBadge status={status} text={eventDate} />
+              <StatusBadge
+                status={result ? 'scheduled' : status}
+                text={eventDate}
+              />
             )}
             {status === 'live' ? <LiveCountBadge eventId={eventId} /> : null}
           </View>
@@ -59,16 +63,18 @@ export const EventCard = ({
         </View>
       </LinearGradient>
     </ImageCard>
-    <View style={buttonAbsoluteWrapper}>
-      <FollowButton
-        defaultContainerStyle={followButtonStyle.container}
-        defaultImageStyle={followButtonStyle.image}
-        size={FollowButtonSizeTypes.short}
-        onPress={onPressFollow}
-        type={
-          userFollows ? FollowButtonTypes.selected : FollowButtonTypes.default
-        }
-      />
-    </View>
+    {status !== 'completed' ? (
+      <View style={buttonAbsoluteWrapper}>
+        <FollowButton
+          defaultContainerStyle={followButtonStyle.container}
+          defaultImageStyle={followButtonStyle.image}
+          size={FollowButtonSizeTypes.short}
+          onPress={onPressFollow}
+          type={
+            userFollows ? FollowButtonTypes.selected : FollowButtonTypes.default
+          }
+        />
+      </View>
+    ) : null}
   </View>
 );
