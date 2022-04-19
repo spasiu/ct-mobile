@@ -996,6 +996,9 @@ export type Breaks = {
   break_type: Break_Type_Enum;
   created_at: Scalars['timestamptz'];
   dataset?: Maybe<Scalars['jsonb']>;
+  dataset_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  datasets?: Maybe<Datasets>;
   description: Scalars['String'];
   event_id: Scalars['uuid'];
   id: Scalars['uuid'];
@@ -1220,6 +1223,8 @@ export type Breaks_Bool_Exp = {
   break_type?: Maybe<Break_Type_Enum_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   dataset?: Maybe<Jsonb_Comparison_Exp>;
+  dataset_id?: Maybe<Uuid_Comparison_Exp>;
+  datasets?: Maybe<Datasets_Bool_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   event_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
@@ -1282,6 +1287,8 @@ export type Breaks_Insert_Input = {
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
   dataset?: Maybe<Scalars['jsonb']>;
+  dataset_id?: Maybe<Scalars['uuid']>;
+  datasets?: Maybe<Datasets_Obj_Rel_Insert_Input>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
@@ -1301,6 +1308,7 @@ export type Breaks_Insert_Input = {
 export type Breaks_Max_Fields = {
   __typename?: 'Breaks_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  dataset_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
@@ -1315,6 +1323,7 @@ export type Breaks_Max_Fields = {
 /** order by max() on columns of table "Breaks" */
 export type Breaks_Max_Order_By = {
   created_at?: Maybe<Order_By>;
+  dataset_id?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1330,6 +1339,7 @@ export type Breaks_Max_Order_By = {
 export type Breaks_Min_Fields = {
   __typename?: 'Breaks_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  dataset_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
@@ -1344,6 +1354,7 @@ export type Breaks_Min_Fields = {
 /** order by min() on columns of table "Breaks" */
 export type Breaks_Min_Order_By = {
   created_at?: Maybe<Order_By>;
+  dataset_id?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1391,6 +1402,8 @@ export type Breaks_Order_By = {
   break_type?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   dataset?: Maybe<Order_By>;
+  dataset_id?: Maybe<Order_By>;
+  datasets?: Maybe<Datasets_Order_By>;
   description?: Maybe<Order_By>;
   event_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1429,6 +1442,8 @@ export enum Breaks_Select_Column {
   /** column name */
   Dataset = 'dataset',
   /** column name */
+  DatasetId = 'dataset_id',
+  /** column name */
   Description = 'description',
   /** column name */
   EventId = 'event_id',
@@ -1460,6 +1475,7 @@ export type Breaks_Set_Input = {
   break_type?: Maybe<Break_Type_Enum>;
   created_at?: Maybe<Scalars['timestamptz']>;
   dataset?: Maybe<Scalars['jsonb']>;
+  dataset_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   event_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
@@ -1544,6 +1560,8 @@ export enum Breaks_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   Dataset = 'dataset',
+  /** column name */
+  DatasetId = 'dataset_id',
   /** column name */
   Description = 'description',
   /** column name */
@@ -7228,6 +7246,13 @@ export type Datasets_Mutation_Response = {
   returning: Array<Datasets>;
 };
 
+/** input type for inserting object relation for remote table "datasets" */
+export type Datasets_Obj_Rel_Insert_Input = {
+  data: Datasets_Insert_Input;
+  /** upsert condition */
+  on_conflict?: Maybe<Datasets_On_Conflict>;
+};
+
 /** on_conflict condition type for table "datasets" */
 export type Datasets_On_Conflict = {
   constraint: Datasets_Constraint;
@@ -11422,8 +11447,8 @@ export type BreakerBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11474,8 +11499,8 @@ export type NewBreakerBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11691,9 +11716,9 @@ export type EventBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -11744,8 +11769,8 @@ export type NewEventBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12002,8 +12027,8 @@ export type LiveStreamSubscription = (
     )>, Breaks: Array<(
       { __typename?: 'Breaks' }
       & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
-      & { Inventory: Array<(
-        { __typename?: 'Inventory' }
+      & { break_products: Array<(
+        { __typename?: 'break_product' }
         & { Product: (
           { __typename?: 'Products' }
           & Pick<Products, 'category'>
@@ -12070,8 +12095,8 @@ export type ScheduledBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12123,8 +12148,8 @@ export type NewScheduledBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12246,8 +12271,8 @@ export type SearchQuery = (
   )>, Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12523,8 +12548,8 @@ export type NewUserUpcomingBreaksSubscription = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12574,8 +12599,8 @@ export type UserUpcomingBreaksQuery = (
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
     & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { Inventory: Array<(
-      { __typename?: 'Inventory' }
+    & { break_products: Array<(
+      { __typename?: 'break_product' }
       & { Product: (
         { __typename?: 'Products' }
         & Pick<Products, 'category'>
@@ -12876,7 +12901,7 @@ export const BreakerBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -12954,7 +12979,7 @@ export const NewBreakerBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -13400,8 +13425,7 @@ export const EventBreaksDocument = gql`
     description
     status
     title
-    result
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -13480,7 +13504,7 @@ export const NewEventBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -13980,7 +14004,7 @@ export const LiveStreamDocument = gql`
       status
       title
       result
-      Inventory(limit: 1) {
+      break_products {
         Product {
           category
         }
@@ -14085,7 +14109,7 @@ export type LoggedUserQueryResult = Apollo.QueryResult<LoggedUserQuery, LoggedUs
 export const ScheduledBreaksDocument = gql`
     query ScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, break_products: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
     order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
@@ -14093,7 +14117,7 @@ export const ScheduledBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -14164,7 +14188,7 @@ export type ScheduledBreaksQueryResult = Apollo.QueryResult<ScheduledBreaksQuery
 export const NewScheduledBreaksDocument = gql`
     subscription NewScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Inventory: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, break_products: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
     order_by: [{Event: {start_time: asc}}, {created_at: asc}]
   ) {
     id
@@ -14172,7 +14196,7 @@ export const NewScheduledBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -14244,7 +14268,7 @@ export const ScheduledEventsDocument = gql`
     last_name
     Events(
       limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, Inventory: {Product: {category: $sportTypeFilter}}}}
+      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
     ) {
       id
       title
@@ -14311,7 +14335,7 @@ export const NewScheduledEventsDocument = gql`
     last_name
     Events(
       limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, Inventory: {Product: {category: $sportTypeFilter}}}}
+      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
     ) {
       id
       title
@@ -14391,7 +14415,7 @@ export const SearchDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -14936,7 +14960,7 @@ export const NewUserUpcomingBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }
@@ -15008,7 +15032,7 @@ export const UserUpcomingBreaksDocument = gql`
     description
     status
     title
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }

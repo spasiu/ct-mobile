@@ -11,8 +11,7 @@ query EventBreaks($id: uuid!, $userId: String, $status: break_status_enum_compar
     description
     status
     title
-    result
-    Inventory(limit: 1) {
+    break_products {
       Product {
         category
       }

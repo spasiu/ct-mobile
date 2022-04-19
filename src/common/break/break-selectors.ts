@@ -11,7 +11,7 @@ import {
   BreakDetailQuery,
   EventBreaksQuery,
   SaveBreak,
-  Inventory,
+  Break_Product,
   Break_Status_Enum,
 } from '../../services/api/requests';
 import {
@@ -120,11 +120,11 @@ export const breakFollowedByUserIdSelector = (eventBreak: Breaks): string => {
   return pathOr('', ['id'], head(saves));
 };
 
-export const breakInventorySelector = (eventBreak: Breaks): Inventory[] =>
-  pathOr([], ['Inventory'], eventBreak);
+export const breakProductJoinSelector = (eventBreak: Breaks): Break_Product[] =>
+  pathOr([], ['break_products'], eventBreak);
 
 export const breakSportSelector = (eventBreak: Breaks): Sports | string => {
-  const inventory = breakInventorySelector(eventBreak);
+  const inventory = breakProductJoinSelector(eventBreak);
   return pathOr('', ['Product', 'category'], head(inventory));
 };
 
