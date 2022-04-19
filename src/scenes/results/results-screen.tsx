@@ -16,6 +16,7 @@ import {
   FilterItem,
   FilterItemTypes,
   FilterItemStatusTypes,
+  EmptyState,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
@@ -35,6 +36,8 @@ import {
 } from './results-screen.utils';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
+import dayjs from 'dayjs';
+import { userNameSelector } from '../../common/user-profile';
 
 export const ResultsScreen = (): JSX.Element => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
@@ -57,16 +60,19 @@ export const ResultsScreen = (): JSX.Element => {
   const { data: breakerList } = useBreakersListQuery({
     fetchPolicy: 'cache-and-network',
   });
-
   const { loading, data } = useCompletedEventsQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
       breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      startDate: filterByDate ? { _gte: new Date(date.setUTCHours(0, 0)) } : {},
+      startDate: filterByDate ? { _gte: date } : {},
       endDate: filterByDate
-        ? { start_time: { _lte: new Date(date.setUTCHours(23, 59)) } }
+        ? {
+          start_time: {
+            _lte: dayjs(date).add(1, 'day').subtract(1, 'second').toDate(),
+          },
+        }
         : {},
-      limit: 20,
+      limit: filterByDate || myEventsFilter || breakerFilter ? 100 : 20,
       userId: myEventsFilter
         ? { Order: { user_id: { _eq: authUser?.uid } } }
         : {},
@@ -116,14 +122,9 @@ export const ResultsScreen = (): JSX.Element => {
               type={FilterItemTypes.pill_alt}
               text={
                 breakerFilter ? (
-                  <Text
-                    style={[
-                      s.b,
-                      s.white,
-                      s.ff_alt_sb,
-                      s.f5,
-                      s.ph3,
-                    ]}>{`${breakerFilter.first_name} ${breakerFilter.last_name} `}</Text>
+                  <Text style={[s.b, s.white, s.ff_alt_sb, s.f5, s.ph3]}>
+                    {userNameSelector(breakerFilter)}
+                  </Text>
                 ) : (
                   t('buttons.breaker')
                 )
@@ -160,43 +161,53 @@ export const ResultsScreen = (): JSX.Element => {
           </View>
         </View>
         <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
-          {breakers?.map((user: any, index: number) => {
-            const breaker = user as Users;
-            const breakerEvents = breakerEventsSelector(breaker);
-            if (isEmpty(breakerEvents)) {
-              return null;
-            }
-            return (
-              <View key={`breaker-${index}`}>
-                <SectionHeader
-                  {...eventBreakerSelector(breaker)}
-                  containerStyle={[s.mr3]}
-                />
-                <FlatList
-                  keyExtractor={item => item.id}
-                  horizontal
-                  data={breaker.Events}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item }) => {
-                    return (
-                      <EventCard
-                        title={item.title}
-                        status="completed"
-                        image={item.image}
-                        eventId={item.id}
-                        eventDate={formatScheduledStatus(eventTimeSelector(item))}
-                        onPress={() => {
-                          setResult(eventDetailSelector(item, breaker));
-                        }}
-                        containerStyle={[s.mr3]}
-                        result={true}
-                      />
-                    );
-                  }}
-                />
-              </View>
-            );
-          })}
+          {breakers?.length === 0 ||
+          (breakerFilter && breakers && breakers[0].Events.length === 0) ? (
+            <EmptyState
+              title={t('emptyResults.noEventsTitle')}
+              description={t('emptyResults.noEventsDescription')}
+            />
+          ) : (
+            breakers?.map((user: any, index: number) => {
+              const breaker = user as Users;
+              const breakerEvents = breakerEventsSelector(breaker);
+              if (isEmpty(breakerEvents)) {
+                return null;
+              }
+              return (
+                <View key={`breaker-${index}`}>
+                  <SectionHeader
+                    {...eventBreakerSelector(breaker)}
+                    containerStyle={[s.mr3]}
+                  />
+                  <FlatList
+                    keyExtractor={item => item.id}
+                    horizontal
+                    data={breaker.Events}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => {
+                      return (
+                        <EventCard
+                          title={item.title}
+                          status="completed"
+                          image={item.image}
+                          eventId={item.id}
+                          eventDate={formatScheduledStatus(
+                            eventTimeSelector(item),
+                          )}
+                          onPress={() => {
+                            setResult(eventDetailSelector(item, breaker));
+                          }}
+                          containerStyle={[s.mr3]}
+                          result={true}
+                        />
+                      );
+                    }}
+                  />
+                </View>
+              );
+            })
+          )}
         </ScrollView>
         <DatePicker
           modal

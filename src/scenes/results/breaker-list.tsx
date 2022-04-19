@@ -6,6 +6,7 @@ import { t } from '../../i18n/i18n';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { ICON_SIZE } from '../../theme/sizes';
 import { Users } from '../../services/api/requests';
+import { userNameSelector } from '../../common/user-profile';
 type BreakerListType = {
   breakers: Users[];
   onClose: () => void;
@@ -44,7 +45,7 @@ export const BreakerList = ({
               }}>
               <View style={[s.flx_row, s.aic, s.pa2]}>
                 <Text style={[s.f3, s.fw3, s.left_2, s.b, s.pa2]}>
-                  {`${breaker.first_name} ${breaker.last_name}`}
+                  {userNameSelector(breaker)}
                 </Text>
                 <ServerImage
                   style={[s.circle_l, s.absolute, s.right_2, s.pa3]}
