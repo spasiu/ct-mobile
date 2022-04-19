@@ -34,6 +34,7 @@ export const HitsView = ({
   hits,
   onEndReached,
   loading,
+  myHits,
 }: HitsViewProps): JSX.Element => {
   const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
   return (
@@ -41,8 +42,16 @@ export const HitsView = ({
       <FlatList
         ListEmptyComponent={() => (
           <EmptyState
-            title={t('emptyResults.noHitSearchResultTitle')}
-            description={t('emptyResults.noHitSearchResultDescription')}
+            title={
+              myHits
+                ? t('emptyResults.noMyHitsTitle')
+                : t('emptyResults.noHitSearchResultTitle')
+            }
+            description={
+              myHits
+                ? t('emptyResults.noMyHitsDescription')
+                : t('emptyResults.noHitSearchResultDescription')
+            }
           />
         )}
         style={gridStyle}

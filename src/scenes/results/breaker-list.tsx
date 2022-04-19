@@ -44,7 +44,7 @@ export const BreakerList = ({
                 onClose();
               }}>
               <View style={[s.flx_row, s.aic, s.pa2]}>
-                <Text style={[s.f3, s.fw3, s.left_2, s.b, s.pa2]}>
+                <Text style={[s.f3, s.fw3, s.left_2, s.ff_b, s.pa2]}>
                   {userNameSelector(breaker)}
                 </Text>
                 <ServerImage

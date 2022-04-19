@@ -106,6 +106,7 @@ export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
         hits={hits}
         onEndReached={() => (hits.length > 15 ? loadMore() : null)}
         loading={loading}
+        myHits={userHitsFilterActive}
       />
     </Container>
   );

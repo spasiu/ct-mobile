@@ -164,8 +164,8 @@ export const ResultsScreen = (): JSX.Element => {
           {breakers?.length === 0 ||
           (breakerFilter && breakers && breakers[0].Events.length === 0) ? (
             <EmptyState
-              title={t('emptyResults.noEventsTitle')}
-              description={t('emptyResults.noEventsDescription')}
+              title={t('emptyResults.noResultsTitle')}
+              description={t('emptyResults.noResultsDescription')}
             />
           ) : (
             breakers?.map((user: any, index: number) => {
@@ -211,7 +211,7 @@ export const ResultsScreen = (): JSX.Element => {
         </ScrollView>
         <DatePicker
           modal
-          title={t('dates.start')}
+          title={t('dates.date')}
           open={showDatePicker}
           mode="date"
           date={date}
