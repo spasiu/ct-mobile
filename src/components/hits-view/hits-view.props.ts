@@ -4,4 +4,5 @@ export interface HitsViewProps {
   hits: Hits[];
   onEndReached?: () => void;
   loading?: boolean;
+  myHits?: boolean;
 }

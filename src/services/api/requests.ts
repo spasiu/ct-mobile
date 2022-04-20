@@ -11716,7 +11716,7 @@ export type EventBreaksQuery = (
   { __typename?: 'query_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
     & { break_products: Array<(
       { __typename?: 'break_product' }
       & { Product: (
@@ -13425,6 +13425,7 @@ export const EventBreaksDocument = gql`
     description
     status
     title
+    result
     break_products {
       Product {
         category

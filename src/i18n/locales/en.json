@@ -206,7 +206,11 @@
     "noEventsFollowedByUserTitle": "Your calendar is empty!",
     "noEventsFollowedByUserDescription": "The bad news: you don’t have any Events at the moment. The good news: you can easily change that by going to the Schedule page and following the Events you are interested in.",
     "noHitsFollowedByUserTitle": "No hits yet!?!",
-    "noHitsFollowedByUserDescription": "We have a fix for you! Jump into one of our upcoming breaks, pull some :fire: and your problem will be solved!"
+    "noHitsFollowedByUserDescription": "We have a fix for you! Jump into one of our upcoming breaks, pull some :fire: and your problem will be solved!",
+    "noResultsTitle": "Sorry, no events matching your criteria.",
+    "noResultsDescription": "Try resetting your filters and use different criteria to find the break you are looking for.",
+    "noMyHitsTitle": "No hits yet!?!",
+    "noMyHitsDescription": "We have a fix for you! Jump into one of our breaks, pull some :fire: and your problem will be solved!"
   },
   "status": {
     "live": "Live",
@@ -388,7 +392,6 @@
     "title": "Completed Breaks"
   },
   "dates": {
-    "start": "Start Date",
-    "end": "End Date"
-  }
+    "date": "Date"
+    }
 }
