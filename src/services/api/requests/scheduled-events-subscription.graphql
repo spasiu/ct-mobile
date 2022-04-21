@@ -1,45 +1,34 @@
 subscription NewScheduledEvents(
   $userId: String
   $breakTypeFilter: break_type_enum_comparison_exp
-  $sportTypeFilter: String_comparison_exp
-) {
-  Users(where: { is_breaker: { _eq: true } }) {
-    id
-    image
-    first_name
-    last_name
-    Events(
-      limit: 5
-      where: {
-         _and: [{ status: { _neq: DRAFT } }, { status: { _neq: COMPLETED }}, { archived: { _neq:  true}}]
-        Breaks: {
-          break_type: $breakTypeFilter
-          break_products: { Product: { category: $sportTypeFilter } }
-        }
-      }
+  $sportTypeFilter: String_comparison_exp) {
+  Events(where:
+    {_and: [
+    {status: {_neq: DRAFT}},
+    { status: { _neq: COMPLETED }},
+    {archived: {_neq: true}}],
+    Breaks: {
+      break_type: $breakTypeFilter,
+      break_products: {Product: {category: $sportTypeFilter}}
+    }},
+    order_by: {start_time: asc}
     ) {
+    id
+    title
+    status
+    image
+    start_time
+    description
+    User {
       id
-      title
-      status
       image
-      start_time
-      description
-      Saves(where: { User: { id: { _eq: $userId } } }) {
-        Event {
-          id
-        }
-        User {
-          id
-        }
-      }
+      first_name
+      last_name
     }
-    BreakerProfile {
-      id
-      twitter
-      facebook
-      instagram
-      video
-      bio
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      User {
+        id
+      }
     }
   }
 }

@@ -4,7 +4,6 @@ import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 
-import { usersSelector } from '../../common/user-profile';
 import { breakerEventsSelector } from '../../common/breaker';
 import {
   SectionHeader,
@@ -42,6 +41,7 @@ import {
   getBreakTypeFilter,
   shouldShowEventsEmptyState,
   getSportTypeFilter,
+  formatEvents,
 } from './schedule-screen.utils';
 import { eventStatusSelector } from '../../common/event';
 
@@ -84,8 +84,7 @@ export const EventsView = (): JSX.Element => {
   if (loading && !data) {
     return <Loading />;
   }
-
-  const breakers = usersSelector(data);
+  const breakers = formatEvents(data);
   const hasNoEvents = shouldShowEventsEmptyState(breakers);
   if (hasNoEvents) {
     return (
@@ -150,10 +149,11 @@ export const EventsView = (): JSX.Element => {
 
                         eventData.userFollows
                           ? unfollowEvent({
-                              optimisticResponse: optimisticUnfollowEventResponse(
-                                item,
-                                authUser?.uid as string,
-                              ),
+                              optimisticResponse:
+                                optimisticUnfollowEventResponse(
+                                  item,
+                                  authUser?.uid as string,
+                                ),
                               update: cache =>
                                 updateUnfollowEventCache(cache, item),
                               variables: followData,

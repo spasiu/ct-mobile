@@ -12198,25 +12198,18 @@ export type ScheduledEventsQueryVariables = Exact<{
 
 export type ScheduledEventsQuery = (
   { __typename?: 'query_root' }
-  & { Users: Array<(
-    { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    & { Events: Array<(
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-      & { Saves: Array<(
-        { __typename?: 'SaveEvent' }
-        & { Event: (
-          { __typename?: 'Events' }
-          & Pick<Events, 'id'>
-        ), User: (
-          { __typename?: 'Users' }
-          & Pick<Users, 'id'>
-        ) }
-      )> }
-    )>, BreakerProfile?: Maybe<(
-      { __typename?: 'BreakerProfiles' }
-      & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
+    ), Saves: Array<(
+      { __typename?: 'SaveEvent' }
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
     )> }
   )> }
 );
@@ -12230,25 +12223,18 @@ export type NewScheduledEventsSubscriptionVariables = Exact<{
 
 export type NewScheduledEventsSubscription = (
   { __typename?: 'subscription_root' }
-  & { Users: Array<(
-    { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    & { Events: Array<(
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-      & { Saves: Array<(
-        { __typename?: 'SaveEvent' }
-        & { Event: (
-          { __typename?: 'Events' }
-          & Pick<Events, 'id'>
-        ), User: (
-          { __typename?: 'Users' }
-          & Pick<Users, 'id'>
-        ) }
-      )> }
-    )>, BreakerProfile?: Maybe<(
-      { __typename?: 'BreakerProfiles' }
-      & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
+    ), Saves: Array<(
+      { __typename?: 'SaveEvent' }
+      & { User: (
+        { __typename?: 'Users' }
+        & Pick<Users, 'id'>
+      ) }
     )> }
   )> }
 );
@@ -14262,37 +14248,26 @@ export type NewScheduledBreaksSubscriptionHookResult = ReturnType<typeof useNewS
 export type NewScheduledBreaksSubscriptionResult = Apollo.SubscriptionResult<NewScheduledBreaksSubscription>;
 export const ScheduledEventsDocument = gql`
     query ScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
-  Users(where: {is_breaker: {_eq: true}}) {
+  Events(
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+    order_by: {start_time: asc}
+  ) {
     id
+    title
+    status
     image
-    first_name
-    last_name
-    Events(
-      limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
-    ) {
+    start_time
+    description
+    User {
       id
-      title
-      status
       image
-      start_time
-      description
-      Saves(where: {User: {id: {_eq: $userId}}}) {
-        Event {
-          id
-        }
-        User {
-          id
-        }
-      }
+      first_name
+      last_name
     }
-    BreakerProfile {
-      id
-      twitter
-      facebook
-      instagram
-      video
-      bio
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      User {
+        id
+      }
     }
   }
 }
@@ -14329,37 +14304,26 @@ export type ScheduledEventsLazyQueryHookResult = ReturnType<typeof useScheduledE
 export type ScheduledEventsQueryResult = Apollo.QueryResult<ScheduledEventsQuery, ScheduledEventsQueryVariables>;
 export const NewScheduledEventsDocument = gql`
     subscription NewScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
-  Users(where: {is_breaker: {_eq: true}}) {
+  Events(
+    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+    order_by: {start_time: asc}
+  ) {
     id
+    title
+    status
     image
-    first_name
-    last_name
-    Events(
-      limit: 5
-      where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
-    ) {
+    start_time
+    description
+    User {
       id
-      title
-      status
       image
-      start_time
-      description
-      Saves(where: {User: {id: {_eq: $userId}}}) {
-        Event {
-          id
-        }
-        User {
-          id
-        }
-      }
+      first_name
+      last_name
     }
-    BreakerProfile {
-      id
-      twitter
-      facebook
-      instagram
-      video
-      bio
+    Saves(where: {User: {id: {_eq: $userId}}}) {
+      User {
+        id
+      }
     }
   }
 }
