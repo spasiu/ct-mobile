@@ -41,10 +41,7 @@ export const BreakCard = ({
   ...borderlessButtonProps
 }: BreakCardProps): JSX.Element => {
   const buyDisabled =
-    status === 'completed' ||
-    status === 'live' ||
-    spotsLeft === 0;
-
+    status === 'completed' || status === 'live' || spotsLeft === 0;
   return (
     <BorderlessButton
       style={[...cardContainerStyle, ...containerStyle]}
