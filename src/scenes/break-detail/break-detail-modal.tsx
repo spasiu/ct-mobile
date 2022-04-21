@@ -60,11 +60,11 @@ export const BreakDetailModal = ({
   ) as PaymentContextType;
 
   const [couponCode, setCouponCode] = useState('');
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
 
   useEffect(() => {
     error === 'invalid_coupon_code' ? setError('') : null;
-  }, [couponCode])
+  }, [couponCode]);
 
   const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
     route: ROUTES_IDS.BREAK_DETAIL_MODAL,
@@ -74,7 +74,7 @@ export const BreakDetailModal = ({
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
   const { data, loading, refetch, subscribeToMore } = useBreakDetailQuery({
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
     variables: {
       breakId,
       userId: authUser?.uid,
@@ -119,7 +119,7 @@ export const BreakDetailModal = ({
     if (!success) { // if closed without purchase, restore inventory
       selectedItems.forEach(item => {
         updateBreakItem({ variables: { itemId: item.id, quantity: 1 } });
-      })
+      });
     }
     setSelectedItems([]);
     setShowPurchaseModal(false);
