@@ -10,7 +10,9 @@ query ScheduledEvents(
     Breaks: {
       break_type: $breakTypeFilter,
       break_products: {Product: {category: $sportTypeFilter}}
-    }}) {
+    }},
+    order_by: {start_time: asc}
+    ) {
     id
     title
     status

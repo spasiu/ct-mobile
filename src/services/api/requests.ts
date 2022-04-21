@@ -14250,6 +14250,7 @@ export const ScheduledEventsDocument = gql`
     query ScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Events(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+    order_by: {start_time: asc}
   ) {
     id
     title
@@ -14305,6 +14306,7 @@ export const NewScheduledEventsDocument = gql`
     subscription NewScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Events(
     where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
+    order_by: {start_time: asc}
   ) {
     id
     title
