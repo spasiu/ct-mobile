@@ -84,8 +84,12 @@ export const breakCardStatusSelector = (
 ): StatusBadgeTypes => {
   const event = optionalEvent ? optionalEvent : breakEventSelector(eventBreak);
   const eventStatus = eventCardStatusSelector(event);
-  if ([Break_Status_Enum.Notified, Break_Status_Enum.Live].includes(eventBreak.status)) {
+  if (eventBreak.status === Break_Status_Enum.Live) {
     return StatusBadgeTypes.live;
+  }
+
+  if (eventBreak.status === Break_Status_Enum.Notified) {
+    return StatusBadgeTypes.notified;
   }
 
   if (eventBreak.status === Break_Status_Enum.Available) {

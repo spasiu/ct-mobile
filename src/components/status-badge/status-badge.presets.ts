@@ -11,6 +11,7 @@ export const badgeContainerPresets = {
   [StatusBadgeTypes.scheduled]: [s.bg_primary] as ViewStyle[],
   [StatusBadgeTypes.completed]: [s.bg_black_40] as ViewStyle[],
   [StatusBadgeTypes.upNext]: [s.bg_primary] as ViewStyle[],
+  [StatusBadgeTypes.notified]: [s.bg_secondary] as ViewStyle[],
 };
 
 export const badgeTextPresets = {
@@ -19,4 +20,5 @@ export const badgeTextPresets = {
   [StatusBadgeTypes.scheduled]: '',
   [StatusBadgeTypes.completed]: 'status.completed',
   [StatusBadgeTypes.upNext]: 'status.upNext',
+  [StatusBadgeTypes.notified]: 'status.live',
 };
