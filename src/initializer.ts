@@ -32,7 +32,7 @@ export const initLibraries = async (
       lastDay: 'ddd, h:mma',
       sameDay: `[${t('calendar.today')}], h:mma`,
       nextDay: 'ddd, h:mma',
-      lastWeek: 'ddd, h:mma',
+      lastWeek: 'MMM D, h:mma',
       nextWeek: 'ddd, h:mma',
       sameElse: 'MMM D, h:mma',
     },
