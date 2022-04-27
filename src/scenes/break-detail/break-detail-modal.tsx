@@ -88,6 +88,10 @@ export const BreakDetailModal = ({
   });
 
   useEffect(() => {
+    refetch();
+  }, [visibleRoute]);
+
+  useEffect(() => {
     if (isEmpty(cards)) {
       getCards(authUser as FirebaseAuthTypes.User);
     }
