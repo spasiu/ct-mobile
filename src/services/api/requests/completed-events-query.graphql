@@ -1,38 +1,34 @@
 query CompletedEvents(
-  $limit: Int
   $breakerId: String_comparison_exp
-  $userId: BreakProductItems_bool_exp
   $startDate: timestamptz_comparison_exp
   $endDate: [Events_bool_exp!]
+  $userId: BreakProductItems_bool_exp
+  $limit: Int
 ) {
-  Users(
-    where: {
-      is_breaker: { _eq: true }
-      Events: {
-        User: { id: $breakerId }
-        Breaks: { BreakProductItems: $userId }
-        start_time: $startDate
-        _and: $endDate
-      }
-    }
+  Events(
     limit: $limit
+    order_by: { start_time: desc }
+    where: {
+      status: { _eq: COMPLETED }
+      archived: { _eq: false }
+      user_id: $breakerId
+      start_time: $startDate
+      _and: $endDate
+      Breaks: { BreakProductItems: $userId }
+    }
   ) {
     id
-    first_name
-    last_name
+    title
     image
-    username
-    Events(
-      where: { archived: { _eq: false }, status: { _eq: COMPLETED }, start_time: $startDate, _and: $endDate}
-      limit: $limit
-      order_by: { start_time: desc}
-    ) {
+    start_time
+    description
+    video_url
+    User {
       id
       image
-      start_time
-      title
-      description
-      video_url
+      first_name
+      last_name
+      username
     }
   }
 }
