@@ -19,7 +19,6 @@ import {
   Breaks,
   Break_Type_Enum_Comparison_Exp,
   Events,
-  ScheduledEventsQuery,
   String_Comparison_Exp,
   Users,
 } from '../../services/api/requests';
@@ -141,19 +140,4 @@ export const shouldShowEventsEmptyState = (breakers: Users[]): boolean => {
     const events = breakerEventsSelector(breaker);
     return events.length !== 0;
   }, breakers);
-};
-
-export const formatEvents = (
-  data: ScheduledEventsQuery | undefined,
-): Users[] => {
-  const userEvents: { [key: string]: Users } = {};
-  data?.Events.forEach((eventData: any) => {
-    const { User, ...event } = eventData;
-    if (User) {
-      userEvents[User.id]
-        ? userEvents[User.id].Events?.push(event)
-        : (userEvents[User.id] = { ...User, Events: [event] });
-    }
-  });
-  return Object.keys(userEvents).map(userId => userEvents[userId]) as Users[];
 };

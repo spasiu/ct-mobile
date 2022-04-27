@@ -4,6 +4,7 @@ import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 import { breakerEventsSelector } from '../../common/breaker';
+import { formatEvents } from '../../common/event';
 import DatePicker from 'react-native-date-picker';
 import {
   SectionHeader,
@@ -78,7 +79,7 @@ export const ResultsScreen = (): JSX.Element => {
         : {},
     },
   });
-  const breakers = data?.Users;
+  const breakers = formatEvents(data);
   if (loading && !data) {
     return <Loading />;
   }

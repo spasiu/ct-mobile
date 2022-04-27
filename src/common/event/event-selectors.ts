@@ -10,6 +10,8 @@ import {
   FeaturedEventsSubscription,
   SaveEvent,
   Users,
+  ScheduledEventsQuery,
+  CompletedEventsQuery,
 } from '../../services/api/requests';
 import { StatusBadgeTypes } from '../../components';
 
@@ -131,3 +133,18 @@ export const eventUpcomingBreakSelector = (
 
 export const eventStreamNameSelector = (event: Partial<Events>) =>
   event.stream_name || undefined;
+
+export const formatEvents = (
+  data: ScheduledEventsQuery | CompletedEventsQuery | undefined,
+): Users[] => {
+  const userEvents: { [key: string]: Users } = {};
+  data?.Events.forEach((eventData: any) => {
+    const { User, ...event } = eventData;
+    if (User) {
+      userEvents[User.id]
+        ? userEvents[User.id].Events?.push(event)
+        : (userEvents[User.id] = { ...User, Events: [event] });
+    }
+  });
+  return Object.keys(userEvents).map(userId => userEvents[userId]) as Users[];
+};

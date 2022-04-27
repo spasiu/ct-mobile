@@ -5917,7 +5917,7 @@ export type Users = {
   Notification?: Maybe<Notifications>;
   /** An object relationship */
   NotificationSettings?: Maybe<NotificationSettings>;
-  /** fetch data from the table: "Orders" */
+  /** An array relationship */
   Orders: Array<Orders>;
   /** An aggregate relationship */
   Orders_aggregate: Orders_Aggregate;
@@ -7060,6 +7060,26 @@ export type Dataset_Type_Bool_Exp = {
   value?: Maybe<String_Comparison_Exp>;
 };
 
+/** unique or primary key constraints on table "dataset_type" */
+export enum Dataset_Type_Constraint {
+  /** unique or primary key constraint */
+  DatasetTypePkey = 'dataset_type_pkey'
+}
+
+export enum Dataset_Type_Enum {
+  Division = 'DIVISION',
+  Team = 'TEAM'
+}
+
+/** Boolean expression to compare columns of type "dataset_type_enum". All fields are combined with logical 'AND'. */
+export type Dataset_Type_Enum_Comparison_Exp = {
+  _eq?: Maybe<Dataset_Type_Enum>;
+  _in?: Maybe<Array<Dataset_Type_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Dataset_Type_Enum>;
+  _nin?: Maybe<Array<Dataset_Type_Enum>>;
+};
+
 /** input type for inserting data into table "dataset_type" */
 export type Dataset_Type_Insert_Input = {
   value?: Maybe<Scalars['String']>;
@@ -7086,9 +7106,21 @@ export type Dataset_Type_Mutation_Response = {
   returning: Array<Dataset_Type>;
 };
 
+/** on_conflict condition type for table "dataset_type" */
+export type Dataset_Type_On_Conflict = {
+  constraint: Dataset_Type_Constraint;
+  update_columns?: Array<Dataset_Type_Update_Column>;
+  where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
 /** Ordering options when selecting data from "dataset_type". */
 export type Dataset_Type_Order_By = {
   value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: dataset_type */
+export type Dataset_Type_Pk_Columns_Input = {
+  value: Scalars['String'];
 };
 
 /** select columns of table "dataset_type" */
@@ -7102,6 +7134,12 @@ export type Dataset_Type_Set_Input = {
   value?: Maybe<Scalars['String']>;
 };
 
+/** update columns of table "dataset_type" */
+export enum Dataset_Type_Update_Column {
+  /** column name */
+  Value = 'value'
+}
+
 /** columns and relationships of "datasets" */
 export type Datasets = {
   __typename?: 'datasets';
@@ -7109,7 +7147,7 @@ export type Datasets = {
   data?: Maybe<Scalars['jsonb']>;
   id: Scalars['uuid'];
   subcategory?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<Dataset_Type_Enum>;
   year: Scalars['smallint'];
 };
 
@@ -7169,7 +7207,7 @@ export type Datasets_Bool_Exp = {
   data?: Maybe<Jsonb_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   subcategory?: Maybe<String_Comparison_Exp>;
-  type?: Maybe<String_Comparison_Exp>;
+  type?: Maybe<Dataset_Type_Enum_Comparison_Exp>;
   year?: Maybe<Smallint_Comparison_Exp>;
 };
 
@@ -7213,7 +7251,7 @@ export type Datasets_Insert_Input = {
   data?: Maybe<Scalars['jsonb']>;
   id?: Maybe<Scalars['uuid']>;
   subcategory?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<Dataset_Type_Enum>;
   year?: Maybe<Scalars['smallint']>;
 };
 
@@ -7223,7 +7261,6 @@ export type Datasets_Max_Fields = {
   category?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   subcategory?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['smallint']>;
 };
 
@@ -7233,7 +7270,6 @@ export type Datasets_Min_Fields = {
   category?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   subcategory?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['smallint']>;
 };
 
@@ -7302,7 +7338,7 @@ export type Datasets_Set_Input = {
   data?: Maybe<Scalars['jsonb']>;
   id?: Maybe<Scalars['uuid']>;
   subcategory?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<Dataset_Type_Enum>;
   year?: Maybe<Scalars['smallint']>;
 };
 
@@ -7517,8 +7553,13 @@ export enum Event_Status_Update_Column {
 }
 
 
+export type Jsonb_Cast_Exp = {
+  String?: Maybe<String_Comparison_Exp>;
+};
+
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
+  _cast?: Maybe<Jsonb_Cast_Exp>;
   /** is the column contained in the given json value */
   _contained_in?: Maybe<Scalars['jsonb']>;
   /** does the column contain the given json value at the top level */
@@ -7641,6 +7682,8 @@ export type Mutation_Root = {
   delete_break_type_by_pk?: Maybe<Break_Type>;
   /** delete data from the table: "dataset_type" */
   delete_dataset_type?: Maybe<Dataset_Type_Mutation_Response>;
+  /** delete single row from the table: "dataset_type" */
+  delete_dataset_type_by_pk?: Maybe<Dataset_Type>;
   /** delete data from the table: "datasets" */
   delete_datasets?: Maybe<Datasets_Mutation_Response>;
   /** delete single row from the table: "datasets" */
@@ -7879,6 +7922,8 @@ export type Mutation_Root = {
   update_break_type_by_pk?: Maybe<Break_Type>;
   /** update data of the table: "dataset_type" */
   update_dataset_type?: Maybe<Dataset_Type_Mutation_Response>;
+  /** update single row of the table: "dataset_type" */
+  update_dataset_type_by_pk?: Maybe<Dataset_Type>;
   /** update data of the table: "datasets" */
   update_datasets?: Maybe<Datasets_Mutation_Response>;
   /** update single row of the table: "datasets" */
@@ -8201,6 +8246,12 @@ export type Mutation_RootDelete_Break_Type_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Dataset_TypeArgs = {
   where: Dataset_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Dataset_Type_By_PkArgs = {
+  value: Scalars['String'];
 };
 
 
@@ -8603,12 +8654,14 @@ export type Mutation_RootInsert_Break_Type_OneArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Dataset_TypeArgs = {
   objects: Array<Dataset_Type_Insert_Input>;
+  on_conflict?: Maybe<Dataset_Type_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Dataset_Type_OneArgs = {
   object: Dataset_Type_Insert_Input;
+  on_conflict?: Maybe<Dataset_Type_On_Conflict>;
 };
 
 
@@ -9052,6 +9105,13 @@ export type Mutation_RootUpdate_Dataset_TypeArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Dataset_Type_By_PkArgs = {
+  _set?: Maybe<Dataset_Type_Set_Input>;
+  pk_columns: Dataset_Type_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_DatasetsArgs = {
   _append?: Maybe<Datasets_Append_Input>;
   _delete_at_path?: Maybe<Datasets_Delete_At_Path_Input>;
@@ -9337,7 +9397,7 @@ export type Query_Root = {
   Notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "Notifications" using primary key columns */
   Notifications_by_pk?: Maybe<Notifications>;
-  /** fetch data from the table: "Orders" */
+  /** An array relationship */
   Orders: Array<Orders>;
   /** An aggregate relationship */
   Orders_aggregate: Orders_Aggregate;
@@ -9419,6 +9479,8 @@ export type Query_Root = {
   dataset_type: Array<Dataset_Type>;
   /** fetch aggregated fields from the table: "dataset_type" */
   dataset_type_aggregate: Dataset_Type_Aggregate;
+  /** fetch data from the table: "dataset_type" using primary key columns */
+  dataset_type_by_pk?: Maybe<Dataset_Type>;
   /** fetch data from the table: "datasets" */
   datasets: Array<Datasets>;
   /** fetch aggregated fields from the table: "datasets" */
@@ -10030,6 +10092,11 @@ export type Query_RootDataset_Type_AggregateArgs = {
 };
 
 
+export type Query_RootDataset_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
 export type Query_RootDatasetsArgs = {
   distinct_on?: Maybe<Array<Datasets_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10226,7 +10293,7 @@ export type Subscription_Root = {
   Notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "Notifications" using primary key columns */
   Notifications_by_pk?: Maybe<Notifications>;
-  /** fetch data from the table: "Orders" */
+  /** An array relationship */
   Orders: Array<Orders>;
   /** An aggregate relationship */
   Orders_aggregate: Orders_Aggregate;
@@ -10308,6 +10375,8 @@ export type Subscription_Root = {
   dataset_type: Array<Dataset_Type>;
   /** fetch aggregated fields from the table: "dataset_type" */
   dataset_type_aggregate: Dataset_Type_Aggregate;
+  /** fetch data from the table: "dataset_type" using primary key columns */
+  dataset_type_by_pk?: Maybe<Dataset_Type>;
   /** fetch data from the table: "datasets" */
   datasets: Array<Datasets>;
   /** fetch aggregated fields from the table: "datasets" */
@@ -10916,6 +10985,11 @@ export type Subscription_RootDataset_Type_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Dataset_Type_Order_By>>;
   where?: Maybe<Dataset_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootDataset_Type_By_PkArgs = {
+  value: Scalars['String'];
 };
 
 
@@ -11668,23 +11742,23 @@ export type NewBreakersSubscription = (
 );
 
 export type CompletedEventsQueryVariables = Exact<{
-  limit?: Maybe<Scalars['Int']>;
   breakerId?: Maybe<String_Comparison_Exp>;
-  userId?: Maybe<BreakProductItems_Bool_Exp>;
   startDate?: Maybe<Timestamptz_Comparison_Exp>;
   endDate?: Maybe<Array<Events_Bool_Exp> | Events_Bool_Exp>;
+  userId?: Maybe<BreakProductItems_Bool_Exp>;
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
 export type CompletedEventsQuery = (
   { __typename?: 'query_root' }
-  & { Users: Array<(
-    { __typename?: 'Users' }
-    & Pick<Users, 'id' | 'first_name' | 'last_name' | 'image' | 'username'>
-    & { Events: Array<(
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'image' | 'start_time' | 'title' | 'description' | 'video_url'>
-    )> }
+  & { Events: Array<(
+    { __typename?: 'Events' }
+    & Pick<Events, 'id' | 'title' | 'image' | 'start_time' | 'description' | 'video_url'>
+    & { User: (
+      { __typename?: 'Users' }
+      & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name' | 'username'>
+    ) }
   )> }
 );
 
@@ -13307,27 +13381,24 @@ export function useNewBreakersSubscription(baseOptions?: ApolloReactHooks.Subscr
 export type NewBreakersSubscriptionHookResult = ReturnType<typeof useNewBreakersSubscription>;
 export type NewBreakersSubscriptionResult = Apollo.SubscriptionResult<NewBreakersSubscription>;
 export const CompletedEventsDocument = gql`
-    query CompletedEvents($limit: Int, $breakerId: String_comparison_exp, $userId: BreakProductItems_bool_exp, $startDate: timestamptz_comparison_exp, $endDate: [Events_bool_exp!]) {
-  Users(
-    where: {is_breaker: {_eq: true}, Events: {User: {id: $breakerId}, Breaks: {BreakProductItems: $userId}, start_time: $startDate, _and: $endDate}}
+    query CompletedEvents($breakerId: String_comparison_exp, $startDate: timestamptz_comparison_exp, $endDate: [Events_bool_exp!], $userId: BreakProductItems_bool_exp, $limit: Int) {
+  Events(
     limit: $limit
+    order_by: {start_time: desc}
+    where: {status: {_eq: COMPLETED}, archived: {_eq: false}, user_id: $breakerId, start_time: $startDate, _and: $endDate, Breaks: {BreakProductItems: $userId}}
   ) {
     id
-    first_name
-    last_name
+    title
     image
-    username
-    Events(
-      where: {archived: {_eq: false}, status: {_eq: COMPLETED}, start_time: $startDate, _and: $endDate}
-      limit: $limit
-      order_by: {start_time: desc}
-    ) {
+    start_time
+    description
+    video_url
+    User {
       id
       image
-      start_time
-      title
-      description
-      video_url
+      first_name
+      last_name
+      username
     }
   }
 }
@@ -13345,11 +13416,11 @@ export const CompletedEventsDocument = gql`
  * @example
  * const { data, loading, error } = useCompletedEventsQuery({
  *   variables: {
- *      limit: // value for 'limit'
  *      breakerId: // value for 'breakerId'
- *      userId: // value for 'userId'
  *      startDate: // value for 'startDate'
  *      endDate: // value for 'endDate'
+ *      userId: // value for 'userId'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

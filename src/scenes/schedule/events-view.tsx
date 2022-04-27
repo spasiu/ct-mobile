@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 
 import { breakerEventsSelector } from '../../common/breaker';
+import { formatEvents } from '../../common/event';
 import {
   SectionHeader,
   EventCard,
@@ -41,7 +42,6 @@ import {
   getBreakTypeFilter,
   shouldShowEventsEmptyState,
   getSportTypeFilter,
-  formatEvents,
 } from './schedule-screen.utils';
 import { eventStatusSelector } from '../../common/event';
 
