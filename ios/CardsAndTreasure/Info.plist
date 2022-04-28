@@ -11,7 +11,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION).0</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
@@ -47,7 +47,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the camera only if you'd like to create a new avatar and not use an image from your photo library.</string>
+	<string>This app requires access to the camera only if you&apos;d like to create a new avatar and not use an image from your photo library.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>

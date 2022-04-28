@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = CardsAndTreasure/CardsAndTreasure.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = L4FDBYMKF2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CardsAndTreasure/Info.plist;
@@ -634,7 +634,7 @@
 				CODE_SIGN_ENTITLEMENTS = CardsAndTreasure/CardsAndTreasure.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = L4FDBYMKF2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CardsAndTreasure/Info.plist;
