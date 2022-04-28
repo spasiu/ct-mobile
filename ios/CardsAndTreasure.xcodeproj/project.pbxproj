@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = CardsAndTreasure/CardsAndTreasure.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = L4FDBYMKF2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CardsAndTreasure/Info.plist;
@@ -610,7 +610,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.25;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -634,7 +634,7 @@
 				CODE_SIGN_ENTITLEMENTS = CardsAndTreasure/CardsAndTreasure.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = L4FDBYMKF2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CardsAndTreasure/Info.plist;
@@ -646,7 +646,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.25;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

@@ -47,7 +47,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the camera only if you&apos;d like to create a new avatar and not use an image from your photo library.</string>
+	<string>This app requires access to the camera only if you'd like to create a new avatar and not use an image from your photo library.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
