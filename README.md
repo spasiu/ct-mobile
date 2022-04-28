@@ -52,6 +52,8 @@ Basically you need to build the project using react native and then open it in X
 
 ## Deploying a new build to TestFlight for internal testing
 
+The first time you create a new build for testflight run the instructions below, but for subsequent builds you can just run `yarn dist <version> <build>` e.g., `yarn dist 0.25 10`.
+
 1. Download or generate a **distribution** certificate for **Cartes et Tresor Inc** from `developer.apple.com/account/resources/certificates/list`.
 1. Run `yarn ios:clean` to build the React-Native project for ios.
 1. Open _ios/CardsAndTreasure.xcworkspace_ in Xcode.
