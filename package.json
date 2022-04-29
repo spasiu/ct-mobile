@@ -20,7 +20,8 @@
         "generate": "graphql-codegen --config codegen.js -r dotenv/config ./.env",
         "ts:watch": "tsc --noEmit --skipLibCheck --watch --pretty",
         "ts": "tsc --noEmit --skipLibCheck --pretty",
-        "buildclean": "yarn clean:js && yarn clean:ios && yarn install"
+        "buildclean": "yarn clean:js && yarn clean:ios && yarn install",
+        "dist": "scripts/distribute.sh"
     },
     "dependencies": {
         "@apollo/client": "3.3.15",

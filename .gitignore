@@ -71,3 +71,5 @@ ios/GoogleService-Info.plist
 *.swo
 *~
 
+# Archives
+/ios/CardsAndTreasure.xcarchive/
