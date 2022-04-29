@@ -21,7 +21,7 @@
         "ts:watch": "tsc --noEmit --skipLibCheck --watch --pretty",
         "ts": "tsc --noEmit --skipLibCheck --pretty",
         "buildclean": "yarn clean:js && yarn clean:ios && yarn install",
-        "dist": "dist() { cd ios && xcrun agvtool new-marketing-version $1 && xcrun agvtool new-version $2 && xcodebuild ARCHS=arm64 -archivePath CardsAndTreasure.xcarchive -workspace CardsAndTreasure.xcworkspace -scheme CardsAndTreasure -destination 'generic/platform=iOS' archive && xcodebuild -exportArchive -archivePath CardsAndTreasure.xcarchive -exportOptionsPlist ExportOptions.plist; } ; dist"
+        "dist": "scripts/distribute.sh"
     },
     "dependencies": {
         "@apollo/client": "3.3.15",

@@ -52,7 +52,7 @@ Basically you need to build the project using react native and then open it in X
 
 ## Deploying a new build to TestFlight for internal testing
 
-The first time you create a new build for testflight run the instructions below, but for subsequent builds you can just run `yarn dist <version> <build>` e.g., `yarn dist 0.25 10`.
+The first time you create a new build for testflight run the instructions below, but for subsequent builds you can just run `yarn dist <version> <build>` e.g., `yarn dist 0.25 10` (the _dist_ command will require you to change permissions on the distribute.sh script: e.g., `chmod +x scripts/distribute.sh`).
 
 1. Download or generate a **distribution** certificate for **Cartes et Tresor Inc** from `developer.apple.com/account/resources/certificates/list`.
 1. Run `yarn ios:clean` to build the React-Native project for ios.
