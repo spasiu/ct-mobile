@@ -123,6 +123,7 @@ export const ResultDetailModal = ({
                 {...breakCardDetails}
                 eventDate={eventDate}
                 setResult={() => setBreakResults(item)}
+                onPress={() => setBreakResults(item)}
               />
             );
           })

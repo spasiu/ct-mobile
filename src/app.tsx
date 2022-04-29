@@ -98,24 +98,34 @@ const App = (): JSX.Element | null => {
   }, [loaded]);
 
   useEffect(() => {
-    const checkVersion = () => getMinimumVersion().then((minVersion) => {
-      const [currentMajor, currentMinor] = VersionCheck.getCurrentVersion().split(".");
-      const currentBuild = VersionCheck.getCurrentBuildNumber();
-      if ((minVersion.data.major > currentMajor) ||
-        (minVersion.data.major === currentMajor && minVersion.data.minor > currentMinor) ||
-        (minVersion.data.major === currentMajor && minVersion.data.minor === currentMinor && minVersion.data.build > currentBuild))
-        setShowUpdateModal(true);
-      setAppstoreUrl(minVersion.data.appstoreUrl);
-    });
+    const checkVersion = () =>
+      getMinimumVersion().then(minVersion => {
+        const [currentMajor, currentMinor] =
+          VersionCheck.getCurrentVersion().split('.');
+        const currentBuild = VersionCheck.getCurrentBuildNumber();
+        if (
+          minVersion.data.major > currentMajor ||
+          (minVersion.data.major === currentMajor &&
+            minVersion.data.minor > currentMinor) ||
+          (minVersion.data.major === currentMajor &&
+            minVersion.data.minor === currentMinor &&
+            minVersion.data.build > currentBuild)
+        ) {
+          setShowUpdateModal(true);
+        }
+        setAppstoreUrl(minVersion.data.appstoreUrl);
+      });
     checkVersion();
-    AppState.addEventListener("change", nextAppState => {
+    AppState.addEventListener('change', nextAppState => {
       if (
         appState.current.match(/inactive|background/) &&
-        nextAppState === "active"
-      ) checkVersion();
+        nextAppState === 'active'
+      ) {
+        checkVersion();
+      }
       appState.current = nextAppState;
     });
-    return AppState.removeEventListener("change", () => {});
+    return AppState.removeEventListener('change', () => {});
   }, []);
 
   if (!loaded || initializing) {
