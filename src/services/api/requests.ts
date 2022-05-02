@@ -12158,31 +12158,6 @@ export type NewScheduledBreaksSubscription = (
   )> }
 );
 
-export type ScheduledEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-  breakTypeFilter?: Maybe<Break_Type_Enum_Comparison_Exp>;
-  sportTypeFilter?: Maybe<String_Comparison_Exp>;
-}>;
-
-
-export type ScheduledEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    ), Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )> }
-  )> }
-);
-
 export type NewScheduledEventsSubscriptionVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
   breakTypeFilter?: Maybe<Break_Type_Enum_Comparison_Exp>;
@@ -14055,62 +14030,6 @@ export function useNewScheduledBreaksSubscription(baseOptions?: ApolloReactHooks
       }
 export type NewScheduledBreaksSubscriptionHookResult = ReturnType<typeof useNewScheduledBreaksSubscription>;
 export type NewScheduledBreaksSubscriptionResult = Apollo.SubscriptionResult<NewScheduledBreaksSubscription>;
-export const ScheduledEventsDocument = gql`
-    query ScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
-  Events(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
-    order_by: {start_time: asc}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    User {
-      id
-      image
-      first_name
-      last_name
-    }
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      User {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useScheduledEventsQuery__
- *
- * To run a query within a React component, call `useScheduledEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useScheduledEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useScheduledEventsQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *      breakTypeFilter: // value for 'breakTypeFilter'
- *      sportTypeFilter: // value for 'sportTypeFilter'
- *   },
- * });
- */
-export function useScheduledEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ScheduledEventsQuery, ScheduledEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<ScheduledEventsQuery, ScheduledEventsQueryVariables>(ScheduledEventsDocument, options);
-      }
-export function useScheduledEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ScheduledEventsQuery, ScheduledEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<ScheduledEventsQuery, ScheduledEventsQueryVariables>(ScheduledEventsDocument, options);
-        }
-export type ScheduledEventsQueryHookResult = ReturnType<typeof useScheduledEventsQuery>;
-export type ScheduledEventsLazyQueryHookResult = ReturnType<typeof useScheduledEventsLazyQuery>;
-export type ScheduledEventsQueryResult = Apollo.QueryResult<ScheduledEventsQuery, ScheduledEventsQueryVariables>;
 export const NewScheduledEventsDocument = gql`
     subscription NewScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Events(

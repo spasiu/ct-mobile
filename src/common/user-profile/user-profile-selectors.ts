@@ -7,7 +7,6 @@ import {
   Notifications,
   FeaturedBreakersQuery,
   LoggedUserQuery,
-  ScheduledEventsQuery,
   UserAddressesQuery,
   UserMinimalInformationQuery,
 } from '../../services/api/requests';
@@ -20,7 +19,6 @@ import {
 export const usersSelector = (
   requestData:
     | FeaturedBreakersQuery
-    | ScheduledEventsQuery
     | LoggedUserQuery
     | UserAddressesQuery
     | UserMinimalInformationQuery
@@ -30,7 +28,6 @@ export const usersSelector = (
 export const userSelector = (
   requestData:
     | FeaturedBreakersQuery
-    | ScheduledEventsQuery
     | LoggedUserQuery
     | UserAddressesQuery
     | UserMinimalInformationQuery
