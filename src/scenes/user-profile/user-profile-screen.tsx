@@ -23,6 +23,7 @@ import {
   PaymentRowLink,
   AvatarUpload,
   Loading,
+  WarningModal,
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
@@ -43,6 +44,7 @@ import {
   privacyPolicyIcon,
   chatIcon,
   logoutIcon,
+  failedEmojiIcon,
 } from './user-profile-screen.presets';
 import { UserSaves } from './user-saves';
 import { FilterContext, FilterContextType } from '../../providers/filter';
@@ -51,6 +53,7 @@ import {
   NotificationContext,
   NotificationContextType,
 } from '../../providers/notification';
+import { deleteUser } from './user-profile-screen.utils';
 
 export const UserProfileScreen = ({
   navigation,
@@ -69,6 +72,7 @@ export const UserProfileScreen = ({
   ) as NotificationContextType;
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     if (isEmpty(cards)) {
@@ -211,10 +215,32 @@ export const UserProfileScreen = ({
                   logout();
                 }}
               />
+              <RowLink
+                icon={failedEmojiIcon}
+                text={t('buttons.delete')}
+                containerStyle={[s.mb2]}
+                onPress={() => setConfirmDelete(true)}
+              />
             </View>
           </>
         )}
       </ScrollView>
+      <WarningModal
+        title={t('account.confirmDelete')}
+        description={t('warningModal.delete')}
+        visible={confirmDelete}
+        primaryActionText={t('buttons.delete')}
+        onPrimaryActionPressed={() => {
+          cleanPaymentInfo();
+          cleanFilters();
+          cleanNotificationData();
+          logout();
+          deleteUser({ id: authUser?.uid });
+        }}
+        secondaryActionText={t('buttons.cancel')}
+        onSecondaryActionPressed={() => setConfirmDelete(false)}
+        loadingPrimaryAction={loading}
+      />
     </Container>
   );
 };

@@ -6,3 +6,4 @@ export const termsOfServiceIcon = require('../../assets/terms-of-service-icon.pn
 export const privacyPolicyIcon = require('../../assets/privacy-policy-icon.png');
 export const chatIcon = require('../../assets/chat-icon.png');
 export const logoutIcon = require('../../assets/logout-icon.png');
+export const failedEmojiIcon = require('../../assets/failed-emoji.png');
