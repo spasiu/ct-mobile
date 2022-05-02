@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/core';
@@ -6,11 +6,10 @@ import { useNavigation } from '@react-navigation/core';
 import { BreakCard, EmptyState, Loading } from '../../components';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  useScheduledBreaksQuery,
-  NewScheduledBreaksDocument,
   Breaks,
   useFollowBreakMutation,
   useUnfollowBreakMutation,
+  useNewScheduledBreaksSubscription,
 } from '../../services/api/requests';
 import {
   optimisticUnfollowBreakResponse,
@@ -28,10 +27,7 @@ import {
   getBreakTypeFilter,
   getSportTypeFilter,
 } from './schedule-screen.utils';
-import {
-  breakIdSelector,
-  handleBreakPress,
-} from '../../common/break';
+import { breakIdSelector, handleBreakPress } from '../../common/break';
 
 export const BreaksView = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
@@ -41,8 +37,7 @@ export const BreaksView = (): JSX.Element => {
   ) as FilterContextType;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
-  const { loading, data, subscribeToMore } = useScheduledBreaksQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, data } = useNewScheduledBreaksSubscription({
     variables: {
       userId: authUser?.uid as string,
       breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
@@ -52,22 +47,6 @@ export const BreaksView = (): JSX.Element => {
 
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMore({
-      document: NewScheduledBreaksDocument,
-      variables: {
-        userId: authUser?.uid,
-        breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
-        sportTypeFilter: getSportTypeFilter(sportTypeFilter),
-      },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [breakTypeFilter, sportTypeFilter]);
 
   if (loading && !data) {
     return <Loading />;
