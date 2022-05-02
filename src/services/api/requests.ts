@@ -12549,36 +12549,6 @@ export type NewUserUpcomingEventsSubscription = (
   )> }
 );
 
-export type UserUpcomingEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type UserUpcomingEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { Event: (
-        { __typename?: 'Events' }
-        & Pick<Events, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )>, User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'first_name' | 'image' | 'last_name'>
-      & { BreakerProfile?: Maybe<(
-        { __typename?: 'BreakerProfiles' }
-        & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-      )> }
-    ) }
-  )> }
-);
-
 export const AddressOverviewFragmentDoc = gql`
     fragment AddressOverview on Addresses {
   first_name
@@ -14723,68 +14693,3 @@ export function useNewUserUpcomingEventsSubscription(baseOptions?: ApolloReactHo
       }
 export type NewUserUpcomingEventsSubscriptionHookResult = ReturnType<typeof useNewUserUpcomingEventsSubscription>;
 export type NewUserUpcomingEventsSubscriptionResult = Apollo.SubscriptionResult<NewUserUpcomingEventsSubscription>;
-export const UserUpcomingEventsDocument = gql`
-    query UserUpcomingEvents($userId: String) {
-  Events(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Saves: {user_id: {_eq: $userId}}}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Event {
-        id
-      }
-      User {
-        id
-      }
-    }
-    User {
-      id
-      first_name
-      image
-      first_name
-      last_name
-      BreakerProfile {
-        id
-        twitter
-        facebook
-        instagram
-        video
-        bio
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useUserUpcomingEventsQuery__
- *
- * To run a query within a React component, call `useUserUpcomingEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserUpcomingEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserUpcomingEventsQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useUserUpcomingEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>(UserUpcomingEventsDocument, options);
-      }
-export function useUserUpcomingEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>(UserUpcomingEventsDocument, options);
-        }
-export type UserUpcomingEventsQueryHookResult = ReturnType<typeof useUserUpcomingEventsQuery>;
-export type UserUpcomingEventsLazyQueryHookResult = ReturnType<typeof useUserUpcomingEventsLazyQuery>;
-export type UserUpcomingEventsQueryResult = Apollo.QueryResult<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>;

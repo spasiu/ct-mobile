@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
@@ -8,9 +8,8 @@ import { t } from '../../i18n/i18n';
 import {
   useFollowEventMutation,
   useUnfollowEventMutation,
-  useUserUpcomingEventsQuery,
-  NewUserUpcomingEventsDocument,
   Event_Status_Enum,
+  useNewUserUpcomingEventsSubscription,
 } from '../../services/api/requests';
 
 import { isEmpty } from 'ramda';
@@ -36,23 +35,12 @@ export const UserUpcomingEvents = (): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
 
-  const { loading, data, subscribeToMore } = useUserUpcomingEventsQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, data } = useNewUserUpcomingEventsSubscription({
     variables: { userId: authUser?.uid },
   });
 
   const [followEvent] = useFollowEventMutation();
   const [unfollowEvent] = useUnfollowEventMutation();
-
-  useEffect(() => {
-    subscribeToMore({
-      document: NewUserUpcomingEventsDocument,
-      variables: { userId: authUser?.uid },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (loading && !data) {
     return <Loading />;
