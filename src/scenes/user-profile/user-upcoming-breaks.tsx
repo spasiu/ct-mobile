@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
@@ -14,10 +14,9 @@ import { t } from '../../i18n/i18n';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
   Breaks,
-  NewUserUpcomingBreaksDocument,
   useFollowBreakMutation,
+  useNewUserUpcomingBreaksSubscription,
   useUnfollowBreakMutation,
-  useUserUpcomingBreaksQuery,
 } from '../../services/api/requests';
 import {
   optimisticUnfollowBreakResponse,
@@ -37,28 +36,13 @@ export const UserUpcomingBreaks = (): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [breakId, setBreakId] = useState<string>();
   const [limit, setLimit] = useState(3);
-  const { data, subscribeToMore } = useUserUpcomingBreaksQuery({
-    fetchPolicy: 'cache-and-network',
+  const { data } = useNewUserUpcomingBreaksSubscription({
     variables: {
       userId: authUser?.uid,
     },
   });
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMore({
-      document: NewUserUpcomingBreaksDocument,
-      variables: {
-        userId: authUser?.uid,
-      },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const breaks = breaksSelector(data);
   if (isEmpty(breaks)) {
