@@ -24,6 +24,7 @@ import { BreakCardProps, EventCardProps } from '../../components';
 import { Breaks, Events, Users } from '../../services/api/requests';
 import { formatScheduledStatus } from '../../utils/date';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import functions from '@react-native-firebase/functions';
 
 export const breakScheduleSelector = (
   eventBreak: Breaks,
@@ -78,3 +79,5 @@ export const eventDetailSelector = (event: Events): EventDetailModalProps => {
     eventDate: formatScheduledStatus(eventTime),
   };
 };
+
+export const deleteUser = functions().httpsCallable('deleteUser');

@@ -49,7 +49,8 @@
     "continueToCheckout": "Continue to Checkout",
     "proceedToLiveStream": "Great, let’s get ripping!",
     "takeMeBack": "I disagree, take me back",
-    "appstore": "Update now."
+    "appstore": "Update now.",
+    "delete": "Delete Account."
   },
   "tabBar": {
     "homeTab": "Home",
@@ -103,7 +104,8 @@
     "welcomeBackSubtitle": "Ready for a break?",
     "completeProfileTitle": "Reserve your username",
     "completeProfileConcise": "Complete your profile",
-    "completeProfileSubtitle": "Choose a username and upload an avatar"
+    "completeProfileSubtitle": "Choose a username and upload an avatar",
+    "confirmDelete": "Are you sure you want to delete your account?"
   },
   "onboarding": {
     "firstInstructionTitle": "Find your break",
@@ -378,7 +380,8 @@
     "confirmationInstruction": "Check your email entered below for the link to reset your password"
   },
   "warningModal": {
-    "title": "Are you sure?"
+    "title": "Are you sure?",
+    "delete": "You will be unable to log in again."
   },
   "liveTermsAndConditionsModal": {
     "title": "Let's rip wax and have some fun!",
