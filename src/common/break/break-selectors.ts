@@ -13,6 +13,7 @@ import {
   SaveBreak,
   Break_Product,
   Break_Status_Enum,
+  NewBreakerBreaksSubscription,
 } from '../../services/api/requests';
 import {
   breakProductsMaxPriceSelector,
@@ -29,7 +30,11 @@ import { Sports } from '../sports';
 import { BreakResult } from './break';
 
 export const breaksSelector = (
-  requestData: BreakDetailQuery | EventBreaksQuery | undefined,
+  requestData:
+    | NewBreakerBreaksSubscription
+    | BreakDetailQuery
+    | EventBreaksQuery
+    | undefined,
 ): Breaks[] => pathOr([], ['Breaks'], requestData);
 
 export const breakSelector = (

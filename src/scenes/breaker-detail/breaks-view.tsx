@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/core';
 
 import { BreakCard, EmptyState, Loading } from '../../components';
 import {
-  useBreakerBreaksQuery,
-  BreakerBreaksDocument,
   Breaks,
   useFollowBreakMutation,
   useUnfollowBreakMutation,
+  useNewBreakerBreaksSubscription,
 } from '../../services/api/requests';
 import { indexedMap } from '../../utils/ramda';
 
@@ -42,23 +41,12 @@ export const BreaksView = ({
   const [breakId, setBreakId] = useState<string>();
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
-  const { loading, data, subscribeToMore } = useBreakerBreaksQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, data } = useNewBreakerBreaksSubscription({
     variables: { id: breaker.id, userId: authUser?.uid },
   });
 
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
-
-  useEffect(() => {
-    subscribeToMore({
-      document: BreakerBreaksDocument,
-      variables: { id: breaker.id, userId: authUser?.uid },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (loading && !data) {
     return <Loading />;
