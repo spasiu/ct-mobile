@@ -11562,30 +11562,6 @@ export type NewBreakerBreaksSubscription = (
   )> }
 );
 
-export type BreakerEventsQueryVariables = Exact<{
-  id: Scalars['String'];
-  userId: Scalars['String'];
-}>;
-
-
-export type BreakerEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { Event: (
-        { __typename?: 'Events' }
-        & Pick<Events, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )> }
-  )> }
-);
-
 export type NewBreakerEventsSubscriptionVariables = Exact<{
   id: Scalars['String'];
   userId: Scalars['String'];
@@ -12812,57 +12788,6 @@ export function useNewBreakerBreaksSubscription(baseOptions: ApolloReactHooks.Su
       }
 export type NewBreakerBreaksSubscriptionHookResult = ReturnType<typeof useNewBreakerBreaksSubscription>;
 export type NewBreakerBreaksSubscriptionResult = Apollo.SubscriptionResult<NewBreakerBreaksSubscription>;
-export const BreakerEventsDocument = gql`
-    query BreakerEvents($id: String!, $userId: String!) {
-  Events(
-    where: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Event {
-        id
-      }
-      User {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useBreakerEventsQuery__
- *
- * To run a query within a React component, call `useBreakerEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useBreakerEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBreakerEventsQuery({
- *   variables: {
- *      id: // value for 'id'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useBreakerEventsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<BreakerEventsQuery, BreakerEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<BreakerEventsQuery, BreakerEventsQueryVariables>(BreakerEventsDocument, options);
-      }
-export function useBreakerEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BreakerEventsQuery, BreakerEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<BreakerEventsQuery, BreakerEventsQueryVariables>(BreakerEventsDocument, options);
-        }
-export type BreakerEventsQueryHookResult = ReturnType<typeof useBreakerEventsQuery>;
-export type BreakerEventsLazyQueryHookResult = ReturnType<typeof useBreakerEventsLazyQuery>;
-export type BreakerEventsQueryResult = Apollo.QueryResult<BreakerEventsQuery, BreakerEventsQueryVariables>;
 export const NewBreakerEventsDocument = gql`
     subscription NewBreakerEvents($id: String!, $userId: String!) {
   Events(

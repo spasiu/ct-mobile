@@ -1,7 +1,7 @@
 import { filter, find, head, isEmpty, pathOr, propEq } from 'ramda';
 
 import {
-  BreakerEventsQuery,
+  NewBreakerEventsSubscription,
   Breaks,
   Break_Status_Enum,
   Events,
@@ -60,7 +60,7 @@ export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
 
 export const eventsSelector = (
   requestData:
-    | BreakerEventsQuery
+    | NewBreakerEventsSubscription
     | LiveStreamSubscription
     | FeaturedEventsSubscription
     | undefined,
