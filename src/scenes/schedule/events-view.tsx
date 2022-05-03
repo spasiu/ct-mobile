@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
@@ -16,12 +16,11 @@ import { t } from '../../i18n/i18n';
 import { indexedMap } from '../../utils/ramda';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import {
-  useScheduledEventsQuery,
-  NewScheduledEventsDocument,
   Users,
   useFollowEventMutation,
   useUnfollowEventMutation,
   Event_Status_Enum,
+  useNewScheduledEventsSubscription,
 } from '../../services/api/requests';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { AuthContext, AuthContextType } from '../../providers/auth';
@@ -53,8 +52,7 @@ export const EventsView = (): JSX.Element => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
 
   const navigation = useNavigation();
-  const { loading, data, subscribeToMore } = useScheduledEventsQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, data } = useNewScheduledEventsSubscription({
     variables: {
       userId: authUser?.uid,
       breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
@@ -64,22 +62,6 @@ export const EventsView = (): JSX.Element => {
 
   const [followEvent] = useFollowEventMutation();
   const [unfollowEvent] = useUnfollowEventMutation();
-
-  useEffect(() => {
-    const unsubscribe = subscribeToMore({
-      document: NewScheduledEventsDocument,
-      variables: {
-        userId: authUser?.uid,
-        breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
-        sportTypeFilter: getSportTypeFilter(sportTypeFilter),
-      },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [breakTypeFilter, sportTypeFilter]);
 
   if (loading && !data) {
     return <Loading />;

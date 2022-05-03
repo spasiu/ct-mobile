@@ -11510,58 +11510,6 @@ export type BreakItemsSubscription = (
   )> }
 );
 
-export type BreakerBreaksQueryVariables = Exact<{
-  id: Scalars['String'];
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type BreakerBreaksQuery = (
-  { __typename?: 'query_root' }
-  & { Breaks: Array<(
-    { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
-      & { Product: (
-        { __typename?: 'Products' }
-        & Pick<Products, 'category'>
-      ) }
-    )>, Saves: Array<(
-      { __typename?: 'SaveBreak' }
-      & { Break: (
-        { __typename?: 'Breaks' }
-        & Pick<Breaks, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )>, BreakProductItems_aggregate: (
-      { __typename?: 'BreakProductItems_aggregate' }
-      & { aggregate?: Maybe<(
-        { __typename?: 'BreakProductItems_aggregate_fields' }
-        & { max?: Maybe<(
-          { __typename?: 'BreakProductItems_max_fields' }
-          & Pick<BreakProductItems_Max_Fields, 'price'>
-        )>, min?: Maybe<(
-          { __typename?: 'BreakProductItems_min_fields' }
-          & Pick<BreakProductItems_Min_Fields, 'price'>
-        )>, sum?: Maybe<(
-          { __typename?: 'BreakProductItems_sum_fields' }
-          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
-        )> }
-      )> }
-    ), Event: (
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'status' | 'start_time'>
-      & { User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id' | 'image'>
-      ) }
-    ) }
-  )> }
-);
-
 export type NewBreakerBreaksSubscriptionVariables = Exact<{
   id: Scalars['String'];
   userId?: Maybe<Scalars['String']>;
@@ -11611,30 +11559,6 @@ export type NewBreakerBreaksSubscription = (
         & Pick<Users, 'id' | 'image'>
       ) }
     ) }
-  )> }
-);
-
-export type BreakerEventsQueryVariables = Exact<{
-  id: Scalars['String'];
-  userId: Scalars['String'];
-}>;
-
-
-export type BreakerEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { Event: (
-        { __typename?: 'Events' }
-        & Pick<Events, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )> }
   )> }
 );
 
@@ -12157,59 +12081,6 @@ export type LoggedUserQuery = (
   )> }
 );
 
-export type ScheduledBreaksQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-  breakTypeFilter?: Maybe<Break_Type_Enum_Comparison_Exp>;
-  sportTypeFilter?: Maybe<String_Comparison_Exp>;
-}>;
-
-
-export type ScheduledBreaksQuery = (
-  { __typename?: 'query_root' }
-  & { Breaks: Array<(
-    { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
-      & { Product: (
-        { __typename?: 'Products' }
-        & Pick<Products, 'category'>
-      ) }
-    )>, Saves: Array<(
-      { __typename?: 'SaveBreak' }
-      & { Break: (
-        { __typename?: 'Breaks' }
-        & Pick<Breaks, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )>, BreakProductItems_aggregate: (
-      { __typename?: 'BreakProductItems_aggregate' }
-      & { aggregate?: Maybe<(
-        { __typename?: 'BreakProductItems_aggregate_fields' }
-        & { max?: Maybe<(
-          { __typename?: 'BreakProductItems_max_fields' }
-          & Pick<BreakProductItems_Max_Fields, 'price'>
-        )>, min?: Maybe<(
-          { __typename?: 'BreakProductItems_min_fields' }
-          & Pick<BreakProductItems_Min_Fields, 'price'>
-        )>, sum?: Maybe<(
-          { __typename?: 'BreakProductItems_sum_fields' }
-          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
-        )> }
-      )> }
-    ), Event: (
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'status' | 'start_time'>
-      & { User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id' | 'image'>
-      ) }
-    ) }
-  )> }
-);
-
 export type NewScheduledBreaksSubscriptionVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
   breakTypeFilter?: Maybe<Break_Type_Enum_Comparison_Exp>;
@@ -12260,31 +12131,6 @@ export type NewScheduledBreaksSubscription = (
         & Pick<Users, 'id' | 'image'>
       ) }
     ) }
-  )> }
-);
-
-export type ScheduledEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-  breakTypeFilter?: Maybe<Break_Type_Enum_Comparison_Exp>;
-  sportTypeFilter?: Maybe<String_Comparison_Exp>;
-}>;
-
-
-export type ScheduledEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
-    ), Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )> }
   )> }
 );
 
@@ -12649,57 +12495,6 @@ export type NewUserUpcomingBreaksSubscription = (
   )> }
 );
 
-export type UserUpcomingBreaksQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type UserUpcomingBreaksQuery = (
-  { __typename?: 'query_root' }
-  & { Breaks: Array<(
-    { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
-    & { break_products: Array<(
-      { __typename?: 'break_product' }
-      & { Product: (
-        { __typename?: 'Products' }
-        & Pick<Products, 'category'>
-      ) }
-    )>, Saves: Array<(
-      { __typename?: 'SaveBreak' }
-      & { Break: (
-        { __typename?: 'Breaks' }
-        & Pick<Breaks, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )>, BreakProductItems_aggregate: (
-      { __typename?: 'BreakProductItems_aggregate' }
-      & { aggregate?: Maybe<(
-        { __typename?: 'BreakProductItems_aggregate_fields' }
-        & { max?: Maybe<(
-          { __typename?: 'BreakProductItems_max_fields' }
-          & Pick<BreakProductItems_Max_Fields, 'price'>
-        )>, min?: Maybe<(
-          { __typename?: 'BreakProductItems_min_fields' }
-          & Pick<BreakProductItems_Min_Fields, 'price'>
-        )>, sum?: Maybe<(
-          { __typename?: 'BreakProductItems_sum_fields' }
-          & Pick<BreakProductItems_Sum_Fields, 'quantity'>
-        )> }
-      )> }
-    ), Event: (
-      { __typename?: 'Events' }
-      & Pick<Events, 'id' | 'status' | 'start_time'>
-      & { User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id' | 'image'>
-      ) }
-    ) }
-  )> }
-);
-
 export type NewUserUpcomingEventsSubscriptionVariables = Exact<{
   userId?: Maybe<Scalars['String']>;
 }>;
@@ -12707,36 +12502,6 @@ export type NewUserUpcomingEventsSubscriptionVariables = Exact<{
 
 export type NewUserUpcomingEventsSubscription = (
   { __typename?: 'subscription_root' }
-  & { Events: Array<(
-    { __typename?: 'Events' }
-    & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
-    & { Saves: Array<(
-      { __typename?: 'SaveEvent' }
-      & { Event: (
-        { __typename?: 'Events' }
-        & Pick<Events, 'id'>
-      ), User: (
-        { __typename?: 'Users' }
-        & Pick<Users, 'id'>
-      ) }
-    )>, User: (
-      { __typename?: 'Users' }
-      & Pick<Users, 'id' | 'first_name' | 'image' | 'last_name'>
-      & { BreakerProfile?: Maybe<(
-        { __typename?: 'BreakerProfiles' }
-        & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
-      )> }
-    ) }
-  )> }
-);
-
-export type UserUpcomingEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type UserUpcomingEventsQuery = (
-  { __typename?: 'query_root' }
   & { Events: Array<(
     { __typename?: 'Events' }
     & Pick<Events, 'id' | 'title' | 'status' | 'image' | 'start_time' | 'description'>
@@ -12950,84 +12715,6 @@ export function useBreakItemsSubscription(baseOptions?: ApolloReactHooks.Subscri
       }
 export type BreakItemsSubscriptionHookResult = ReturnType<typeof useBreakItemsSubscription>;
 export type BreakItemsSubscriptionResult = Apollo.SubscriptionResult<BreakItemsSubscription>;
-export const BreakerBreaksDocument = gql`
-    query BreakerBreaks($id: String!, $userId: String) {
-  Breaks(
-    where: {Event: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
-  ) {
-    id
-    break_type
-    description
-    status
-    title
-    break_products {
-      Product {
-        category
-      }
-    }
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Break {
-        id
-      }
-      User {
-        id
-      }
-    }
-    BreakProductItems_aggregate {
-      aggregate {
-        max {
-          price
-        }
-        min {
-          price
-        }
-        sum {
-          quantity
-        }
-      }
-    }
-    Event {
-      id
-      status
-      start_time
-      User {
-        id
-        image
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useBreakerBreaksQuery__
- *
- * To run a query within a React component, call `useBreakerBreaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useBreakerBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBreakerBreaksQuery({
- *   variables: {
- *      id: // value for 'id'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useBreakerBreaksQuery(baseOptions: ApolloReactHooks.QueryHookOptions<BreakerBreaksQuery, BreakerBreaksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<BreakerBreaksQuery, BreakerBreaksQueryVariables>(BreakerBreaksDocument, options);
-      }
-export function useBreakerBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BreakerBreaksQuery, BreakerBreaksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<BreakerBreaksQuery, BreakerBreaksQueryVariables>(BreakerBreaksDocument, options);
-        }
-export type BreakerBreaksQueryHookResult = ReturnType<typeof useBreakerBreaksQuery>;
-export type BreakerBreaksLazyQueryHookResult = ReturnType<typeof useBreakerBreaksLazyQuery>;
-export type BreakerBreaksQueryResult = Apollo.QueryResult<BreakerBreaksQuery, BreakerBreaksQueryVariables>;
 export const NewBreakerBreaksDocument = gql`
     subscription NewBreakerBreaks($id: String!, $userId: String) {
   Breaks(
@@ -13101,57 +12788,6 @@ export function useNewBreakerBreaksSubscription(baseOptions: ApolloReactHooks.Su
       }
 export type NewBreakerBreaksSubscriptionHookResult = ReturnType<typeof useNewBreakerBreaksSubscription>;
 export type NewBreakerBreaksSubscriptionResult = Apollo.SubscriptionResult<NewBreakerBreaksSubscription>;
-export const BreakerEventsDocument = gql`
-    query BreakerEvents($id: String!, $userId: String!) {
-  Events(
-    where: {User: {id: {_eq: $id}}, _and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Event {
-        id
-      }
-      User {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useBreakerEventsQuery__
- *
- * To run a query within a React component, call `useBreakerEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useBreakerEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBreakerEventsQuery({
- *   variables: {
- *      id: // value for 'id'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useBreakerEventsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<BreakerEventsQuery, BreakerEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<BreakerEventsQuery, BreakerEventsQueryVariables>(BreakerEventsDocument, options);
-      }
-export function useBreakerEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BreakerEventsQuery, BreakerEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<BreakerEventsQuery, BreakerEventsQueryVariables>(BreakerEventsDocument, options);
-        }
-export type BreakerEventsQueryHookResult = ReturnType<typeof useBreakerEventsQuery>;
-export type BreakerEventsLazyQueryHookResult = ReturnType<typeof useBreakerEventsLazyQuery>;
-export type BreakerEventsQueryResult = Apollo.QueryResult<BreakerEventsQuery, BreakerEventsQueryVariables>;
 export const NewBreakerEventsDocument = gql`
     subscription NewBreakerEvents($id: String!, $userId: String!) {
   Events(
@@ -14164,85 +13800,6 @@ export function useLoggedUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type LoggedUserQueryHookResult = ReturnType<typeof useLoggedUserQuery>;
 export type LoggedUserLazyQueryHookResult = ReturnType<typeof useLoggedUserLazyQuery>;
 export type LoggedUserQueryResult = Apollo.QueryResult<LoggedUserQuery, LoggedUserQueryVariables>;
-export const ScheduledBreaksDocument = gql`
-    query ScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
-  Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, break_products: {Product: {category: $sportTypeFilter}}, break_type: $breakTypeFilter}
-    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
-  ) {
-    id
-    break_type
-    description
-    status
-    title
-    break_products {
-      Product {
-        category
-      }
-    }
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Break {
-        id
-      }
-      User {
-        id
-      }
-    }
-    BreakProductItems_aggregate {
-      aggregate {
-        max {
-          price
-        }
-        min {
-          price
-        }
-        sum {
-          quantity
-        }
-      }
-    }
-    Event {
-      id
-      status
-      start_time
-      User {
-        id
-        image
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useScheduledBreaksQuery__
- *
- * To run a query within a React component, call `useScheduledBreaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useScheduledBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useScheduledBreaksQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *      breakTypeFilter: // value for 'breakTypeFilter'
- *      sportTypeFilter: // value for 'sportTypeFilter'
- *   },
- * });
- */
-export function useScheduledBreaksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>(ScheduledBreaksDocument, options);
-      }
-export function useScheduledBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>(ScheduledBreaksDocument, options);
-        }
-export type ScheduledBreaksQueryHookResult = ReturnType<typeof useScheduledBreaksQuery>;
-export type ScheduledBreaksLazyQueryHookResult = ReturnType<typeof useScheduledBreaksLazyQuery>;
-export type ScheduledBreaksQueryResult = Apollo.QueryResult<ScheduledBreaksQuery, ScheduledBreaksQueryVariables>;
 export const NewScheduledBreaksDocument = gql`
     subscription NewScheduledBreaks($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Breaks(
@@ -14317,62 +13874,6 @@ export function useNewScheduledBreaksSubscription(baseOptions?: ApolloReactHooks
       }
 export type NewScheduledBreaksSubscriptionHookResult = ReturnType<typeof useNewScheduledBreaksSubscription>;
 export type NewScheduledBreaksSubscriptionResult = Apollo.SubscriptionResult<NewScheduledBreaksSubscription>;
-export const ScheduledEventsDocument = gql`
-    query ScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
-  Events(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Breaks: {break_type: $breakTypeFilter, break_products: {Product: {category: $sportTypeFilter}}}}
-    order_by: {start_time: asc}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    User {
-      id
-      image
-      first_name
-      last_name
-    }
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      User {
-        id
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useScheduledEventsQuery__
- *
- * To run a query within a React component, call `useScheduledEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useScheduledEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useScheduledEventsQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *      breakTypeFilter: // value for 'breakTypeFilter'
- *      sportTypeFilter: // value for 'sportTypeFilter'
- *   },
- * });
- */
-export function useScheduledEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ScheduledEventsQuery, ScheduledEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<ScheduledEventsQuery, ScheduledEventsQueryVariables>(ScheduledEventsDocument, options);
-      }
-export function useScheduledEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ScheduledEventsQuery, ScheduledEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<ScheduledEventsQuery, ScheduledEventsQueryVariables>(ScheduledEventsDocument, options);
-        }
-export type ScheduledEventsQueryHookResult = ReturnType<typeof useScheduledEventsQuery>;
-export type ScheduledEventsLazyQueryHookResult = ReturnType<typeof useScheduledEventsLazyQuery>;
-export type ScheduledEventsQueryResult = Apollo.QueryResult<ScheduledEventsQuery, ScheduledEventsQueryVariables>;
 export const NewScheduledEventsDocument = gql`
     subscription NewScheduledEvents($userId: String, $breakTypeFilter: break_type_enum_comparison_exp, $sportTypeFilter: String_comparison_exp) {
   Events(
@@ -15057,83 +14558,6 @@ export function useNewUserUpcomingBreaksSubscription(baseOptions?: ApolloReactHo
       }
 export type NewUserUpcomingBreaksSubscriptionHookResult = ReturnType<typeof useNewUserUpcomingBreaksSubscription>;
 export type NewUserUpcomingBreaksSubscriptionResult = Apollo.SubscriptionResult<NewUserUpcomingBreaksSubscription>;
-export const UserUpcomingBreaksDocument = gql`
-    query UserUpcomingBreaks($userId: String) {
-  Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}]}, Saves: {user_id: {_eq: $userId}}}
-    order_by: [{Event: {start_time: asc}}, {created_at: asc}]
-  ) {
-    id
-    break_type
-    description
-    status
-    title
-    break_products {
-      Product {
-        category
-      }
-    }
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Break {
-        id
-      }
-      User {
-        id
-      }
-    }
-    BreakProductItems_aggregate {
-      aggregate {
-        max {
-          price
-        }
-        min {
-          price
-        }
-        sum {
-          quantity
-        }
-      }
-    }
-    Event {
-      id
-      status
-      start_time
-      User {
-        id
-        image
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useUserUpcomingBreaksQuery__
- *
- * To run a query within a React component, call `useUserUpcomingBreaksQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserUpcomingBreaksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserUpcomingBreaksQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useUserUpcomingBreaksQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserUpcomingBreaksQuery, UserUpcomingBreaksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<UserUpcomingBreaksQuery, UserUpcomingBreaksQueryVariables>(UserUpcomingBreaksDocument, options);
-      }
-export function useUserUpcomingBreaksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserUpcomingBreaksQuery, UserUpcomingBreaksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<UserUpcomingBreaksQuery, UserUpcomingBreaksQueryVariables>(UserUpcomingBreaksDocument, options);
-        }
-export type UserUpcomingBreaksQueryHookResult = ReturnType<typeof useUserUpcomingBreaksQuery>;
-export type UserUpcomingBreaksLazyQueryHookResult = ReturnType<typeof useUserUpcomingBreaksLazyQuery>;
-export type UserUpcomingBreaksQueryResult = Apollo.QueryResult<UserUpcomingBreaksQuery, UserUpcomingBreaksQueryVariables>;
 export const NewUserUpcomingEventsDocument = gql`
     subscription NewUserUpcomingEvents($userId: String) {
   Events(
@@ -15194,68 +14618,3 @@ export function useNewUserUpcomingEventsSubscription(baseOptions?: ApolloReactHo
       }
 export type NewUserUpcomingEventsSubscriptionHookResult = ReturnType<typeof useNewUserUpcomingEventsSubscription>;
 export type NewUserUpcomingEventsSubscriptionResult = Apollo.SubscriptionResult<NewUserUpcomingEventsSubscription>;
-export const UserUpcomingEventsDocument = gql`
-    query UserUpcomingEvents($userId: String) {
-  Events(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Saves: {user_id: {_eq: $userId}}}
-  ) {
-    id
-    title
-    status
-    image
-    start_time
-    description
-    Saves(where: {User: {id: {_eq: $userId}}}) {
-      Event {
-        id
-      }
-      User {
-        id
-      }
-    }
-    User {
-      id
-      first_name
-      image
-      first_name
-      last_name
-      BreakerProfile {
-        id
-        twitter
-        facebook
-        instagram
-        video
-        bio
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useUserUpcomingEventsQuery__
- *
- * To run a query within a React component, call `useUserUpcomingEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserUpcomingEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserUpcomingEventsQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useUserUpcomingEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>(UserUpcomingEventsDocument, options);
-      }
-export function useUserUpcomingEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>(UserUpcomingEventsDocument, options);
-        }
-export type UserUpcomingEventsQueryHookResult = ReturnType<typeof useUserUpcomingEventsQuery>;
-export type UserUpcomingEventsLazyQueryHookResult = ReturnType<typeof useUserUpcomingEventsLazyQuery>;
-export type UserUpcomingEventsQueryResult = Apollo.QueryResult<UserUpcomingEventsQuery, UserUpcomingEventsQueryVariables>;

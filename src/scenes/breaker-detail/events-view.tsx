@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
@@ -6,11 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import { EmptyState, EventCard, Loading } from '../../components';
 import { t } from '../../i18n/i18n';
 import {
-  useBreakerEventsQuery,
-  NewBreakerEventsDocument,
   useFollowEventMutation,
   useUnfollowEventMutation,
   Event_Status_Enum,
+  useNewBreakerEventsSubscription,
 } from '../../services/api/requests';
 
 import {
@@ -40,23 +39,12 @@ export const EventsView = ({
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
 
-  const { loading, data, subscribeToMore } = useBreakerEventsQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, data } = useNewBreakerEventsSubscription({
     variables: { id: breaker.id, userId: authUser?.uid as string },
   });
 
   const [followEvent] = useFollowEventMutation();
   const [unfollowEvent] = useUnfollowEventMutation();
-
-  useEffect(() => {
-    subscribeToMore({
-      document: NewBreakerEventsDocument,
-      variables: { id: breaker.id, userId: authUser?.uid as string },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (loading && !data) {
     return <Loading />;

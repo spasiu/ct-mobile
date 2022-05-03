@@ -1,7 +1,7 @@
 import { filter, find, head, isEmpty, pathOr, propEq } from 'ramda';
 
 import {
-  BreakerEventsQuery,
+  NewBreakerEventsSubscription,
   Breaks,
   Break_Status_Enum,
   Events,
@@ -10,8 +10,8 @@ import {
   FeaturedEventsSubscription,
   SaveEvent,
   Users,
-  ScheduledEventsQuery,
   CompletedEventsQuery,
+  NewScheduledEventsSubscription,
 } from '../../services/api/requests';
 import { StatusBadgeTypes } from '../../components';
 
@@ -60,7 +60,7 @@ export const eventBreakerSelector = (event: Partial<Events>): Partial<Users> =>
 
 export const eventsSelector = (
   requestData:
-    | BreakerEventsQuery
+    | NewBreakerEventsSubscription
     | LiveStreamSubscription
     | FeaturedEventsSubscription
     | undefined,
@@ -135,7 +135,7 @@ export const eventStreamNameSelector = (event: Partial<Events>) =>
   event.stream_name || undefined;
 
 export const formatEvents = (
-  data: ScheduledEventsQuery | CompletedEventsQuery | undefined,
+  data: NewScheduledEventsSubscription | CompletedEventsQuery | undefined,
 ): Users[] => {
   const userEvents: { [key: string]: Users } = {};
   data?.Events.forEach((eventData: any) => {
