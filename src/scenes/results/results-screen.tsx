@@ -68,12 +68,12 @@ export const ResultsScreen = (): JSX.Element => {
       startDate: filterByDate ? { _gte: date } : {},
       endDate: filterByDate
         ? {
-          start_time: {
-            _lte: dayjs(date).add(1, 'day').subtract(1, 'second').toDate(),
-          },
-        }
+            start_time: {
+              _lte: dayjs(date).add(1, 'day').subtract(1, 'second').toDate(),
+            },
+          }
         : {},
-      limit: filterByDate || myEventsFilter || breakerFilter ? 100 : 20,
+      limit: 100,
       userId: myEventsFilter
         ? { Order: { user_id: { _eq: authUser?.uid } } }
         : {},
