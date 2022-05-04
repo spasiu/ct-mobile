@@ -246,7 +246,10 @@ export const LiveScreen = ({
                 <View style={[s.flx_i, s.flx_row, s.jcfe]}>
                   <StatusBadge status={StatusBadgeTypes.live} />
                   <View style={[s.ml2]}>
-                    <LiveCountBadge showPresence eventId={eventId} />
+                    <LiveCountBadge
+                      eventId={eventId}
+                      userId={userId}
+                    />
                   </View>
                 </View>
               </View>
