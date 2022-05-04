@@ -1,4 +1,4 @@
-import { formatEvents } from '../../common/event';
+import { formatEvents } from './event-selectors';
 import { CompletedEventsQuery } from '../../services/api/requests';
 jest.mock('react-native-localize', () => {});
 jest.mock('react-native-config', () => {});

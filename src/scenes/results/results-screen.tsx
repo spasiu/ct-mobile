@@ -27,11 +27,7 @@ import { BreakerList } from './breaker-list';
 import {
   eventBreakerSelector,
   eventDetailSelector,
-  useBreakerFilterHook,
-  useMyEventsFilterHook,
-  useDateFilterHook,
   useResultsScreenHook,
-  useEventResultHook,
 } from './results-screen.logic';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
@@ -40,28 +36,26 @@ import { userNameSelector } from '../../common/user-profile';
 export const ResultsScreen = (): JSX.Element => {
   const navigation = useNavigation();
   const {
+    users,
+    breakerList,
+    breakers,
+    loading,
     showBreakerList,
     setShowBreakerList,
     breakerFilter,
     setBreakerFilter,
-    chooseBreaker,
-  } = useBreakerFilterHook();
-  const { myEventsFilter, setMyEventsFilter } = useMyEventsFilterHook();
-  const {
+    result,
+    setResult,
     showDatePicker,
     setShowDatePicker,
     dateFilter,
-    confirmDate,
-    cancelDate,
+    setDateFilter,
     date,
-  } = useDateFilterHook();
-  const { users, breakerList, breakers, loading } = useResultsScreenHook(
+    setDate,
     myEventsFilter,
-    date,
-    dateFilter,
-    breakerFilter,
-  );
-  const { result, setResult } = useEventResultHook();
+    setMyEventsFilter,
+  } = useResultsScreenHook();
+
   if (loading && !breakers) {
     return <Loading />;
   }
@@ -130,7 +124,7 @@ export const ResultsScreen = (): JSX.Element => {
                   : FilterItemStatusTypes.default
               }
               onPress={() =>
-                dateFilter ? cancelDate() : setShowDatePicker(true)
+                dateFilter ? setDateFilter(false) : setShowDatePicker(true)
               }
             />
           </View>
@@ -170,12 +164,9 @@ export const ResultsScreen = (): JSX.Element => {
                           eventDate={formatScheduledStatus(
                             eventTimeSelector(item),
                           )}
-                          onPress={() => {
-                            console.log('item', item);
-                            console.log('breaker', breaker);
-                            setResult(eventDetailSelector(item, breaker));
-                            console.log(eventDetailSelector(item, breaker));
-                          }}
+                          onPress={() =>
+                            setResult(eventDetailSelector(item, breaker))
+                          }
                           containerStyle={[s.mr3]}
                           result={true}
                         />
@@ -194,15 +185,25 @@ export const ResultsScreen = (): JSX.Element => {
           mode="date"
           date={date}
           maximumDate={new Date(Date.now())}
-          onConfirm={(input: Date) => confirmDate(input)}
-          onCancel={() => cancelDate()}
+          onConfirm={(input: Date) => {
+            setDate(input);
+            setShowDatePicker(false);
+            setDateFilter(true);
+          }}
+          onCancel={() => {
+            setDate(new Date());
+            setShowDatePicker(false);
+          }}
         />
         {breakerList ? (
           <BreakerList
             breakers={breakerList as Users[]}
             onClose={() => setShowBreakerList(false)}
             showModal={showBreakerList}
-            setBreakerFilter={(breaker: Users) => chooseBreaker(breaker)}
+            setBreakerFilter={(breaker: Users) => {
+              setBreakerFilter(breaker);
+              setShowBreakerList(false);
+            }}
           />
         ) : null}
         {!isEmpty(result) ? (

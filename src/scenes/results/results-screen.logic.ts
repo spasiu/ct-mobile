@@ -22,13 +22,7 @@ import { EventDetailModalProps } from '../event-detail/event-detail-modal.props'
 import { useContext, useState } from 'react';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import dayjs from 'dayjs';
-import {
-  BreakerFilterHookType,
-  DateFilterHookType,
-  MyEventsFilterHookType,
-  ResultDetailHookType,
-  ResultsQueryHookType,
-} from './results-screen.props';
+import { ResultsQueryHookType } from './results-screen.props';
 
 export const eventBreakerSelector = (breaker: Users): SectionHeaderProps => {
   return {
@@ -57,58 +51,16 @@ export const eventDetailSelector = (
   };
 };
 
-export const useBreakerFilterHook = (): BreakerFilterHookType => {
-  const [showBreakerList, setShowBreakerList] = useState(false);
-  const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
-  const chooseBreaker = (breaker: Partial<Users>) => {
-    setBreakerFilter(breaker);
-    setShowBreakerList(false);
-  };
-  return {
-    showBreakerList,
-    setShowBreakerList,
-    breakerFilter,
-    setBreakerFilter,
-    chooseBreaker,
-  };
-};
-
-export const useMyEventsFilterHook = (): MyEventsFilterHookType => {
-  const [myEventsFilter, setMyEventsFilter] = useState(false);
-  return { myEventsFilter, setMyEventsFilter };
-};
-
-export const useDateFilterHook = (): DateFilterHookType => {
+export const useResultsScreenHook = (): ResultsQueryHookType => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [dateFilter, setDateFilter] = useState(false);
-  const confirmDate = (input: Date) => {
-    setDate(input);
-    setShowDatePicker(false);
-    setDateFilter(true);
-  };
-  const cancelDate = () => {
-    setDate(new Date());
-    setShowDatePicker(false);
-    setDateFilter(false);
-  };
-  return {
-    showDatePicker,
-    setShowDatePicker,
-    dateFilter,
-    confirmDate,
-    cancelDate,
-    date,
-  };
-};
+  const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
+  const [myEventsFilter, setMyEventsFilter] = useState(false);
+  const [showBreakerList, setShowBreakerList] = useState(false);
+  const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
 
-export const useResultsScreenHook = (
-  myEventsFilter?: boolean,
-  date?: Date,
-  dateFilter?: boolean,
-  breakerFilter?: Partial<Users>,
-): ResultsQueryHookType => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const { data: users } = useUserMinimalInformationQuery({
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -137,10 +89,24 @@ export const useResultsScreenHook = (
     },
   });
   const breakers = formatEvents(data);
-  return { users, breakerList: breakerList?.Users, breakers, loading };
-};
-
-export const useEventResultHook = (): ResultDetailHookType => {
-  const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
-  return { result, setResult };
+  return {
+    users,
+    breakerList: breakerList?.Users,
+    breakers,
+    loading,
+    showBreakerList,
+    setShowBreakerList,
+    breakerFilter,
+    setBreakerFilter,
+    result,
+    setResult,
+    showDatePicker,
+    setShowDatePicker,
+    dateFilter,
+    setDateFilter,
+    date,
+    setDate,
+    myEventsFilter,
+    setMyEventsFilter,
+  };
 };
