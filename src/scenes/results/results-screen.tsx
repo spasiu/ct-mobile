@@ -31,7 +31,7 @@ import {
   useMyEventsFilterHook,
   useDateFilterHook,
   useResultsScreenHook,
-  useEventResultSelector,
+  useEventResultHook,
 } from './results-screen.logic';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
@@ -61,7 +61,7 @@ export const ResultsScreen = (): JSX.Element => {
     dateFilter,
     breakerFilter,
   );
-  const { result, setResult } = useEventResultSelector();
+  const { result, setResult } = useEventResultHook();
   if (loading && !breakers) {
     return <Loading />;
   }
@@ -171,7 +171,10 @@ export const ResultsScreen = (): JSX.Element => {
                             eventTimeSelector(item),
                           )}
                           onPress={() => {
+                            console.log('item', item);
+                            console.log('breaker', breaker);
                             setResult(eventDetailSelector(item, breaker));
+                            console.log(eventDetailSelector(item, breaker));
                           }}
                           containerStyle={[s.mr3]}
                           result={true}

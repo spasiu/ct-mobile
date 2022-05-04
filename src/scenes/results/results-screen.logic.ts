@@ -28,7 +28,7 @@ import {
   MyEventsFilterHookType,
   ResultDetailHookType,
   ResultsQueryHookType,
-} from './results-screen.presets';
+} from './results-screen.props';
 
 export const eventBreakerSelector = (breaker: Users): SectionHeaderProps => {
   return {
@@ -136,13 +136,11 @@ export const useResultsScreenHook = (
         : {},
     },
   });
-  console.log('before: ', JSON.stringify(data, null, 4));
   const breakers = formatEvents(data);
-  console.log('after: ', JSON.stringify(breakers, null, 2));
   return { users, breakerList: breakerList?.Users, breakers, loading };
 };
 
-export const useEventResultSelector = (): ResultDetailHookType => {
+export const useEventResultHook = (): ResultDetailHookType => {
   const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
   return { result, setResult };
 };
