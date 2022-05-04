@@ -7,12 +7,8 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { ICON_SIZE } from '../../theme/sizes';
 import { Users } from '../../services/api/requests';
 import { userNameSelector } from '../../common/user-profile';
-type BreakerListType = {
-  breakers: Users[];
-  onClose: () => void;
-  showModal: boolean;
-  setBreakerFilter: (breaker: Users) => void;
-};
+import { BreakerListType } from './results-screen.props';
+
 export const BreakerList = ({
   breakers = [],
   onClose,
@@ -28,6 +24,7 @@ export const BreakerList = ({
             <BorderlessButton
               key={`filter-breaker-car-${breaker.id}`}
               style={[
+                // eslint-disable-next-line react-native/no-inline-styles
                 { height: sizes.h2 + sizes.h2, width: '90%' },
                 s.flx_i,
                 s.br3,

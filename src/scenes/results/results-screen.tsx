@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { FlatList, ScrollView, Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 import { breakerEventsSelector } from '../../common/breaker';
-import { formatEvents } from '../../common/event';
 import DatePicker from 'react-native-date-picker';
 import {
   SectionHeader,
@@ -21,66 +20,43 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
-import {
-  useCompletedEventsQuery,
-  Users,
-  useUserMinimalInformationQuery,
-  useBreakersListQuery,
-} from '../../services/api/requests';
+import { Users } from '../../services/api/requests';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import { ResultDetailModal } from '../result-detail/result-detail-modal';
 import { BreakerList } from './breaker-list';
 import {
   eventBreakerSelector,
   eventDetailSelector,
-} from './results-screen.utils';
+  useResultsScreenHook,
+} from './results-screen.logic';
 import { formatScheduledStatus } from '../../utils/date';
 import { eventTimeSelector } from '../../common/event';
-import dayjs from 'dayjs';
 import { userNameSelector } from '../../common/user-profile';
 
 export const ResultsScreen = (): JSX.Element => {
-  const [result, setResult] = useState<Partial<EventDetailModalProps>>({});
-  const [showBreakersModal, setShowBreakersModal] = useState(false);
-  const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
-  const [date, setDate] = useState<Date>(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [filterByDate, setFilterByDate] = useState(false);
-  const [myEventsFilter, setMyEventsFilter] = useState(false);
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const navigation = useNavigation();
+  const {
+    users,
+    breakerList,
+    breakers,
+    loading,
+    showBreakerList,
+    setShowBreakerList,
+    breakerFilter,
+    setBreakerFilter,
+    result,
+    setResult,
+    showDatePicker,
+    setShowDatePicker,
+    dateFilter,
+    setDateFilter,
+    date,
+    setDate,
+    myEventsFilter,
+    setMyEventsFilter,
+  } = useResultsScreenHook();
 
-  const { data: users } = useUserMinimalInformationQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: authUser?.uid,
-    },
-  });
-
-  const { data: breakerList } = useBreakersListQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-  const { loading, data } = useCompletedEventsQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      breakerId: breakerFilter ? { _eq: breakerFilter.id } : {},
-      startDate: filterByDate ? { _gte: date } : {},
-      endDate: filterByDate
-        ? {
-            start_time: {
-              _lte: dayjs(date).add(1, 'day').subtract(1, 'second').toDate(),
-            },
-          }
-        : {},
-      limit: 100,
-      userId: myEventsFilter
-        ? { Order: { user_id: { _eq: authUser?.uid } } }
-        : {},
-    },
-  });
-  const breakers = formatEvents(data);
-  if (loading && !data) {
+  if (loading && !breakers) {
     return <Loading />;
   }
   return (
@@ -113,10 +89,7 @@ export const ResultsScreen = (): JSX.Element => {
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() => {
-                if (breakerFilter && !myEventsFilter) setBreakerFilter(undefined);
-                setMyEventsFilter(!myEventsFilter);
-              }}
+              onPress={() => setMyEventsFilter(!myEventsFilter)}
             />
             <FilterItem
               style={[s.mr3]}
@@ -138,7 +111,7 @@ export const ResultsScreen = (): JSX.Element => {
               onPress={() =>
                 breakerFilter
                   ? setBreakerFilter(undefined)
-                  : setShowBreakersModal(true)
+                  : setShowBreakerList(true)
               }
             />
             <FilterItem
@@ -146,31 +119,26 @@ export const ResultsScreen = (): JSX.Element => {
               type={FilterItemTypes.pill_alt}
               text={t('buttons.date')}
               status={
-                filterByDate
+                dateFilter
                   ? FilterItemStatusTypes.selected
                   : FilterItemStatusTypes.default
               }
-              onPress={() => {
-                if (filterByDate) {
-                  setFilterByDate(false);
-                  setDate(new Date(Date.now()));
-                } else {
-                  setShowDatePicker(true);
-                }
-              }}
+              onPress={() =>
+                dateFilter ? setDateFilter(false) : setShowDatePicker(true)
+              }
             />
           </View>
         </View>
         <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
           {breakers?.length === 0 ||
-          (breakerFilter && breakers && breakers[0].Events.length === 0) ? (
+          (breakers && breakers[0].Events.length === 0) ? (
             <EmptyState
               title={t('emptyResults.noResultsTitle')}
               description={t('emptyResults.noResultsDescription')}
             />
           ) : (
-            breakers?.map((user: any, index: number) => {
-              const breaker = user as Users;
+            breakers?.map((user: Users, index: number) => {
+              const breaker = user;
               const breakerEvents = breakerEventsSelector(breaker);
               if (isEmpty(breakerEvents)) {
                 return null;
@@ -196,9 +164,9 @@ export const ResultsScreen = (): JSX.Element => {
                           eventDate={formatScheduledStatus(
                             eventTimeSelector(item),
                           )}
-                          onPress={() => {
-                            setResult(eventDetailSelector(item, breaker));
-                          }}
+                          onPress={() =>
+                            setResult(eventDetailSelector(item, breaker))
+                          }
                           containerStyle={[s.mr3]}
                           result={true}
                         />
@@ -220,21 +188,21 @@ export const ResultsScreen = (): JSX.Element => {
           onConfirm={(input: Date) => {
             setDate(input);
             setShowDatePicker(false);
-            setFilterByDate(true);
+            setDateFilter(true);
           }}
           onCancel={() => {
+            setDate(new Date());
             setShowDatePicker(false);
-            setDate(new Date(Date.now()));
           }}
         />
-        {breakerList?.Users ? (
+        {breakerList ? (
           <BreakerList
-            breakers={breakerList.Users as Users[]}
-            onClose={() => setShowBreakersModal(false)}
-            showModal={showBreakersModal}
+            breakers={breakerList as Users[]}
+            onClose={() => setShowBreakerList(false)}
+            showModal={showBreakerList}
             setBreakerFilter={(breaker: Users) => {
               setBreakerFilter(breaker);
-              if (myEventsFilter) setMyEventsFilter(false);
+              setShowBreakerList(false);
             }}
           />
         ) : null}
