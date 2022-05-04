@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { Badge } from '../badge';
+import { styles as s } from 'react-native-style-tachyons';
 
 const eyeIcon = require('../../assets/eye-icon.png');
 export let TIMEOUT = 30000; //ms
@@ -89,5 +90,7 @@ export const LiveCountBadge = ({
 
     return;
   }, [eventId, userId]);
-  return <Badge image={eyeIcon} text={count.toString()} />;
+  return (
+    <Badge containerStyle={[s.o_70]} image={eyeIcon} text={count.toString()} />
+  );
 };

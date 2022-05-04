@@ -3,8 +3,8 @@ import { ViewStyle } from 'react-native';
 import { ImageCardProps } from '../image-card';
 import { StatusBadgeTypes } from '../status-badge';
 export interface EventCardProps extends ImageCardProps {
-  eventId: string;
   title?: string;
+  eventId: string;
   contentContainerStyle?: ViewStyle[];
   eventDate: string;
   status: keyof typeof StatusBadgeTypes;
