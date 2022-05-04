@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ImageCard, ImageCardSizeTypes } from '../image-card';
 import { StatusBadge } from '../status-badge';
+import { Badge } from 'components/badge';
+import { styles as s } from 'react-native-style-tachyons';
 import {
   FollowButton,
   FollowButtonSizeTypes,
@@ -39,7 +41,14 @@ export const EventCard = ({
         <View
           style={[...contentContainerStylePreset, ...contentContainerStyle]}>
           <View style={infoWrapperStylePreset}>
-            <StatusBadge status={status} text={eventDate} />
+            {status === 'completed' && result === false ? (
+              <Badge containerStyle={[s.bg_black_40]} text={eventDate} />
+            ) : (
+              <StatusBadge
+                status={result ? 'scheduled' : status}
+                text={eventDate}
+              />
+            )}
             {status === 'live' ? <LiveCountBadge /> : null}
           </View>
           <View style={contentWrapperStyle}>
