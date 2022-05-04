@@ -7,7 +7,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { ICON_SIZE } from '../../theme/sizes';
 import { Users } from '../../services/api/requests';
 import { userNameSelector } from '../../common/user-profile';
-import { BreakerListType } from './results-screen.presets';
+import { BreakerListType } from './results-screen.props';
 
 export const BreakerList = ({
   breakers = [],
