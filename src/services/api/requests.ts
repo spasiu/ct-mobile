@@ -12384,32 +12384,6 @@ export type UserAddressesQuery = (
   )> }
 );
 
-export type CompletedUserEventsQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
-}>;
-
-
-export type CompletedUserEventsQuery = (
-  { __typename?: 'query_root' }
-  & { Orders: Array<(
-    { __typename?: 'Orders' }
-    & { BreakProductItems: Array<(
-      { __typename?: 'BreakProductItems' }
-      & { Break: (
-        { __typename?: 'Breaks' }
-        & { Event: (
-          { __typename?: 'Events' }
-          & Pick<Events, 'id' | 'title' | 'description' | 'start_time' | 'image'>
-          & { User: (
-            { __typename?: 'Users' }
-            & Pick<Users, 'id' | 'first_name' | 'last_name' | 'username' | 'image'>
-          ) }
-        ) }
-      ) }
-    )> }
-  )> }
-);
-
 export type UserMinimalInformationQueryVariables = Exact<{
   id?: Maybe<Scalars['String']>;
 }>;
@@ -14352,58 +14326,6 @@ export function useUserAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type UserAddressesQueryHookResult = ReturnType<typeof useUserAddressesQuery>;
 export type UserAddressesLazyQueryHookResult = ReturnType<typeof useUserAddressesLazyQuery>;
 export type UserAddressesQueryResult = Apollo.QueryResult<UserAddressesQuery, UserAddressesQueryVariables>;
-export const CompletedUserEventsDocument = gql`
-    query CompletedUserEvents($userId: String) {
-  Orders(where: {user_id: {_eq: $userId}}, order_by: {created_at: desc}) {
-    BreakProductItems {
-      Break {
-        Event {
-          id
-          title
-          description
-          start_time
-          image
-          User {
-            id
-            first_name
-            last_name
-            username
-            image
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useCompletedUserEventsQuery__
- *
- * To run a query within a React component, call `useCompletedUserEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useCompletedUserEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCompletedUserEventsQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useCompletedUserEventsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>(CompletedUserEventsDocument, options);
-      }
-export function useCompletedUserEventsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>(CompletedUserEventsDocument, options);
-        }
-export type CompletedUserEventsQueryHookResult = ReturnType<typeof useCompletedUserEventsQuery>;
-export type CompletedUserEventsLazyQueryHookResult = ReturnType<typeof useCompletedUserEventsLazyQuery>;
-export type CompletedUserEventsQueryResult = Apollo.QueryResult<CompletedUserEventsQuery, CompletedUserEventsQueryVariables>;
 export const UserMinimalInformationDocument = gql`
     query UserMinimalInformation($id: String) {
   Users(where: {id: {_eq: $id}}) {
