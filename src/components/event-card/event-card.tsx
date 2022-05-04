@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ImageCard, ImageCardSizeTypes } from '../image-card';
 import { StatusBadge } from '../status-badge';
-import { Badge } from 'components/badge';
+import { Badge } from '../badge';
 import { styles as s } from 'react-native-style-tachyons';
 import {
   FollowButton,
