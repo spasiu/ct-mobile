@@ -57,7 +57,7 @@ export const eventDetailSelector = (
   };
 };
 
-export const useBreakerFilterSelector = (): BreakerFilterHookType => {
+export const useBreakerFilterHook = (): BreakerFilterHookType => {
   const [showBreakerList, setShowBreakerList] = useState(false);
   const [breakerFilter, setBreakerFilter] = useState<Partial<Users>>();
   const chooseBreaker = (breaker: Partial<Users>) => {
@@ -73,12 +73,12 @@ export const useBreakerFilterSelector = (): BreakerFilterHookType => {
   };
 };
 
-export const useMyEventsFilterSelector = (): MyEventsFilterHookType => {
+export const useMyEventsFilterHook = (): MyEventsFilterHookType => {
   const [myEventsFilter, setMyEventsFilter] = useState(false);
   return { myEventsFilter, setMyEventsFilter };
 };
 
-export const useDateFilterSelector = (): DateFilterHookType => {
+export const useDateFilterHook = (): DateFilterHookType => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [dateFilter, setDateFilter] = useState(false);

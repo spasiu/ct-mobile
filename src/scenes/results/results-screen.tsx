@@ -27,9 +27,9 @@ import { BreakerList } from './breaker-list';
 import {
   eventBreakerSelector,
   eventDetailSelector,
-  useBreakerFilterSelector,
-  useMyEventsFilterSelector,
-  useDateFilterSelector,
+  useBreakerFilterHook,
+  useMyEventsFilterHook,
+  useDateFilterHook,
   useResultsScreenHook,
   useEventResultSelector,
 } from './results-screen.logic';
@@ -45,8 +45,8 @@ export const ResultsScreen = (): JSX.Element => {
     breakerFilter,
     setBreakerFilter,
     chooseBreaker,
-  } = useBreakerFilterSelector();
-  const { myEventsFilter, setMyEventsFilter } = useMyEventsFilterSelector();
+  } = useBreakerFilterHook();
+  const { myEventsFilter, setMyEventsFilter } = useMyEventsFilterHook();
   const {
     showDatePicker,
     setShowDatePicker,
@@ -54,7 +54,7 @@ export const ResultsScreen = (): JSX.Element => {
     confirmDate,
     cancelDate,
     date,
-  } = useDateFilterSelector();
+  } = useDateFilterHook();
   const { users, breakerList, breakers, loading } = useResultsScreenHook(
     myEventsFilter,
     date,
