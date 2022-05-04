@@ -1,9 +1,14 @@
+// @ts-nocheck
 jest.mock('@react-native-firebase/firestore', () => jest.fn(() => ({})));
 import firestore from '@react-native-firebase/firestore';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const mockDocs = (docs: [] = [], set=jest.fn(() => Promise.resolve(true)), update=jest.fn(() => Promise.resolve(true))) =>
+const mockDocs = (
+  docs: [] = [],
+  set = jest.fn(() => Promise.resolve(true)),
+  update = jest.fn(() => Promise.resolve(true)),
+) =>
   jest.fn(() => ({
     collection: jest.fn(() => ({
       doc: jest.fn(() => ({
@@ -101,10 +106,12 @@ describe('Viewer Counts', () => {
   describe('one expired view and one recent view', () => {
     beforeAll(() => {
       const timestamp = Date.now();
-      firestore.mockImplementation(mockDocs([
+      firestore.mockImplementation(
+        mockDocs([
           { data: () => ({ timestamp }) },
           { data: () => ({ timestamp: 0 }) },
-        ]));
+        ]),
+      );
     });
     test('getCount should return a view count of one for a collection with a recent view', done => {
       getCount('some_event')

@@ -86,6 +86,8 @@ export const LiveCountBadge = ({
     if (eventId) {
       return poll(eventId, userId, setCount);
     }
+
+    return;
   }, [eventId, userId]);
   return <Badge image={eyeIcon} text={count.toString()} />;
 };

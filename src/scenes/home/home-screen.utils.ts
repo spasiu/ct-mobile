@@ -20,6 +20,7 @@ export const featuredEventSelector = (
 ): FeaturedEventCardProps => {
   const eventTime = eventTimeSelector(event);
   return {
+    eventId: event.id,
     status: eventCardStatusSelector(event),
     eventDate: formatScheduledStatus(eventTime),
     viewCount: eventViewCountSelector(event),
