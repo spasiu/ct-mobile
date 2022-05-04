@@ -72,7 +72,6 @@ export const EventsView = ({
           return (
             <EventCard
               {...eventData}
-              eventId={item.id}
               onPress={() => {
                 const eventStatus = eventStatusSelector(item);
                 if (eventStatus === Event_Status_Enum.Live) {

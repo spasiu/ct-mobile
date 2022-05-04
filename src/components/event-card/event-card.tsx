@@ -29,7 +29,6 @@ export const EventCard = ({
   title = '',
   status,
   eventDate,
-  eventId,
   contentContainerStyle = [],
   onPressFollow = () => undefined,
   userFollows = false,
@@ -42,15 +41,8 @@ export const EventCard = ({
         <View
           style={[...contentContainerStylePreset, ...contentContainerStyle]}>
           <View style={infoWrapperStylePreset}>
-            {status === 'completed' && result === false ? (
-              <Badge containerStyle={[s.bg_black_40]} text={eventDate} />
-            ) : (
-              <StatusBadge
-                status={result ? 'scheduled' : status}
-                text={eventDate}
-              />
-            )}
-            {status === 'live' ? <LiveCountBadge eventId={eventId} /> : null}
+            <StatusBadge status={status} text={eventDate} />
+            {status === 'live' ? <LiveCountBadge /> : null}
           </View>
           <View style={contentWrapperStyle}>
             <View style={footerWrapperStyle}>

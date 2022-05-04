@@ -94,7 +94,6 @@ export const breakerDetailBreakSelector = (
 export const breakerEventDetailSelector = (event: Events): EventCardProps => {
   const eventTime = eventTimeSelector(event);
   return {
-    eventId: eventIdSelector(event),
     eventDate: formatScheduledStatus(eventTime),
     title: eventTitleSelector(event),
     status: eventCardStatusSelector(event),
