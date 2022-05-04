@@ -192,6 +192,7 @@ export const ResultsScreen = (): JSX.Element => {
                           title={item.title}
                           status="completed"
                           image={item.image}
+                          eventId={item.id}
                           eventDate={formatScheduledStatus(
                             eventTimeSelector(item),
                           )}

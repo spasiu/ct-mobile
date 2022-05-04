@@ -1,6 +1,7 @@
 // @ts-nocheck
 jest.mock('@react-native-firebase/firestore', () => jest.fn(() => ({})));
 import firestore from '@react-native-firebase/firestore';
+import { render } from '@testing-library/react-native';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -27,7 +28,7 @@ const mockDocs = (
     })),
   }));
 
-import { getCount, poll, configure } from '../viewership';
+import { LiveCountBadge, getCount, poll, configure } from '../viewership';
 configure({ timeoutMs: 100, intervalMs: 100 });
 
 describe('Viewer Counts', () => {
@@ -113,6 +114,7 @@ describe('Viewer Counts', () => {
         ]),
       );
     });
+
     test('getCount should return a view count of one for a collection with a recent view', done => {
       getCount('some_event')
         .then(count => {
