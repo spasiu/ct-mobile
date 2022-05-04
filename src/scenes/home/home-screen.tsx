@@ -1,19 +1,12 @@
-import React, { useContext, useState } from 'react';
-import {
-  View,
-  ScrollView,
-  FlatList
-} from 'react-native';
+import React from 'react';
+import { View, ScrollView, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
-import Intercom from '@intercom/intercom-react-native';
 
 import {
   userImageSelector,
-  userNameSelector,
   userSelector,
   usersSelector,
-  userUsernameSelector,
 } from '../../common/user-profile';
 import {
   Container,
@@ -31,20 +24,10 @@ import {
   ImageCardSizeTypes,
   Avatar,
 } from '../../components';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { indexedMap } from '../../utils/ramda';
-import {
-  useFeaturedBreakersQuery,
-  useUserMinimalInformationQuery,
-  Users,
-  Hits,
-  Events,
-  Event_Status_Enum,
-  useFeaturedEventsSubscription,
-  useFeaturedHitsSubscription,
-} from '../../services/api/requests';
+import { Users, Events, Event_Status_Enum } from '../../services/api/requests';
 
 import {
   HomeScreenProps,
@@ -54,11 +37,6 @@ import {
   HomeSportsData,
 } from './home-screen.props';
 import { SectionsData, SportsData } from './home-screen.presets';
-import {
-  featuredEventSelector,
-  featuredBreakerSelector,
-  featuredEventDetailSelector,
-} from './home-screen.utils';
 import { TabNavigatorParamList } from '../../navigators';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 import {
@@ -67,44 +45,29 @@ import {
   hitsSelector,
 } from '../../common/hit';
 import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
-import { FilterContext, FilterContextType } from '../../providers/filter';
 import { eventsSelector, eventStatusSelector } from '../../common/event';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import {
+  featuredBreakerSelector,
+  featuredEventDetailSelector,
+  featuredEventSelector,
+  useHomeScreenHook,
+} from './home-screen.logic';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps): JSX.Element => {
-  const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { setSportTypeFilter, setItemTypeFilter } = useContext(FilterContext) as FilterContextType;
-  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
-
   const {
-    data: featuredEvents
-  } = useFeaturedEventsSubscription();
-
-  const {
-    data: featuredHits
-  } = useFeaturedHitsSubscription();
-
-  const { data: featuredBreakers } = useFeaturedBreakersQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-
-  const { data: users } = useUserMinimalInformationQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: authUser?.uid,
-    },
-    onCompleted: queryData => {
-      const user = userSelector(queryData);
-      Intercom.updateUser({
-        name: userNameSelector(user),
-        customAttributes: {
-          username: userUsernameSelector(user),
-        },
-      });
-    },
-  });
+    event,
+    setEvent,
+    setSportTypeFilter,
+    setItemTypeFilter,
+    hitDetail,
+    setHitDetail,
+    featuredEvents,
+    featuredHits,
+    featuredBreakers,
+    users,
+  } = useHomeScreenHook();
 
   if (!featuredBreakers && !featuredEvents) {
     return <Loading />;
