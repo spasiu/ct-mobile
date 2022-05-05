@@ -1,5 +1,4 @@
 // @ts-nocheck
-jest.mock('@react-native-firebase/firestore', () => jest.fn(() => ({})));
 import firestore from '@react-native-firebase/firestore';
 import { render } from '@testing-library/react-native';
 
