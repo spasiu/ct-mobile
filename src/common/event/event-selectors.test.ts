@@ -1,10 +1,5 @@
 import { formatEvents } from './event-selectors';
 import { CompletedEventsQuery } from '../../services/api/requests';
-jest.mock('react-native-localize', () => {});
-jest.mock('react-native-config', () => {});
-jest.mock('react-native-style-tachyons', () =>
-  jest.requireActual('react-native-style-tachyons'),
-);
 jest.mock('../../components', () => ({
   ...jest.requireActual(
     '../../components/address-prediction-list/address-prediction-list.props',

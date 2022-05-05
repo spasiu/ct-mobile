@@ -1,6 +1,3 @@
-jest.mock('@react-native-firebase/firestore', () => {});
-jest.mock('react-native-localize', () => {});
-jest.mock('react-native-config', () => {});
 jest.mock('../../common/break', () => {});
 jest.mock('../../common/chat', () => {});
 jest.mock('../../common/user-profile', () => {});
