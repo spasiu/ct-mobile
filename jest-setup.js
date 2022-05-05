@@ -1,4 +1,3 @@
-
 jest.mock('@intercom/intercom-react-native', () => {});
 jest.mock('@invertase/react-native-apple-authentication', () => {});
 jest.mock('@react-native-firebase/firestore', () => jest.fn(() => ({})));
