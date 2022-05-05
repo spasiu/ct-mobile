@@ -79,20 +79,14 @@ import { UserContextType } from '../../providers/user/user.types';
 import appsFlyer from 'react-native-appsflyer';
 import { Break_Type_Enum } from '../../services/api/requests';
 
-export const LiveScreen = ({
-  navigation,
-  route,
-}: LiveScreenProps): JSX.Element => {
-  const { eventId } = route.params;
+export const useLiveScreenHook = (eventId: string) => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const userId = authUser?.uid;
+  const inputRef = useRef<TextInput>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const { liveTermsAccepted, setLiveTermsAccepted } = useContext(
     UserContext,
   ) as UserContextType;
-
-  const inputRef = useRef<TextInput>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-
   const [breakId, setBreakId] = useState<string>();
   const [showTeams, setShowTeams] = useState(false);
   const [showRandomTeamAnimation, setShowRandomTeamsAnimation] =
@@ -140,13 +134,93 @@ export const LiveScreen = ({
       );
 
     return unsubscribe;
-  }, []);
+  }, [eventId]);
 
   useLayoutEffect(() => {
     if (!liveTermsAccepted) {
       setTermsOfUseVisible(true);
     }
-  }, []);
+  }, [liveTermsAccepted]);
+
+  useEffect((): (() => void) => {
+    const EnteredLiveStream = Date.now();
+    const sendEvent = () =>
+      appsFlyer.logEvent('af_content_viewed', {
+        af_event_start: EnteredLiveStream,
+        af_event_end: () => Date.now(),
+        af_customer_user_id: userId,
+      });
+    return sendEvent;
+  }, [userId]);
+
+  return {
+    userId,
+    setLiveTermsAccepted,
+    inputRef,
+    messages,
+    breakId,
+    setBreakId,
+    showTeams,
+    setShowTeams,
+    showRandomTeamAnimation,
+    setShowRandomTeamsAnimation,
+    showLineup,
+    setShowLineup,
+    termsOfUseVisible,
+    setTermsOfUseVisible,
+    currentLiveBreak,
+    setCurrentLiveBreak,
+    users,
+    data,
+  };
+};
+
+export const sendChatMessage =
+  ({ userId, eventId, inputRef, breakUser }: any) =>
+  (submitEvent: { nativeEvent: { text: string } }) => {
+    const newChatMessage = createChatMessage(
+      submitEvent.nativeEvent.text,
+      userId as string,
+      breakUser,
+    );
+
+    firestore()
+      .collection('LiveChat')
+      .doc(eventId)
+      .collection('Messages')
+      .add(newChatMessage);
+
+    if (inputRef && inputRef.current) {
+      inputRef.current.clear();
+    }
+    Keyboard.dismiss();
+  };
+
+export const LiveScreen = ({
+  navigation,
+  route,
+}: LiveScreenProps): JSX.Element => {
+  const { eventId } = route.params;
+  const {
+    userId,
+    setLiveTermsAccepted,
+    inputRef,
+    messages,
+    breakId,
+    setBreakId,
+    showTeams,
+    setShowTeams,
+    showRandomTeamAnimation,
+    setShowRandomTeamsAnimation,
+    showLineup,
+    setShowLineup,
+    termsOfUseVisible,
+    setTermsOfUseVisible,
+    currentLiveBreak,
+    setCurrentLiveBreak,
+    users,
+    data,
+  } = useLiveScreenHook(eventId);
 
   const event = eventSelector(data);
   const breaker = eventBreakerSelector(event);
@@ -154,7 +228,6 @@ export const LiveScreen = ({
   const notifiedBreak = eventNotifiedBreakSelector(event);
   const upcomingBreak = eventUpcomingBreakSelector(event);
   const streamName = eventStreamNameSelector(event);
-
   const breakUser = userSelector(users);
   const liveBreakResult = breakResultSelector(liveBreak);
 
@@ -186,23 +259,13 @@ export const LiveScreen = ({
       showAnimations(breakTypeSelector(liveBreak));
       setCurrentLiveBreak(liveBreak);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveBreak, currentLiveBreak]);
 
   const handleConfirmTermsOfUse = () => {
     setTermsOfUseVisible(false);
     setLiveTermsAccepted(true);
   };
-
-  useEffect((): (() => void) => {
-    const EnteredLiveStream = Date.now();
-    const sendEvent = () =>
-      appsFlyer.logEvent('af_content_viewed', {
-        af_event_start: EnteredLiveStream,
-        af_event_end: () => Date.now(),
-        af_customer_user_id: userId,
-      });
-    return sendEvent;
-  }, []);
 
   return (
     <View style={[s.flx_i, s.bg_black]}>
@@ -246,10 +309,7 @@ export const LiveScreen = ({
                 <View style={[s.flx_i, s.flx_row, s.jcfe]}>
                   <StatusBadge status={StatusBadgeTypes.live} />
                   <View style={[s.ml2]}>
-                    <LiveCountBadge
-                      eventId={eventId}
-                      userId={userId}
-                    />
+                    <LiveCountBadge eventId={eventId} userId={userId} />
                   </View>
                 </View>
               </View>
@@ -297,24 +357,12 @@ export const LiveScreen = ({
                 returnKeyType="send"
                 enablesReturnKeyAutomatically
                 blurOnSubmit={false}
-                onSubmitEditing={submitEvent => {
-                  const newChatMessage = createChatMessage(
-                    submitEvent.nativeEvent.text,
-                    userId as string,
-                    breakUser,
-                  );
-
-                  firestore()
-                    .collection('LiveChat')
-                    .doc(eventId)
-                    .collection('Messages')
-                    .add(newChatMessage);
-
-                  if (inputRef && inputRef.current) {
-                    inputRef.current.clear();
-                  }
-                  Keyboard.dismiss();
-                }}
+                onSubmitEditing={sendChatMessage({
+                  userId,
+                  eventId,
+                  inputRef,
+                  breakUser,
+                })}
                 placeholderTextColor={COLORS.white}
                 placeholder={t('forms.chatInputPlaceholder')}
                 style={[
