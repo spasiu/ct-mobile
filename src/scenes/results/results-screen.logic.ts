@@ -22,7 +22,7 @@ import { EventDetailModalProps } from '../event-detail/event-detail-modal.props'
 import { useContext, useState } from 'react';
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import dayjs from 'dayjs';
-import { ResultsQueryHookType } from './results-screen.props';
+import { ResultsScreenHookType } from './results-screen.props';
 
 export const eventBreakerSelector = (breaker: Users): SectionHeaderProps => {
   return {
@@ -51,7 +51,7 @@ export const eventDetailSelector = (
   };
 };
 
-export const useResultsScreenHook = (): ResultsQueryHookType => {
+export const useResultsScreenHook = (): ResultsScreenHookType => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
