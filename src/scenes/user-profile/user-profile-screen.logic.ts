@@ -51,6 +51,7 @@ import {
   useUserUpcomingBreaksHookType,
   useUserUpcomingEventsHookType,
   useUserUpcomingHitsHookType,
+  breakScheduleSelectorType,
 } from './user-profile-screen.props';
 import { SearchType } from '../../common/search';
 import {
@@ -67,7 +68,7 @@ import {
 } from '../../common/break';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { hitsSelector } from '../../common/hit';
-import { BreakCardProps, EventCardProps } from 'components';
+import { EventCardProps } from 'components';
 import { formatScheduledStatus } from '../../utils/date';
 import functions from '@react-native-firebase/functions';
 import { ApolloCache, FetchResult } from '@apollo/client';
@@ -84,18 +85,7 @@ import {
 
 export const breakScheduleSelector = (
   eventBreak: Breaks,
-): Pick<
-  BreakCardProps,
-  | 'eventDate'
-  | 'status'
-  | 'price'
-  | 'spotsLeft'
-  | 'title'
-  | 'breakType'
-  | 'breakerImage'
-  | 'league'
-  | 'userFollows'
-> => ({
+): breakScheduleSelectorType => ({
   eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
   status: breakCardStatusSelector(eventBreak),
   price: breakPriceSelector(eventBreak),
@@ -222,18 +212,7 @@ export const useUserUpcomingBreaksHook = (): useUserUpcomingBreaksHookType => {
   const breaks = breaksSelector(data);
   const onFollow = (
     breakItem: Breaks,
-    breakerBreakDetail: Pick<
-      BreakCardProps,
-      | 'title'
-      | 'status'
-      | 'eventDate'
-      | 'price'
-      | 'spotsLeft'
-      | 'breakType'
-      | 'breakerImage'
-      | 'league'
-      | 'userFollows'
-    >,
+    breakerBreakDetail: breakScheduleSelectorType,
   ): void => {
     const followData = {
       user_id: authUser?.uid,

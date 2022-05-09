@@ -119,3 +119,16 @@ export type useUserUpcomingHitsHookType = {
   setHitDetail: Dispatch<Partial<Hits>>;
   hits: Hits[];
 };
+
+export type breakScheduleSelectorType = Pick<
+  BreakCardProps,
+  | 'title'
+  | 'status'
+  | 'eventDate'
+  | 'price'
+  | 'spotsLeft'
+  | 'breakType'
+  | 'breakerImage'
+  | 'league'
+  | 'userFollows'
+>;
