@@ -7,14 +7,6 @@ import { styles as s } from 'react-native-style-tachyons';
 import { breakIdSelector, handleBreakPress } from '../../common/break';
 import { BreakCard, EmptyState, IconButton } from '../../components';
 import { t } from '../../i18n/i18n';
-import { Breaks, FollowBreakMutation, UnfollowBreakMutation } from '../../services/api/requests';
-import {
-  optimisticUnfollowBreakResponse,
-  updateUnfollowBreakCache,
-  optimisticFollowBreakResponse,
-  updateFollowBreakCache,
-} from '../../utils/cache';
-import { indexedMap } from '../../utils/ramda';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
 import { LiveScreenNavigationProp } from '../live/live-screen.props';
@@ -22,22 +14,13 @@ import {
   useUserUpcomingBreaksHook,
   breakScheduleSelector,
 } from './user-profile-screen.logic';
-import { ApolloCache, FetchResult } from '@apollo/client';
 
 const downArrow = require('../../assets/down-arrow.png');
 
 export const UserUpcomingBreaks = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const {
-    userId,
-    breakId,
-    setBreakId,
-    limit,
-    setLimit,
-    followBreak,
-    unfollowBreak,
-    breaks,
-  } = useUserUpcomingBreaksHook();
+  const { breakId, setBreakId, limit, setLimit, onFollow, breaks } =
+    useUserUpcomingBreaksHook();
 
   if (isEmpty(breaks)) {
     return (
@@ -49,8 +32,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
   }
   return (
     <View>
-      {indexedMap((item, index) => {
-        const breakItem = item as Breaks;
+      {breaks.map((breakItem, index) => {
         const breakerBreakDetail = breakScheduleSelector(breakItem);
         return index < limit ? (
           <BreakCard
@@ -58,44 +40,10 @@ export const UserUpcomingBreaks = (): JSX.Element => {
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}
             {...breakerBreakDetail}
-            onPressFollow={() => {
-              const followData = {
-                user_id: userId,
-                break_id: breakItem.id,
-              };
-
-              breakerBreakDetail.userFollows
-                ? unfollowBreak({
-                    optimisticResponse: optimisticUnfollowBreakResponse(
-                      breakItem,
-                      userId as string,
-                    ),
-                    update: (cache: ApolloCache<UnfollowBreakMutation>) =>
-                      updateUnfollowBreakCache(cache, breakItem),
-                    variables: followData,
-                  })
-                : followBreak({
-                    optimisticResponse: optimisticFollowBreakResponse(
-                      breakItem,
-                      userId as string,
-                    ),
-                    update: (
-                      cache: ApolloCache<FollowBreakMutation>,
-                      followResponse: FetchResult<
-                        FollowBreakMutation,
-                        Record<string, any>,
-                        Record<string, any>
-                      >,
-                    ) =>
-                      updateFollowBreakCache(cache, followResponse, breakItem),
-                    variables: {
-                      follow: followData,
-                    },
-                  });
-            }}
+            onPressFollow={() => onFollow(breakItem, breakerBreakDetail)}
           />
         ) : null;
-      }, breaks)}
+      })}
       {breakId ? (
         <BreakDetailModal
           breakId={breakId}

@@ -34,6 +34,10 @@ import {
   Breaks,
   Events,
   Users,
+  FollowEventMutation,
+  UnfollowEventMutation,
+  UnfollowBreakMutation,
+  FollowBreakMutation,
 } from '../../services/api/requests';
 import { FilterContext, FilterContextType } from '../../providers/filter';
 import { isEmpty } from 'ramda';
@@ -66,6 +70,17 @@ import { hitsSelector } from '../../common/hit';
 import { BreakCardProps, EventCardProps } from 'components';
 import { formatScheduledStatus } from '../../utils/date';
 import functions from '@react-native-firebase/functions';
+import { ApolloCache, FetchResult } from '@apollo/client';
+import {
+  optimisticUnfollowEventResponse,
+  updateUnfollowEventCache,
+  optimisticFollowEventResponse,
+  updateFollowEventCache,
+  optimisticUnfollowBreakResponse,
+  updateUnfollowBreakCache,
+  optimisticFollowBreakResponse,
+  updateFollowBreakCache,
+} from '../../utils/cache';
 
 export const breakScheduleSelector = (
   eventBreak: Breaks,
@@ -144,7 +159,6 @@ export const useUserProfileScreenHook = (): userProfileScreenHookType => {
     if (isEmpty(cards)) {
       getCards(authUser as FirebaseAuthTypes.User);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -206,14 +220,59 @@ export const useUserUpcomingBreaksHook = (): useUserUpcomingBreaksHookType => {
   const [followBreak] = useFollowBreakMutation();
   const [unfollowBreak] = useUnfollowBreakMutation();
   const breaks = breaksSelector(data);
+  const onFollow = (
+    breakItem: Breaks,
+    breakerBreakDetail: Pick<
+      BreakCardProps,
+      | 'title'
+      | 'status'
+      | 'eventDate'
+      | 'price'
+      | 'spotsLeft'
+      | 'breakType'
+      | 'breakerImage'
+      | 'league'
+      | 'userFollows'
+    >,
+  ): void => {
+    const followData = {
+      user_id: authUser?.uid,
+      break_id: breakItem.id,
+    };
+    breakerBreakDetail.userFollows
+      ? unfollowBreak({
+          optimisticResponse: optimisticUnfollowBreakResponse(
+            breakItem,
+            authUser?.uid as string,
+          ),
+          update: (cache: ApolloCache<UnfollowBreakMutation>) =>
+            updateUnfollowBreakCache(cache, breakItem),
+          variables: followData,
+        })
+      : followBreak({
+          optimisticResponse: optimisticFollowBreakResponse(
+            breakItem,
+            authUser?.uid as string,
+          ),
+          update: (
+            cache: ApolloCache<FollowBreakMutation>,
+            followResponse: FetchResult<
+              FollowBreakMutation,
+              Record<string, any>,
+              Record<string, any>
+            >,
+          ) => updateFollowBreakCache(cache, followResponse, breakItem),
+          variables: {
+            follow: followData,
+          },
+        });
+  };
   return {
-    userId: authUser?.uid,
     breakId,
     setBreakId,
     limit,
     setLimit,
-    followBreak,
-    unfollowBreak,
+    onFollow,
     breaks,
   };
 };
@@ -221,22 +280,49 @@ export const useUserUpcomingBreaksHook = (): useUserUpcomingBreaksHookType => {
 export const useUserUpcomingEventsHook = (): useUserUpcomingEventsHookType => {
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
   const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
-
   const { loading, data } = useNewUserUpcomingEventsSubscription({
     variables: { userId: authUser?.uid },
   });
-
   const [followEvent] = useFollowEventMutation();
   const [unfollowEvent] = useUnfollowEventMutation();
-
   const events = eventsSelector(data);
-
+  const onFollow = (item: Events, eventData: EventCardProps) => {
+    const followData = {
+      user_id: authUser?.uid,
+      event_id: item.id,
+    };
+    eventData.userFollows
+      ? unfollowEvent({
+          optimisticResponse: optimisticUnfollowEventResponse(
+            item,
+            authUser?.uid as string,
+          ),
+          update: (cache: ApolloCache<UnfollowEventMutation>) =>
+            updateUnfollowEventCache(cache, item),
+          variables: followData,
+        })
+      : followEvent({
+          optimisticResponse: optimisticFollowEventResponse(
+            item,
+            authUser?.uid as string,
+          ),
+          update: (
+            cache: ApolloCache<FollowEventMutation>,
+            followResponse: FetchResult<
+              FollowEventMutation,
+              Record<string, any>,
+              Record<string, any>
+            >,
+          ) => updateFollowEventCache(cache, followResponse, item),
+          variables: {
+            follow: followData,
+          },
+        });
+  };
   return {
-    userId: authUser?.uid,
     event,
     setEvent,
-    followEvent,
-    unfollowEvent,
+    onFollow,
     events,
     loading,
   };
