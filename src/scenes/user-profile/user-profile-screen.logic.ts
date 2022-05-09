@@ -1,12 +1,39 @@
 import { useContext, useState, useEffect } from 'react';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { NetworkStatus } from '@apollo/client';
-import { userSelector } from '../../common/user-profile';
+import {
+  userImageSelector,
+  userNameSelector,
+  userSelector,
+} from '../../common/user-profile';
+import {
+  eventBreakerSelector,
+  eventCardStatusSelector,
+  eventDescriptionSelector,
+  eventFollowedByUserSelector,
+  eventIdSelector,
+  eventImageSelector,
+  eventsSelector,
+  eventTimeSelector,
+  eventTitleSelector,
+} from '../../common/event';
+
 import { AuthContext, AuthContextType } from '../../providers/auth';
 import { PaymentContext, PaymentContextType } from '../../providers/payment';
 import {
+  useFollowBreakMutation,
   useLoggedUserQuery,
+  useNewUserUpcomingBreaksSubscription,
+  useUnfollowBreakMutation,
   useUpdateUserMutation,
+  useNewUserUpcomingEventsSubscription,
+  useFollowEventMutation,
+  useUnfollowEventMutation,
+  useHitsQuery,
+  Hits,
+  Breaks,
+  Events,
+  Users,
 } from '../../services/api/requests';
 import { FilterContext, FilterContextType } from '../../providers/filter';
 import { isEmpty } from 'ramda';
@@ -14,7 +41,87 @@ import {
   NotificationContext,
   NotificationContextType,
 } from '../../providers/notification';
-import { userProfileScreenHookType } from './user-profile-screen.props';
+import {
+  userProfileScreenHookType,
+  userSavesHookType,
+  useUserUpcomingBreaksHookType,
+  useUserUpcomingEventsHookType,
+  useUserUpcomingHitsHookType,
+} from './user-profile-screen.props';
+import { SearchType } from '../../common/search';
+import {
+  breakBreakerSelector,
+  breakCardStatusSelector,
+  breakFollowedByUserSelector,
+  breakPriceSelector,
+  breakSportSelector,
+  breakSpotsSelector,
+  breaksSelector,
+  breakTimeSelector,
+  breakTitleSelector,
+  breakTypeSelector,
+} from '../../common/break';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
+import { hitsSelector } from '../../common/hit';
+import { BreakCardProps, EventCardProps } from 'components';
+import { formatScheduledStatus } from '../../utils/date';
+import functions from '@react-native-firebase/functions';
+
+export const breakScheduleSelector = (
+  eventBreak: Breaks,
+): Pick<
+  BreakCardProps,
+  | 'eventDate'
+  | 'status'
+  | 'price'
+  | 'spotsLeft'
+  | 'title'
+  | 'breakType'
+  | 'breakerImage'
+  | 'league'
+  | 'userFollows'
+> => ({
+  eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
+  status: breakCardStatusSelector(eventBreak),
+  price: breakPriceSelector(eventBreak),
+  spotsLeft: breakSpotsSelector(eventBreak),
+  title: breakTitleSelector(eventBreak),
+  breakType: breakTypeSelector(eventBreak),
+  breakerImage: userImageSelector(breakBreakerSelector(eventBreak)),
+  league: breakSportSelector(eventBreak),
+  userFollows: breakFollowedByUserSelector(eventBreak),
+});
+
+export const upcomingEventSelector = (event: Events): EventCardProps => {
+  const eventTime = eventTimeSelector(event);
+  return {
+    eventId: eventIdSelector(event),
+    eventDate: formatScheduledStatus(eventTime),
+    title: eventTitleSelector(event),
+    status: eventCardStatusSelector(event),
+    image: eventImageSelector(event),
+    userFollows: eventFollowedByUserSelector(event),
+  };
+};
+
+export const eventDetailSelector = (event: Events): EventDetailModalProps => {
+  const eventTime = eventTimeSelector(event);
+  const eventBreaker = eventBreakerSelector(event);
+  return {
+    eventId: eventIdSelector(event),
+    title: eventTitleSelector(event),
+    image: eventImageSelector(event),
+    breaker: {
+      name: userNameSelector(eventBreaker),
+      image: userImageSelector(eventBreaker as Users),
+    },
+    status: eventCardStatusSelector(event),
+    description: eventDescriptionSelector(event),
+    eventDate: formatScheduledStatus(eventTime),
+  };
+};
+
+export const deleteUser = functions().httpsCallable('deleteUser');
 
 export const useUserProfileScreenHook = (): userProfileScreenHookType => {
   const {
@@ -80,4 +187,76 @@ export const useUserProfileScreenHook = (): userProfileScreenHookType => {
     isRefetching,
     user,
   };
+};
+
+export const useUserSavesHook = (): userSavesHookType => {
+  const [searchFilter, setSearchFilter] = useState<SearchType>(
+    SearchType.Breaks,
+  );
+  return { searchFilter, setSearchFilter };
+};
+
+export const useUserUpcomingBreaksHook = (): useUserUpcomingBreaksHookType => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [breakId, setBreakId] = useState<string>();
+  const [limit, setLimit] = useState(3);
+  const { data } = useNewUserUpcomingBreaksSubscription({
+    variables: { userId: authUser?.uid },
+  });
+  const [followBreak] = useFollowBreakMutation();
+  const [unfollowBreak] = useUnfollowBreakMutation();
+  const breaks = breaksSelector(data);
+  return {
+    userId: authUser?.uid,
+    breakId,
+    setBreakId,
+    limit,
+    setLimit,
+    followBreak,
+    unfollowBreak,
+    breaks,
+  };
+};
+
+export const useUserUpcomingEventsHook = (): useUserUpcomingEventsHookType => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
+
+  const { loading, data } = useNewUserUpcomingEventsSubscription({
+    variables: { userId: authUser?.uid },
+  });
+
+  const [followEvent] = useFollowEventMutation();
+  const [unfollowEvent] = useUnfollowEventMutation();
+
+  const events = eventsSelector(data);
+
+  return {
+    userId: authUser?.uid,
+    event,
+    setEvent,
+    followEvent,
+    unfollowEvent,
+    events,
+    loading,
+  };
+};
+
+export const useUserUpcomingHitsHook = (): useUserUpcomingHitsHookType => {
+  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
+
+  const { data } = useHitsQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      searchInput: '%%',
+      userHitsFilter: {
+        _eq: authUser?.uid as string,
+      },
+    },
+  });
+
+  const hits = hitsSelector(data);
+
+  return { hits, hitDetail, setHitDetail };
 };

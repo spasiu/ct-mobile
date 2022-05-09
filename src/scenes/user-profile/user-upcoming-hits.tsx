@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
@@ -6,32 +6,13 @@ import { isEmpty } from 'ramda';
 import { EmptyState, HitCard, ImageCardSizeTypes } from '../../components';
 
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
-
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import { Hits, useHitsQuery } from '../../services/api/requests';
-import {
-  hitImageFrontSelector,
-  hitPlayerSelector,
-  hitsSelector,
-} from '../../common/hit';
+import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
 import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
 import { t } from '../../i18n/i18n';
-
+import { useUserUpcomingHitsHook } from './user-profile-screen.logic';
 export const UserUpcomingHits = (): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
+  const { hitDetail, setHitDetail, hits } = useUserUpcomingHitsHook();
 
-  const { data } = useHitsQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      searchInput: '%%',
-      userHitsFilter: {
-        _eq: authUser?.uid as string,
-      },
-    },
-  });
-
-  const hits = hitsSelector(data);
   if (isEmpty(hits)) {
     return (
       <EmptyState

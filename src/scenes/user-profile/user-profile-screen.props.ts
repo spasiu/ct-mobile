@@ -8,6 +8,15 @@ import {
   Maybe,
   UpdateUserMutation,
   Users_Set_Input,
+  FollowBreakMutation,
+  SaveBreak_Insert_Input,
+  Breaks,
+  UnfollowBreakMutation,
+  Events,
+  FollowEventMutation,
+  SaveEvent_Insert_Input,
+  UnfollowEventMutation,
+  Hits,
 } from '../../services/api/requests';
 import { Card } from '../../common/payment/card';
 import { UserProfileStackParamList } from '../../navigators';
@@ -19,6 +28,8 @@ import {
   NetworkStatus,
 } from '@apollo/client';
 import { Dispatch, SetStateAction } from 'react';
+import { SearchType } from '../../common/search';
+import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 
 export type UserProfileScreenNavigationProp = NativeStackNavigationProp<
   UserProfileStackParamList,
@@ -70,4 +81,76 @@ export type userProfileScreenHookType = {
   >;
   isRefetching: boolean;
   user: Users;
+};
+
+export type userSavesHookType = {
+  searchFilter: SearchType;
+  setSearchFilter: Dispatch<SetStateAction<SearchType>>;
+};
+
+export type useUserUpcomingBreaksHookType = {
+  userId: string | undefined;
+  breakId: string | undefined;
+  setBreakId: Dispatch<SetStateAction<string | undefined>>;
+  limit: number;
+  setLimit: Dispatch<SetStateAction<number>>;
+  followBreak: (
+    options?:
+      | MutationFunctionOptions<
+          FollowBreakMutation,
+          Exact<{
+            follow: SaveBreak_Insert_Input;
+          }>
+        >
+      | undefined,
+  ) => Promise<
+    FetchResult<FollowBreakMutation, Record<string, any>, Record<string, any>>
+  >;
+  unfollowBreak: (
+    options?:
+      | MutationFunctionOptions<
+          UnfollowBreakMutation,
+          Exact<{ user_id?: Maybe<string> | undefined; break_id: any }>
+        >
+      | undefined,
+  ) => Promise<
+    FetchResult<UnfollowBreakMutation, Record<string, any>, Record<string, any>>
+  >;
+  breaks: Breaks[];
+};
+
+export type useUserUpcomingEventsHookType = {
+  userId: string | undefined;
+  event: Partial<EventDetailModalProps>;
+  setEvent: Dispatch<Partial<EventDetailModalProps>>;
+  followEvent: (
+    options?:
+      | MutationFunctionOptions<
+          FollowEventMutation,
+          Exact<{
+            follow: SaveEvent_Insert_Input;
+          }>
+        >
+      | undefined,
+  ) => Promise<
+    FetchResult<FollowEventMutation, Record<string, any>, Record<string, any>>
+  >;
+  unfollowEvent: (
+    options?:
+      | MutationFunctionOptions<
+          UnfollowEventMutation,
+          Exact<{ user_id?: Maybe<string> | undefined; event_id: any }>
+        >
+      | undefined,
+  ) => Promise<
+    FetchResult<UnfollowEventMutation, Record<string, any>, Record<string, any>>
+  >;
+  events: Events[];
+  loading: boolean;
+};
+
+export type useUserUpcomingHitsHookType = {
+  hitDetail: Partial<Hits>;
+  setHitDetail: Dispatch<Partial<Hits>>;
+  hits: Hits[];
 };

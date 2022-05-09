@@ -38,8 +38,10 @@ import {
   failedEmojiIcon,
 } from './user-profile-screen.presets';
 import { UserSaves } from './user-saves';
-import { useUserProfileScreenHook } from './user-profile-screen.logic';
-import { deleteUser } from './user-profile-screen.utils';
+import {
+  useUserProfileScreenHook,
+  deleteUser,
+} from './user-profile-screen.logic';
 
 export const UserProfileScreen = ({
   navigation,
