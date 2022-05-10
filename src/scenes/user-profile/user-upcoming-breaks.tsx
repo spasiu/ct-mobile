@@ -1,50 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { isEmpty } from 'ramda';
 import { styles as s } from 'react-native-style-tachyons';
 
-import {
-  breakIdSelector,
-  breaksSelector,
-  handleBreakPress,
-} from '../../common/break';
+import { breakIdSelector, handleBreakPress } from '../../common/break';
 import { BreakCard, EmptyState, IconButton } from '../../components';
 import { t } from '../../i18n/i18n';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  Breaks,
-  useFollowBreakMutation,
-  useNewUserUpcomingBreaksSubscription,
-  useUnfollowBreakMutation,
-} from '../../services/api/requests';
-import {
-  optimisticUnfollowBreakResponse,
-  updateUnfollowBreakCache,
-  optimisticFollowBreakResponse,
-  updateFollowBreakCache,
-} from '../../utils/cache';
-import { indexedMap } from '../../utils/ramda';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
-import { breakScheduleSelector } from './user-profile-screen.utils';
 import { LiveScreenNavigationProp } from '../live/live-screen.props';
+import {
+  useUserUpcomingBreaksHook,
+  breakScheduleSelector,
+} from './user-profile-screen.logic';
+
 const downArrow = require('../../assets/down-arrow.png');
 
 export const UserUpcomingBreaks = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakId, setBreakId] = useState<string>();
-  const [limit, setLimit] = useState(3);
-  const { data } = useNewUserUpcomingBreaksSubscription({
-    variables: {
-      userId: authUser?.uid,
-    },
-  });
-  const [followBreak] = useFollowBreakMutation();
-  const [unfollowBreak] = useUnfollowBreakMutation();
+  const { breakId, setBreakId, limit, setLimit, onFollow, breaks } =
+    useUserUpcomingBreaksHook();
 
-  const breaks = breaksSelector(data);
   if (isEmpty(breaks)) {
     return (
       <EmptyState
@@ -55,8 +32,7 @@ export const UserUpcomingBreaks = (): JSX.Element => {
   }
   return (
     <View>
-      {indexedMap((item, index) => {
-        const breakItem = item as Breaks;
+      {breaks.map((breakItem, index) => {
         const breakerBreakDetail = breakScheduleSelector(breakItem);
         return index < limit ? (
           <BreakCard
@@ -64,36 +40,10 @@ export const UserUpcomingBreaks = (): JSX.Element => {
             onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
             key={`breaker-break-${index}`}
             {...breakerBreakDetail}
-            onPressFollow={() => {
-              const followData = {
-                user_id: authUser?.uid,
-                break_id: breakItem.id,
-              };
-
-              breakerBreakDetail.userFollows
-                ? unfollowBreak({
-                    optimisticResponse: optimisticUnfollowBreakResponse(
-                      breakItem,
-                      authUser?.uid as string,
-                    ),
-                    update: cache => updateUnfollowBreakCache(cache, breakItem),
-                    variables: followData,
-                  })
-                : followBreak({
-                    optimisticResponse: optimisticFollowBreakResponse(
-                      breakItem,
-                      authUser?.uid as string,
-                    ),
-                    update: (cache, followResponse) =>
-                      updateFollowBreakCache(cache, followResponse, breakItem),
-                    variables: {
-                      follow: followData,
-                    },
-                  });
-            }}
+            onPressFollow={() => onFollow(breakItem, breakerBreakDetail)}
           />
         ) : null;
-      }, breaks)}
+      })}
       {breakId ? (
         <BreakDetailModal
           breakId={breakId}

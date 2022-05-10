@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { FilterItem, FilterItemStatusTypes } from '../../components';
@@ -14,12 +14,10 @@ import { filter } from 'ramda';
 import { UserUpcomingBreaks } from './user-upcoming-breaks';
 import { UserUpcomingEvents } from './user-upcoming-events';
 import { UserUpcomingHits } from './user-upcoming-hits';
+import { useUserSavesHook } from './user-profile-screen.logic';
 
 export const UserSaves = (): JSX.Element => {
-  const [searchFilter, setSearchFilter] = useState<SearchType>(
-    SearchType.Breaks,
-  );
-
+  const { searchFilter, setSearchFilter } = useUserSavesHook();
   return (
     <View style={[s.w_100, s.mb3]}>
       <FlatList

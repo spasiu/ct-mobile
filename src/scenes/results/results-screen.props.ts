@@ -9,7 +9,7 @@ export type BreakerListType = {
   setBreakerFilter: (breaker: Users) => void;
 };
 
-export type ResultsQueryHookType = {
+export type ResultsScreenHookType = {
   users: UserMinimalInformationQuery | undefined;
   breakerList: Partial<Users>[] | undefined;
   breakers: Users[] | undefined;

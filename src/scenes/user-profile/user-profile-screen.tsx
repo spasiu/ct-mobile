@@ -1,13 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import Config from 'react-native-config';
-import { NetworkStatus } from '@apollo/client';
 import Intercom from '@intercom/intercom-react-native';
 
 import {
-  userSelector,
   userUsernameSelector,
   userNameSelector,
   userImageSelector,
@@ -27,13 +24,7 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import { PaymentContext, PaymentContextType } from '../../providers/payment';
-import {
-  useLoggedUserQuery,
-  useUpdateUserMutation,
-  Users,
-} from '../../services/api/requests';
+import { Users } from '../../services/api/requests';
 
 import { UserProfileScreenProps } from './user-profile-screen.props';
 import {
@@ -47,13 +38,10 @@ import {
   failedEmojiIcon,
 } from './user-profile-screen.presets';
 import { UserSaves } from './user-saves';
-import { FilterContext, FilterContextType } from '../../providers/filter';
-import { isEmpty } from 'ramda';
 import {
-  NotificationContext,
-  NotificationContextType,
-} from '../../providers/notification';
-import { deleteUser } from './user-profile-screen.utils';
+  useUserProfileScreenHook,
+  deleteUser,
+} from './user-profile-screen.logic';
 
 export const UserProfileScreen = ({
   navigation,
@@ -61,44 +49,21 @@ export const UserProfileScreen = ({
   const {
     logout,
     uploadPhoto,
-    user: authUser,
-  } = useContext(AuthContext) as AuthContextType;
-  const { cards, getCards, getDefaultPaymentCard, cleanPaymentInfo } =
-    useContext(PaymentContext) as PaymentContextType;
-  const { cleanFilters } = useContext(FilterContext) as FilterContextType;
+    userId,
+    getDefaultPaymentCard,
+    cleanPaymentInfo,
+    cleanFilters,
+    cleanNotificationData,
+    uploadingPhoto,
+    setUploadingPhoto,
+    confirmDelete,
+    setConfirmDelete,
+    loading,
+    updateUserMutation,
+    isRefetching,
+    user,
+  } = useUserProfileScreenHook();
 
-  const { cleanNotificationData } = useContext(
-    NotificationContext,
-  ) as NotificationContextType;
-
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-
-  useEffect(() => {
-    if (isEmpty(cards)) {
-      getCards(authUser as FirebaseAuthTypes.User);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const { data, loading, refetch, networkStatus } = useLoggedUserQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: authUser?.uid,
-    },
-  });
-
-  const [updateUserMutation] = useUpdateUserMutation({
-    onError: () => setUploadingPhoto(false),
-    onCompleted: () => {
-      refetch();
-      setUploadingPhoto(false);
-    },
-  });
-
-  const isRefetching = networkStatus === NetworkStatus.refetch;
-  const user = userSelector(data);
   return (
     <Container
       style={[s.mh0]}
@@ -122,7 +87,7 @@ export const UserProfileScreen = ({
                   const url = await uploadPhoto(response);
                   updateUserMutation({
                     variables: {
-                      userId: authUser?.uid,
+                      userId,
                       userInput: {
                         image: url,
                       },
@@ -235,7 +200,7 @@ export const UserProfileScreen = ({
           cleanFilters();
           cleanNotificationData();
           logout();
-          deleteUser({ id: authUser?.uid });
+          deleteUser({ id: userId });
         }}
         secondaryActionText={t('buttons.cancel')}
         onSecondaryActionPressed={() => setConfirmDelete(false)}
