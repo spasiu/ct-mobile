@@ -21,7 +21,7 @@ import {
   appleLogo,
   googleLogo,
 } from './sign-up-screen.presets';
-import { SignUpScreenProps, FormikType } from './sign-up-screen.props';
+import { SignUpScreenProps } from './sign-up-screen.props';
 import { isShortScreen, screenHeight } from '../device-properties';
 import { useSignUpScreenHook } from './sign-up-screen.logic';
 
@@ -46,7 +46,7 @@ export const SignUpScreen = ({
         validateOnBlur
         validationSchema={SIGN_UP_FORM_SCHEMA}
         initialValues={SIGN_UP_FORM_INITIAL_VALUES}
-        onSubmit={(values: { [x: string]: string; }) =>
+        onSubmit={(values: { [x: string]: string }) =>
           signUpEmail(
             values[SIGN_UP_FORM_FIELDS.EMAIL],
             values[SIGN_UP_FORM_FIELDS.PASSWORD],
@@ -59,7 +59,7 @@ export const SignUpScreen = ({
           values,
           errors,
           touched,
-        }: FormikType) => (
+        }) => (
           <>
             <View style={[s.flx_i, s.jcfs, s.aic]}>
               <View style={[s.w_100, isShortScreen ? s.mv1 : s.mv4, s.aic]}>
@@ -119,8 +119,8 @@ export const SignUpScreen = ({
                     touched,
                   )}
                   label={t('forms.emailLabel')}
-                  onBlur={e => {
-                    handleBlur(SIGN_UP_FORM_FIELDS.EMAIL)(e);
+                  onBlur={event => {
+                    handleBlur(SIGN_UP_FORM_FIELDS.EMAIL)(event);
                     setActiveField('');
                   }}
                   onChangeText={handleChange(SIGN_UP_FORM_FIELDS.EMAIL)}

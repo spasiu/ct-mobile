@@ -27,12 +27,3 @@ export type useSignUpScreenHookType = {
   activeField: string;
   setActiveField: Dispatch<SetStateAction<string>>;
 };
-
-export type FormikType = {
-  handleChange: (e?: any) => (a?: any) => void;
-  handleBlur: (e?: any) => (a?: any) => void;
-  handleSubmit: (e?: any) => void | undefined;
-  values: { [field: string]: any };
-  errors: { [field: string]: string };
-  touched: { [field: string]: boolean };
-};
