@@ -14,4 +14,5 @@ export interface ActionButtonProps extends BorderlessButtonProps {
   buttonType?: keyof typeof ActionButtonTypes;
   children?: React.ReactNode;
   isLoading?: boolean;
+  onPress?: any;
 }
