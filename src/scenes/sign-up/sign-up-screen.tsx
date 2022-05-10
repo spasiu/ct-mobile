@@ -35,7 +35,7 @@ export const SignUpScreen = ({
     password,
     processing,
     activeField,
-    setActiveField
+    setActiveField,
   } = useSignUpScreenHook();
   return (
     <Container
@@ -67,10 +67,7 @@ export const SignUpScreen = ({
                   {t('account.welcomeText')}
                 </Text>
                 <Image
-                  style={[
-                    s.mv2,
-                    { height: screenHeight / 15 }
-                  ]}
+                  style={[s.mv2, { height: screenHeight / 15 }]}
                   resizeMode="contain"
                   source={logo}
                 />
@@ -92,7 +89,14 @@ export const SignUpScreen = ({
                 text={t('buttons.googleSignUp')}>
                 <Image source={googleLogo} style={[s.mr3]} />
               </ActionButton>
-              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, isShortScreen ? s.mv1 : s.mv4]}>
+              <View
+                style={[
+                  s.flx_row,
+                  s.aic,
+                  s.jcsb,
+                  s.w_100,
+                  isShortScreen ? s.mv1 : s.mv4,
+                ]}>
                 <View
                   style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]}
                 />
@@ -115,15 +119,11 @@ export const SignUpScreen = ({
                     touched,
                   )}
                   label={t('forms.emailLabel')}
-                  onBlur={event => {
-                    const blur: any = handleBlur(SIGN_UP_FORM_FIELDS.EMAIL);
-                    blur(event);
+                  onBlur={e => {
+                    handleBlur(SIGN_UP_FORM_FIELDS.EMAIL)(e);
                     setActiveField('');
                   }}
-                  onChangeText={(event) => {
-                    const change: any = handleChange(SIGN_UP_FORM_FIELDS.EMAIL);
-                    change && change(event);
-                  }}
+                  onChangeText={handleChange(SIGN_UP_FORM_FIELDS.EMAIL)}
                   errorMessage={errors[SIGN_UP_FORM_FIELDS.EMAIL]}
                   returnKeyType="next"
                   onSubmitEditing={() => {
@@ -145,14 +145,10 @@ export const SignUpScreen = ({
                   )}
                   label={t('forms.passwordLabel')}
                   onBlur={event => {
-                    const blur: any = handleBlur(SIGN_UP_FORM_FIELDS.PASSWORD);
-                    blur(event);
+                    handleBlur(SIGN_UP_FORM_FIELDS.PASSWORD)(event);
                     setActiveField('');
                   }}
-                  onChangeText={(event) =>  {
-                    const change: any = handleChange(SIGN_UP_FORM_FIELDS.PASSWORD);
-                    change(event);
-                  }}
+                  onChangeText={handleChange(SIGN_UP_FORM_FIELDS.PASSWORD)}
                   errorMessage={errors[SIGN_UP_FORM_FIELDS.PASSWORD]}
                   returnKeyType="go"
                   onSubmitEditing={handleSubmit}

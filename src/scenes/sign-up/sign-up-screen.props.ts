@@ -29,8 +29,8 @@ export type useSignUpScreenHookType = {
 };
 
 export type FormikType = {
-  handleChange: (e?: any) => void | undefined;
-  handleBlur: (e?: any) => void | undefined;
+  handleChange: (e?: any) => (a?: any) => void;
+  handleBlur: (e?: any) => (a?: any) => void;
   handleSubmit: (e?: any) => void | undefined;
   values: { [field: string]: any };
   errors: { [field: string]: string };
