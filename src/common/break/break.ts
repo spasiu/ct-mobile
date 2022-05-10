@@ -1,3 +1,4 @@
+import { BreakCardProps } from '../../components';
 import { Break_Type_Enum } from '../../services/api/requests';
 
 export type BreakType = typeof Break_Type_Enum[keyof typeof Break_Type_Enum];
@@ -22,3 +23,16 @@ export type BreakResultUser = {
   username: string;
   items?: BreakResultItem[];
 };
+
+export type PickBreakCard = Pick<
+  BreakCardProps,
+  | 'title'
+  | 'status'
+  | 'eventDate'
+  | 'price'
+  | 'spotsLeft'
+  | 'breakType'
+  | 'breakerImage'
+  | 'league'
+  | 'userFollows'
+>;

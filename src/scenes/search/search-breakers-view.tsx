@@ -5,7 +5,7 @@ import { styles as s, sizes } from 'react-native-style-tachyons';
 import { BreakerCard, EmptyState } from '../../components';
 import { t } from '../../i18n/i18n';
 
-import { breakerCardSelector } from './search-modal.utils';
+import { breakerCardSelector } from './search-modal.logic';
 import { SearchBreakersViewProps } from './search-modal.props';
 
 export const SearchBreakersView = ({

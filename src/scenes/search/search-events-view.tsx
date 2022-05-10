@@ -1,35 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { isEmpty } from 'ramda';
 import { useNavigation } from '@react-navigation/native';
-
 import { breakerEventsSelector } from '../../common/breaker';
 import { SectionHeader, EventCard, EmptyState } from '../../components';
 import { t } from '../../i18n/i18n';
-import { indexedMap } from '../../utils/ramda';
-import {
-  Users,
-  useFollowEventMutation,
-  useUnfollowEventMutation,
-  Event_Status_Enum,
-} from '../../services/api/requests';
+import { Users, Event_Status_Enum } from '../../services/api/requests';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
-import {
-  optimisticUnfollowEventResponse,
-  updateUnfollowEventCache,
-  optimisticFollowEventResponse,
-  updateFollowEventCache,
-} from '../../utils/cache';
-
 import {
   eventBreakerSelector,
   eventDetailSelector,
   scheduleEventSelector,
-  shouldShowEventsEmptyState,
-} from './search-modal.utils';
+  useSearchEventsHook,
+} from './search-modal.logic';
 import { SearchEventsViewProps } from './search-modal.props';
 import { eventStatusSelector } from '../../common/event';
 import { ROUTES_IDS } from '../../navigators';
@@ -38,13 +23,9 @@ export const SearchEventsView = ({
   breakers,
 }: SearchEventsViewProps): JSX.Element => {
   const navigation = useNavigation();
-  const [event, setEvent] = useState<Partial<EventDetailModalProps>>({});
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
+  const { event, setEvent, hasNoEvents, onPressFollow } =
+    useSearchEventsHook(breakers);
 
-  const [followEvent] = useFollowEventMutation();
-  const [unfollowEvent] = useUnfollowEventMutation();
-
-  const hasNoEvents = shouldShowEventsEmptyState(breakers);
   if (hasNoEvents) {
     return (
       <EmptyState
@@ -53,11 +34,10 @@ export const SearchEventsView = ({
       />
     );
   }
-
   return (
     <>
       <ScrollView style={[s.h_100]} contentContainerStyle={[s.pb4, s.ml3]}>
-        {indexedMap((user, index: number) => {
+        {breakers.map((user, index: number) => {
           const breaker = user as Users;
           const breakerEvents = breakerEventsSelector(breaker);
           if (isEmpty(breakerEvents)) {
@@ -91,45 +71,14 @@ export const SearchEventsView = ({
                         }
                       }}
                       containerStyle={[s.mr3]}
-                      onPressFollow={() => {
-                        const followData = {
-                          user_id: authUser?.uid,
-                          event_id: item.id,
-                        };
-
-                        eventData.userFollows
-                          ? unfollowEvent({
-                              optimisticResponse: optimisticUnfollowEventResponse(
-                                item,
-                                authUser?.uid as string,
-                              ),
-                              update: cache =>
-                                updateUnfollowEventCache(cache, item),
-                              variables: followData,
-                            })
-                          : followEvent({
-                              optimisticResponse: optimisticFollowEventResponse(
-                                item,
-                                authUser?.uid as string,
-                              ),
-                              update: (cache, followResponse) =>
-                                updateFollowEventCache(
-                                  cache,
-                                  followResponse,
-                                  item,
-                                ),
-                              variables: {
-                                follow: followData,
-                              },
-                            });
-                      }}
+                      onPressFollow={() => onPressFollow(item, eventData)}
                     />
                   );
                 }}
               />
             </View>
           );
-        }, breakers)}
+        })}
       </ScrollView>
       {!isEmpty(event) ? (
         <EventDetailModal
