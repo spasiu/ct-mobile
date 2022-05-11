@@ -27,7 +27,7 @@ export interface AddAddressProps {
 }
 
 export type useAddAddressHookType = {
-  submit: (values: any) => void;
+  submit: (values: submitType) => void;
   activeField: string;
   setActiveField: Dispatch<SetStateAction<string>>;
   lastName: RefObject<TextInput>;
@@ -39,4 +39,15 @@ export type useAddAddressHookType = {
   postalCode: RefObject<TextInput>;
   state: RefObject<TextInput>;
   loading: boolean;
+};
+
+export type submitType = {
+  first_name: string;
+  last_name: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state_province_region: string;
+  postal_zip_code: string;
+  country: string;
 };

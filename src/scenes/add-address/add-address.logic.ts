@@ -7,11 +7,12 @@ import {
   useInsertUserAddressMutation,
   UserAddressesDocument,
   LoggedUserDocument,
+  InsertUserAddressMutation,
 } from '../../services/api/requests';
 import { PredictionType } from '../../services/places-api';
-
 import {
   AddAddressProps,
+  submitType,
   useAddAddressHookType,
 } from './add-address-screen.props';
 
@@ -33,7 +34,7 @@ export const useAddAddressHook = ({
           message: t('errors.could_not_add_address'),
           type: 'danger',
         }),
-      onCompleted: (address: any) => {
+      onCompleted: (address: InsertUserAddressMutation) => {
         setId(address?.insert_Addresses_one?.id);
         return onAddressAdded();
       },
@@ -61,7 +62,7 @@ export const useAddAddressHook = ({
   const city = useRef<TextInput>(null);
   const state = useRef<TextInput>(null);
   const postalCode = useRef<TextInput>(null);
-  const submit = (values: any) => {
+  const submit = (values: submitType) => {
     values.country === 'CA' || values.country === 'US'
       ? insertUserAddressMutation({
           variables: {
