@@ -25,8 +25,8 @@ import { LiveScreenProps } from './live-screen.props';
 import { SeeTeamsAnimation } from './see-teams-animation';
 import { useLiveScreenHook } from './live-screen-logic';
 import { BreakCards } from './live-screen-break-cards';
-import { InputFields } from './live-screen-input';
 import { Nav } from './live-screen-navigation';
+import { InputFields } from './live-screen-input';
 
 export const LiveScreen = ({
   navigation,
