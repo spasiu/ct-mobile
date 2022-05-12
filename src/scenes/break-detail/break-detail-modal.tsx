@@ -1,33 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { isEmpty } from 'ramda';
-
 import { t } from '../../i18n/i18n';
 import { OverScreenModal, Loading } from '../../components';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  BreakItemsDocument,
-  BreakProductItems,
-  useBreakDetailQuery,
-  useBreakItemUpdateMutation,
-} from '../../services/api/requests';
-import {
-  userDefaultAddressSelector,
-  userSelector,
-} from '../../common/user-profile';
-import { breakCompletedSelector, breakSelector } from '../../common/break';
-import { breakSoldOutSelector } from '../../common/break';
 import { ROUTES_IDS } from '../../navigators';
-
 import { AddPaymentInformation } from '../add-payment-information/add-payment-information';
 import { AddressesList } from '../addresses-list/addresses-list';
 import { AddAddress } from '../add-address/add-address';
 import { EditAddress } from '../edit-address/edit-address';
 import { PaymentInformationList } from '../payment-information-list/payment-information-list';
-import { PaymentContext, PaymentContextType } from '../../providers/payment';
-
 import { BreakDetail } from './break-detail';
 import {
   isBreakDetailView,
@@ -37,13 +18,11 @@ import {
   isEditAddress,
   isPaymentList,
   isAddPayment,
-} from './break-detail-modal.utils';
-import { BreakDetailModalProps, ModalRoute } from './break-detail-modal.props';
+  useBreakDetailModalHook,
+} from './break-detail-modal.logic';
+import { BreakDetailModalProps } from './break-detail-modal.props';
 import { PurchaseModal } from './purchase-modal';
 import { addressCleanSelector } from '../../common/address/address-selectors';
-import { CtError, handleError } from '../../common/error';
-import { ApolloError } from '@apollo/client';
-import { NotificationContext, NotificationContextType } from '../../providers/notification';
 
 export const BreakDetailModal = ({
   breakId,
@@ -51,84 +30,28 @@ export const BreakDetailModal = ({
   onPressClose = () => undefined,
   ...modalProps
 }: BreakDetailModalProps): JSX.Element => {
-  const { requestNotificationPermission } = useContext(
-    NotificationContext,
-  ) as NotificationContextType;
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const { cards, getCards, getDefaultPaymentCard } = useContext(
-    PaymentContext,
-  ) as PaymentContextType;
-
-  const [couponCode, setCouponCode] = useState('');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    error === 'invalid_coupon_code' ? setError('') : null;
-  }, [couponCode]);
-
-  const [visibleRoute, setVisibleRoute] = useState<ModalRoute>({
-    route: ROUTES_IDS.BREAK_DETAIL_MODAL,
-  });
-
-  const [selectedItems, setSelectedItems] = useState<BreakProductItems[]>([]);
-  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
-
-  const { data, loading, refetch, subscribeToMore } = useBreakDetailQuery({
-    fetchPolicy: 'no-cache',
-    variables: {
-      breakId,
-      userId: authUser?.uid,
-    },
-    onError: (error: ApolloError) => {
-      const level = isVisible ? 'warning' : 'none';
-      handleError(
-        new CtError('breaker_detail_retrieval_error', level, error),
-      );
-    },
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [visibleRoute]);
-
-  useEffect(() => {
-    if (isEmpty(cards)) {
-      getCards(authUser as FirebaseAuthTypes.User);
-    }
-
-    subscribeToMore({
-      document: BreakItemsDocument,
-      variables: { breakId },
-      onError: (error: Error) => console.error('SUBSC ERROR', error),
-      updateQuery: (prev, { subscriptionData }) => Object.assign({}, prev, { Breaks: subscriptionData.data.Breaks })
-    });
-  }, [breakId]);
-
-  const breakData = breakSelector(data);
-  const userData = userSelector(data);
-
-  const isBreakSoldOut = !isEmpty(selectedItems) ? false : breakSoldOutSelector(breakData);
-  const isBreakCompleted = breakData ? breakCompletedSelector(breakData) : false;
-
-  const userAddress = userDefaultAddressSelector(userData);
-  const userPaymentData = getDefaultPaymentCard();
-  const shouldAllowToContinueToCheckout =
-    !isEmpty(selectedItems) && Boolean(userAddress) && Boolean(userPaymentData);
-
-  const [updateBreakItem] = useBreakItemUpdateMutation({
-    onError: (error: ApolloError) => console.error('SQL ERROR', error)
-  });
-
-  const cleanModalOnClose = (success: boolean = true) => {
-    if (!success) { // if closed without purchase, restore inventory
-      selectedItems.forEach(item => {
-        updateBreakItem({ variables: { itemId: item.id, quantity: 1 } });
-      });
-    }
-    setSelectedItems([]);
-    setShowPurchaseModal(false);
-    setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL });
-  };
+  const {
+    loading,
+    visibleRoute,
+    isBreakSoldOut,
+    cleanModalOnClose,
+    setVisibleRoute,
+    refetch,
+    setShowPurchaseModal,
+    breakData,
+    shouldAllowToContinueToCheckout,
+    selectedItems,
+    setSelectedItems,
+    isBreakCompleted,
+    userAddress,
+    userPaymentData,
+    couponCode,
+    setCouponCode,
+    error,
+    setError,
+    showPurchaseModal,
+    requestNotificationPermission,
+  } = useBreakDetailModalHook(breakId, isVisible);
 
   return (
     <OverScreenModal
@@ -190,7 +113,9 @@ export const BreakDetailModal = ({
           ) : null}
           {isAddressList(visibleRoute) ? (
             <AddressesList
-              onSave={()=> setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL })}
+              onSave={() =>
+                setVisibleRoute({ route: ROUTES_IDS.BREAK_DETAIL_MODAL })
+              }
               onAddAddress={params =>
                 setVisibleRoute({
                   route: ROUTES_IDS.ADD_ADDRESS_SCREEN,
@@ -223,9 +148,11 @@ export const BreakDetailModal = ({
           ) : null}
           {isPaymentList(visibleRoute) ? (
             <PaymentInformationList
-              goBack={() => setVisibleRoute({
-                route: ROUTES_IDS.BREAK_DETAIL_MODAL,
-              })}
+              goBack={() =>
+                setVisibleRoute({
+                  route: ROUTES_IDS.BREAK_DETAIL_MODAL,
+                })
+              }
               onAddPayment={() =>
                 setVisibleRoute({
                   route: ROUTES_IDS.ADD_PAYMENT_INFORMATION_SCREEN,
@@ -250,7 +177,6 @@ export const BreakDetailModal = ({
         userPaymentData={userPaymentData}
         cartItems={selectedItems}
         coupon={couponCode}
-        error={error}
         setError={setError}
         onSuccess={() => {
           cleanModalOnClose();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { t } from '../../i18n/i18n';
@@ -10,20 +10,10 @@ import {
   checkoutCartSubtotalSelector,
   checkoutCartTaxSelector,
   checkoutCartDiscountSelector,
-  createCheckout,
-  getCheckoutCartInfo,
-  getCheckoutParams,
-  getWarningModalProps,
-} from './break-detail-modal.utils';
-import {
-  CheckoutCart,
-  CheckoutResponse,
-  PurchaseModalProps,
-} from './break-detail-modal.props';
+  usePurchaseModalHook,
+} from './break-detail-modal.logic';
+import { PurchaseModalProps } from './break-detail-modal.props';
 import { addressSingleLineSelector } from '../../common/address/address-selectors';
-import { PaymentContext, PaymentContextType } from '../../providers/payment';
-import { Card } from '../../common/payment';
-import { OrderState } from '../../providers/payment/payment-types';
 
 export const PurchaseModal = ({
   visible,
@@ -31,50 +21,24 @@ export const PurchaseModal = ({
   userPaymentData,
   cartItems,
   coupon,
-  error,
   setError,
   onSuccess,
   onCancel,
   onError,
   ...modalProps
 }: PurchaseModalProps): JSX.Element => {
-  const { createOrder } = useContext(PaymentContext) as PaymentContextType;
-
-  const [checkoutCart, setCheckoutCart] = useState<CheckoutCart>();
-  const [orderCreated, setOrderCreated] = useState<OrderState>();
-  const [loading, setLoading] = useState(true);
-  const [purchasing, setPurchasing] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    if (visible) {
-      const checkoutParams = getCheckoutParams(userAddress, cartItems, coupon);
-      createCheckout(checkoutParams)
-        .then((response: CheckoutResponse) => {
-          const cart = getCheckoutCartInfo(response);
-          setCheckoutCart(cart);
-          setLoading(false);
-        })
-        .catch(e => {
-          setError(e.details?.ct_error_code || "generic");
-          setLoading(false);
-          onCancel();
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
-
-  const warningModalProps = getWarningModalProps(
-    orderCreated,
-    checkoutCart as CheckoutCart,
-    userPaymentData as Card,
-    createOrder,
-    setOrderCreated,
-    onSuccess,
-    onCancel,
-    setPurchasing,
-    onError,
-  );
+  const { warningModalProps, loading, purchasing, orderCreated, checkoutCart } =
+    usePurchaseModalHook({
+      visible,
+      userAddress,
+      cartItems,
+      coupon,
+      setError,
+      onCancel,
+      userPaymentData,
+      onSuccess,
+      onError,
+    });
 
   return (
     <WarningModal

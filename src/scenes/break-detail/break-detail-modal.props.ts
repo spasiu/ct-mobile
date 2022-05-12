@@ -1,10 +1,16 @@
+import { ApolloQueryResult } from '@apollo/client';
+import { OrderState } from '../../providers/payment';
+import { ImageSourcePropType } from 'react-native';
 import { Card } from '../../common/payment';
 import { OverScreenModalProps, WarningModalProps } from '../../components';
 
 import {
   Addresses,
+  BreakDetailQuery,
   BreakProductItems,
   Breaks,
+  Exact,
+  Maybe,
 } from '../../services/api/requests';
 
 export type CheckoutCartData = {
@@ -94,6 +100,63 @@ export interface PurchaseModalProps extends WarningModalProps {
   onSuccess: () => void;
   onCancel: () => void;
   onError: () => void;
-  error: string;
   setError: (error: string) => void;
 }
+
+export type useBreakDetailModalHookType = {
+  loading: boolean;
+  visibleRoute: ModalRoute;
+  isBreakSoldOut: boolean;
+  cleanModalOnClose: (success?: boolean | undefined) => void;
+  setVisibleRoute: React.Dispatch<React.SetStateAction<ModalRoute>>;
+  refetch: (
+    variables?:
+      | Partial<
+          Exact<{
+            breakId?: any;
+            userId?: Maybe<string> | undefined;
+          }>
+        >
+      | undefined,
+  ) => Promise<ApolloQueryResult<BreakDetailQuery>>;
+  setShowPurchaseModal: React.Dispatch<React.SetStateAction<boolean>>;
+  breakData: Breaks;
+  shouldAllowToContinueToCheckout: boolean;
+  selectedItems: BreakProductItems[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<BreakProductItems[]>>;
+  isBreakCompleted: boolean;
+  userAddress: Addresses;
+  userPaymentData: Card | undefined;
+  couponCode: string;
+  setCouponCode: React.Dispatch<React.SetStateAction<string>>;
+  error: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  showPurchaseModal: boolean;
+  requestNotificationPermission: () => void;
+};
+
+export type useBreakDetailHookType = {
+  openModal: boolean;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  updateItem: (
+    item: BreakProductItems,
+    itemIndex: number,
+    selectedItems: BreakProductItems[],
+    selected: boolean,
+  ) => BreakProductItems[];
+};
+
+export type usePurchaseModalHookType = {
+  warningModalProps: {
+    title: string;
+    primaryActionText: string;
+    secondaryActionText?: string | undefined;
+    onPrimaryActionPressed: () => void | Promise<void>;
+    onSecondaryActionPressed?: (() => void) | undefined;
+    imageSrc?: ImageSourcePropType | undefined;
+  };
+  loading: boolean;
+  purchasing: boolean;
+  orderCreated: OrderState | undefined;
+  checkoutCart: CheckoutCart | undefined;
+};
