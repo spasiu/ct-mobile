@@ -44,7 +44,7 @@ export const hitDescription = (hit: Partial<Hits>): string => {
     hit.parallel,
     hit.insert,
     hit.autograph ? 'Autograph' : '',
-    hit.memoribillia ? hit.memoribillia : '',
+    hit.memoribilia ? hit.memoribilia : '',
     hit.rookie_card ? 'Rookie' : '',
     hit.numbered ? '/' + hit.numbered : '',
   ].filter(h => h).join(' ');
