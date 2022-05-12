@@ -1,11 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-import { breaksSelector } from '../../common/break';
-
-import { hitsSelector } from '../../common/hit';
-import { usersSelector } from '../../common/user-profile';
-
 import {
   BackButton,
   Container,
@@ -19,77 +14,34 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  Breaks,
-  Hits,
-  Users,
-  useSearchLazyQuery,
-} from '../../services/api/requests';
 import { SearchBreakersView } from './search-breakers-view';
 import { SearchBreaksView } from './search-breaks-view';
 import { SearchEventsView } from './search-events-view';
-
 import {
   SearchType,
   SEARCH_TYPES,
   TEXT_KEY_FOR_SEARCH_TYPE,
 } from '../../common/search';
 import {
-  searchEventBreakersSelector,
   eventBreakerDetailSelector,
-  noBreakersHaveEvents,
-} from './search-modal.utils';
+  useSearchModalHook,
+} from './search-modal.logic';
 import { SearchModalProps } from './search-modal.props';
-import { find, isEmpty, pathOr } from 'ramda';
 import { isSearchTermValid } from '../../utils/search';
 
 export const SearchModal = ({ navigation }: SearchModalProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchFilter, setSearchFilter] = useState<SearchType>(
-    SearchType.Breaks,
-  );
+  const {
+    searchTerm,
+    setSearchTerm,
+    loading,
+    searchFilter,
+    setSearchFilter,
+    hits,
+    eventBreakers,
+    breaks,
+    breakers,
+  } = useSearchModalHook();
 
-  const [startSearch, { data, loading }] = useSearchLazyQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-
-  useEffect(() => {
-    if (isSearchTermValid(searchTerm)) {
-      startSearch({
-        variables: {
-          searchInput: `%${searchTerm}%`,
-          userId: authUser?.uid,
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
-
-  useEffect(() => {
-    const firstTabWithContent = find(searchType => {
-      const tabData = pathOr([], [searchType], data) as
-        | Users[]
-        | Breaks[]
-        | Hits[];
-      const nestedEventsEmpty =
-        searchType === SearchType.Events
-          ? noBreakersHaveEvents(tabData as Users[])
-          : false;
-
-      return !isEmpty(tabData) && !nestedEventsEmpty;
-    }, SEARCH_TYPES);
-
-    if (firstTabWithContent) {
-      setSearchFilter(firstTabWithContent);
-    }
-  }, [data]);
-
-  const hits = hitsSelector(data);
-  const breaks = breaksSelector(data);
-  const eventBreakers = searchEventBreakersSelector(data);
-  const breakers = usersSelector(data);
   return (
     <Container
       style={[s.mh0]}
