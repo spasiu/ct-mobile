@@ -2258,7 +2258,7 @@ export type Hits = {
   image_back?: Maybe<Scalars['String']>;
   image_front: Scalars['String'];
   insert?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
   player: Scalars['String'];
@@ -2350,7 +2350,7 @@ export type Hits_Bool_Exp = {
   image_back?: Maybe<String_Comparison_Exp>;
   image_front?: Maybe<String_Comparison_Exp>;
   insert?: Maybe<String_Comparison_Exp>;
-  memoribillia?: Maybe<String_Comparison_Exp>;
+  memoribilia?: Maybe<String_Comparison_Exp>;
   numbered?: Maybe<Int_Comparison_Exp>;
   parallel?: Maybe<String_Comparison_Exp>;
   player?: Maybe<String_Comparison_Exp>;
@@ -2387,7 +2387,7 @@ export type Hits_Insert_Input = {
   image_back?: Maybe<Scalars['String']>;
   image_front?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
@@ -2409,7 +2409,7 @@ export type Hits_Max_Fields = {
   image_back?: Maybe<Scalars['String']>;
   image_front?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
@@ -2428,7 +2428,7 @@ export type Hits_Max_Order_By = {
   image_back?: Maybe<Order_By>;
   image_front?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
@@ -2448,7 +2448,7 @@ export type Hits_Min_Fields = {
   image_back?: Maybe<Scalars['String']>;
   image_front?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
@@ -2467,7 +2467,7 @@ export type Hits_Min_Order_By = {
   image_back?: Maybe<Order_By>;
   image_front?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
@@ -2507,7 +2507,7 @@ export type Hits_Order_By = {
   image_back?: Maybe<Order_By>;
   image_front?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
   player?: Maybe<Order_By>;
@@ -2546,7 +2546,7 @@ export enum Hits_Select_Column {
   /** column name */
   Insert = 'insert',
   /** column name */
-  Memoribillia = 'memoribillia',
+  Memoribilia = 'memoribilia',
   /** column name */
   Numbered = 'numbered',
   /** column name */
@@ -2577,7 +2577,7 @@ export type Hits_Set_Input = {
   image_back?: Maybe<Scalars['String']>;
   image_front?: Maybe<Scalars['String']>;
   insert?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
   player?: Maybe<Scalars['String']>;
@@ -2655,7 +2655,7 @@ export enum Hits_Update_Column {
   /** column name */
   Insert = 'insert',
   /** column name */
-  Memoribillia = 'memoribillia',
+  Memoribilia = 'memoribilia',
   /** column name */
   Numbered = 'numbered',
   /** column name */
@@ -4054,7 +4054,7 @@ export type Products = {
   id: Scalars['uuid'];
   insert?: Maybe<Scalars['String']>;
   manufacturer: Scalars['String'];
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
@@ -4221,7 +4221,7 @@ export type Products_Bool_Exp = {
   id?: Maybe<Uuid_Comparison_Exp>;
   insert?: Maybe<String_Comparison_Exp>;
   manufacturer?: Maybe<String_Comparison_Exp>;
-  memoribillia?: Maybe<String_Comparison_Exp>;
+  memoribilia?: Maybe<String_Comparison_Exp>;
   numbered?: Maybe<Int_Comparison_Exp>;
   packs_per_box?: Maybe<Int_Comparison_Exp>;
   parallel?: Maybe<String_Comparison_Exp>;
@@ -4269,7 +4269,7 @@ export type Products_Insert_Input = {
   id?: Maybe<Scalars['uuid']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
@@ -4299,7 +4299,7 @@ export type Products_Max_Fields = {
   id?: Maybe<Scalars['uuid']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
@@ -4325,7 +4325,7 @@ export type Products_Max_Order_By = {
   id?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
@@ -4352,7 +4352,7 @@ export type Products_Min_Fields = {
   id?: Maybe<Scalars['uuid']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
@@ -4378,7 +4378,7 @@ export type Products_Min_Order_By = {
   id?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
@@ -4432,7 +4432,7 @@ export type Products_Order_By = {
   id?: Maybe<Order_By>;
   insert?: Maybe<Order_By>;
   manufacturer?: Maybe<Order_By>;
-  memoribillia?: Maybe<Order_By>;
+  memoribilia?: Maybe<Order_By>;
   numbered?: Maybe<Order_By>;
   packs_per_box?: Maybe<Order_By>;
   parallel?: Maybe<Order_By>;
@@ -4483,7 +4483,7 @@ export enum Products_Select_Column {
   /** column name */
   Manufacturer = 'manufacturer',
   /** column name */
-  Memoribillia = 'memoribillia',
+  Memoribilia = 'memoribilia',
   /** column name */
   Numbered = 'numbered',
   /** column name */
@@ -4524,7 +4524,7 @@ export type Products_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   insert?: Maybe<Scalars['String']>;
   manufacturer?: Maybe<Scalars['String']>;
-  memoribillia?: Maybe<Scalars['String']>;
+  memoribilia?: Maybe<Scalars['String']>;
   numbered?: Maybe<Scalars['Int']>;
   packs_per_box?: Maybe<Scalars['Int']>;
   parallel?: Maybe<Scalars['String']>;
@@ -4637,7 +4637,7 @@ export enum Products_Update_Column {
   /** column name */
   Manufacturer = 'manufacturer',
   /** column name */
-  Memoribillia = 'memoribillia',
+  Memoribilia = 'memoribilia',
   /** column name */
   Numbered = 'numbered',
   /** column name */
@@ -11908,7 +11908,7 @@ export type FollowEventMutation = (
 
 export type HitsDetailFragment = (
   { __typename?: 'Hits' }
-  & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribillia' | 'autograph' | 'numbered' | 'user_id'>
+  & Pick<Hits, 'id' | 'image_front' | 'image_back' | 'player' | 'card_number' | 'parallel' | 'insert' | 'rookie_card' | 'memoribilia' | 'autograph' | 'numbered' | 'user_id'>
   & { User: (
     { __typename?: 'Users' }
     & Pick<Users, 'username'>
@@ -12522,7 +12522,7 @@ export const HitsDetailFragmentDoc = gql`
   parallel
   insert
   rookie_card
-  memoribillia
+  memoribilia
   autograph
   numbered
   user_id
@@ -13512,7 +13512,7 @@ export type HitsQueryResult = Apollo.QueryResult<HitsQuery, HitsQueryVariables>;
 export const HitsScreenDocument = gql`
     query HitsScreen($userHitsFilter: String_comparison_exp, $searchInput: String, $offset: Int, $limit: Int) {
   Hits(
-    where: {user_id: $userHitsFilter, archived: {_eq: false}, published: {_eq: true}, _or: [{player: {_ilike: $searchInput}}, {memoribillia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}]}
+    where: {user_id: $userHitsFilter, archived: {_eq: false}, published: {_eq: true}, _or: [{player: {_ilike: $searchInput}}, {memoribilia: {_ilike: $searchInput}}, {parallel: {_ilike: $searchInput}}, {insert: {_ilike: $searchInput}}, {Product: {_or: [{year: {_ilike: $searchInput}}, {category: {_ilike: $searchInput}}, {manufacturer: {_ilike: $searchInput}}, {brand: {_ilike: $searchInput}}, {series: {_ilike: $searchInput}}]}}]}
     order_by: [{created_at: desc}, {id: desc}]
     offset: $offset
     limit: $limit
