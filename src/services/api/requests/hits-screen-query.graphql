@@ -11,7 +11,7 @@ query HitsScreen(
       published: { _eq: true }
       _or: [
         { player: { _ilike: $searchInput } }
-        { memoribilia: { _ilike: $searchInput } }
+        { memorabilia: { _ilike: $searchInput } }
         { parallel: { _ilike: $searchInput } }
         { insert: { _ilike: $searchInput } }
         {

@@ -7,7 +7,7 @@ fragment HitsDetail on Hits {
     parallel
     insert
     rookie_card
-    memoribilia
+    memorabilia
     autograph
     numbered
     user_id
