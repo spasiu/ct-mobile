@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -30,41 +30,36 @@ import {
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
 
-import { breakerDetailScreenSelector } from './breaker-detail-screen.utils';
+import { useBreakerDetailScreenHook } from './breaker-detail-screen.logic';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
-import { Hits, useBreakerHitsQuery } from '../../services/api/requests';
-import {
-  hitImageFrontSelector,
-  hitPlayerSelector,
-  hitsSelector,
-} from '../../common/hit';
+import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
 import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
 
 export const BreakerDetailScreen = ({
   route,
   navigation,
 }: BreakerDetailScreenProps): JSX.Element => {
-  const { breaker, startOnEventsView = false } = route.params;
-  const [eventsView, setEventsView] = useState(startOnEventsView);
-  const [hitDetail, setHitDetail] = useState<Partial<Hits>>({});
-  const { id, name, image, social, description, video } =
-    breakerDetailScreenSelector(breaker);
-  const { data: hitsRequestData } = useBreakerHitsQuery({
-    fetchPolicy: 'no-cache',
-    variables: {
-      breakerId: id,
-      offset: 0,
-    },
-  });
+  const {
+    video,
+    image,
+    name,
+    id,
+    social,
+    description,
+    hitDetail,
+    setHitDetail,
+    hits,
+    eventsView,
+    setEventsView,
+  } = useBreakerDetailScreenHook(route);
 
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
   const iframeHeight = (videoWidth * pixelRatio) / 2;
-
   const videoHtml = `
     <html>
       <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
@@ -72,7 +67,6 @@ export const BreakerDetailScreen = ({
       </body>
     </html>
   `;
-  const hits = hitsSelector(hitsRequestData);
   return (
     <Container
       containerType={ContainerTypes.fixed}

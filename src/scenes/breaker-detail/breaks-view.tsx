@@ -1,35 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/core';
 
 import { BreakCard, EmptyState, Loading } from '../../components';
-import {
-  Breaks,
-  useFollowBreakMutation,
-  useUnfollowBreakMutation,
-  useNewBreakerBreaksSubscription,
-} from '../../services/api/requests';
-import { indexedMap } from '../../utils/ramda';
+import { Breaks } from '../../services/api/requests';
 
-import { breakerDetailBreakSelector } from './breaker-detail-screen.utils';
+import {
+  breakerDetailBreakSelector,
+  useBreaksViewHook,
+} from './breaker-detail-screen.logic';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
-import {
-  breakIdSelector,
-  breaksSelector,
-  handleBreakPress,
-} from '../../common/break';
+import { breakIdSelector, handleBreakPress } from '../../common/break';
 import { SimpleBreaker } from './breaker-detail-screen.props';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  optimisticFollowBreakResponse,
-  optimisticUnfollowBreakResponse,
-  updateFollowBreakCache,
-  updateUnfollowBreakCache,
-} from '../../utils/cache';
 import { isEmpty } from 'ramda';
 import { t } from '../../i18n/i18n';
-
 import { LiveScreenNavigationProp } from '../live/live-screen.props';
 
 export const BreaksView = ({
@@ -38,21 +23,12 @@ export const BreaksView = ({
   breaker: SimpleBreaker;
 }): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const [breakId, setBreakId] = useState<string>();
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const { loading, data } = useNewBreakerBreaksSubscription({
-    variables: { id: breaker.id, userId: authUser?.uid },
-  });
-
-  const [followBreak] = useFollowBreakMutation();
-  const [unfollowBreak] = useUnfollowBreakMutation();
+  const { breakId, setBreakId, loading, data, breaks, onPressFollow } =
+    useBreaksViewHook(breaker);
 
   if (loading && !data) {
     return <Loading />;
   }
-
-  const breaks = breaksSelector(data);
   if (isEmpty(breaks)) {
     return (
       <EmptyState
@@ -63,48 +39,21 @@ export const BreaksView = ({
   }
   return (
     <View style={[s.mh3]}>
-      {indexedMap((item, index) => {
-        const breakItem = item as Breaks;
+      {breaks.map((item: Breaks, index: number) => {
         const breakerBreakDetail = breakerDetailBreakSelector(
-          breakItem,
+          item,
           breaker.image,
         );
         return (
           <BreakCard
-            onPressBuy={() => setBreakId(breakIdSelector(breakItem))}
-            onPress={() => handleBreakPress(breakItem, navigation, setBreakId)}
+            onPressBuy={() => setBreakId(breakIdSelector(item))}
+            onPress={() => handleBreakPress(item, navigation, setBreakId)}
             key={`breaker-break-${index}`}
             {...breakerBreakDetail}
-            onPressFollow={() => {
-              const followData = {
-                user_id: authUser?.uid,
-                break_id: breakItem.id,
-              };
-
-              breakerBreakDetail.userFollows
-                ? unfollowBreak({
-                    optimisticResponse: optimisticUnfollowBreakResponse(
-                      breakItem,
-                      authUser?.uid as string,
-                    ),
-                    update: cache => updateUnfollowBreakCache(cache, breakItem),
-                    variables: followData,
-                  })
-                : followBreak({
-                    optimisticResponse: optimisticFollowBreakResponse(
-                      breakItem,
-                      authUser?.uid as string,
-                    ),
-                    update: (cache, followResponse) =>
-                      updateFollowBreakCache(cache, followResponse, breakItem),
-                    variables: {
-                      follow: followData,
-                    },
-                  });
-            }}
+            onPressFollow={() => onPressFollow(item, breakerBreakDetail)}
           />
         );
-      }, breaks)}
+      })}
       {breakId ? (
         <BreakDetailModal
           breakId={breakId}
