@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, Image, View, FlatList, TextInput } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 import Modal from 'react-native-modal';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { append, remove } from 'ramda';
 
 import { t } from '../../i18n/i18n';
 import {
@@ -25,15 +24,13 @@ import {
 import { breakProductItemsWithQuantitySelector } from '../../common/break-products';
 import { ROUTES_IDS } from '../../navigators';
 
-import { findSelectedItem } from './break-detail-modal.utils';
+import {
+  findSelectedItem,
+  useBreakDetailHook,
+} from './break-detail-modal.logic';
 import { BreakDetailProps } from './break-detail-modal.props';
 import { checkIcon } from './break-detail-modal.presets';
 import { addressSingleLineSelector } from '../../common/address/address-selectors';
-import {
-  BreakProductItems,
-  useBreakItemUpdateMutation,
-} from '../../services/api/requests';
-import { ApolloError } from '@apollo/client';
 
 export const BreakDetail = ({
   breakData,
@@ -48,25 +45,7 @@ export const BreakDetail = ({
   setCoupon,
   error,
 }: BreakDetailProps): JSX.Element => {
-  const [updateBreakItem] = useBreakItemUpdateMutation({
-    onError: (error: ApolloError) => console.error('SQL ERROR', error)
-  });
-
-  const updateItem = (
-    item: BreakProductItems,
-    itemIndex: number,
-    selectedItems: BreakProductItems[],
-    selected: boolean
-  ): BreakProductItems[] => {
-    const [newSelectedItems, quantity] = selected
-      ? [remove(itemIndex, 1, selectedItems), 1]
-      : [append(item, selectedItems), -1];
-
-    updateBreakItem({ variables: { itemId: item.id, quantity: quantity } });
-    return newSelectedItems;
-  };
-  const [openModal, setOpenModal] = useState(false);
-
+  const { openModal, setOpenModal, updateItem } = useBreakDetailHook();
   return (
     <KeyboardAwareScrollView>
       <View style={[s.aic]}>
@@ -119,16 +98,20 @@ export const BreakDetail = ({
               autoCapitalize={'none'}
               spellCheck={false}
               autoCorrect={false}
-              style={[s.pl3 , {flex:1}]}
+              style={[s.pl3, { flex: 1 }]}
               placeholderTextColor={'black'}
               placeholder={t('payment.addCoupon')}
             />
           </View>
 
-          {error ? <View style={[s.flx_row, s.h3]}>
-            <Text style={[s.pl3, s.pv3, s.negative]}>{t(`errors.${error}`)}</Text>
-          </View> : null}
-          
+          {error ? (
+            <View style={[s.flx_row, s.h3]}>
+              <Text style={[s.pl3, s.pv3, s.negative]}>
+                {t(`errors.${error}`)}
+              </Text>
+            </View>
+          ) : null}
+
           <Modal
             style={[s.ma0, s.jcfe]}
             isVisible={openModal}
@@ -148,10 +131,10 @@ export const BreakDetail = ({
                   <View style={[s.h_custom(1), s.bg_black_10]} />
                 )}
                 style={[s.mb4]}
-                data={
-                  breakProductItemsWithQuantitySelector(breakData, selectedItems)
-                    .sort((a, b) => a.bc_variant_id! - b.bc_variant_id!)
-                }
+                data={breakProductItemsWithQuantitySelector(
+                  breakData,
+                  selectedItems,
+                ).sort((a, b) => a.bc_variant_id! - b.bc_variant_id!)}
                 renderItem={({ item }) => {
                   const itemIndex = findSelectedItem(item, selectedItems);
                   const selected = itemIndex !== -1;
@@ -159,7 +142,12 @@ export const BreakDetail = ({
                     <BorderlessButton
                       style={[s.flx_row, s.jcsb, s.pv3]}
                       onPress={() => {
-                        const items = updateItem(item, itemIndex, selectedItems, selected);
+                        const items = updateItem(
+                          item,
+                          itemIndex,
+                          selectedItems,
+                          selected,
+                        );
                         setSelectedItems(items);
                       }}>
                       <Text>{`${item.title} • $${item.price}`}</Text>
