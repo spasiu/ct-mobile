@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -23,32 +23,12 @@ import {
   pricingIcon,
 } from './break-preferences-screen.presets';
 import { BreakType } from '../../common/break';
-import { useUserPreferencesLazyQuery } from '../../services/api/requests';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  userBreakPreferencesSelector,
-  userSelector,
-} from '../../common/user-profile';
+import { useBreakPreferencesScreenHook } from './break-preferences-screen.logic';
 
 export const BreakPreferencesScreen = ({
   navigation,
 }: BreakPreferencesScreenProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const [getUserPreferences, { data }] = useUserPreferencesLazyQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: authUser?.uid,
-    },
-  });
-
-  useEffect(() => {
-    getUserPreferences();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const user = userSelector(data);
-  const breakPreferences = userBreakPreferencesSelector(user);
+  const { breakPreferences } = useBreakPreferencesScreenHook();
   return (
     <Container
       style={[s.mh0]}
