@@ -1,5 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
+import { SetStateAction, Dispatch } from 'react';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { Addresses } from 'services/api/requests';
 
 import { UserProfileStackParamList } from '../../navigators';
 import { ROUTES_IDS } from '../../navigators';
@@ -24,12 +26,20 @@ type AddParams = UserProfileStackParamList[AddAddressType];
 export interface AddressesListScreenProps {
   navigation: AddressesListScreenNavigationProp;
   route: AddressesListScreenRouteProp;
-  setId?: (id:string) => void;
+  setId?: (id: string) => void;
 }
 
 export interface AddressesListProps {
   onEditAddress: (params: EditParams) => void;
   onAddAddress: (params: AddParams) => void;
-  setId?: (id:string) => void;
+  setId?: (id: string) => void;
   onSave: () => void;
 }
+export type useAddressListHookType = {
+  firstLoading: boolean;
+  addresses: Addresses[];
+  selectedAddress: string;
+  setSelectedAddress: Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  updateAddress: (onSave: () => void) => void;
+};
