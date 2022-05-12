@@ -8,7 +8,7 @@ import { sendChatMessage } from './live-screen-logic';
 import { t } from 'i18n-js';
 import React from 'react';
 import { sizes } from 'react-native-style-tachyons';
-import { COLORS } from 'theme/colors';
+import { COLORS } from '../../theme/colors';
 import { shopIcon } from './live-screen.presets';
 import { IconButton } from '../../components';
 
