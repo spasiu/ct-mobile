@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-
 import {
   Container,
   ContainerTypes,
@@ -16,18 +15,31 @@ import {
   NotificationContextType,
 } from '../../providers/notification';
 import { AuthContext, AuthContextType } from '../../providers/auth';
-
 import { instructionImage } from './allow-notifications-screen.presets';
 
-export const AllowNotificationsScreen = (): JSX.Element => {
+const useAllowNotificationsScreenHook = () => {
   const { requestNotificationPermission } = useContext(
     NotificationContext,
   ) as NotificationContextType;
   const { setOnboardingStatusComplete } = useContext(
     AuthContext,
   ) as AuthContextType;
-
   const [warningModalVisible, setWarningModalVisible] = useState(false);
+  return {
+    requestNotificationPermission,
+    setOnboardingStatusComplete,
+    warningModalVisible,
+    setWarningModalVisible,
+  };
+};
+
+export const AllowNotificationsScreen = (): JSX.Element => {
+  const {
+    requestNotificationPermission,
+    setOnboardingStatusComplete,
+    warningModalVisible,
+    setWarningModalVisible,
+  } = useAllowNotificationsScreenHook();
   return (
     <Container
       style={[s.flx_i, s.jcfe, s.aic]}
