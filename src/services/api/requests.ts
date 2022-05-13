@@ -12811,7 +12811,7 @@ export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBr
 export const BreakerHitsDocument = gql`
     query BreakerHits($breakerId: String, $offset: Int) {
   Hits(
-    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}, published: {_eq: true}}]}
     offset: $offset
   ) {
     ...HitsDetail
