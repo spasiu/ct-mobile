@@ -1,3 +1,9 @@
+import { PickBreakCard } from '../../common/break';
+import { Dispatch } from 'react';
+import {
+  Breaks,
+  NewEventBreaksSubscription,
+} from '../../services/api/requests';
 import { OverScreenModalProps, StatusBadgeTypes } from '../../components';
 
 export interface EventDetailModalProps extends OverScreenModalProps {
@@ -12,3 +18,12 @@ export interface EventDetailModalProps extends OverScreenModalProps {
   eventId: string;
   videoUrl?: string;
 }
+
+export type useEventDetailModalHookType = {
+  breaks: Breaks[];
+  data: NewEventBreaksSubscription | undefined;
+  loading: boolean;
+  breakId: string | undefined;
+  setBreakId: Dispatch<string | undefined>;
+  onPressFollow: (item: Breaks, breakCardDetails: PickBreakCard) => void;
+};
