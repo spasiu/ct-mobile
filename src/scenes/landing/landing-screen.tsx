@@ -5,22 +5,24 @@ import { styles as s } from 'react-native-style-tachyons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { useIsFocused } from '@react-navigation/native';
-
 import { TextLink, SoundButton, ActionFooter } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
 import { COLORS } from '../../theme/colors';
-
 import { introVideo, logo } from './landing-screen.presets';
 import { LandingScreenProps } from './landing-screen.props';
 
 const VOLUME = 0.10;
+const useLandingScreenHook = () => {
+  const [muted, setMuted] = useState<boolean>(false);
+  const isFocused = useIsFocused();
+  return { muted, setMuted, isFocused };
+};
 
 export const LandingScreen = ({
   navigation,
 }: LandingScreenProps): JSX.Element => {
-  const [muted, setMuted] = useState<boolean>(false);
-  const isFocused = useIsFocused();
+  const { muted, setMuted, isFocused } = useLandingScreenHook();
   return (
     <View style={[s.flx_i]}>
       {isFocused ? (
