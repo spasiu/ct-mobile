@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+/* eslint-disable quotes */
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import { Text, ScrollView, View, Image, Dimensions } from 'react-native';
 import { styles as s, sizes } from 'react-native-style-tachyons';
 
 import { OverScreenModal, ImageCard, IconButton } from '../../components';
 import { CARD_SIZES } from '../../components/image-card/image-card.presets';
 import { HitDetailModalProps } from './hit-detail-modal.props';
-import { shareHit } from './hit-detail-modal.utils';
+import { shareHit, useHitDetailModalHook } from './hit-detail-modal.logic';
 import ImageZoom from 'react-native-image-pan-zoom';
 const shareIcon = require('../../assets/share-icon.png');
 const flipIcon = require('../../assets/flip-icon.png');
@@ -20,8 +22,7 @@ export const HitDetailModal = ({
   user = '',
   breaker = '',
 }: HitDetailModalProps): JSX.Element => {
-  const [showBack, setShowBack] = useState(false);
-  const [zoom, setZoom] = useState(false);
+  const { showBack, setShowBack, zoom, setZoom } = useHitDetailModalHook();
 
   return (
     <OverScreenModal

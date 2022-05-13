@@ -4,7 +4,10 @@ import Share from 'react-native-share';
 import { showMessage } from 'react-native-flash-message';
 
 import { t } from '../../i18n/i18n';
-import { HitDetailModalProps } from './hit-detail-modal.props';
+import {
+  HitDetailModalProps,
+  useHitDetailModalHookType,
+} from './hit-detail-modal.props';
 import {
   hitDescription,
   hitImageFrontSelector,
@@ -14,6 +17,7 @@ import {
   hitPlayerSelector,
 } from '../../common/hit';
 import { Hits } from '../../services/api/requests';
+import { useState } from 'react';
 
 export const shareHit = (
   title: string,
@@ -61,6 +65,17 @@ export const hitDetailForModalSelector = (
     description: hitDescription(hit),
     player: hitPlayerSelector(hit),
     user: hitUserSelector(hit),
-    breaker: hitBreakerSelector(hit)
+    breaker: hitBreakerSelector(hit),
+  };
+};
+
+export const useHitDetailModalHook = (): useHitDetailModalHookType => {
+  const [showBack, setShowBack] = useState(false);
+  const [zoom, setZoom] = useState(false);
+  return {
+    showBack,
+    setShowBack,
+    zoom,
+    setZoom,
   };
 };
