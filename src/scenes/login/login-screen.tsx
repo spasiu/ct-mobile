@@ -27,14 +27,36 @@ import {
 import { LoginScreenProps } from './login-screen.props';
 import { isShortScreen } from '../device-properties';
 
-export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
+const useLoginScreenHook = () => {
   const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(
     AuthContext,
   ) as AuthContextType;
-
   const [activeField, setActiveField] = useState('');
   const [processing, setProcessing] = useState(false);
   const password = useRef<TextInput>(null);
+  return {
+    signInWithGoogle,
+    signInWithApple,
+    signInWithEmail,
+    activeField,
+    setActiveField,
+    processing,
+    setProcessing,
+    password,
+  };
+};
+
+export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
+  const {
+    signInWithGoogle,
+    signInWithApple,
+    signInWithEmail,
+    activeField,
+    setActiveField,
+    processing,
+    setProcessing,
+    password,
+  } = useLoginScreenHook();
   return (
     <Container
       style={[s.flx_i, s.jcfe]}
@@ -62,11 +84,13 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
         }) => (
           <>
             <View style={[s.flx_i, s.jcfs, s.aic]}>
-              { isShortScreen ? null : (<TitleBar
-                title={t('account.welcomeBackTitle')}
-                subtitle={t('account.welcomeBackSubtitle')}
-                wrapperStyle={[s.w_100]}
-              />)}
+              {isShortScreen ? null : (
+                <TitleBar
+                  title={t('account.welcomeBackTitle')}
+                  subtitle={t('account.welcomeBackSubtitle')}
+                  wrapperStyle={[s.w_100]}
+                />
+              )}
               <ActionButton
                 onPress={() => signInWithApple()}
                 style={[s.bg_white, s.ba, s.b__black]}
@@ -81,7 +105,14 @@ export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
                 text={t('buttons.googleSignUp')}>
                 <Image source={googleLogo} style={[s.mr3]} />
               </ActionButton>
-              <View style={[s.flx_row, s.aic, s.jcsb, s.w_100, isShortScreen ? s.mv3 : s.mv4]}>
+              <View
+                style={[
+                  s.flx_row,
+                  s.aic,
+                  s.jcsb,
+                  s.w_100,
+                  isShortScreen ? s.mv3 : s.mv4,
+                ]}>
                 <View
                   style={[s.flx_ratio(0.45), s.h_custom(1), s.bg_black_40]}
                 />
