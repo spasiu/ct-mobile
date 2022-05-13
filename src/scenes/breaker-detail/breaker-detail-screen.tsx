@@ -42,7 +42,7 @@ import {
   hitPlayerSelector,
   hitsSelector,
 } from '../../common/hit';
-import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.logic';
 
 export const BreakerDetailScreen = ({
   route,

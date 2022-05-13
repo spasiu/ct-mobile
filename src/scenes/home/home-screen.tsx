@@ -44,7 +44,7 @@ import {
   hitPlayerSelector,
   hitsSelector,
 } from '../../common/hit';
-import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.logic';
 import { eventsSelector, eventStatusSelector } from '../../common/event';
 import { EventDetailModal } from '../event-detail/event-detail-modal';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';

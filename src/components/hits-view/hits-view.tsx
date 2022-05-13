@@ -9,7 +9,7 @@ import { t } from '../../i18n/i18n';
 import { Hits } from '../../services/api/requests';
 
 import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
-import { hitDetailForModalSelector } from '../../scenes/hit-detail/hit-detail-modal.utils';
+import { hitDetailForModalSelector } from '../../scenes/hit-detail/hit-detail-modal.logic';
 import { HitDetailModal } from '../../scenes/hit-detail/hit-detail-modal';
 
 import {

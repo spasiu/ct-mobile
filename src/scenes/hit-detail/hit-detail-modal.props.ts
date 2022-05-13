@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface HitDetailModalProps {
   isVisible?: boolean;
   onPressClose?: () => void;
@@ -8,3 +10,10 @@ export interface HitDetailModalProps {
   user?: string;
   breaker?: string;
 }
+
+export type useHitDetailModalHookType = {
+  showBack: boolean;
+  setShowBack: Dispatch<SetStateAction<boolean>>;
+  zoom: boolean;
+  setZoom: Dispatch<SetStateAction<boolean>>;
+};
