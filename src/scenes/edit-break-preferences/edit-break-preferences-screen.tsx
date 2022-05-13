@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
-import { showMessage } from 'react-native-flash-message';
+import React from 'react';
 import { styles as s } from 'react-native-style-tachyons';
-
 import {
   Container,
   ContainerTypes,
@@ -9,13 +7,8 @@ import {
   NavigationBar,
 } from '../../components';
 import { t } from '../../i18n/i18n';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  useUpdateUserPreferencesMutation,
-} from '../../services/api/requests';
 import { postgresStringArray } from '../../utils/array';
-
+import { useEditBreakPreferencesScreenHook } from './edit-break-preferences-screen.logic';
 import { EditBreakPreferencesScreenProps } from './edit-break-preferences-screen.props';
 
 export const EditBreakPreferencesScreen = ({
@@ -23,18 +16,8 @@ export const EditBreakPreferencesScreen = ({
   route,
 }: EditBreakPreferencesScreenProps): JSX.Element => {
   const { content, userSelection, pageTitle } = route.params;
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const [updateUserPreferences, { loading }] = useUpdateUserPreferencesMutation(
-    {
-      onError: () =>
-        showMessage({
-          message: t('errors.could_not_set_preferences'),
-          type: 'danger',
-        }),
-      onCompleted: () => navigation.navigate(ROUTES_IDS.USER_PROFILE_SCREEN)
-    },
-  );
+  const { userId, updateUserPreferences, loading } =
+    useEditBreakPreferencesScreenHook(navigation);
   return (
     <Container
       style={[s.flx_i, s.jcfe, s.mh0]}
@@ -55,7 +38,7 @@ export const EditBreakPreferencesScreen = ({
         onActionPressed={options =>
           updateUserPreferences({
             variables: {
-              userId: authUser?.uid,
+              userId: userId,
               input: {
                 [content.questionKey]: content.allowMultipleSelection
                   ? postgresStringArray(options as string[])
