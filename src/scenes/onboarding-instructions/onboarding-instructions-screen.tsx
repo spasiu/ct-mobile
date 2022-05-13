@@ -3,7 +3,6 @@ import { View, Text, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import { map } from 'ramda';
-
 import {
   Container,
   ContainerTypes,
@@ -13,15 +12,20 @@ import {
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { WINDOW_WIDTH } from '../../theme/sizes';
-
 import { instructions } from './onboarding-instructions-screen.presets';
 import { OnboardingInstructionsScreenProps } from './onboarding-instructions-screen.props';
+
+const useOnboardingInstructionsScreenHook = () => {
+  const swiperRef = useRef<SwiperFlatList>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  return { swiperRef, currentIndex, setCurrentIndex };
+};
 
 export const OnboardingInstructionsScreen = ({
   navigation,
 }: OnboardingInstructionsScreenProps): JSX.Element => {
-  const swiperRef = useRef<SwiperFlatList>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { swiperRef, currentIndex, setCurrentIndex } =
+    useOnboardingInstructionsScreenHook();
   return (
     <Container
       style={[s.flx_i, s.jcfe, s.mh0]}
