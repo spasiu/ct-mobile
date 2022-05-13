@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-
 import {
   TitleBar,
   Container,
@@ -14,56 +13,23 @@ import {
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
-import {
-  useHitsScreenQuery,
-  useUserMinimalInformationQuery,
-} from '../../services/api/requests';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import { userSelector, userImageSelector } from '../../common/user-profile';
-
-import { hitsSelector } from '../../common/hit';
-
+import { userImageSelector } from '../../common/user-profile';
 import { HitsScreenProps } from './hits-screen.props';
-import { getHitsSearchAndFilterParams } from './hits-screen.utils';
+import { useHitsScreenHook } from './hits-screen.logic';
+
 const PAGE_SIZE = 99;
 export const HitsScreen = ({ navigation }: HitsScreenProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [userHitsFilterActive, setUserHitsFilterActive] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [offset, setOffset] = useState(PAGE_SIZE);
-  const { data: users } = useUserMinimalInformationQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: authUser?.uid,
-    },
-  });
-
   const {
-    data: requestData,
+    userHitsFilterActive,
+    setUserHitsFilterActive,
+    user,
+    searchTerm,
+    setSearchTerm,
+    setOffset,
+    hits,
+    loadMore,
     loading,
-    fetchMore,
-  } = useHitsScreenQuery({
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      ...getHitsSearchAndFilterParams(
-        authUser?.uid as string,
-        searchTerm,
-        userHitsFilterActive,
-      ),
-      offset: 0,
-      limit: PAGE_SIZE,
-    },
-  });
-  const hits = hitsSelector(requestData);
-  const user = userSelector(users);
-  const loadMore = () => {
-    if (offset - PAGE_SIZE > hits.length) return;
-    fetchMore({
-      variables: { offset },
-    });
-    setOffset(offset + PAGE_SIZE);
-  };
+  } = useHitsScreenHook(PAGE_SIZE);
   return (
     <Container
       containerType={ContainerTypes.fixed}
