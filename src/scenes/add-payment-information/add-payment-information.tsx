@@ -16,7 +16,7 @@ const sourceUri =
   (Platform.OS === 'android' ? 'file:///android_asset/' : '') +
   'Web.bundle/index.html';
 
-  /* injectedJavaScriptBeforeContentLoaded is not Android compatible */
+/* injectedJavaScriptBeforeContentLoaded is not Android compatible */
 const INJECTED_JAVASCRIPT = `(function() {
   window.googleApiKey = "${Config.GOOGLE_PLACES_API_KEY}";
   window.paysafeSingleUseToken = "${Config.PAYSAFE_SINGLE_USE_TOKEN}";
@@ -24,13 +24,24 @@ const INJECTED_JAVASCRIPT = `(function() {
   true;
   })();`;
 
-export const AddPaymentInformation = ({
-  onPaymentAdded,
-}: AddPaymentInformationProps): JSX.Element => {
+const useAddPaymentInformationHook = () => {
   const [status, setStatus] = useState('loading');
 
   const { createCard } = useContext(PaymentContext) as PaymentContextType;
   const { user: authUser } = useContext(AuthContext) as AuthContextType;
+
+  return {
+    status,
+    setStatus,
+    createCard,
+    authUser,
+  };
+}
+export const AddPaymentInformation = ({
+  onPaymentAdded,
+}: AddPaymentInformationProps): JSX.Element => {
+  const { status, setStatus, createCard, authUser } =
+    useAddPaymentInformationHook();
   return (
     <>
       {status === 'processing' ? (
