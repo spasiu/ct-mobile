@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
-
 import {
   Container,
   ContainerTypes,
@@ -12,24 +11,20 @@ import {
   ActionFooter,
 } from '../../components';
 import { t } from '../../i18n/i18n';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import { getFieldStatus } from '../../utils/form-field';
-
 import { ResetPasswordScreenProps } from './reset-password-screen.props';
 import {
   RESET_PASSWORD_FORM_INITIAL_VALUES,
   RESET_PASSWORD_FORM_FIELDS,
   RESET_PASSWORD_FORM_SCHEMA,
 } from './reset-password-screen.presets';
-import { ROUTES_IDS } from '../../navigators';
+import { useResetPasswordScreenHook } from './reset-password-screen.logic';
 
 export const ResetPasswordScreen = ({
   navigation,
 }: ResetPasswordScreenProps): JSX.Element => {
-  const { resetPassword } = useContext(AuthContext) as AuthContextType;
-
-  const [activeField, setActiveField] = useState('');
-  const [processing, setProcessing] = useState(false);
+  const { submit, activeField, setActiveField, processing } =
+    useResetPasswordScreenHook(navigation);
   return (
     <Container
       style={[s.flx_i, s.jcfe]}
@@ -39,17 +34,7 @@ export const ResetPasswordScreen = ({
         validateOnBlur
         validationSchema={RESET_PASSWORD_FORM_SCHEMA}
         initialValues={RESET_PASSWORD_FORM_INITIAL_VALUES}
-        onSubmit={async values => {
-          setProcessing(true);
-          const email = values[RESET_PASSWORD_FORM_FIELDS.EMAIL];
-          const isEmailSent = await resetPassword(email);
-          setProcessing(false);
-          if (isEmailSent) {
-            navigation.navigate(ROUTES_IDS.RESET_PASSWORD_CONFIRMATION_SCREEN, {
-              email,
-            });
-          }
-        }}>
+        onSubmit={async values => submit(values)}>
         {({
           handleChange,
           handleBlur,
