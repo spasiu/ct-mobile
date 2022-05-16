@@ -1,8 +1,7 @@
-import React, { useContext, useState, useRef } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
-
 import {
   Container,
   ContainerTypes,
@@ -14,9 +13,7 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { ROUTES_IDS } from '../../navigators';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import { getFieldStatus } from '../../utils/form-field';
-
 import {
   LOGIN_FORM_FIELDS,
   LOGIN_FORM_INITIAL_VALUES,
@@ -26,25 +23,7 @@ import {
 } from './login-screen.presets';
 import { LoginScreenProps } from './login-screen.props';
 import { isShortScreen } from '../device-properties';
-
-const useLoginScreenHook = () => {
-  const { signInWithGoogle, signInWithApple, signInWithEmail } = useContext(
-    AuthContext,
-  ) as AuthContextType;
-  const [activeField, setActiveField] = useState('');
-  const [processing, setProcessing] = useState(false);
-  const password = useRef<TextInput>(null);
-  return {
-    signInWithGoogle,
-    signInWithApple,
-    signInWithEmail,
-    activeField,
-    setActiveField,
-    processing,
-    setProcessing,
-    password,
-  };
-};
+import { useLoginScreenHook } from './login-screen.logic';
 
 export const LoginScreen = ({ navigation }: LoginScreenProps): JSX.Element => {
   const {

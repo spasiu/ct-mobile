@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { RefObject, Dispatch, SetStateAction } from 'react';
 import { TextInput } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 
@@ -22,7 +22,7 @@ export type useSignUpScreenHookType = {
   signInGoogle: () => Promise<void>;
   signInApple: () => Promise<void>;
   signUpEmail: (email: string, password: string) => void;
-  password: React.RefObject<TextInput>;
+  password: RefObject<TextInput>;
   processing: boolean;
   activeField: string;
   setActiveField: Dispatch<SetStateAction<string>>;

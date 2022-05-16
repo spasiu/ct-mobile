@@ -8,7 +8,8 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
   typeof ROUTES_IDS.LOGIN_SCREEN
 >;
 
-export type LoginFormFieldsType = typeof LOGIN_FORM_FIELDS[keyof typeof LOGIN_FORM_FIELDS];
+export type LoginFormFieldsType =
+  typeof LOGIN_FORM_FIELDS[keyof typeof LOGIN_FORM_FIELDS];
 export interface LoginScreenProps {
   navigation: LoginScreenNavigationProp;
 }
