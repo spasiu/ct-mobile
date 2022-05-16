@@ -33,12 +33,7 @@ import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
-import { Hits, useBreakerHitsQuery } from '../../services/api/requests';
-import {
-  hitImageFrontSelector,
-  hitPlayerSelector,
-  hitsSelector,
-} from '../../common/hit';
+import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
 import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.logic';
 
 export const BreakerDetailScreen = ({
