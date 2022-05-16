@@ -10,7 +10,6 @@ import {
 import { styles as s, sizes } from 'react-native-style-tachyons';
 import { WebView } from 'react-native-webview';
 import { isEmpty } from 'ramda';
-
 import { ICON_SIZE, WINDOW_WIDTH } from '../../theme/sizes';
 import { COLORS } from '../../theme/colors';
 import {
@@ -29,15 +28,18 @@ import {
 } from '../../components';
 import { ROUTES_IDS } from '../../navigators/routes/identifiers';
 import { t } from '../../i18n/i18n';
-
 import { useBreakerDetailScreenHook } from './breaker-detail-screen.logic';
 import { BreaksView } from './breaks-view';
 import { EventsView } from './events-view';
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
-
 import { BreakerDetailScreenProps } from './breaker-detail-screen.props';
-import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
-import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
+import { Hits, useBreakerHitsQuery } from '../../services/api/requests';
+import {
+  hitImageFrontSelector,
+  hitPlayerSelector,
+  hitsSelector,
+} from '../../common/hit';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.logic';
 
 export const BreakerDetailScreen = ({
   route,

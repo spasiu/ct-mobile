@@ -11759,6 +11759,7 @@ export type EventBreaksQuery = (
 export type NewEventBreaksSubscriptionVariables = Exact<{
   id: Scalars['uuid'];
   userId?: Maybe<Scalars['String']>;
+  status?: Maybe<Break_Status_Enum_Comparison_Exp>;
 }>;
 
 
@@ -11766,7 +11767,7 @@ export type NewEventBreaksSubscription = (
   { __typename?: 'subscription_root' }
   & { Breaks: Array<(
     { __typename?: 'Breaks' }
-    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title'>
+    & Pick<Breaks, 'id' | 'break_type' | 'description' | 'status' | 'title' | 'result'>
     & { break_products: Array<(
       { __typename?: 'break_product' }
       & { Product: (
@@ -12811,7 +12812,7 @@ export type NewBreakerEventsSubscriptionResult = Apollo.SubscriptionResult<NewBr
 export const BreakerHitsDocument = gql`
     query BreakerHits($breakerId: String, $offset: Int) {
   Hits(
-    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}}]}
+    where: {Break: {Event: {user_id: {_eq: $breakerId}}}, _and: [{archived: {_eq: false}, published: {_eq: true}}]}
     offset: $offset
   ) {
     ...HitsDetail
@@ -13162,9 +13163,9 @@ export type EventBreaksQueryHookResult = ReturnType<typeof useEventBreaksQuery>;
 export type EventBreaksLazyQueryHookResult = ReturnType<typeof useEventBreaksLazyQuery>;
 export type EventBreaksQueryResult = Apollo.QueryResult<EventBreaksQuery, EventBreaksQueryVariables>;
 export const NewEventBreaksDocument = gql`
-    subscription NewEventBreaks($id: uuid!, $userId: String) {
+    subscription NewEventBreaks($id: uuid!, $userId: String, $status: break_status_enum_comparison_exp) {
   Breaks(
-    where: {_and: [{status: {_neq: DRAFT}}, {status: {_neq: COMPLETED}}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
+    where: {_and: [{status: {_neq: DRAFT}}, {status: $status}, {archived: {_neq: true}}], Event: {id: {_eq: $id}}}
     order_by: {created_at: asc}
   ) {
     id
@@ -13172,6 +13173,7 @@ export const NewEventBreaksDocument = gql`
     description
     status
     title
+    result
     break_products {
       Product {
         category
@@ -13225,6 +13227,7 @@ export const NewEventBreaksDocument = gql`
  *   variables: {
  *      id: // value for 'id'
  *      userId: // value for 'userId'
+ *      status: // value for 'status'
  *   },
  * });
  */

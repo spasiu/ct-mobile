@@ -1,11 +1,9 @@
-import React, { useState, useRef, useContext } from 'react';
-import { View, TextInput } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { showMessage } from 'react-native-flash-message';
-import { findIndex, head, omit, propEq, remove } from 'ramda';
-
+import { omit } from 'ramda';
 import {
   ADDRESS_FORM_SCHEMA,
   ADDRESS_FORM_FIELDS,
@@ -20,102 +18,34 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { getFieldStatus } from '../../utils/form-field';
-import { getPredictions, PredictionType } from '../../services/places-api';
-import { addressIsDefaultSelector } from '../../common/address/address-selectors';
-import {
-  useUpdateUserAddressMutation,
-  useDeleteUserAddressMutation,
-  Addresses,
-  UserAddressesDocument,
-} from '../../services/api/requests';
-
-import { AuthContext, AuthContextType } from '../../providers/auth';
-
+import { getPredictions } from '../../services/places-api';
 import { EditAddressProp } from './edit-address-screen.props';
 import { CountryCode } from 'react-native-country-picker-modal';
+import { useEditAddressHook } from './edit-address.logic';
 
 export const EditAddress = ({
   address,
   addresses,
   onAddressEdited,
 }: EditAddressProp): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const [activeField, setActiveField] = useState('');
-  const [addressPredictions, setAddressPredictions] = useState<
-    PredictionType[]
-  >([]);
-  const [deleteAddress, setDeleteAddress] = useState(false);
-
-  const [updateUserAddressMutation, { loading }] = useUpdateUserAddressMutation(
-    {
-      onError: () =>
-        showMessage({
-          message: t('errors.could_not_update_address'),
-          type: 'danger',
-        }),
-      onCompleted: () => onAddressEdited(),
-      refetchQueries: [
-        {
-          query: UserAddressesDocument,
-          variables: {
-            id: authUser?.uid,
-          },
-        },
-      ],
-      awaitRefetchQueries: true,
-    },
-  );
-
-  const [
+  const {
+    updateUserAddressMutation,
+    activeField,
+    setActiveField,
+    firstAddressLine,
+    secondAddressLine,
+    addressPredictions,
+    setAddressPredictions,
+    lastName,
+    city,
+    postalCode,
+    state,
+    deleteAddress,
+    setDeleteAddress,
     deleteUserAddressMutation,
-    { loading: deleting },
-  ] = useDeleteUserAddressMutation({
-    variables: {
-      addressId: address.id,
-    },
-    onError: () =>
-      showMessage({
-        message: t('errors.could_not_delete_address'),
-        type: 'danger',
-      }),
-    onCompleted: () => {
-      if (addresses.length > 1 && addressIsDefaultSelector(address)) {
-        const addressIndex = findIndex(propEq('id', address.id), addresses);
-        const newDefaultAddress = head(
-          remove(addressIndex, 1, addresses),
-        ) as Addresses;
-        updateUserAddressMutation({
-          variables: {
-            address: {
-              is_default: true,
-            },
-            addressId: {
-              id: newDefaultAddress.id,
-            },
-          },
-        });
-      } else {
-        onAddressEdited();
-      }
-    },
-    refetchQueries: [
-      {
-        query: UserAddressesDocument,
-        variables: {
-          id: authUser?.uid,
-        },
-      },
-    ],
-    awaitRefetchQueries: true,
-  });
-
-  const lastName = useRef<TextInput>(null);
-  const firstAddressLine = useRef<TextInput>(null);
-  const secondAddressLine = useRef<TextInput>(null);
-  const city = useRef<TextInput>(null);
-  const state = useRef<TextInput>(null);
-  const postalCode = useRef<TextInput>(null);
+    deleting,
+    loading,
+  } = useEditAddressHook({ address, addresses, onAddressEdited });
   return (
     <>
       <Formik

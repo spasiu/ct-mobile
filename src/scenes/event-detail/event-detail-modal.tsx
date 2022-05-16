@@ -1,7 +1,6 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import { Text, FlatList, View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
-
 import {
   StatusBadge,
   ImageCard,
@@ -10,27 +9,13 @@ import {
   ReadMore,
   ServerImage,
 } from '../../components';
-
 import { t } from '../../i18n/i18n';
 import { OverScreenModal } from '../../components';
-import {
-  useEventBreaksQuery,
-  NewEventBreaksDocument,
-  useFollowBreakMutation,
-  useUnfollowBreakMutation,
-  Break_Status_Enum,
-} from '../../services/api/requests';
 import { ICON_SIZE } from '../../theme/sizes';
-import { breaksSelector } from '../../common/break';
-import { AuthContext, AuthContextType } from '../../providers/auth';
 import {
-  optimisticFollowBreakResponse,
-  optimisticUnfollowBreakResponse,
-  updateFollowBreakCache,
-  updateUnfollowBreakCache,
-} from '../../utils/cache';
-
-import { breakCardSelector } from './event-detail-modal.utils';
+  breakCardSelector,
+  useEventDetailModalHook,
+} from './event-detail-modal.logic';
 import { EventDetailModalProps } from './event-detail-modal.props';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
 
@@ -48,32 +33,9 @@ export const EventDetailModal = ({
   onPressClose = () => undefined,
   ...modalProps
 }: EventDetailModalProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakId, setBreakId] = useState<string>();
+  const { breaks, data, loading, breakId, setBreakId, onPressFollow } =
+    useEventDetailModalHook(eventId);
 
-  const { loading, data, subscribeToMore } = useEventBreaksQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: eventId,
-      userId: authUser?.uid,
-      status: { _neq: Break_Status_Enum.Completed }
-    },
-  });
-
-  const [followBreak] = useFollowBreakMutation();
-  const [unfollowBreak] = useUnfollowBreakMutation();
-
-  useEffect(() => {
-    subscribeToMore({
-      document: NewEventBreaksDocument,
-      variables: { id: eventId, userId: authUser?.uid },
-      updateQuery: (prev, { subscriptionData }) =>
-        subscriptionData.data || prev,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const breaks = breaksSelector(data);
   return (
     <OverScreenModal
       title={modalTitle}
@@ -125,33 +87,7 @@ export const EventDetailModal = ({
                 eventDate={eventDate}
                 onPressBuy={() => setBreakId(item.id)}
                 onPress={() => setBreakId(item.id)}
-                onPressFollow={() => {
-                  const followData = {
-                    user_id: authUser?.uid,
-                    break_id: item.id,
-                  };
-
-                  breakCardDetails.userFollows
-                    ? unfollowBreak({
-                        optimisticResponse: optimisticUnfollowBreakResponse(
-                          item,
-                          authUser?.uid as string,
-                        ),
-                        update: cache => updateUnfollowBreakCache(cache, item),
-                        variables: followData,
-                      })
-                    : followBreak({
-                        optimisticResponse: optimisticFollowBreakResponse(
-                          item,
-                          authUser?.uid as string,
-                        ),
-                        update: (cache, followResponse) =>
-                          updateFollowBreakCache(cache, followResponse, item),
-                        variables: {
-                          follow: followData,
-                        },
-                      });
-                }}
+                onPressFollow={() => onPressFollow(item, breakCardDetails)}
               />
             );
           }}

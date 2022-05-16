@@ -7,7 +7,7 @@ import { EmptyState, HitCard, ImageCardSizeTypes } from '../../components';
 
 import { HitDetailModal } from '../hit-detail/hit-detail-modal';
 import { hitImageFrontSelector, hitPlayerSelector } from '../../common/hit';
-import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.utils';
+import { hitDetailForModalSelector } from '../hit-detail/hit-detail-modal.logic';
 import { t } from '../../i18n/i18n';
 import { useUserUpcomingHitsHook } from './user-profile-screen.logic';
 export const UserUpcomingHits = (): JSX.Element => {
