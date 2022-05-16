@@ -51,7 +51,6 @@ import {
   useUserUpcomingBreaksHookType,
   useUserUpcomingEventsHookType,
   useUserUpcomingHitsHookType,
-  breakScheduleSelectorType,
 } from './user-profile-screen.props';
 import { SearchType } from '../../common/search';
 import {
@@ -65,6 +64,7 @@ import {
   breakTimeSelector,
   breakTitleSelector,
   breakTypeSelector,
+  PickBreakCard,
 } from '../../common/break';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
 import { hitsSelector } from '../../common/hit';
@@ -83,9 +83,7 @@ import {
   updateFollowBreakCache,
 } from '../../utils/cache';
 
-export const breakScheduleSelector = (
-  eventBreak: Breaks,
-): breakScheduleSelectorType => ({
+export const breakScheduleSelector = (eventBreak: Breaks): PickBreakCard => ({
   eventDate: formatScheduledStatus(breakTimeSelector(eventBreak)),
   status: breakCardStatusSelector(eventBreak),
   price: breakPriceSelector(eventBreak),
@@ -207,7 +205,7 @@ export const useUserUpcomingBreaksHook = (): useUserUpcomingBreaksHookType => {
   const breaks = breaksSelector(data);
   const onFollow = (
     breakItem: Breaks,
-    breakerBreakDetail: breakScheduleSelectorType,
+    breakerBreakDetail: PickBreakCard,
   ): void => {
     const followData = {
       user_id: authUser?.uid,

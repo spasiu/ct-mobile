@@ -1,57 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { useNavigation } from '@react-navigation/core';
-
 import { BreakCard, EmptyState, Loading } from '../../components';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  Breaks,
-  useFollowBreakMutation,
-  useUnfollowBreakMutation,
-  useNewScheduledBreaksSubscription,
-} from '../../services/api/requests';
-import {
-  optimisticUnfollowBreakResponse,
-  updateUnfollowBreakCache,
-  optimisticFollowBreakResponse,
-  updateFollowBreakCache,
-} from '../../utils/cache';
+import { Breaks } from '../../services/api/requests';
 import { t } from '../../i18n/i18n';
 import { BreakDetailModal } from '../break-detail/break-detail-modal';
-import { FilterContext, FilterContextType } from '../../providers/filter';
 import { LiveScreenNavigationProp } from '../live/live-screen.props';
-
 import {
   breakScheduleSelector,
-  getBreakTypeFilter,
-  getSportTypeFilter,
-} from './schedule-screen.utils';
+  useBreaksViewHook,
+} from './schedule-screen.logic';
 import { breakIdSelector, handleBreakPress } from '../../common/break';
 
 export const BreaksView = (): JSX.Element => {
   const navigation = useNavigation<LiveScreenNavigationProp>();
-  const [breakId, setBreakId] = useState<string>();
-  const { breakTypeFilter, sportTypeFilter } = useContext(
-    FilterContext,
-  ) as FilterContextType;
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const { loading, data } = useNewScheduledBreaksSubscription({
-    variables: {
-      userId: authUser?.uid as string,
-      breakTypeFilter: getBreakTypeFilter(breakTypeFilter),
-      sportTypeFilter: getSportTypeFilter(sportTypeFilter),
-    },
-  });
-
-  const [followBreak] = useFollowBreakMutation();
-  const [unfollowBreak] = useUnfollowBreakMutation();
+  const { loading, data, breakId, setBreakId, onPressFollow } =
+    useBreaksViewHook();
 
   if (loading && !data) {
     return <Loading />;
   }
-
   return (
     <>
       <FlatList
@@ -74,38 +43,7 @@ export const BreaksView = (): JSX.Element => {
               onPress={() =>
                 handleBreakPress(eventBreak, navigation, setBreakId)
               }
-              onPressFollow={() => {
-                const followData = {
-                  user_id: authUser?.uid,
-                  break_id: eventBreak.id,
-                };
-
-                breakSchedule.userFollows
-                  ? unfollowBreak({
-                      optimisticResponse: optimisticUnfollowBreakResponse(
-                        eventBreak,
-                        authUser?.uid as string,
-                      ),
-                      update: cache =>
-                        updateUnfollowBreakCache(cache, eventBreak),
-                      variables: followData,
-                    })
-                  : followBreak({
-                      optimisticResponse: optimisticFollowBreakResponse(
-                        eventBreak,
-                        authUser?.uid as string,
-                      ),
-                      update: (cache, followResponse) =>
-                        updateFollowBreakCache(
-                          cache,
-                          followResponse,
-                          eventBreak,
-                        ),
-                      variables: {
-                        follow: followData,
-                      },
-                    });
-              }}
+              onPressFollow={() => onPressFollow(eventBreak, breakSchedule)}
             />
           );
         }}
