@@ -10,7 +10,7 @@ export const EVENT_TYPES = [
 export const SPORTS_TYPES = [ALL_FILTER_OPTION, ...Object.values(Sports)];
 
 export const TEXT_KEY_FOR_FILTER_TYPE: {
-  [key in BreakType  | Sports | typeof ALL_FILTER_OPTION]: string;
+  [key in BreakType | Sports | typeof ALL_FILTER_OPTION]: string;
 } = {
   [Break_Type_Enum.HitDraft]: 'filter.breakTypes.hitDraft',
   [Break_Type_Enum.Personal]: 'filter.breakTypes.personal',

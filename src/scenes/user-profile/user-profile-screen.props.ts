@@ -17,7 +17,8 @@ import { FetchResult, MutationFunctionOptions } from '@apollo/client';
 import { Dispatch, SetStateAction } from 'react';
 import { SearchType } from '../../common/search';
 import { EventDetailModalProps } from '../event-detail/event-detail-modal.props';
-import { BreakCardProps, EventCardProps } from 'components';
+import { EventCardProps } from 'components';
+import { PickBreakCard } from 'common/break';
 
 export type UserProfileScreenNavigationProp = NativeStackNavigationProp<
   UserProfileStackParamList,
@@ -69,21 +70,7 @@ export type useUserUpcomingBreaksHookType = {
   limit: number;
   setLimit: Dispatch<SetStateAction<number>>;
   breaks: Breaks[];
-  onFollow: (
-    breakItem: Breaks,
-    breakerBreakDetail: Pick<
-      BreakCardProps,
-      | 'title'
-      | 'status'
-      | 'eventDate'
-      | 'price'
-      | 'spotsLeft'
-      | 'breakType'
-      | 'breakerImage'
-      | 'league'
-      | 'userFollows'
-    >,
-  ) => void;
+  onFollow: (breakItem: Breaks, breakerBreakDetail: PickBreakCard) => void;
 };
 
 export type useUserUpcomingEventsHookType = {
@@ -99,16 +86,3 @@ export type useUserUpcomingHitsHookType = {
   setHitDetail: Dispatch<Partial<Hits>>;
   hits: Hits[];
 };
-
-export type breakScheduleSelectorType = Pick<
-  BreakCardProps,
-  | 'title'
-  | 'status'
-  | 'eventDate'
-  | 'price'
-  | 'spotsLeft'
-  | 'breakType'
-  | 'breakerImage'
-  | 'league'
-  | 'userFollows'
->;

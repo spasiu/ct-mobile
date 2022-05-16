@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
-
 import {
   Container,
   ContainerTypes,
@@ -13,51 +12,40 @@ import {
   FilterItemStatusTypes,
 } from '../../components';
 import { t } from '../../i18n/i18n';
-
 import { EventsView } from './events-view';
 import { BreaksView } from './breaks-view';
 import { filterIcon } from './schedule-screen.presets';
-import { BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler';
 import {
-  ALL_FILTER_OPTION,
+  BorderlessButton,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
+import {
   EVENT_TYPES,
   SPORTS_TYPES,
   TEXT_KEY_FOR_FILTER_TYPE,
 } from '../../providers/filter/filter.presets';
 import {
   BreakTypeFilterOptions,
-  FilterContext,
-  FilterContextType,
   SportTypeFilterOptions,
 } from '../../providers/filter';
 import { WINDOW_WIDTH } from '../../theme/sizes';
-import { Sports } from '../../common/sports';
 import { isEmpty } from 'ramda';
+import { useScheduleScreenHook } from './schedule-screen.logic';
 
 export const ScheduleScreen = (): JSX.Element => {
   const {
-    breakTypeFilter,
+    breaksView,
+    setBreaksView,
+    setItemTypeFilter,
+    filters,
+    isSport,
+    setOpenModal,
+    openModal,
     sportTypeFilter,
-    setBreakTypeFilter,
     setSportTypeFilter,
-    itemTypeFilter,
-    setItemTypeFilter
-  } = useContext(FilterContext) as FilterContextType;
-
-  type FilterType = BreakTypeFilterOptions | SportTypeFilterOptions;
-
-  const [breaksView, setBreaksView] = useState(itemTypeFilter === 'Breaks');
-  const [openModal, setOpenModal] = useState(false);
-  const [filters, setFilters] = useState<FilterType[]>([]);
-
-  useEffect(() => {setBreaksView(itemTypeFilter === 'Breaks')},[itemTypeFilter])
-
-  useEffect(() => {
-    setFilters([sportTypeFilter,breakTypeFilter].filter(filter => filter !== ALL_FILTER_OPTION));
-  }, [sportTypeFilter,breakTypeFilter])
-
-  const isSport = (filter: any): filter is Sports => Object.values(Sports).includes(filter as Sports);
-
+    breakTypeFilter,
+    setBreakTypeFilter,
+  } = useScheduleScreenHook();
   return (
     <Container
       style={[s.mh0]}
@@ -72,35 +60,44 @@ export const ScheduleScreen = (): JSX.Element => {
               isOn={breaksView}
               onToggle={() => {
                 setBreaksView(!breaksView);
-                breaksView ? setItemTypeFilter('Events') : setItemTypeFilter('Breaks');
-              }
-            }
+                breaksView
+                  ? setItemTypeFilter('Events')
+                  : setItemTypeFilter('Breaks');
+              }}
             />
           }
         />
-        {!isEmpty(filters)
-        ? <FlatList
-          showsHorizontalScrollIndicator={false}
-          style={[s.h2, s.pl3, s.mv3]}
-          contentContainerStyle={[s.aic, s.pr3]}
-          horizontal={true}
-          data={filters}
-          keyExtractor={item => item}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                style={[s.br4, s.ba, s.ph3, s.mb2, s.black,{flexDirection:'row'}]}
-                onPress={() => 
-                  isSport(item) ? setSportTypeFilter('ALL') : setBreakTypeFilter('ALL')
-                }
-              >
-                <Text style={[s.mr3]}>X</Text>
-                <Text>{t(TEXT_KEY_FOR_FILTER_TYPE[item])}</Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      : null }
+        {!isEmpty(filters) ? (
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            style={[s.h2, s.pl3, s.mv3]}
+            contentContainerStyle={[s.aic, s.pr3]}
+            horizontal={true}
+            data={filters}
+            keyExtractor={item => item}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  style={[
+                    s.br4,
+                    s.ba,
+                    s.ph3,
+                    s.mb2,
+                    s.black,
+                    { flexDirection: 'row' },
+                  ]}
+                  onPress={() =>
+                    isSport(item)
+                      ? setSportTypeFilter('ALL')
+                      : setBreakTypeFilter('ALL')
+                  }>
+                  <Text style={[s.mr3]}>X</Text>
+                  <Text>{t(TEXT_KEY_FOR_FILTER_TYPE[item])}</Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        ) : null}
       </View>
       {breaksView ? <BreaksView /> : <EventsView />}
       <View
