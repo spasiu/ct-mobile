@@ -1,8 +1,7 @@
-import React, { useState, useContext, useRef } from 'react';
-import { View, TextInput } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
-
 import {
   Container,
   ContainerTypes,
@@ -13,13 +12,8 @@ import {
   TextLink,
 } from '../../components';
 import { t } from '../../i18n/i18n';
-import { ROUTES_IDS } from '../../navigators/routes/identifiers';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import { PaymentContext, PaymentContextType } from '../../providers/payment';
-import { useUpdateUserMutation } from '../../services/api/requests';
 import { getFieldStatus } from '../../utils/form-field';
 import { displayError } from '../../common/error';
-
 import { CompleteProfileScreenProps } from './complete-profile-screen.props';
 import {
   COMPLETE_PROFILE_FORM_FIELDS,
@@ -28,51 +22,28 @@ import {
 import {
   getSuggestedName,
   getSuggestedUserPhotoURL,
-  getUserFromUpdate,
-  showError,
-} from './complete-profile-screen.utils';
-import { errorDuplicateUsernameSelector } from '../../common/error';
+  useCompleteProfileScreenHook,
+} from './complete-profile-screen.logic';
 import { isShortScreen } from '../device-properties';
 
 export const CompleteProfileScreen = ({
   navigation,
 }: CompleteProfileScreenProps): JSX.Element => {
-  const { user, uploadPhoto, logout } = useContext(
-    AuthContext,
-  ) as AuthContextType;
-  const { createUserOnPaymentPlatform } = useContext(
-    PaymentContext,
-  ) as PaymentContextType;
+  const {
+    user,
+    updateUserMutation,
+    uploadingPhoto,
+    setUploadingPhoto,
+    uploadPhoto,
+    activeField,
+    setActiveField,
+    firstNameField,
+    lastNameField,
+    loading,
+    processing,
+    logout,
+  } = useCompleteProfileScreenHook(navigation);
 
-  const [activeField, setActiveField] = useState('');
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
-  const [processing, setProcessing] = useState(false);
-
-  const [updateUserMutation, { loading }] = useUpdateUserMutation({
-    onError: e => {
-      if (errorDuplicateUsernameSelector(e.graphQLErrors)) {
-        showError(t('errors.duplicatedUsername'));
-      } else {
-        showError(t('errors.could_not_create_user'));
-      }
-    },
-    onCompleted: async data => {
-      setProcessing(true);
-      const updatedUser = getUserFromUpdate(data);
-      const created = await createUserOnPaymentPlatform(
-        updatedUser[COMPLETE_PROFILE_FORM_FIELDS.FIRST_NAME] || '',
-        updatedUser[COMPLETE_PROFILE_FORM_FIELDS.LAST_NAME] || '',
-      );
-
-      setProcessing(false);
-      if (created) {
-        navigation.navigate(ROUTES_IDS.ONBOARDING_INSTRUCTIONS_SCREEN);
-      }
-    },
-  });
-
-  const firstNameField = useRef<TextInput>(null);
-  const lastNameField = useRef<TextInput>(null);
   return (
     <Container
       style={[s.flx_i, s.jcfe]}
