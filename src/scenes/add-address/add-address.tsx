@@ -1,10 +1,8 @@
-import React, { useState, useRef, useContext } from 'react';
-import { View, TextInput } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { styles as s } from 'react-native-style-tachyons';
 import { Formik } from 'formik';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { showMessage } from 'react-native-flash-message';
-
 import {
   ADDRESS_FORM_SCHEMA,
   ADDRESS_FORM_FIELDS,
@@ -17,85 +15,36 @@ import {
 } from '../../components';
 import { t } from '../../i18n/i18n';
 import { getFieldStatus } from '../../utils/form-field';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  useInsertUserAddressMutation,
-  UserAddressesDocument,
-  LoggedUserDocument,
-} from '../../services/api/requests';
-import { getPredictions, PredictionType } from '../../services/places-api';
-
+import { getPredictions } from '../../services/places-api';
 import { AddAddressProps } from './add-address-screen.props';
 import { ADD_ADDRESS_FORM_INITIAL_VALUES } from './add-address-screen.presets';
 import { CountryCode } from 'react-native-country-picker-modal';
+import { useAddAddressHook } from './add-address.logic';
 
 export const AddAddress = ({
   onAddressAdded,
   setId,
 }: AddAddressProps): JSX.Element => {
-  const [activeField, setActiveField] = useState('');
-  const [addressPredictions, setAddressPredictions] = useState<
-    PredictionType[]
-  >([]);
-
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-
-  const [insertUserAddressMutation, { loading }] = useInsertUserAddressMutation(
-    {
-      onError: () =>
-        showMessage({
-          message: t('errors.could_not_add_address'),
-          type: 'danger',
-        }),
-      onCompleted: address => {
-        setId(address?.insert_Addresses_one?.id);
-        return onAddressAdded();
-      },
-      refetchQueries: [
-        {
-          query: UserAddressesDocument,
-          variables: {
-            id: authUser?.uid,
-          },
-        },
-        {
-          query: LoggedUserDocument,
-          variables: {
-            id: authUser?.uid,
-          },
-        },
-      ],
-      awaitRefetchQueries: true,
-    },
-  );
-
-  const lastName = useRef<TextInput>(null);
-  const firstAddressLine = useRef<TextInput>(null);
-  const secondAddressLine = useRef<TextInput>(null);
-  const city = useRef<TextInput>(null);
-  const state = useRef<TextInput>(null);
-  const postalCode = useRef<TextInput>(null);
+  const {
+    submit,
+    activeField,
+    setActiveField,
+    lastName,
+    firstAddressLine,
+    secondAddressLine,
+    addressPredictions,
+    setAddressPredictions,
+    state,
+    postalCode,
+    city,
+    loading,
+  } = useAddAddressHook({ onAddressAdded, setId });
   return (
     <Formik
       validateOnBlur
       validationSchema={ADDRESS_FORM_SCHEMA}
       initialValues={ADD_ADDRESS_FORM_INITIAL_VALUES}
-      onSubmit={values => {
-        values.country === 'CA' || values.country === 'US'
-          ? insertUserAddressMutation({
-              variables: {
-                address: {
-                  ...values,
-                  is_default: false,
-                  user_id: authUser?.uid,
-                },
-              },
-            })
-          : showMessage({
-              message: t('errors.only_us_or_ca_address'),
-              type: 'danger',
-            });
-      }}>
+      onSubmit={submit}>
       {({
         handleChange,
         handleBlur,
@@ -105,7 +54,9 @@ export const AddAddress = ({
         touched,
       }) => (
         <>
-          <KeyboardAwareScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[s.ph3]}>
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={[s.ph3]}>
             <FormInput
               onFocus={() => setActiveField(ADDRESS_FORM_FIELDS.FIRST_NAME)}
               status={getFieldStatus(
@@ -160,7 +111,9 @@ export const AddAddress = ({
               onBlur={() => {
                 setActiveField('');
               }}
-              onSelected={(countryCode) => handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode)}
+              onSelected={countryCode =>
+                handleChange(ADDRESS_FORM_FIELDS.COUNTRY)(countryCode)
+              }
               status={getFieldStatus(
                 ADDRESS_FORM_FIELDS.COUNTRY,
                 activeField,
@@ -179,7 +132,10 @@ export const AddAddress = ({
               )}
               onChangeText={async text => {
                 handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(text);
-                const predictions = await getPredictions(text, values[ADDRESS_FORM_FIELDS.COUNTRY]);
+                const predictions = await getPredictions(
+                  text,
+                  values[ADDRESS_FORM_FIELDS.COUNTRY],
+                );
                 setAddressPredictions(predictions);
               }}
               onBlur={event => {
@@ -202,7 +158,9 @@ export const AddAddress = ({
                 onItemPressed={suggestion => {
                   const addressFirstLine =
                     suggestion[ADDRESS_FORM_FIELDS.FIRST_LINE];
-                  handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(addressFirstLine);
+                  handleChange(ADDRESS_FORM_FIELDS.FIRST_LINE)(
+                    addressFirstLine,
+                  );
 
                   const addressCity = suggestion[ADDRESS_FORM_FIELDS.CITY];
                   handleChange(ADDRESS_FORM_FIELDS.CITY)(addressCity);
@@ -219,7 +177,7 @@ export const AddAddress = ({
                     addressPostalCode,
                   );
                   setAddressPredictions([]);
-                  secondAddressLine.current?.focus()
+                  secondAddressLine.current?.focus();
                 }}
               />
             )}
