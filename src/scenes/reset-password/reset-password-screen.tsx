@@ -34,7 +34,7 @@ export const ResetPasswordScreen = ({
         validateOnBlur
         validationSchema={RESET_PASSWORD_FORM_SCHEMA}
         initialValues={RESET_PASSWORD_FORM_INITIAL_VALUES}
-        onSubmit={async values => submit(values)}>
+        onSubmit={async values => await submit(values)}>
         {({
           handleChange,
           handleBlur,
