@@ -195,12 +195,12 @@ export const UserProfileScreen = ({
         description={t('warningModal.delete')}
         visible={confirmDelete}
         primaryActionText={t('buttons.delete')}
-        onPrimaryActionPressed={() => {
+        onPrimaryActionPressed={async () => {
           cleanPaymentInfo();
           cleanFilters();
           cleanNotificationData();
+          await deleteUser();
           logout();
-          deleteUser({ id: userId });
         }}
         secondaryActionText={t('buttons.cancel')}
         onSecondaryActionPressed={() => setConfirmDelete(false)}
