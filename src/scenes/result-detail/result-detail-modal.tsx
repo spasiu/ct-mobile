@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Text, View, PixelRatio, ScrollView } from 'react-native';
 import { sizes, styles as s } from 'react-native-style-tachyons';
 import { WebView } from 'react-native-webview';
@@ -16,15 +16,13 @@ import { t } from '../../i18n/i18n';
 import { SeeAllTeamsModal } from '../live/see-all-teams-modal';
 
 import { ICON_SIZE } from '../../theme/sizes';
-import { breakResultSelector, breaksSelector, breakTypeSelector } from '../../common/break';
-import { AuthContext, AuthContextType } from '../../providers/auth';
-import {
-  useEventBreaksQuery,
-  Break_Status_Enum,
-  Breaks,
-} from '../../services/api/requests';
+import { breakResultSelector, breakTypeSelector } from '../../common/break';
+import { Breaks } from '../../services/api/requests';
 import { WINDOW_WIDTH } from '../../theme/sizes';
-import { breakCardSelector } from './result-detail-modal.utils';
+import {
+  breakCardSelector,
+  useResultDetailModalHook,
+} from './result-detail-modal.logic';
 import { ResultDetailModalProps } from './result-detail-modal.props';
 import { COLORS } from '../../theme/colors';
 
@@ -41,22 +39,12 @@ export const ResultDetailModal = ({
   videoUrl,
   ...modalProps
 }: ResultDetailModalProps): JSX.Element => {
-  const { user: authUser } = useContext(AuthContext) as AuthContextType;
-  const [breakResults, setBreakResults] = useState<Breaks>();
+  const { breaks, loading, data, breakResults, setBreakResults, userId } =
+    useResultDetailModalHook(eventId);
 
-  const { loading, data } = useEventBreaksQuery({
-    fetchPolicy: 'cache-and-network',
-    variables: {
-      id: eventId,
-      userId: authUser?.uid,
-      status: { _eq: Break_Status_Enum.Completed },
-    },
-  });
   const pixelRatio = PixelRatio.get();
   const videoWidth = WINDOW_WIDTH - sizes.mv3 * 2;
   const iframeHeight = (videoWidth * pixelRatio) / 2;
-  const breaks = breaksSelector(data);
-
   const videoHtml = `
   <html>
     <body style="display:flex;justify-content:center;align-items:center;background-color:${COLORS.black_5}">
@@ -115,7 +103,7 @@ export const ResultDetailModal = ({
         {loading && !data ? (
           <Loading />
         ) : (
-          breaks.map(item => {
+          breaks.map((item: Breaks) => {
             const breakCardDetails = breakCardSelector(item, breaker);
             return (
               <ResultCard
@@ -132,7 +120,7 @@ export const ResultDetailModal = ({
           <SeeAllTeamsModal
             isVisible={!!breakResults}
             onPressClose={() => setBreakResults(undefined)}
-            userId={authUser?.uid as string}
+            userId={userId as string}
             result={breakResultSelector(breakResults)}
             breakType={breakTypeSelector(breakResults)}
           />
