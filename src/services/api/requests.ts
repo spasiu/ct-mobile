@@ -12150,6 +12150,10 @@ export type NewScheduledEventsSubscription = (
     & { User: (
       { __typename?: 'Users' }
       & Pick<Users, 'id' | 'image' | 'first_name' | 'last_name'>
+      & { BreakerProfile?: Maybe<(
+        { __typename?: 'BreakerProfiles' }
+        & Pick<BreakerProfiles, 'id' | 'twitter' | 'facebook' | 'instagram' | 'video' | 'bio'>
+      )> }
     ), Saves: Array<(
       { __typename?: 'SaveEvent' }
       & { User: (
@@ -13868,6 +13872,14 @@ export const NewScheduledEventsDocument = gql`
       image
       first_name
       last_name
+      BreakerProfile {
+        id
+        twitter
+        facebook
+        instagram
+        video
+        bio
+      }
     }
     Saves(where: {User: {id: {_eq: $userId}}}) {
       User {
