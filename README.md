@@ -1,5 +1,4 @@
 # Cards & Treasure
-
 ## Release Configuration Steps
 
 - [ ] Production email sources for Apple Sign-in on [Apple Developer Center](https://help.apple.com/developer-account/#/devf822fb8fc)
